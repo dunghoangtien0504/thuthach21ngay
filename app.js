@@ -47,6 +47,19 @@ const videoContainer = document.getElementById('video-container');
 const videoIframe = document.getElementById('video-iframe');
 const videoOverlay = document.getElementById('video-overlay');
 
+// Interactive Player Elements
+const playerTabsBar = document.getElementById('player-tabs-bar');
+const btnTabVideo = document.getElementById('btn-tab-video');
+const btnTabTool = document.getElementById('btn-tab-tool');
+const interactiveToolContainer = document.getElementById('interactive-tool-container');
+
+// Interactive Tool Timer State
+let toolTimerInterval = null;
+let toolSecondaryInterval = null;
+let toolTimerSeconds = 0;
+let toolTimerRunning = false;
+let isVoiceMuted = false;
+
 const btnPrevLesson = document.getElementById('btn-prev-lesson');
 const btnNextLesson = document.getElementById('btn-next-lesson');
 const btnCompleteLesson = document.getElementById('btn-complete-lesson');
@@ -450,16 +463,97 @@ function selectLesson(id) {
     lessonBody.innerHTML = `<pre>${selectedLesson.text_content}</pre>`;
   }
   
-  if (selectedLesson.type === 'video' && selectedLesson.video_url) {
-    videoContainer.style.display = 'block';
-    const embedUrl = getYouTubeEmbedUrl(selectedLesson.video_url);
-    videoIframe.src = embedUrl;
+  // Clear any running timers from previous tools
+  stopToolTimers();
+  interactiveToolContainer.style.display = 'none';
+  interactiveToolContainer.innerHTML = '';
+  
+  // Reset tab active state to video
+  btnTabVideo.classList.add('active');
+  btnTabTool.classList.remove('active');
+  
+  const text = selectedLesson.text_content || "";
+  const title = selectedLesson.title || "";
+  const fullText = (title + " " + text).toLowerCase();
+  
+  // Decide which tool fits the lesson
+  let toolType = null;
+  if (selectedLesson.lesson_id > 0) {
+    if (fullText.includes("4-2-6") || fullText.includes("hít vào 4") || fullText.includes("thở phế vị") || fullText.includes("thở bụng")) {
+      toolType = 'breathing';
+    } else if (fullText.includes("start-stop") || fullText.includes("dừng và bắt đầu") || fullText.includes("chu kỳ dừng") || fullText.includes("dừng lại")) {
+      toolType = 'startstop';
+    } else if (fullText.includes("ranh giới hưng phấn") || fullText.includes("thang đo 10 điểm") || fullText.includes("biểu đồ khoái cảm")) {
+      toolType = 'arousal';
+    } else if (fullText.includes("kegel") || fullText.includes("sàn chậu") || fullText.includes("glute bridge") || fullText.includes("sit-up") || fullText.includes("stretch") || fullText.includes("kick back") || title.includes("Cơ")) {
+      toolType = 'pelvic';
+    }
+  }
+
+  // Handle video display
+  const hasVideo = !!(selectedLesson.type === 'video' && selectedLesson.video_url);
+  
+  if (toolType) {
+    playerTabsBar.style.display = 'flex';
     
-    videoOverlay.style.display = 'flex';
-    videoIframe.style.display = 'none';
+    // Wire up tab button event listeners
+    btnTabVideo.onclick = () => {
+      btnTabVideo.classList.add('active');
+      btnTabTool.classList.remove('active');
+      if (hasVideo) {
+        videoContainer.style.display = 'block';
+        videoOverlay.style.display = 'flex';
+        videoIframe.style.display = 'none';
+      } else {
+        videoContainer.style.display = 'none';
+      }
+      interactiveToolContainer.style.display = 'none';
+      stopToolTimers();
+    };
+    
+    btnTabTool.onclick = () => {
+      btnTabVideo.classList.remove('active');
+      btnTabTool.classList.add('active');
+      videoContainer.style.display = 'none';
+      videoIframe.src = ''; // Stop video playback
+      interactiveToolContainer.style.display = 'block';
+      
+      // Load and initialize the tool
+      initializeInteractiveTool(toolType, selectedLesson);
+    };
+    
+    // Default mode:
+    // If there is no video, show the interactive tool by default!
+    if (!hasVideo) {
+      btnTabVideo.style.display = 'none';
+      btnTabVideo.classList.remove('active');
+      btnTabTool.classList.add('active');
+      videoContainer.style.display = 'none';
+      interactiveToolContainer.style.display = 'block';
+      initializeInteractiveTool(toolType, selectedLesson);
+    } else {
+      btnTabVideo.style.display = 'flex';
+      videoContainer.style.display = 'block';
+      const embedUrl = getYouTubeEmbedUrl(selectedLesson.video_url);
+      videoIframe.src = embedUrl;
+      videoOverlay.style.display = 'flex';
+      videoIframe.style.display = 'none';
+    }
   } else {
-    videoContainer.style.display = 'none';
-    videoIframe.src = '';
+    // No tool available for this lesson
+    playerTabsBar.style.display = 'none';
+    interactiveToolContainer.style.display = 'none';
+    
+    if (hasVideo) {
+      videoContainer.style.display = 'block';
+      const embedUrl = getYouTubeEmbedUrl(selectedLesson.video_url);
+      videoIframe.src = embedUrl;
+      videoOverlay.style.display = 'flex';
+      videoIframe.style.display = 'none';
+    } else {
+      videoContainer.style.display = 'none';
+      videoIframe.src = '';
+    }
   }
   
   updateCompletionButtonState();
@@ -471,7 +565,7 @@ function setupInteractiveLessons() {
   videoOverlay.addEventListener('click', () => {
     videoOverlay.style.display = 'none';
     videoIframe.style.display = 'block';
-    if (videoIframe.src.indexOf('autoplay=1') === -1) {
+    if (videoIframe.src && videoIframe.src.indexOf('autoplay=1') === -1) {
       videoIframe.src += (videoIframe.src.indexOf('?') === -1 ? '?' : '&') + 'autoplay=1';
     }
   });
@@ -646,7 +740,7 @@ function renderLogsTable() {
   
   const reversedLogs = [...progressLogs].reverse();
   
-  reversedLogs.forEach(log => {
+reversedLogs.forEach(log => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td><strong>${log.week}</strong></td>
@@ -658,4 +752,753 @@ function renderLogsTable() {
     `;
     logsTableBody.appendChild(row);
   });
+}
+
+/* ==========================================================================
+   INTERACTIVE PRACTICE ASSISTANTS (CLINICAL BIOFEEDBACK LOGIC)
+   ========================================================================== */
+
+function stopToolTimers() {
+  if (toolTimerInterval) {
+    clearInterval(toolTimerInterval);
+    toolTimerInterval = null;
+  }
+  if (toolSecondaryInterval) {
+    clearInterval(toolSecondaryInterval);
+    toolSecondaryInterval = null;
+  }
+  toolTimerRunning = false;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+function speakVietnamese(text) {
+  if (isVoiceMuted) return;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'vi-VN';
+    utterance.rate = 0.95; // Slightly slower for absolute clarity
+    
+    const voices = window.speechSynthesis.getVoices();
+    const viVoice = voices.find(voice => voice.lang.includes('vi'));
+    if (viVoice) {
+      utterance.voice = viVoice;
+    }
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+function playChime(type = 'bell') {
+  if (isVoiceMuted) return;
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    if (type === 'bell') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0);
+      osc.start(osc.frequency.setValueAtTime);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 1.0);
+    } else if (type === 'tick') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(440, ctx.currentTime); // A4
+      gain.gain.setValueAtTime(0.03, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.08);
+    } else if (type === 'success') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+      osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+      osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.3); // G5
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+    }
+  } catch (e) {
+    console.error("Audio failed", e);
+  }
+}
+
+function setupVoiceToggler() {
+  const voiceToggle = document.getElementById('tool-voice-toggle');
+  if (voiceToggle) {
+    voiceToggle.onclick = () => {
+      isVoiceMuted = !isVoiceMuted;
+      if (isVoiceMuted) {
+        voiceToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Giọng nói: <span>TẮT</span>';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      } else {
+        voiceToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i> Giọng nói: <span>BẬT</span>';
+        speakVietnamese("Bật hướng dẫn âm thanh");
+      }
+    };
+    // Initialize correct state UI
+    if (isVoiceMuted) {
+      voiceToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Giọng nói: <span>TẮT</span>';
+    }
+  }
+}
+
+function initializeInteractiveTool(toolType, lesson) {
+  stopToolTimers();
+  interactiveToolContainer.innerHTML = '';
+  
+  if (toolType === 'breathing') {
+    initBreathingCoach(lesson);
+  } else if (toolType === 'pelvic') {
+    initPelvicCoach(lesson);
+  } else if (toolType === 'arousal') {
+    initArousalMeter(lesson);
+  } else if (toolType === 'startstop') {
+    initStartStopCoach(lesson);
+  }
+}
+
+/* 1. Breathing Coach Implementation */
+function initBreathingCoach(lesson) {
+  interactiveToolContainer.innerHTML = `
+    <div class="breathing-coach-box">
+      <div class="voice-switch" id="tool-voice-toggle">
+        <i class="fa-solid fa-volume-high"></i> Giọng nói: <span>BẬT</span>
+      </div>
+      <div class="tool-badge">Hô Hấp Đối Giao Cảm 4-2-6</div>
+      
+      <div class="breathing-visual-area">
+        <div class="breathing-circle-outer" id="breathing-circle-outer">
+          <div class="breathing-circle-inner" id="breathing-circle-inner"></div>
+          <div class="breathing-text-instruction" id="breathing-state-text">BẮT ĐẦU</div>
+        </div>
+        <div class="breathing-timer-display" id="breathing-time-text">05:00</div>
+      </div>
+      
+      <div class="breathing-controls">
+        <button class="btn-tool primary" id="btn-breathing-start"><i class="fa-solid fa-play"></i> Bắt đầu tập</button>
+        <button class="btn-tool" id="btn-breathing-reset"><i class="fa-solid fa-rotate-left"></i> Đặt lại</button>
+      </div>
+    </div>
+  `;
+  
+  setupVoiceToggler();
+  
+  const outerCircle = document.getElementById('breathing-circle-outer');
+  const innerCircle = document.getElementById('breathing-circle-inner');
+  const stateText = document.getElementById('breathing-state-text');
+  const timeText = document.getElementById('breathing-time-text');
+  const btnStart = document.getElementById('btn-breathing-start');
+  const btnReset = document.getElementById('btn-breathing-reset');
+  
+  let elapsed = 0;
+  let remainingSeconds = 300; // 5 mins
+  
+  function updateTimerUI() {
+    const mins = Math.floor(remainingSeconds / 60);
+    const secs = remainingSeconds % 60;
+    timeText.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+  
+  function stepBreathing() {
+    if (remainingSeconds <= 0) {
+      stopToolTimers();
+      stateText.textContent = "HOÀN THÀNH";
+      stateText.style.color = "#00ff88";
+      innerCircle.style.transform = "scale(1)";
+      innerCircle.style.boxShadow = "0 0 40px #00ff88";
+      btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Bắt đầu';
+      playChime('success');
+      speakVietnamese("Hoàn thành bài tập thở phế vị xuất sắc!");
+      return;
+    }
+    
+    remainingSeconds--;
+    elapsed++;
+    updateTimerUI();
+    
+    const cycleSec = elapsed % 12;
+    
+    if (cycleSec === 0) {
+      // Inhale phase (4 seconds)
+      stateText.textContent = "HÍT VÀO";
+      stateText.style.color = "#00ff88";
+      innerCircle.style.transform = "scale(1.4)";
+      innerCircle.style.background = "radial-gradient(circle, #00ff88 0%, #0d2b1a 100%)";
+      innerCircle.style.boxShadow = "0 0 40px #00ff88";
+      playChime('bell');
+      speakVietnamese("Hít vào phình bụng");
+    } else if (cycleSec === 4) {
+      // Hold phase (2 seconds)
+      stateText.textContent = "GIỮ HƠI";
+      stateText.style.color = "var(--warning)";
+      innerCircle.style.transform = "scale(1.4)";
+      innerCircle.style.background = "radial-gradient(circle, var(--warning) 0%, #8b6508 100%)";
+      innerCircle.style.boxShadow = "0 0 50px var(--warning)";
+      playChime('bell');
+      speakVietnamese("Giữ hơi");
+    } else if (cycleSec === 6) {
+      // Exhale phase (6 seconds)
+      stateText.textContent = "THỞ RA";
+      stateText.style.color = "var(--danger)";
+      innerCircle.style.transform = "scale(0.85)";
+      innerCircle.style.background = "radial-gradient(circle, var(--danger) 0%, #7c1a05 100%)";
+      innerCircle.style.boxShadow = "0 0 30px rgba(192, 57, 14, 0.5)";
+      playChime('bell');
+      speakVietnamese("Thở ra nhẹ nhàng");
+    } else {
+      // Standard tick
+      playChime('tick');
+    }
+  }
+  
+  btnStart.onclick = () => {
+    if (toolTimerRunning) {
+      // Pause
+      stopToolTimers();
+      btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Tiếp tục';
+    } else {
+      // Start
+      toolTimerRunning = true;
+      btnStart.innerHTML = '<i class="fa-solid fa-pause"></i> Tạm dừng';
+      stepBreathing(); // run first step instantly
+      toolTimerInterval = setInterval(stepBreathing, 1000);
+    }
+  };
+  
+  btnReset.onclick = () => {
+    stopToolTimers();
+    elapsed = 0;
+    remainingSeconds = 300;
+    updateTimerUI();
+    stateText.textContent = "BẮT ĐẦU";
+    stateText.style.color = "#FFF";
+    innerCircle.style.transform = "scale(1.0)";
+    innerCircle.style.background = "radial-gradient(circle, var(--warning) 0%, #8b6508 100%)";
+    innerCircle.style.boxShadow = "0 0 30px rgba(184, 134, 11, 0.6)";
+    btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Bắt đầu tập';
+  };
+}
+
+/* 2. Pelvic Floor Coach Implementation */
+function initPelvicCoach(lesson) {
+  const title = lesson.title || "";
+  let exerciseMode = 'kegel'; // default
+  let modelTitle = "Co Thắt Cơ Sàn Chậu";
+  let description = "Hãy siết cơ sàn chậu (co cơ hậu môn/PC) và giữ, sau đó thả lỏng hoàn toàn theo nhịp đồng hồ.";
+  
+  if (title.includes("Glute Bridge") || title.includes("nâng hông") || title.includes("cầu mông")) {
+    exerciseMode = 'bridge';
+    modelTitle = "Bài Tập Glute Bridge";
+    description = "Nằm ngửa gập gối, nâng cao hông tạo đường thẳng và siết chặt cơ chậu khi ở trên đỉnh.";
+  } else if (title.includes("Sit-up") || title.includes("gập bụng")) {
+    exerciseMode = 'situp';
+    modelTitle = "Bài Tập Gập Bụng Sit-up";
+    description = "Gập bụng lên 45 độ, thở ra và giải phóng (kegel ngược) hoàn toàn cơ chậu để tránh áp lực nội tạng.";
+  }
+  
+  interactiveToolContainer.innerHTML = `
+    <div class="pelvic-coach-box">
+      <div class="pelvic-coach-left">
+        <div class="voice-switch" id="tool-voice-toggle" style="position: static; margin-bottom: 10px;">
+          <i class="fa-solid fa-volume-high"></i> Giọng nói: <span>BẬT</span>
+        </div>
+        <div>
+          <div class="pelvic-instruction-title" id="pelvic-title-ui">${modelTitle}</div>
+          <div class="pelvic-instruction-text" id="pelvic-desc-ui">${description}</div>
+        </div>
+        
+        <div class="pelvic-progress-bar-container">
+          <div class="pelvic-progress-fill" id="pelvic-progress-fill"></div>
+        </div>
+        
+        <div class="rep-tracker">
+          <div>Hiệp: <span class="rep-number" id="pelvic-set-text">1/3</span></div>
+          <div>Lần lặp (Rep): <span class="rep-number" id="pelvic-rep-text">0/10</span></div>
+        </div>
+        
+        <div class="breathing-controls" style="margin-top: 15px;">
+          <button class="btn-tool primary" id="btn-pelvic-start"><i class="fa-solid fa-play"></i> Bắt đầu</button>
+          <button class="btn-tool" id="btn-pelvic-reset"><i class="fa-solid fa-rotate-left"></i> Đặt lại</button>
+        </div>
+      </div>
+      
+      <div class="pelvic-coach-right">
+        <div class="anatomy-visual-container">
+          <svg viewBox="0 0 200 100" class="stick-figure-svg">
+            <line x1="10" y1="90" x2="190" y2="90" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+            <g id="pelvic-anatomy-body">
+              <circle cx="40" cy="80" r="6" fill="#FFF" id="fig-head" />
+              <path d="M 40 80 L 100 80 L 140 80" stroke="#FFF" stroke-width="4" stroke-linecap="round" fill="none" id="fig-spine" />
+              <path d="M 140 80 L 160 55 L 180 90" stroke="#FFF" stroke-width="4" stroke-linecap="round" fill="none" id="fig-leg" />
+              <line x1="80" y1="80" x2="120" y2="90" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round" />
+            </g>
+            <ellipse cx="140" cy="80" rx="14" ry="7" fill="none" stroke="rgba(0, 255, 136, 0.2)" stroke-width="3" id="fig-pc-muscle" />
+          </svg>
+        </div>
+        <div style="font-size: 14px; font-weight: 700; color: #FFF; text-align: center; margin-top: 10px;" id="pelvic-state-indicator">SẴN SÀNG</div>
+      </div>
+    </div>
+  `;
+  
+  setupVoiceToggler();
+  
+  const btnStart = document.getElementById('btn-pelvic-start');
+  const btnReset = document.getElementById('btn-pelvic-reset');
+  const fillBar = document.getElementById('pelvic-progress-fill');
+  const repText = document.getElementById('pelvic-rep-text');
+  const setText = document.getElementById('pelvic-set-text');
+  const stateIndicator = document.getElementById('pelvic-state-indicator');
+  
+  // SVG points references
+  const figHead = document.getElementById('fig-head');
+  const figSpine = document.getElementById('fig-spine');
+  const figPc = document.getElementById('fig-pc-muscle');
+  
+  let reps = 0;
+  let sets = 1;
+  let step = 0; // 0 to 9 representing a 10s cycle (5s contract, 5s relax)
+  
+  function updateStickFigure(isSqueezing) {
+    if (isSqueezing) {
+      figPc.classList.add('active-kegel-squeeze');
+      figPc.style.stroke = "var(--warning)";
+      if (exerciseMode === 'bridge') {
+        // Move hips up
+        figSpine.setAttribute('d', 'M 40 80 L 100 60 L 140 45');
+        figPc.setAttribute('cx', '140');
+        figPc.setAttribute('cy', '45');
+      } else if (exerciseMode === 'situp') {
+        // Move head/torso up
+        figHead.setAttribute('cx', '70');
+        figHead.setAttribute('cy', '45');
+        figSpine.setAttribute('d', 'M 70 45 L 110 65 L 140 80');
+      } else {
+        // Standard Kegel: pulse the PC ring
+        figPc.setAttribute('rx', '18');
+        figPc.setAttribute('ry', '9');
+      }
+    } else {
+      figPc.classList.remove('active-kegel-squeeze');
+      figPc.style.stroke = "rgba(0, 255, 136, 0.2)";
+      if (exerciseMode === 'bridge') {
+        // flat spine
+        figSpine.setAttribute('d', 'M 40 80 L 100 80 L 140 80');
+        figPc.setAttribute('cx', '140');
+        figPc.setAttribute('cy', '80');
+      } else if (exerciseMode === 'situp') {
+        // flat spine
+        figHead.setAttribute('cx', '40');
+        figHead.setAttribute('cy', '80');
+        figSpine.setAttribute('d', 'M 40 80 L 100 80 L 140 80');
+      } else {
+        // standard size
+        figPc.setAttribute('rx', '14');
+        figPc.setAttribute('ry', '7');
+      }
+    }
+  }
+  
+  function stepPelvic() {
+    const cycleSec = step % 10;
+    
+    if (cycleSec < 5) {
+      // Squeeze phase (5 seconds)
+      const pct = ((cycleSec + 1) / 5) * 100;
+      fillBar.style.width = `${pct}%`;
+      fillBar.style.backgroundColor = "var(--warning)";
+      stateIndicator.textContent = "SIẾT CƠ CHẬU";
+      stateIndicator.style.color = "var(--warning)";
+      updateStickFigure(true);
+      
+      if (cycleSec === 0) {
+        playChime('bell');
+        speakVietnamese("Siết chặt cơ chậu, giữ hông cao");
+      } else {
+        playChime('tick');
+      }
+    } else {
+      // Relax phase (5 seconds)
+      const relaxSec = cycleSec - 5;
+      const pct = (1 - (relaxSec + 1) / 5) * 100;
+      fillBar.style.width = `${pct}%`;
+      fillBar.style.backgroundColor = "rgba(255,255,255,0.2)";
+      stateIndicator.textContent = "THẢ LỎNG";
+      stateIndicator.style.color = "#FFF";
+      updateStickFigure(false);
+      
+      if (cycleSec === 5) {
+        playChime('bell');
+        speakVietnamese("Thả lỏng hoàn toàn");
+      } else {
+        playChime('tick');
+      }
+    }
+    
+    step++;
+    
+    if (step > 0 && step % 10 === 0) {
+      reps++;
+      repText.textContent = `${reps}/10`;
+      
+      if (reps >= 10) {
+        reps = 0;
+        repText.textContent = `0/10`;
+        sets++;
+        if (sets > 3) {
+          stopToolTimers();
+          stateIndicator.textContent = "HOÀN THÀNH";
+          stateIndicator.style.color = "#00ff88";
+          setText.textContent = "3/3";
+          playChime('success');
+          speakVietnamese("Hoàn thành bài tập cơ sàn chậu xuất sắc!");
+          return;
+        }
+        setText.textContent = `${sets}/3`;
+        stopToolTimers();
+        btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Hiệp tiếp theo';
+        speakVietnamese("Hoàn thành hiệp. Nghỉ ngơi mười giây");
+      }
+    }
+  }
+  
+  btnStart.onclick = () => {
+    if (toolTimerRunning) {
+      stopToolTimers();
+      btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Tiếp tục';
+    } else {
+      toolTimerRunning = true;
+      btnStart.innerHTML = '<i class="fa-solid fa-pause"></i> Tạm dừng';
+      stepPelvic();
+      toolTimerInterval = setInterval(stepPelvic, 1000);
+    }
+  };
+  
+  btnReset.onclick = () => {
+    stopToolTimers();
+    reps = 0;
+    sets = 1;
+    step = 0;
+    fillBar.style.width = "0%";
+    repText.textContent = "0/10";
+    setText.textContent = "1/3";
+    stateIndicator.textContent = "SẴN SÀNG";
+    stateIndicator.style.color = "#FFF";
+    updateStickFigure(false);
+    btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Bắt đầu';
+  };
+}
+
+/* 3. Arousal Meter Implementation */
+function initArousalMeter(lesson) {
+  interactiveToolContainer.innerHTML = `
+    <div class="arousal-meter-box">
+      <div class="arousal-meter-title">BẢN ĐỒ CHẨN ĐOÁN HƯNG PHẤN & RANH GIỚI PHẢN XẠ</div>
+      
+      <div class="arousal-slider-container">
+        <div class="arousal-labels-row" id="arousal-labels-row"></div>
+        <div class="arousal-bar-track" id="arousal-bar-track">
+          <div class="arousal-bar-pointer" id="arousal-bar-pointer"></div>
+        </div>
+      </div>
+      
+      <div class="arousal-info-card" id="arousal-info-card"></div>
+    </div>
+  `;
+  
+  const labelsRow = document.getElementById('arousal-labels-row');
+  const pointer = document.getElementById('arousal-bar-pointer');
+  const infoCard = document.getElementById('arousal-info-card');
+  
+  const arousalData = {
+    1: { name: "Mức 1: Thư giãn hoàn toàn", zone: "safe", title: "Khởi động", state: "Cơ thể hoàn toàn thả lỏng. Không có kích thích. Dương vật xìu hoặc cương nhẹ.", action: "Bắt đầu dạo đầu, thở đều bụng tự nhiên." },
+    2: { name: "Mức 2: Kích thích ban đầu", zone: "safe", title: "Cương cứng nhẹ", state: "Độ cương khoảng 40%. Xúc giác bắt đầu kích hoạt hệ thần kinh.", action: "Duy trì nhịp chạm chậm, kiểm soát tâm lý thoải mái." },
+    3: { name: "Mức 3: Hưng phấn nhẹ", zone: "safe", title: "Chuẩn bị", state: "Độ cương 60%. Cảm giác ấm áp lan tỏa toàn thân.", action: "Tiếp tục nhịp thở điều hòa phế vị." },
+    4: { name: "Mức 4: Vùng An toàn Cương cứng", zone: "safe", title: "Cương tối đa", state: "Đương vật đạt độ cương cứng 100%. Khoái cảm ổn định, nhịp tim tăng nhẹ.", action: "Đây là vùng tối ưu để duy trì thâm nhập lâu nhất. Tập trung thả lỏng cơ chậu." },
+    5: { name: "Mức 5: Hưng phấn ổn định", zone: "safe", title: "Nhịp điệu cao", state: "Khoái cảm đạt điểm cân bằng. Cơ thể dồi dào năng lượng.", action: "Chuyển động chéo góc (Lãng tử quay đầu) để phân tán kích thích trực diện." },
+    6: { name: "Mức 6: Ngưỡng ranh giới an toàn", zone: "safe", title: "Gần cảnh báo", state: "Khoái cảm tích tụ dần. Hơi thở bắt đầu gấp nhẹ.", action: "Giảm tốc độ chuyển động xuống 30% lực, hít thở sâu 4-2-6." },
+    7: { name: "Mức 7: Ngưỡng Cảnh Báo Lâm Sàng", zone: "alert", title: "Phải Dừng Nhịp", state: "Cực kỳ nhạy cảm vùng đầu dương vật. Nhịp tim tăng nhanh, cơ sàn chậu có phản xạ siết cứng tự động.", action: "Dừng mọi chuyển động! Siết cơ chậu Phanh khẩn cấp 5s ngay lập tức, thả lỏng xả áp và thở 4-2-6." },
+    8: { name: "Mức 8: Vùng kích hoạt phản xạ", zone: "alert", title: "Phanh khẩn cấp", state: "Cảm giác tinh dịch bắt đầu co bóp dồn dịch về túi tinh.", action: "Dừng rút ra hoặc dùng kỹ thuật Squeeze (ép gốc/ép quy đầu) ngay. Thở sâu." },
+    9: { name: "Mức 9: Ngưỡng Không Thể Đảo Ngược", zone: "danger", title: "Điểm không thể dừng", state: "Phản xạ cơ học của niệu đạo đã bắt đầu co bóp. Không thể thu hồi kích thích.", action: "Quá muộn để phanh. Chuẩn bị xuất tinh. Ghi nhận thời điểm chạm mức này để căn dừng sớm hơn ở lần sau." },
+    10: { name: "Mức 10: Xuất tinh & Cực khoái", zone: "danger", title: "Giải phóng", state: "Co thắt cơ sàn chậu 5-8 nhịp liên tục và phóng tinh dịch.", action: "Thả lỏng sâu cơ sàn chậu sau xuất tinh để hồi phục nhanh." }
+  };
+  
+  // Render label numbers
+  for (let i = 1; i <= 10; i++) {
+    const btn = document.createElement('div');
+    btn.className = `arousal-label-num level-${i}`;
+    btn.textContent = i;
+    btn.onclick = () => selectLevel(i);
+    labelsRow.appendChild(btn);
+  }
+  
+  function selectLevel(level) {
+    document.querySelectorAll('.arousal-label-num').forEach(node => {
+      node.classList.remove('active');
+    });
+    
+    const activeNode = labelsRow.children[level - 1];
+    activeNode.classList.add('active');
+    
+    // Position pointer
+    const pct = ((level - 1) / 9) * 100;
+    pointer.style.left = `${pct}%`;
+    
+    // Play sound tick
+    playChime('tick');
+    
+    const data = arousalData[level];
+    
+    let zoneClass = data.zone;
+    let zoneText = data.zone === 'safe' ? 'AN TOÀN (MỨC 1 - 6)' : (data.zone === 'alert' ? 'CẢNH BÁO (MỨC 7 - 8)' : 'QUÁ NGƯỠNG (MỨC 9 - 10)');
+    
+    infoCard.innerHTML = `
+      <div class="arousal-info-header">
+        <div class="arousal-info-title">${data.name}</div>
+        <span class="arousal-zone-badge ${zoneClass}">${zoneText}</span>
+      </div>
+      <div class="arousal-info-detail">
+        <p><strong>Trạng thái sinh lý:</strong> ${data.state}</p>
+        <p style="color: var(--warning); font-weight: 600; margin-top: 8px;">
+          <i class="fa-solid fa-circle-exclamation"></i> Hướng dẫn kỹ thuật: ${data.action}
+        </p>
+      </div>
+    `;
+    
+    speakVietnamese(`${data.name}. ${data.title}`);
+  }
+  
+  // Default to level 5
+  selectLevel(5);
+}
+
+/* 4. Start-Stop Coach Implementation */
+function initStartStopCoach(lesson) {
+  interactiveToolContainer.innerHTML = `
+    <div class="start-stop-box">
+      <div class="start-stop-left">
+        <div class="voice-switch" id="tool-voice-toggle" style="position: static; margin-bottom: 5px;">
+          <i class="fa-solid fa-volume-high"></i> Giọng nói: <span>BẬT</span>
+        </div>
+        <div>
+          <div class="pelvic-instruction-title">Bộ Trợ Lý Luyện Tập Start-Stop</div>
+          <div class="pelvic-instruction-text" style="margin-bottom: 15px;">Tự kích thích hoặc phối hợp đối tác. Bấm nút khi hưng phấn đạt mức 7.5 để thực hành chu kỳ dừng siết.</div>
+        </div>
+        
+        <div class="slider-input-group">
+          <div style="display:flex; justify-content:space-between; font-size:12px;">
+            <span>Mức hưng phấn: <strong id="startstop-arousal-num">1.0</strong>/10</span>
+            <span id="startstop-arousal-zone" class="text-success">VÙNG AN TOÀN</span>
+          </div>
+          <input type="range" class="arousal-range-input" id="arousal-range-input" min="1" max="9" step="0.1" value="1">
+        </div>
+        
+        <div class="rep-tracker" style="margin-top: 15px;">
+          <div>Mục tiêu: <span class="rep-number">3 - 4 chu kỳ</span></div>
+          <div>Chu kỳ đã đạt: <span class="rep-number" id="startstop-cycle-count">0</span></div>
+        </div>
+      </div>
+      
+      <div class="start-stop-right" id="startstop-right-panel">
+        <div class="start-stop-state-title" id="ss-state-title">KÍCH THÍCH</div>
+        <div class="start-stop-state-desc" id="ss-state-desc">Hãy kích thích chậm rãi bằng tay hoặc cùng đối tác.</div>
+        
+        <div id="ss-animation-area" style="min-height: 120px; display: flex; align-items:center; justify-content:center;">
+          <!-- Animation injected here -->
+        </div>
+        
+        <div style="margin-top: 15px; width:100%;">
+          <button class="btn-tool primary" id="btn-ss-action" style="width: 100%; justify-content:center; padding:12px;">
+            ĐÃ CHẠM NGƯỠNG 7.5 (DỪNG LẠI)
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  setupVoiceToggler();
+  
+  const arousalInput = document.getElementById('arousal-range-input');
+  const arousalNum = document.getElementById('startstop-arousal-num');
+  const arousalZone = document.getElementById('startstop-arousal-zone');
+  const cycleText = document.getElementById('startstop-cycle-count');
+  
+  const ssTitle = document.getElementById('ss-state-title');
+  const ssDesc = document.getElementById('ss-state-desc');
+  const ssAnimArea = document.getElementById('ss-animation-area');
+  const btnAction = document.getElementById('btn-ss-action');
+  
+  let cycle = 0;
+  let state = 'stimulation'; // 'stimulation' | 'squeeze' | 'relaxation'
+  let secondsRemaining = 0;
+  
+  // Set stimulation default animation
+  setStimulationUI();
+  
+  // Slow arousal auto-increase to simulate real exercise
+  let arousalAutoInterval = setInterval(() => {
+    if (state === 'stimulation') {
+      let val = parseFloat(arousalInput.value);
+      if (val < 7.5) {
+        val = Math.min(7.5, val + 0.1);
+        arousalInput.value = val;
+        updateArousalUI(val);
+      }
+    }
+  }, 1000);
+  
+  // Save interval to the global manager so it gets cleared properly
+  toolSecondaryInterval = arousalAutoInterval;
+  
+  arousalInput.oninput = (e) => {
+    if (state === 'stimulation') {
+      updateArousalUI(parseFloat(e.target.value));
+    }
+  };
+  
+  function updateArousalUI(val) {
+    arousalNum.textContent = val.toFixed(1);
+    if (val < 7.0) {
+      arousalZone.textContent = "VÙNG AN TOÀN";
+      arousalZone.className = "text-success";
+    } else if (val < 8.5) {
+      arousalZone.textContent = "NGƯỠNG CẢNH BÁO";
+      arousalZone.className = "text-warning";
+    } else {
+      arousalZone.textContent = "NGƯỠNG QUÁ TẢI";
+      arousalZone.className = "text-danger";
+    }
+  }
+  
+  function setStimulationUI() {
+    state = 'stimulation';
+    arousalInput.disabled = false;
+    ssTitle.textContent = "1. KÍCH THÍCH";
+    ssTitle.style.color = "#FFF";
+    ssDesc.textContent = "Tiến hành kích thích chậm rãi. Theo dõi cảm giác vùng đầu khấc dương vật và nhịp thở.";
+    ssAnimArea.innerHTML = `
+      <div style="font-size: 50px; color: #00ff88; animation: squeeze-pulse-anim 2s infinite alternate;">
+        <i class="fa-solid fa-heart-pulse"></i>
+      </div>
+    `;
+    btnAction.disabled = false;
+    btnAction.textContent = "ĐÃ CHẠM NGƯỠNG 7.5 (DỪNG LẠI)";
+    btnAction.className = "btn-tool primary";
+    speakVietnamese("Kích thích chậm rãi, theo dõi hưng phấn");
+  }
+  
+  function setSqueezeUI() {
+    state = 'squeeze';
+    arousalInput.disabled = true;
+    arousalInput.value = 7.5;
+    updateArousalUI(7.5);
+    
+    ssTitle.textContent = "2. DỪNG VÀ SIẾT CHẶT";
+    ssTitle.style.color = "var(--danger)";
+    ssDesc.textContent = "Dừng ngay mọi kích thích! Siết cơ sàn chậu 100% lực giống như bạn đang bóp phanh cơ chậu.";
+    
+    secondsRemaining = 5;
+    ssAnimArea.innerHTML = `
+      <div class="pulse-circle-squeeze" id="ss-countdown-circle">5</div>
+    `;
+    btnAction.disabled = true;
+    btnAction.textContent = "ĐANG SIẾT PHANH CƠ CHẬU...";
+    btnAction.className = "btn-tool";
+    
+    playChime('bell');
+    speakVietnamese("Dừng kích thích! Siết cơ chậu giữ năm giây!");
+    
+    toolTimerInterval = setInterval(() => {
+      secondsRemaining--;
+      const circle = document.getElementById('ss-countdown-circle');
+      if (circle) circle.textContent = secondsRemaining;
+      
+      if (secondsRemaining <= 0) {
+        clearInterval(toolTimerInterval);
+        setRelaxationUI();
+      } else {
+        playChime('tick');
+      }
+    }, 1000);
+  }
+  
+  function setRelaxationUI() {
+    state = 'relaxation';
+    ssTitle.textContent = "3. THẢ LỎNG SÂU";
+    ssTitle.style.color = "var(--warning)";
+    ssDesc.textContent = "Thả lỏng hoàn toàn cơ sàn chậu (Kegel ngược) và áp dụng nhịp thở phế vị 4-2-6 để hạ nhịp tim.";
+    
+    secondsRemaining = 15;
+    ssAnimArea.innerHTML = `
+      <div class="calm-wave-container">
+        <div class="calm-wave-bar"></div>
+        <div class="calm-wave-bar"></div>
+        <div class="calm-wave-bar"></div>
+        <div class="calm-wave-bar"></div>
+        <div class="calm-wave-bar"></div>
+      </div>
+      <div style="font-size:24px; font-weight:700; color:var(--warning); margin-left:15px;" id="ss-relax-timer">15s</div>
+    `;
+    btnAction.textContent = "THƯ GIÃN SÂU HẠ NHIỆT...";
+    
+    playChime('bell');
+    speakVietnamese("Thả lỏng sâu và thở bụng bốn hai sáu");
+    
+    toolTimerInterval = setInterval(() => {
+      secondsRemaining--;
+      const timerVal = document.getElementById('ss-relax-timer');
+      if (timerVal) timerVal.textContent = `${secondsRemaining}s`;
+      
+      if (secondsRemaining <= 0) {
+        clearInterval(toolTimerInterval);
+        cycle++;
+        cycleText.textContent = cycle;
+        
+        if (cycle >= 4) {
+          setCompletedUI();
+        } else {
+          arousalInput.value = 1.0;
+          updateArousalUI(1.0);
+          setStimulationUI();
+        }
+      } else {
+        // breathing metronome
+        playChime('tick');
+      }
+    }, 1000);
+  }
+  
+  function setCompletedUI() {
+    state = 'completed';
+    clearInterval(arousalAutoInterval);
+    ssTitle.textContent = "TỐT NGHIỆP BÀI TẬP";
+    ssTitle.style.color = "#00ff88";
+    ssDesc.textContent = "Tuyệt vời! Bạn đã hoàn thành xuất sắc 4 chu kỳ Start-Stop thành công mà không bị xuất tinh sớm.";
+    ssAnimArea.innerHTML = `
+      <div style="font-size: 56px; color: var(--warning); filter: drop-shadow(0 0 10px var(--warning));">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+    `;
+    btnAction.disabled = true;
+    btnAction.textContent = "ĐÃ HOÀN THÀNH 4 CHU KỲ!";
+    
+    playChime('success');
+    speakVietnamese("Chúc mừng bạn đã hoàn thành xuất sắc thử thách!");
+  }
+  
+  btnAction.onclick = () => {
+    if (state === 'stimulation') {
+      clearInterval(toolTimerInterval); // clear any simulation
+      setSqueezeUI();
+    }
+  };
 }

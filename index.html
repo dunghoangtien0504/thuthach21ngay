@@ -188,13 +188,24 @@
               </div>
               <h2 class="lesson-title" id="lesson-main-title">Ngày 1: Nhận diện cơ sàn chậu</h2>
               
-              <!-- Embedded Video/Audio Player -->
-              <div class="video-player-container" id="video-container">
-                <div class="video-overlay" id="video-overlay">
-                  <i class="fa-regular fa-circle-play play-btn-overlay"></i>
-                  <p>Nhấp để phát Video/Audio hướng dẫn bài tập</p>
+              <!-- Player Tabs & Viewport -->
+              <div class="player-wrapper">
+                <div class="player-tabs" id="player-tabs-bar" style="display: none;">
+                  <button class="player-tab-btn active" id="btn-tab-video"><i class="fa-solid fa-video"></i> Video Bài Học</button>
+                  <button class="player-tab-btn" id="btn-tab-tool"><i class="fa-solid fa-gauge-high"></i> Trợ Lý Luyện Tập Trực Quan</button>
                 </div>
-                <iframe id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                
+                <!-- Embedded Video/Audio Player -->
+                <div class="video-player-container" id="video-container">
+                  <div class="video-overlay" id="video-overlay">
+                    <i class="fa-regular fa-circle-play play-btn-overlay"></i>
+                    <p>Nhấp để phát Video/Audio hướng dẫn bài tập</p>
+                  </div>
+                  <iframe id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <!-- Custom Interactive Tools Container -->
+                <div class="interactive-tool-container" id="interactive-tool-container" style="display: none;"></div>
               </div>
 
               <!-- Detailed Content -->

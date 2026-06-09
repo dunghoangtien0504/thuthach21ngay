@@ -1696,3 +1696,586 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   INTERACTIVE COACHING WIDGETS & VIDEO ALTERNATIVE SYSTEM
+   ========================================================================== */
+
+/* Player Wrapper & Tabs */
+.player-wrapper {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.player-tabs {
+  display: flex;
+  background-color: var(--primary);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border: 1px solid var(--border-glow);
+  border-bottom: none;
+  overflow: hidden;
+}
+
+.player-tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.player-tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #FFF;
+}
+
+.player-tab-btn.active {
+  background-color: #07150d;
+  color: var(--warning);
+  border-bottom: 2px solid var(--warning);
+}
+
+/* Interactive Tool Container */
+.interactive-tool-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #07150d 0%, #0d2b1a 100%);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border: 1px solid var(--border-glow);
+  position: relative;
+  overflow: hidden;
+  color: #FFF;
+}
+
+@media (max-width: 768px) {
+  .interactive-tool-container {
+    aspect-ratio: auto;
+    min-height: 380px;
+  }
+}
+
+/* --- 1. Breathing Coach Style --- */
+.breathing-coach-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  position: relative;
+}
+
+.breathing-visual-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.breathing-circle-outer {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(184, 134, 11, 0.1);
+  border: 2px dashed rgba(184, 134, 11, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.breathing-circle-inner {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--warning) 0%, #8b6508 100%);
+  box-shadow: 0 0 30px rgba(184, 134, 11, 0.6);
+  position: absolute;
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.breathing-text-instruction {
+  position: absolute;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 16px;
+  color: #FFF;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.breathing-timer-display {
+  font-family: var(--font-body);
+  font-size: 26px;
+  font-weight: 700;
+  color: #FFF;
+  margin-top: 15px;
+}
+
+.breathing-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn-tool {
+  background-color: var(--primary-light);
+  border: 1px solid var(--border-glow);
+  color: #FFF;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-smooth);
+}
+
+.btn-tool:hover {
+  background-color: var(--warning);
+  color: #07150d;
+}
+
+.btn-tool.primary {
+  background-color: var(--warning);
+  color: #07150d;
+  font-weight: 700;
+  border-color: var(--warning);
+}
+
+.btn-tool.primary:hover {
+  background-color: #FFF;
+}
+
+.tool-badge {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: var(--warning);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+}
+
+.voice-switch {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- 2. Pelvic Floor Coach Style --- */
+.pelvic-coach-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .pelvic-coach-box {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.pelvic-coach-left {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pelvic-coach-right {
+  flex: 0.8;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.anatomy-visual-container {
+  width: 100%;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Body Stick Figure & Glute Bridge / Sit-up Animation */
+.stick-figure-svg {
+  height: 100px;
+  width: 200px;
+}
+
+/* Animation classes */
+.active-kegel-squeeze {
+  animation: squeeze-glow 1s infinite alternate;
+}
+
+@keyframes squeeze-glow {
+  0% {
+    fill: #00ff88;
+    filter: drop-shadow(0 0 2px #00ff88);
+  }
+  100% {
+    fill: var(--warning);
+    filter: drop-shadow(0 0 10px var(--warning));
+  }
+}
+
+/* Glute bridge animation */
+.glute-bridge-moving {
+  animation: bridge-up-down 4s infinite ease-in-out;
+}
+
+@keyframes bridge-up-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.pelvic-instruction-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--warning);
+  margin-bottom: 5px;
+}
+
+.pelvic-instruction-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.pelvic-progress-bar-container {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.pelvic-progress-fill {
+  width: 0%;
+  height: 100%;
+  background-color: var(--warning);
+  transition: width 0.1s linear;
+}
+
+.rep-tracker {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 10px;
+}
+
+.rep-number {
+  font-weight: 700;
+  color: #FFF;
+}
+
+/* --- 3. Arousal Meter Style --- */
+.arousal-meter-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 15px;
+  overflow-y: auto;
+}
+
+.arousal-meter-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--warning);
+  text-align: center;
+}
+
+.arousal-slider-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arousal-labels-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.arousal-label-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.arousal-label-num:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #FFF;
+}
+
+.arousal-label-num.active {
+  color: #000;
+}
+
+.level-1.active { background-color: #00e676; box-shadow: 0 0 10px #00e676; }
+.level-2.active { background-color: #00e676; box-shadow: 0 0 10px #00e676; }
+.level-3.active { background-color: #00e676; box-shadow: 0 0 10px #00e676; }
+.level-4.active { background-color: #ffea00; box-shadow: 0 0 10px #ffea00; }
+.level-5.active { background-color: #ffea00; box-shadow: 0 0 10px #ffea00; }
+.level-6.active { background-color: #ffea00; box-shadow: 0 0 10px #ffea00; }
+.level-7.active { background-color: #ff9100; box-shadow: 0 0 10px #ff9100; }
+.level-8.active { background-color: #ff9100; box-shadow: 0 0 10px #ff9100; }
+.level-9.active { background-color: #ff3d00; box-shadow: 0 0 10px #ff3d00; }
+.level-10.active { background-color: #d50000; box-shadow: 0 0 10px #d50000; }
+
+.arousal-bar-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #00e676 0%, #ffea00 50%, #ff9100 75%, #d50000 100%);
+  position: relative;
+}
+
+.arousal-bar-pointer {
+  position: absolute;
+  top: -4px;
+  width: 18px;
+  height: 18px;
+  background-color: #FFF;
+  border: 2px solid #000;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.arousal-info-card {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arousal-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+
+.arousal-info-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFF;
+}
+
+.arousal-zone-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.arousal-zone-badge.safe { background-color: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
+.arousal-zone-badge.alert { background-color: rgba(255, 145, 0, 0.15); color: #ff9100; border: 1px solid rgba(255, 145, 0, 0.3); }
+.arousal-zone-badge.danger { background-color: rgba(213, 0, 0, 0.15); color: #ff3d00; border: 1px solid rgba(213, 0, 0, 0.3); }
+
+.arousal-info-detail p {
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+/* --- 4. Start-Stop Coach Style --- */
+.start-stop-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .start-stop-box {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.start-stop-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.start-stop-right {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.start-stop-state-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.start-stop-state-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.pulse-circle-squeeze {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--danger) 0%, #7c1a05 100%);
+  box-shadow: 0 0 30px rgba(192, 57, 14, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  animation: squeeze-pulse-anim 0.8s infinite alternate;
+}
+
+@keyframes squeeze-pulse-anim {
+  0% { transform: scale(0.95); box-shadow: 0 0 20px rgba(192, 57, 14, 0.6); }
+  100% { transform: scale(1.05); box-shadow: 0 0 40px rgba(192, 57, 14, 1); }
+}
+
+.calm-wave-container {
+  width: 150px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.calm-wave-bar {
+  width: 8px;
+  height: 20px;
+  background-color: var(--warning);
+  border-radius: 4px;
+  animation: wave-bar-anim 1.5s infinite ease-in-out;
+}
+
+.calm-wave-bar:nth-child(2) { animation-delay: 0.2s; }
+.calm-wave-bar:nth-child(3) { animation-delay: 0.4s; }
+.calm-wave-bar:nth-child(4) { animation-delay: 0.6s; }
+.calm-wave-bar:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes wave-bar-anim {
+  0%, 100% { height: 15px; background-color: var(--primary-light); }
+  50% { height: 55px; background-color: var(--warning); }
+}
+
+.slider-input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.arousal-range-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #00e676 0%, #ffea00 50%, #ff9100 75%, #d50000 100%);
+  outline: none;
+}
+
+.arousal-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFF;
+  border: 2px solid #000;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.arousal-range-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFF;
+  border: 2px solid #000;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
