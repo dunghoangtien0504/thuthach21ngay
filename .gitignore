@@ -1,0 +1,43 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Build outputs
+dist/
+build/
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# System and logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AI agents files
+.system_generated/
+scratch/
+*.py
+*.txt
+*.pyc
+__pycache__/
+avatar.md.metadata.json
+competitor_analysis.md.metadata.json
+offer-start-stop-v1.md.metadata.json
+website_course_structure.md.metadata.json
