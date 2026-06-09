@@ -325,6 +325,14 @@ function setupTabSwitcher() {
 // COURSE METADATA & LESSONS LOADER
 // ==========================================================================
 async function loadCourseData() {
+  const customDb = localStorage.getItem('thuthach21ngay_custom_course_db');
+  if (customDb) {
+    courseData = JSON.parse(customDb);
+    renderSidebar();
+    updateProgressUI();
+    return;
+  }
+
   try {
     const response = await fetch('/course_curriculum_database.json');
     if (!response.ok) {

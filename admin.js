@@ -7,6 +7,7 @@ const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASS || "123456";
 let studentsList = [];
 let allowedAccounts = [];
 let generatedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_generated_keys')) || [];
+let courseData = [];
 
 // DOM Elements
 const adminAuthOverlay = document.getElementById('admin-auth-overlay');
@@ -39,6 +40,10 @@ const adminKeysList = document.getElementById('admin-keys-list');
 const adminProgressList = document.getElementById('admin-progress-list');
 const adminLogoutBtn = document.getElementById('admin-logout-btn');
 
+// Video management
+const adminVideoEditList = document.getElementById('admin-video-edit-list');
+const btnExportJson = document.getElementById('btn-export-json');
+
 // ==========================================================================
 // INITIALIZATION
 // ==========================================================================
@@ -47,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMenuSwitcher();
   setupKeyGenerator();
   setupStudentManager();
+  setupVideoManager();
 });
 
 // Admin authentication logic
@@ -143,12 +149,25 @@ async function loadDatabase() {
     console.error("Failed to fetch server-side accounts:", err);
   }
 
-  // 2. Fetch local storage accounts
+  // 2. Load Course Curriculum Data
+  const customDb = localStorage.getItem('thuthach21ngay_custom_course_db');
+  if (customDb) {
+    courseData = JSON.parse(customDb);
+  } else {
+    try {
+      const res = await fetch('/course_curriculum_database.json');
+      if (res.ok) {
+        courseData = await res.json();
+      }
+    } catch (err) {
+      console.error("Failed to fetch course database:", err);
+    }
+  }
+
+  // 3. Fetch local storage accounts
   const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
 
-  // 3. Merge accounts
-  // Server-side accounts are loaded as static "active" users.
-  // Local storage accounts are user-registered, could be active or pending.
+  // 4. Merge accounts
   studentsList = [];
 
   // Add static server accounts
@@ -176,16 +195,16 @@ async function loadDatabase() {
     }
   });
 
-  // Update UI Stats
+  // Update UI components
   updateStatsUI();
   renderStudentsTable();
   renderKeysTable();
   renderProgressTable();
+  renderVideosTable();
 }
 
 function updateStatsUI() {
   const count = studentsList.length;
-  // Visual stats matching screenshot + localStorage additions
   if (dashTotalStudents) dashTotalStudents.textContent = count;
   if (quickStudentsDesc) quickStudentsDesc.textContent = `${count} tài khoản`;
 }
@@ -194,7 +213,6 @@ function updateStatsUI() {
 // STUDENTS MANAGEMENT
 // ==========================================================================
 function setupStudentManager() {
-  // Manual student form toggle
   if (btnAddStudentManual && manualStudentPanel) {
     btnAddStudentManual.addEventListener('click', () => {
       manualStudentPanel.style.display = 'block';
@@ -208,7 +226,6 @@ function setupStudentManager() {
     });
   }
 
-  // Submit manual student creation
   if (adminStudentForm) {
     adminStudentForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -226,7 +243,6 @@ function setupStudentManager() {
         return;
       }
 
-      // Add as active immediately
       const newUser = {
         name,
         email,
@@ -239,7 +255,6 @@ function setupStudentManager() {
       localUsers.push(newUser);
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
 
-      // Reset and reload
       adminStudentForm.reset();
       if (manualStudentPanel) manualStudentPanel.style.display = 'none';
       loadDatabase();
@@ -328,19 +343,16 @@ function deleteStudentAccount(email) {
 function setupKeyGenerator() {
   if (btnGenerateKey) {
     btnGenerateKey.addEventListener('click', () => {
-      // Generate key like: MATMA21-K89D
-      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Avoid confusing chars like O/0/I/1
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       let randomCode = '';
       for (let i = 0; i < 4; i++) {
         randomCode += chars.charAt(Math.floor(Math.random() * chars.length));
       }
       const newKey = `MATMA21-${randomCode}`;
 
-      // Save key
       generatedKeys.push(newKey);
       localStorage.setItem('thuthach21ngay_generated_keys', JSON.stringify(generatedKeys));
 
-      // Display UI
       adminKeyResult.textContent = newKey;
       if (btnCopyKey) btnCopyKey.style.display = 'inline-flex';
 
@@ -403,18 +415,15 @@ function renderProgressTable() {
   if (!adminProgressList) return;
   adminProgressList.innerHTML = '';
 
-  // Get active session user progress from localStorage
   const activeUserSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session'));
   const completedLessons = JSON.parse(localStorage.getItem('thuthach21ngay_completed_lessons')) || [];
   const ieltLogs = JSON.parse(localStorage.getItem('thuthach21ngay_logs')) || [];
 
   studentsList.forEach(student => {
-    // Generate realistic progress metrics
     let percent = 0;
     let completedCount = 0;
     let logSnippet = "-";
 
-    // If this is the active student viewing from this browser, get their actual stats
     if (activeUserSession && student.email === activeUserSession.email) {
       const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
       completedCount = trainingDays.length;
@@ -425,8 +434,6 @@ function renderProgressTable() {
         logSnippet = `Lần cuối: IELT ${last.ielt}s (Tuần ${last.week})`;
       }
     } else {
-      // Mock progress stats for other list items
-      // Check if we already generated progress for them or set static defaults
       if (student.name === "Thanh Bảo") {
         percent = 76;
         completedCount = 16;
@@ -458,5 +465,67 @@ function renderProgressTable() {
       <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">${logSnippet}</td>
     `;
     adminProgressList.appendChild(row);
+  });
+}
+
+// ==========================================================================
+// COURSE LESSON VIDEOS EDITOR
+// ==========================================================================
+function setupVideoManager() {
+  if (btnExportJson) {
+    btnExportJson.addEventListener('click', () => {
+      // Export current courseData to a downloadable JSON file
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(courseData, null, 4));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href",     dataStr);
+      downloadAnchor.setAttribute("download", "course_curriculum_database.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      alert("Đã xuất file. Hãy sao chép đè file vừa tải về vào thư mục 'public/course_curriculum_database.json' trong thư mục dự án của anh và đẩy lên GitHub nhé.");
+    });
+  }
+}
+
+function renderVideosTable() {
+  if (!adminVideoEditList) return;
+  adminVideoEditList.innerHTML = '';
+
+  courseData.forEach(mod => {
+    mod.lessons.forEach(lesson => {
+      if (lesson.type === 'video') {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>#${lesson.lesson_id}</strong></td>
+          <td style="font-size: 13px; font-weight: 600;">${lesson.title}</td>
+          <td>
+            <input type="text" class="form-control" id="vid-input-${lesson.lesson_id}" 
+                   value="${lesson.video_url || ''}" 
+                   style="width: 100%; font-size: 13px; padding: 6px 10px; border-radius: 4px; border: 1px solid rgba(61, 107, 74, 0.2); background-color: #FBF9F4;" 
+                   placeholder="Dán link YouTube (ví dụ: https://www.youtube.com/watch?v=...)">
+          </td>
+          <td>
+            <button class="btn btn-success btn-sm btn-save-video" data-id="${lesson.lesson_id}">
+              <i class="fa-solid fa-floppy-disk"></i> Lưu
+            </button>
+          </td>
+        `;
+
+        row.querySelector('.btn-save-video').addEventListener('click', () => {
+          const inputVal = document.getElementById(`vid-input-${lesson.lesson_id}`).value.trim();
+          
+          // Update lesson video_url in local courseData
+          lesson.video_url = inputVal;
+          
+          // Save database state
+          localStorage.setItem('thuthach21ngay_custom_course_db', JSON.stringify(courseData));
+          
+          alert(`Đã lưu video mới cho bài: ${lesson.title}`);
+          loadDatabase();
+        });
+
+        adminVideoEditList.appendChild(row);
+      }
+    });
   });
 }

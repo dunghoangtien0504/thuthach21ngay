@@ -78,6 +78,9 @@
         <li class="admin-menu-item" data-target="admin-tab-progress">
           <button><i class="fa-solid fa-chart-line"></i> Quan sát tiến độ</button>
         </li>
+        <li class="admin-menu-item" data-target="admin-tab-videos">
+          <button><i class="fa-solid fa-circle-play"></i> Quản lý video bài học</button>
+        </li>
         
         <!-- Mock Competitor Items -->
         <li class="admin-menu-item mock-item">
@@ -401,6 +404,39 @@
                   </tr>
                 </thead>
                 <tbody id="admin-progress-list">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </section>
+
+        <!-- ================= TAB: VIDEOS MANAGEMENT ================= -->
+        <section class="admin-tab-section" id="admin-tab-videos" style="display: none;">
+          
+          <div class="admin-section-header">
+            <h3>Quản lý Video & Link bài học</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-export-json"><i class="fa-solid fa-download"></i> Xuất file database mới</button>
+          </div>
+          
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+            Chỉnh sửa trực tiếp link video YouTube cho từng bài học. Sau khi thay đổi, hãy nhấn <strong>Lưu</strong>. 
+            Để cập nhật vĩnh viễn lên host, hãy bấm nút <strong>Xuất file database mới</strong>, sau đó chép đè file tải về vào thư mục <code>public/course_curriculum_database.json</code> của mã nguồn và push lên GitHub.
+          </p>
+          
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th style="width: 80px;">ID Bài</th>
+                    <th>Tên bài</th>
+                    <th>Đường dẫn Video YouTube</th>
+                    <th style="width: 120px;">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-video-edit-list">
                   <!-- Rendered dynamically -->
                 </tbody>
               </table>
