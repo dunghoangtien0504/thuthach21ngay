@@ -468,9 +468,10 @@ function selectLesson(id) {
   interactiveToolContainer.style.display = 'none';
   interactiveToolContainer.innerHTML = '';
   
-  // Reset tab active state to video
-  btnTabVideo.classList.add('active');
-  btnTabTool.classList.remove('active');
+  // Hide video elements completely (No Video Mode)
+  playerTabsBar.style.display = 'none';
+  videoContainer.style.display = 'none';
+  videoIframe.src = '';
   
   const text = selectedLesson.text_content || "";
   const title = selectedLesson.title || "";
@@ -490,85 +491,19 @@ function selectLesson(id) {
     }
   }
 
-  // Handle video display
-  const hasVideo = !!(selectedLesson.type === 'video' && selectedLesson.video_url);
-  
   if (toolType) {
-    playerTabsBar.style.display = 'flex';
-    
-    // Wire up tab button event listeners
-    btnTabVideo.onclick = () => {
-      btnTabVideo.classList.add('active');
-      btnTabTool.classList.remove('active');
-      if (hasVideo) {
-        videoContainer.style.display = 'block';
-        videoOverlay.style.display = 'flex';
-        videoIframe.style.display = 'none';
-      } else {
-        videoContainer.style.display = 'none';
-      }
-      interactiveToolContainer.style.display = 'none';
-      stopToolTimers();
-    };
-    
-    btnTabTool.onclick = () => {
-      btnTabVideo.classList.remove('active');
-      btnTabTool.classList.add('active');
-      videoContainer.style.display = 'none';
-      videoIframe.src = ''; // Stop video playback
-      interactiveToolContainer.style.display = 'block';
-      
-      // Load and initialize the tool
-      initializeInteractiveTool(toolType, selectedLesson);
-    };
-    
-    // Default mode:
-    // If there is no video, show the interactive tool by default!
-    if (!hasVideo) {
-      btnTabVideo.style.display = 'none';
-      btnTabVideo.classList.remove('active');
-      btnTabTool.classList.add('active');
-      videoContainer.style.display = 'none';
-      interactiveToolContainer.style.display = 'block';
-      initializeInteractiveTool(toolType, selectedLesson);
-    } else {
-      btnTabVideo.style.display = 'flex';
-      videoContainer.style.display = 'block';
-      const embedUrl = getYouTubeEmbedUrl(selectedLesson.video_url);
-      videoIframe.src = embedUrl;
-      videoOverlay.style.display = 'flex';
-      videoIframe.style.display = 'none';
-    }
+    interactiveToolContainer.style.display = 'block';
+    initializeInteractiveTool(toolType, selectedLesson);
   } else {
-    // No tool available for this lesson
-    playerTabsBar.style.display = 'none';
     interactiveToolContainer.style.display = 'none';
-    
-    if (hasVideo) {
-      videoContainer.style.display = 'block';
-      const embedUrl = getYouTubeEmbedUrl(selectedLesson.video_url);
-      videoIframe.src = embedUrl;
-      videoOverlay.style.display = 'flex';
-      videoIframe.style.display = 'none';
-    } else {
-      videoContainer.style.display = 'none';
-      videoIframe.src = '';
-    }
   }
   
   updateCompletionButtonState();
   lessonViewport.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Setup Video Overlay click to play
+// Setup Practice Controls
 function setupInteractiveLessons() {
-  videoOverlay.addEventListener('click', () => {
-    videoOverlay.style.display = 'none';
-    videoIframe.style.display = 'block';
-    if (videoIframe.src && videoIframe.src.indexOf('autoplay=1') === -1) {
-      videoIframe.src += (videoIframe.src.indexOf('?') === -1 ? '?' : '&') + 'autoplay=1';
-    }
-  });
   
   btnCompleteLesson.addEventListener('click', () => {
     if (currentLessonId === null) return;
