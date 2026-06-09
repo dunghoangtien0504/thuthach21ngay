@@ -12,6 +12,10 @@ let currentLessonId = null;
 let completedLessons = JSON.parse(localStorage.getItem('thuthach21ngay_completed_lessons')) || [];
 let progressLogs = JSON.parse(localStorage.getItem('thuthach21ngay_logs')) || [];
 
+// Auth State
+let userSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session')) || null;
+let allowedAccounts = [];
+
 // DOM Elements
 const siteTitleTag = document.getElementById('site-title-tag');
 const headerTitle = document.getElementById('header-title');
@@ -58,11 +62,24 @@ const trackerForm = document.getElementById('tracker-form');
 const logsTableBody = document.getElementById('logs-table-body');
 const btnClearLogs = document.getElementById('btn-clear-logs');
 
+// DOM Auth Elements
+const authOverlay = document.getElementById('auth-overlay');
+const tabLoginBtn = document.getElementById('tab-login-btn');
+const tabRegisterBtn = document.getElementById('tab-register-btn');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const authErrorAlert = document.getElementById('auth-error-alert');
+const authSuccessAlert = document.getElementById('auth-success-alert');
+const headerUserInfo = document.getElementById('header-user-info');
+const userDisplayName = document.getElementById('user-display-name');
+const btnLogoutAction = document.getElementById('btn-logout-action');
+
 // ==========================================================================
 // INITIALIZATION
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   applyEnvConfigurations();
+  setupAuth();
   setupTabSwitcher();
   loadCourseData();
   setupInteractiveLessons();
@@ -87,7 +104,198 @@ function applyEnvConfigurations() {
   }
 }
 
-// Tab Switching Routing
+// ==========================================================================
+// STUDENT AUTHENTICATION SYSTEM
+// ==========================================================================
+async function setupAuth() {
+  // 1. Fetch server-side accounts.json
+  try {
+    const res = await fetch('/accounts.json');
+    if (res.ok) {
+      allowedAccounts = await res.json();
+    }
+  } catch (err) {
+    console.error("Failed to load allowed accounts:", err);
+  }
+
+  // 2. Check current session
+  checkSession();
+
+  // 3. Tab switching between Login and Register
+  if (tabLoginBtn && tabRegisterBtn) {
+    tabLoginBtn.addEventListener('click', () => {
+      tabLoginBtn.classList.add('active');
+      tabRegisterBtn.classList.remove('active');
+      loginForm.style.display = 'flex';
+      registerForm.style.display = 'none';
+      clearAlerts();
+    });
+
+    tabRegisterBtn.addEventListener('click', () => {
+      tabRegisterBtn.classList.add('active');
+      tabLoginBtn.classList.remove('active');
+      registerForm.style.display = 'flex';
+      loginForm.style.display = 'none';
+      clearAlerts();
+    });
+  }
+
+  // 4. Handle Login Form Submit
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearAlerts();
+
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value.trim();
+
+      // Check server-side accounts
+      let matchedUser = allowedAccounts.find(u => u.email === email && u.password === pass);
+
+      // Check local storage accounts
+      if (!matchedUser) {
+        const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+        matchedUser = localUsers.find(u => u.email === email && u.password === pass);
+      }
+
+      if (matchedUser) {
+        if (matchedUser.status === 'pending') {
+          showAuthError(`Tài khoản của bạn chưa được kích hoạt. Vui lòng bấm liên hệ Zalo bên dưới để Admin mở khóa!`);
+        } else {
+          // Success login
+          userSession = { email: matchedUser.email, name: matchedUser.name };
+          localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+          showAuthSuccess(`Đăng nhập thành công! Đang mở khóa học...`);
+          setTimeout(() => {
+            checkSession();
+          }, 1000);
+        }
+      } else {
+        showAuthError(`Tài khoản hoặc mật khẩu không chính xác!`);
+      }
+    });
+  }
+
+  // 5. Handle Register Form Submit
+  if (registerForm) {
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearAlerts();
+
+      const name = document.getElementById('register-name').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const pass = document.getElementById('register-password').value.trim();
+      const key = document.getElementById('register-key').value.trim();
+
+      if (!name || !email || !pass) {
+        showAuthError(`Vui lòng điền đầy đủ các trường thông tin bắt buộc!`);
+        return;
+      }
+
+      // Check duplicates
+      const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+      const dupServer = allowedAccounts.some(u => u.email === email);
+      const dupLocal = localUsers.some(u => u.email === email);
+
+      if (dupServer || dupLocal) {
+        showAuthError(`Email hoặc Số điện thoại này đã được đăng ký trên hệ thống!`);
+        return;
+      }
+
+      // Check Key Validation
+      const generatedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_generated_keys')) || [];
+      const isValidKey = (key === 'MATMA21-VIP' || generatedKeys.includes(key));
+
+      // Active immediately if key matches, otherwise wait for manual approval
+      const status = isValidKey ? 'active' : 'pending';
+
+      const newUser = { name, email, password: pass, status, key_used: key || null, date: new Date().toLocaleDateString('vi-VN') };
+      localUsers.push(newUser);
+      localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
+
+      if (isValidKey) {
+        // Mark key as consumed if it is in generated keys list
+        if (generatedKeys.includes(key)) {
+          const keyIdx = generatedKeys.indexOf(key);
+          generatedKeys.splice(keyIdx, 1);
+          localStorage.setItem('thuthach21ngay_generated_keys', JSON.stringify(generatedKeys));
+        }
+
+        // Set session
+        userSession = { email, name };
+        localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+        showAuthSuccess(`Đăng ký thành công & tài khoản đã được kích hoạt tự động bằng Mã khóa! Đang chuyển hướng...`);
+        setTimeout(() => {
+          checkSession();
+        }, 1500);
+      } else {
+        // Pending
+        const msg = `Chào Admin, tôi vừa đăng ký tài khoản Mật Mã 21: ${name} (${email}). Nhờ Admin kích hoạt giúp tôi!`;
+        navigator.clipboard.writeText(msg).catch(() => {});
+        
+        showAuthSuccess(`Đăng ký thành công! Hãy gửi tin nhắn Zalo cho Admin để kích hoạt tài khoản của bạn. Thông tin yêu cầu đã được tự động copy.`);
+        
+        const supportLink = document.getElementById('auth-zalo-support');
+        if (supportLink) {
+          supportLink.innerHTML = `<i class="fa-solid fa-comment-dots"></i> Click để nhắn Zalo kích hoạt ngay`;
+          supportLink.href = `https://zalo.me/${ZALO_PHONE}?text=${encodeURIComponent(msg)}`;
+          supportLink.className = "btn btn-success btn-submit";
+          supportLink.style.display = "inline-flex";
+          supportLink.style.marginTop = "15px";
+          supportLink.target = "_blank";
+        }
+      }
+    });
+  }
+
+  // 6. Handle Logout Action
+  if (btnLogoutAction) {
+    btnLogoutAction.addEventListener('click', () => {
+      if (confirm(`Bạn có muốn đăng xuất khỏi cổng học tập không?`)) {
+        localStorage.removeItem('thuthach21ngay_user_session');
+        userSession = null;
+        checkSession();
+      }
+    });
+  }
+}
+
+function checkSession() {
+  const appContainer = document.querySelector('.app-container');
+  if (userSession) {
+    if (authOverlay) authOverlay.style.display = 'none';
+    if (appContainer) appContainer.style.display = 'flex';
+    if (headerUserInfo) headerUserInfo.style.display = 'flex';
+    if (userDisplayName) userDisplayName.textContent = userSession.name;
+  } else {
+    if (authOverlay) authOverlay.style.display = 'flex';
+    if (appContainer) appContainer.style.display = 'none';
+    if (headerUserInfo) headerUserInfo.style.display = 'none';
+  }
+}
+
+function clearAlerts() {
+  if (authErrorAlert) { authErrorAlert.style.display = 'none'; authErrorAlert.textContent = ''; }
+  if (authSuccessAlert) { authSuccessAlert.style.display = 'none'; authSuccessAlert.textContent = ''; }
+}
+
+function showAuthError(msg) {
+  if (authErrorAlert) {
+    authErrorAlert.style.display = 'block';
+    authErrorAlert.textContent = msg;
+  }
+}
+
+function showAuthSuccess(msg) {
+  if (authSuccessAlert) {
+    authSuccessAlert.style.display = 'block';
+    authSuccessAlert.textContent = msg;
+  }
+}
+
+// ==========================================================================
+// PORTAL GENERAL TAB ROUTING
+// ==========================================================================
 function setupTabSwitcher() {
   navTabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -99,16 +307,13 @@ function setupTabSwitcher() {
       tab.classList.add('active');
       document.getElementById(`tab-${targetTab}`).classList.add('active');
       
-      // Update screen layout for mobile viewports
       window.scrollTo(0, 0);
     });
   });
 
   if (btnStartCourse) {
     btnStartCourse.addEventListener('click', () => {
-      // Direct user to Lessons Tab
       document.querySelector('[data-tab="lessons"]').click();
-      // Select first lesson if none is selected
       if (currentLessonId === null && courseData.length > 0) {
         selectLesson(0);
       }
@@ -139,14 +344,12 @@ function getYouTubeEmbedUrl(url) {
   if (!url) return "";
   let videoId = "";
   
-  // Check for watch?v= format
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   const match = url.match(regExp);
   
   if (match && match[2].length === 11) {
     videoId = match[2];
   } else {
-    // Fallback if URL is already just the ID or other formats
     return url;
   }
   
@@ -202,7 +405,6 @@ function renderSidebar() {
 function selectLesson(id) {
   currentLessonId = id;
   
-  // Find lesson object
   let selectedLesson = null;
   let selectedModuleTitle = "";
   
@@ -210,14 +412,13 @@ function selectLesson(id) {
     const found = mod.lessons.find(l => l.lesson_id === id);
     if (found) {
       selectedLesson = found;
-      selectedModuleTitle = mod.module_title.split(":")[0]; // Get the "Module 1" part
+      selectedModuleTitle = mod.module_title.split(":")[0];
       break;
     }
   }
   
   if (!selectedLesson) return;
   
-  // Update Active Button in Sidebar
   document.querySelectorAll('.sidebar-lesson-btn').forEach(btn => {
     btn.classList.remove('active');
     if (parseInt(btn.getAttribute('data-id')) === id) {
@@ -225,32 +426,25 @@ function selectLesson(id) {
     }
   });
   
-  // Display content viewport
   lessonEmptyState.style.display = 'none';
   lessonContentBox.style.display = 'block';
   
-  // Update Content
   lessonModuleTag.textContent = selectedModuleTitle;
   lessonTime.textContent = selectedLesson.duration_min;
   lessonMainTitle.textContent = selectedLesson.title;
   
-  // Render text content markdown using marked.js
   if (window.marked) {
-    // Configure marked to render newlines as breaks
     marked.setOptions({ gfm: true, breaks: true });
     lessonBody.innerHTML = marked.parse(selectedLesson.text_content);
   } else {
-    // Fallback if marked didn't load
     lessonBody.innerHTML = `<pre>${selectedLesson.text_content}</pre>`;
   }
   
-  // Configure Video Player
   if (selectedLesson.type === 'video' && selectedLesson.video_url) {
     videoContainer.style.display = 'block';
     const embedUrl = getYouTubeEmbedUrl(selectedLesson.video_url);
     videoIframe.src = embedUrl;
     
-    // Reset overlay
     videoOverlay.style.display = 'flex';
     videoIframe.style.display = 'none';
   } else {
@@ -258,10 +452,7 @@ function selectLesson(id) {
     videoIframe.src = '';
   }
   
-  // Update Completion button state
   updateCompletionButtonState();
-  
-  // Smooth scroll content area to top
   lessonViewport.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -270,13 +461,11 @@ function setupInteractiveLessons() {
   videoOverlay.addEventListener('click', () => {
     videoOverlay.style.display = 'none';
     videoIframe.style.display = 'block';
-    // Append autoplay flag to force playing
     if (videoIframe.src.indexOf('autoplay=1') === -1) {
       videoIframe.src += (videoIframe.src.indexOf('?') === -1 ? '?' : '&') + 'autoplay=1';
     }
   });
   
-  // Completion Action
   btnCompleteLesson.addEventListener('click', () => {
     if (currentLessonId === null) return;
     
@@ -284,19 +473,16 @@ function setupInteractiveLessons() {
     if (idx === -1) {
       completedLessons.push(currentLessonId);
     } else {
-      // Un-complete if clicked again
       completedLessons.splice(idx, 1);
     }
     
     localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
     
-    // Update UI components
     updateCompletionButtonState();
     renderSidebar();
     updateProgressUI();
   });
   
-  // Navigation Next/Prev
   btnPrevLesson.addEventListener('click', () => {
     if (currentLessonId > 0) {
       selectLesson(currentLessonId - 1);
@@ -304,7 +490,6 @@ function setupInteractiveLessons() {
   });
   
   btnNextLesson.addEventListener('click', () => {
-    // Get flat list of lessons
     const flatLessons = [];
     courseData.forEach(mod => {
       mod.lessons.forEach(l => flatLessons.push(l.lesson_id));
@@ -329,34 +514,26 @@ function updateCompletionButtonState() {
 
 // Update Header Progress Bar and stats
 function updateProgressUI() {
-  // Extract total days (lessons starting from Day 1 to Day 21 = 21 lessons. Day 0 is intro)
   const totalDays = 21;
-  
-  // Filter completed lessons: only count Day 1 to 21 for metrics
   const completedTrainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
   const completedCount = completedTrainingDays.length;
-  
   const percent = Math.min(100, Math.round((completedCount / totalDays) * 100));
   
-  // Update header progress
   progressBar.style.width = `${percent}%`;
   progressText.textContent = `${percent}%`;
   
-  // Update dashboard stats
   if (statCompletedDays) statCompletedDays.textContent = `${completedCount}/21 ngày`;
   
-  // Calculate streak (consecutive days completed up to current day)
   let streak = 0;
   for (let i = 1; i <= totalDays; i++) {
     if (completedLessons.includes(i)) {
       streak++;
     } else {
-      break; // break at first incomplete day
+      break;
     }
   }
   if (statStreak) statStreak.textContent = `${streak} ngày`;
   
-  // Update Status Level
   let statusText = "Khởi động";
   if (percent >= 100) statusText = "Làm chủ Phản xạ";
   else if (percent >= 70) statusText = "Tái tạo Phản xạ";
@@ -370,13 +547,11 @@ function updateProgressUI() {
 // SCREENING CHECKLIST PANEL
 // ==========================================================================
 function setupScreeningChecklist() {
-  // Load screening checklist status
   const checkedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_screening')) || [];
   
   screenChecks.forEach((check, index) => {
     if (!check) return;
     
-    // Set checked state from storage
     if (checkedKeys.includes(index)) {
       check.checked = true;
     }
@@ -415,7 +590,6 @@ function setupTracker() {
   
   renderLogsTable();
   
-  // Submit action
   trackerForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -431,14 +605,10 @@ function setupTracker() {
     
     localStorage.setItem('thuthach21ngay_logs', JSON.stringify(progressLogs));
     
-    // Reset form
     trackerForm.reset();
-    
-    // Render and notify
     renderLogsTable();
   });
   
-  // Clear action
   if (btnClearLogs) {
     btnClearLogs.addEventListener('click', () => {
       if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử tập luyện này không?")) {
@@ -464,7 +634,6 @@ function renderLogsTable() {
     return;
   }
   
-  // Sort logs by newest first
   const reversedLogs = [...progressLogs].reverse();
   
   reversedLogs.forEach(log => {

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Quản Trị - Mật Mã 21</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Admin Login Overlay -->
+  <div class="auth-overlay" id="admin-auth-overlay">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <i class="fa-solid fa-user-shield logo-icon"></i>
+          <h2>Quản Trị Mật Mã 21</h2>
+        </div>
+        <p class="auth-subtitle">Nhập mật khẩu quản trị viên để tiếp tục</p>
+      </div>
+      
+      <div class="auth-alert error" id="admin-auth-error">Mật khẩu không chính xác!</div>
+      
+      <form class="auth-form" id="admin-login-form">
+        <div class="form-group">
+          <label for="admin-user">Tài khoản</label>
+          <input type="text" id="admin-user" value="admin" required readonly>
+        </div>
+        <div class="form-group">
+          <label for="admin-pass">Mật khẩu</label>
+          <input type="password" id="admin-pass" placeholder="Nhập mật khẩu quản trị..." required autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">
+          Đăng Nhập Hệ Thống <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </form>
+      
+      <div class="auth-footer">
+        <p><a href="/index.html"><i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ học viên</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Layout Container (Hidden by default) -->
+  <div class="admin-container" id="admin-layout" style="display: none;">
+    
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div class="admin-user-profile">
+          <div class="admin-avatar">TB</div>
+          <div class="admin-profile-info">
+            <h4 id="admin-profile-name">Thanh Bảo</h4>
+            <span id="admin-profile-role">Quản trị viên</span>
+          </div>
+        </div>
+      </div>
+      
+      <ul class="admin-menu">
+        <li class="admin-menu-item active" data-target="admin-tab-dashboard">
+          <button><i class="fa-solid fa-table-columns"></i> Dashboard</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-students">
+          <button><i class="fa-solid fa-user-graduate"></i> Học viên</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-keys">
+          <button><i class="fa-solid fa-key"></i> Quản lý mã khoá</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-progress">
+          <button><i class="fa-solid fa-chart-line"></i> Quan sát tiến độ</button>
+        </li>
+        
+        <!-- Mock Competitor Items -->
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-book"></i> Khoá học</button>
+        </li>
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-box-open"></i> Sản phẩm</button>
+        </li>
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-circle-info"></i> Về Noli Sales</button>
+        </li>
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-blog"></i> Blog</button>
+        </li>
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-certificate"></i> Chứng chỉ</button>
+        </li>
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-file-invoice"></i> Bài tập học viên</button>
+        </li>
+        <li class="admin-menu-item mock-item">
+          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-gears"></i> Cấu hình</button>
+        </li>
+        
+        <li class="admin-menu-item" id="admin-logout-btn" style="margin-top: auto;">
+          <button class="text-danger"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</button>
+        </li>
+      </ul>
+    </aside>
+    
+    <!-- Admin Main Viewport -->
+    <main class="admin-main">
+      
+      <!-- Admin Top Header Bar -->
+      <header class="admin-header">
+        <h2 id="admin-header-title">Tổng quan hoạt động Noli Sales</h2>
+        <div class="admin-header-right">
+          <a href="/index.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-globe"></i> Xem Website</a>
+        </div>
+      </header>
+      
+      <!-- Admin Scrollable Content -->
+      <div class="admin-content">
+        
+        <!-- ================= TAB: DASHBOARD ================= -->
+        <section class="admin-tab-section active" id="admin-tab-dashboard">
+          
+          <!-- Top Grid Stats -->
+          <div class="admin-stats-grid">
+            <div class="admin-stat-card">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Tổng học viên</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-users"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value" id="dash-total-students">18</p>
+                <span class="admin-stat-desc">+9 tháng này</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card purple">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Chứng chỉ đã cấp</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-award"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">1</p>
+                <span class="admin-stat-desc">Hoàn thành khoá học</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Liên hệ mới</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-envelope-open-text"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">0</p>
+                <span class="admin-stat-desc">Chưa xử lý</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card purple">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Khoá học</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-bookmark"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">16</p>
+                <span class="admin-stat-desc">16 đã xuất bản</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Bài viết blog</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-newspaper"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">28</p>
+                <span class="admin-stat-desc">28 đã đăng</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card purple">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Đánh giá hiển thị</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-star"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">6</p>
+                <span class="admin-stat-desc">6 tổng cộng</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card orange">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Doanh thu xác nhận</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-money-bill-wave"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">0.0Mđ</p>
+                <span class="admin-stat-desc">0 giao dịch</span>
+              </div>
+            </div>
+            
+            <div class="admin-stat-card orange">
+              <div class="admin-stat-top">
+                <span class="admin-stat-subtitle">Chờ xác nhận TT</span>
+                <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
+              </div>
+              <div class="admin-stat-main">
+                <p class="admin-stat-value">0</p>
+                <span class="admin-stat-desc">Không có</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Access Cards -->
+          <div class="admin-section-header">
+            <h3>Truy cập nhanh</h3>
+          </div>
+          
+          <div class="admin-quick-grid">
+            <div class="admin-quick-card" onclick="document.querySelector('[data-target=\'admin-tab-students\']').click()">
+              <div class="admin-quick-icon"><i class="fa-solid fa-user-graduate"></i></div>
+              <div class="admin-quick-info">
+                <h4>Học viên</h4>
+                <p id="quick-students-desc">18 tài khoản</p>
+              </div>
+            </div>
+            
+            <div class="admin-quick-card" onclick="document.querySelector('[data-target=\'admin-tab-keys\']').click()">
+              <div class="admin-quick-icon"><i class="fa-solid fa-key"></i></div>
+              <div class="admin-quick-info">
+                <h4>Mã khoá</h4>
+                <p>Quản lý mã truy cập</p>
+              </div>
+            </div>
+            
+            <div class="admin-quick-card" onclick="document.querySelector('[data-target=\'admin-tab-progress\']').click()">
+              <div class="admin-quick-icon"><i class="fa-solid fa-chart-pie"></i></div>
+              <div class="admin-quick-info">
+                <h4>Cấu hình</h4>
+                <p>CTA, số liệu, tiến trình học viên</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Homepage stats banner -->
+          <div class="admin-section-header">
+            <h3>Số liệu trang chủ</h3>
+          </div>
+          
+          <div class="dashboard-card" style="display: flex; justify-content: space-around; text-align: center; padding: 30px;">
+            <div>
+              <h2 style="color: var(--secondary); font-size: 28px; font-family: var(--font-heading);">500+</h2>
+              <p style="color: var(--text-muted); font-size: 13px;">Học viên đã đào tạo</p>
+            </div>
+            <div style="border-left: 1px solid var(--border-glow);"></div>
+            <div>
+              <h2 style="color: var(--secondary); font-size: 28px; font-family: var(--font-heading);">10+</h2>
+              <p style="color: var(--text-muted); font-size: 13px;">Khoá học thực chiến</p>
+            </div>
+            <div style="border-left: 1px solid var(--border-glow);"></div>
+            <div>
+              <h2 style="color: var(--secondary); font-size: 28px; font-family: var(--font-heading);">5+</h2>
+              <p style="color: var(--text-muted); font-size: 13px;">Năm kinh nghiệm</p>
+            </div>
+            <div style="border-left: 1px solid var(--border-glow);"></div>
+            <div>
+              <h2 style="color: var(--secondary); font-size: 28px; font-family: var(--font-heading);">100%</h2>
+              <p style="color: var(--text-muted); font-size: 13px;">Tỷ lệ học viên có thu nhập</p>
+            </div>
+          </div>
+          
+        </section>
+        
+        <!-- ================= TAB: STUDENTS MANAGEMENT ================= -->
+        <section class="admin-tab-section" id="admin-tab-students" style="display: none;">
+          
+          <div class="admin-section-header">
+            <h3>Danh sách học viên học thử & đăng ký</h3>
+            <button class="btn btn-primary btn-sm" id="btn-add-student-manual"><i class="fa-solid fa-user-plus"></i> Thêm thủ công</button>
+          </div>
+          
+          <!-- Manual Student Form (Hidden by default) -->
+          <div class="dashboard-card" id="manual-student-panel" style="display: none; margin-bottom: 24px; max-width: 500px;">
+            <h4 style="margin-bottom: 16px;"><i class="fa-solid fa-pen"></i> Nhập thông tin học viên</h4>
+            <form id="admin-student-form" class="log-form">
+              <div class="form-group">
+                <label for="manual-student-name">Họ và Tên</label>
+                <input type="text" id="manual-student-name" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-student-email">Email hoặc Số điện thoại</label>
+                <input type="text" id="manual-student-email" required>
+              </div>
+              <div class="form-group">
+                <label for="manual-student-password">Mật khẩu</label>
+                <input type="text" id="manual-student-password" value="123" required>
+              </div>
+              <div style="display: flex; gap: 12px; margin-top: 10px;">
+                <button type="submit" class="btn btn-success">Thêm & Kích hoạt</button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel-student-manual">Hủy</button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Table -->
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table" id="admin-students-table">
+                <thead>
+                  <tr>
+                    <th>Học viên</th>
+                    <th>Email/SĐT</th>
+                    <th>Ngày đăng ký</th>
+                    <th>Mã đã dùng</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-students-list">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </section>
+        
+        <!-- ================= TAB: KEYS MANAGEMENT ================= -->
+        <section class="admin-tab-section" id="admin-tab-keys" style="display: none;">
+          
+          <div class="admin-section-header">
+            <h3>Quản lý Mã kích hoạt học tập</h3>
+          </div>
+          
+          <div class="key-gen-wrapper">
+            <!-- Generator widget -->
+            <div class="key-gen-box">
+              <h4><i class="fa-solid fa-wand-magic-sparkles"></i> Tạo mã khóa học</h4>
+              <p style="font-size: 13px; color: var(--text-muted);">Mã khóa học được cấp cho học viên tự kích hoạt tài khoản của họ lúc đăng ký.</p>
+              
+              <button class="btn btn-primary" id="btn-generate-key">
+                Tạo mã ngẫu nhiên <i class="fa-solid fa-bolt"></i>
+              </button>
+              
+              <div class="generated-key-display" id="admin-key-result">MATMA21-XXXX</div>
+              
+              <button class="btn btn-secondary btn-sm" id="btn-copy-key" style="display: none;">
+                <i class="fa-solid fa-copy"></i> Sao chép mã
+              </button>
+            </div>
+            
+            <!-- Key list table -->
+            <div class="tracker-history-card">
+              <h4>Mã khóa chưa sử dụng trên hệ thống</h4>
+              <div class="table-container" style="margin-top: 16px;">
+                <table class="history-table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Mã kích hoạt (Access Key)</th>
+                      <th>Ngày tạo</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-keys-list">
+                    <!-- Rendered dynamically -->
+                    <tr class="empty-row">
+                      <td colspan="4">Không có mã chưa sử dụng. Bấm tạo mã ở bên trái.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </section>
+        
+        <!-- ================= TAB: PROGRESS MANAGEMENT ================= -->
+        <section class="admin-tab-section" id="admin-tab-progress" style="display: none;">
+          
+          <div class="admin-section-header">
+            <h3>Quan sát tiến độ học của Học viên</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Theo dõi tỷ lệ hoàn thành lộ trình 21 ngày của từng thành viên.</p>
+          </div>
+          
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table" id="admin-progress-table">
+                <thead>
+                  <tr>
+                    <th>Học viên</th>
+                    <th>Tài khoản</th>
+                    <th>Tiến trình lộ trình</th>
+                    <th>Số bài đã học</th>
+                    <th>Nhật ký kết quả</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-progress-list">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </section>
+        
+      </div>
+    </main>
+    
+  </div>
+
+  <script type="module" src="/admin.js"></script>
+</body>
+</html>
