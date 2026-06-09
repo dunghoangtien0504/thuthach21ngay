@@ -5,7 +5,7 @@
 /* Design Tokens & Theme Variables */
 :root {
   --font-primary: 'Inter', sans-serif;
-  --font-heading: 'Outfit', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
 
   /* HSL Tailored Color Palette */
   --bg-app: #F6F0E4;        /* Nền toàn trang - Kem ngà (duy nhất) */
