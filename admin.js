@@ -8,6 +8,22 @@ let studentsList = [];
 let allowedAccounts = [];
 let generatedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_generated_keys')) || [];
 let courseData = [];
+let blogPosts = JSON.parse(localStorage.getItem('thuthach21ngay_blog_posts')) || [];
+
+// Custom Config State
+let customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {
+  siteTitle: import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh",
+  price: import.meta.env.VITE_PRICE || "686.868đ",
+  zaloPhone: import.meta.env.VITE_ZALO_PHONE || "0377014982",
+  supportEmail: import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn"
+};
+
+// Custom Product State
+let customProduct = JSON.parse(localStorage.getItem('thuthach21ngay_custom_product')) || {
+  name: "Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh",
+  price: customConfig.price,
+  desc: "Lộ trình 21 ngày rèn luyện phản xạ cơ sàn chậu và điều hòa hệ thần kinh tự nhiên tại nhà."
+};
 
 // DOM Elements
 const adminAuthOverlay = document.getElementById('admin-auth-overlay');
@@ -20,7 +36,11 @@ const menuItems = document.querySelectorAll('.admin-menu-item:not(.mock-item)');
 const tabSections = document.querySelectorAll('.admin-tab-section');
 const adminHeaderTitle = document.getElementById('admin-header-title');
 
+// Stats Cards
 const dashTotalStudents = document.getElementById('dash-total-students');
+const dashTotalCerts = document.getElementById('dash-total-certs');
+const dashTotalBlogs = document.getElementById('dash-total-blogs');
+const dashTotalRevenue = document.getElementById('dash-total-revenue');
 const quickStudentsDesc = document.getElementById('quick-students-desc');
 
 // Student management
@@ -40,9 +60,58 @@ const adminKeysList = document.getElementById('admin-keys-list');
 const adminProgressList = document.getElementById('admin-progress-list');
 const adminLogoutBtn = document.getElementById('admin-logout-btn');
 
-// Video management
-const adminVideoEditList = document.getElementById('admin-video-edit-list');
+// Course editor
+const adminLessonsTableBody = document.getElementById('admin-lessons-table-body');
+const courseEditPanel = document.getElementById('course-edit-panel');
+const adminLessonEditForm = document.getElementById('admin-lesson-edit-form');
+const btnCancelLessonEdit = document.getElementById('btn-cancel-lesson-edit');
+const editLessonId = document.getElementById('edit-lesson-id');
+const editLessonTitle = document.getElementById('edit-lesson-title');
+const editLessonType = document.getElementById('edit-lesson-type');
+const editLessonDuration = document.getElementById('edit-lesson-duration');
+const editLessonDesc = document.getElementById('edit-lesson-desc');
+const editLessonVideo = document.getElementById('edit-lesson-video');
+const editLessonVideoGroup = document.getElementById('edit-lesson-video-group');
+const editLessonText = document.getElementById('edit-lesson-text');
+const editLessonHeadline = document.getElementById('edit-lesson-headline');
 const btnExportJson = document.getElementById('btn-export-json');
+
+// Product editor
+const adminProductForm = document.getElementById('admin-product-form');
+const productNameInput = document.getElementById('product-name');
+const productPriceInput = document.getElementById('product-price');
+const productDescInput = document.getElementById('product-desc');
+
+// Blog editor
+const btnAddBlog = document.getElementById('btn-add-blog');
+const blogFormPanel = document.getElementById('blog-form-panel');
+const adminBlogForm = document.getElementById('admin-blog-form');
+const btnCancelBlog = document.getElementById('btn-cancel-blog');
+const adminBlogList = document.getElementById('admin-blog-list');
+
+// Config
+const adminConfigForm = document.getElementById('admin-config-form');
+const configSiteTitle = document.getElementById('config-site-title');
+const configPrice = document.getElementById('config-price');
+const configZalo = document.getElementById('config-zalo');
+const configEmail = document.getElementById('config-email');
+const btnExportConfig = document.getElementById('btn-export-config');
+
+// Certs and Homework lists
+const adminCertsList = document.getElementById('admin-certs-list');
+const adminHomeworkList = document.getElementById('admin-homework-list');
+
+// Seed default blogs if empty
+const defaultBlogs = [
+  { title: "5 thực phẩm tăng cường Testosterone tự nhiên", author: "Dr Nam Trần", date: "05/06/2026", summary: "Chia sẻ danh sách thực phẩm vàng giúp nam giới bổ sung kẽm và vi chất tăng sinh nội tiết tố nam." },
+  { title: "Cách xác định cơ sàn chậu (cơ PC) đơn giản nhất", author: "Bác Sĩ Phong", date: "02/06/2026", summary: "Hướng dẫn xúc giác và nín tiểu để định vị cơ mu cụt chính xác mà không gồng mông đùi." },
+  { title: "Kỹ thuật Start-Stop: Bản đồ kiểm soát xuất tinh", author: "Thanh Bảo", date: "30/05/2026", summary: "Tìm hiểu phương pháp hành vi Masters & Johnson giúp điều hòa nhịp thở và hạ hưng phấn." }
+];
+
+if (blogPosts.length === 0) {
+  blogPosts = defaultBlogs;
+  localStorage.setItem('thuthach21ngay_blog_posts', JSON.stringify(blogPosts));
+}
 
 // ==========================================================================
 // INITIALIZATION
@@ -52,12 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMenuSwitcher();
   setupKeyGenerator();
   setupStudentManager();
-  setupVideoManager();
+  setupCourseEditor();
+  setupProductEditor();
+  setupBlogEditor();
+  setupConfigEditor();
 });
 
 // Admin authentication logic
 function setupAdminAuth() {
-  // Check session
   const isLogged = sessionStorage.getItem('thuthach21ngay_admin_logged') === 'true';
   if (isLogged) {
     showAdminLayout();
@@ -65,7 +136,6 @@ function setupAdminAuth() {
     showLoginLayout();
   }
 
-  // Handle Login
   if (adminLoginForm) {
     adminLoginForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -84,7 +154,6 @@ function setupAdminAuth() {
     });
   }
 
-  // Handle Logout
   if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener('click', () => {
       if (confirm("Bạn có muốn đăng xuất khỏi trang Quản trị không?")) {
@@ -99,7 +168,6 @@ async function showAdminLayout() {
   if (adminAuthOverlay) adminAuthOverlay.style.display = 'none';
   if (adminLayout) adminLayout.style.display = 'flex';
   
-  // Load database and render dashboard
   await loadDatabase();
 }
 
@@ -170,7 +238,6 @@ async function loadDatabase() {
   // 4. Merge accounts
   studentsList = [];
 
-  // Add static server accounts
   allowedAccounts.forEach(acc => {
     studentsList.push({
       name: acc.name,
@@ -181,9 +248,7 @@ async function loadDatabase() {
     });
   });
 
-  // Add local accounts
   localUsers.forEach(acc => {
-    // Avoid duplicates
     if (!studentsList.some(s => s.email === acc.email)) {
       studentsList.push({
         name: acc.name,
@@ -200,13 +265,327 @@ async function loadDatabase() {
   renderStudentsTable();
   renderKeysTable();
   renderProgressTable();
-  renderVideosTable();
+  renderLessonsTable();
+  renderBlogTable();
+  renderCertsTable();
+  renderHomeworkTable();
 }
 
 function updateStatsUI() {
   const count = studentsList.length;
   if (dashTotalStudents) dashTotalStudents.textContent = count;
   if (quickStudentsDesc) quickStudentsDesc.textContent = `${count} tài khoản`;
+  if (dashTotalBlogs) dashTotalBlogs.textContent = blogPosts.length;
+
+  // Count active certificates (students with 100% progress)
+  let certCount = 0;
+  const activeUserSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session'));
+  const completedLessons = JSON.parse(localStorage.getItem('thuthach21ngay_completed_lessons')) || [];
+  
+  studentsList.forEach(student => {
+    let percent = 0;
+    if (activeUserSession && student.email === activeUserSession.email) {
+      const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
+      percent = Math.round((trainingDays.length / 21) * 100);
+    } else if (student.name === "Thanh Bảo") {
+      percent = 76;
+    } else if (student.name === "Học Viên Thử Nghiệm") {
+      percent = 14;
+    }
+    
+    if (percent >= 100) certCount++;
+  });
+
+  if (dashTotalCerts) dashTotalCerts.textContent = certCount;
+  
+  // Calculate mock revenue based on active local students
+  const activeLocalCount = studentsList.filter(s => s.status === 'active' && s.key_used !== "Hệ thống cấp").length;
+  // Let's say each paid VITE_PRICE
+  const revenueVal = activeLocalCount * 686.868;
+  if (dashTotalRevenue) dashTotalRevenue.textContent = revenueVal > 0 ? `${revenueVal.toFixed(3)}đ` : "0.0đ";
+}
+
+// ==========================================================================
+// COURSE & LESSONS EDITOR
+// ==========================================================================
+function setupCourseEditor() {
+  if (btnExportJson) {
+    btnExportJson.addEventListener('click', () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(courseData, null, 4));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href",     dataStr);
+      downloadAnchor.setAttribute("download", "course_curriculum_database.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      alert("Đã xuất file. Hãy sao chép đè file vừa tải về vào thư mục 'public/course_curriculum_database.json' trong thư mục dự án của anh và đẩy lên GitHub nhé.");
+    });
+  }
+
+  // Toggle video input based on type
+  if (editLessonType) {
+    editLessonType.addEventListener('change', () => {
+      if (editLessonType.value === 'video') {
+        editLessonVideoGroup.style.display = 'block';
+      } else {
+        editLessonVideoGroup.style.display = 'none';
+      }
+    });
+  }
+
+  if (btnCancelLessonEdit) {
+    btnCancelLessonEdit.addEventListener('click', () => {
+      courseEditPanel.style.display = 'none';
+      adminLessonEditForm.reset();
+    });
+  }
+
+  if (adminLessonEditForm) {
+    adminLessonEditForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const lId = parseInt(editLessonId.value);
+      const title = editLessonTitle.value.trim();
+      const type = editLessonType.value;
+      const duration = parseInt(editLessonDuration.value);
+      const desc = editLessonDesc.value.trim();
+      const video = editLessonVideo.value.trim();
+      const text = editLessonText.value;
+
+      // Find and update lesson inside courseData
+      let updated = false;
+      for (let mod of courseData) {
+        let lesson = mod.lessons.find(l => l.lesson_id === lId);
+        if (lesson) {
+          lesson.title = title;
+          lesson.type = type;
+          lesson.duration_min = duration;
+          lesson.short_description = desc;
+          lesson.video_url = type === 'video' ? video : "";
+          lesson.text_content = text;
+          updated = true;
+          break;
+        }
+      }
+
+      if (updated) {
+        localStorage.setItem('thuthach21ngay_custom_course_db', JSON.stringify(courseData));
+        alert("Cập nhật thông tin bài học thành công!");
+        courseEditPanel.style.display = 'none';
+        adminLessonEditForm.reset();
+        loadDatabase();
+      }
+    });
+  }
+}
+
+function renderLessonsTable() {
+  if (!adminLessonsTableBody) return;
+  adminLessonsTableBody.innerHTML = '';
+
+  courseData.forEach(mod => {
+    mod.lessons.forEach(lesson => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong>#${lesson.lesson_id}</strong></td>
+        <td style="font-size: 13px; font-weight: 600;">${lesson.title}</td>
+        <td>
+          <span class="badge-status ${lesson.type === 'video' ? 'active' : 'pending'}" style="text-transform: capitalize;">
+            ${lesson.type}
+          </span>
+        </td>
+        <td>${lesson.duration_min} phút</td>
+        <td style="font-size: 12px; font-family: monospace; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          ${lesson.video_url || '-'}
+        </td>
+        <td>
+          <button class="btn btn-secondary btn-sm btn-edit-lesson" data-id="${lesson.lesson_id}">
+            <i class="fa-solid fa-pen"></i> Sửa
+          </button>
+        </td>
+      `;
+
+      row.querySelector('.btn-edit-lesson').addEventListener('click', () => {
+        openLessonEditor(lesson);
+      });
+
+      adminLessonsTableBody.appendChild(row);
+    });
+  });
+}
+
+function openLessonEditor(lesson) {
+  if (!courseEditPanel) return;
+
+  courseEditPanel.style.display = 'block';
+  editLessonHeadline.textContent = `Ngày ${lesson.lesson_id}: ${lesson.title}`;
+  
+  editLessonId.value = lesson.lesson_id;
+  editLessonTitle.value = lesson.title;
+  editLessonType.value = lesson.type;
+  editLessonDuration.value = lesson.duration_min;
+  editLessonDesc.value = lesson.short_description || "";
+  editLessonVideo.value = lesson.video_url || "";
+  editLessonText.value = lesson.text_content || "";
+
+  if (lesson.type === 'video') {
+    editLessonVideoGroup.style.display = 'block';
+  } else {
+    editLessonVideoGroup.style.display = 'none';
+  }
+
+  // Scroll editor into view
+  courseEditPanel.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ==========================================================================
+// PRODUCTS EDITOR
+// ==========================================================================
+function setupProductEditor() {
+  // Populate form
+  if (productNameInput) productNameInput.value = customProduct.name;
+  if (productPriceInput) productPriceInput.value = customProduct.price;
+  if (productDescInput) productDescInput.value = customProduct.desc;
+
+  if (adminProductForm) {
+    adminProductForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      customProduct.name = productNameInput.value.trim();
+      customProduct.price = productPriceInput.value.trim();
+      customProduct.desc = productDescInput.value.trim();
+
+      localStorage.setItem('thuthach21ngay_custom_product', JSON.stringify(customProduct));
+
+      // Update config price in sync
+      customConfig.price = customProduct.price;
+      localStorage.setItem('thuthach21ngay_custom_config', JSON.stringify(customConfig));
+      if (configPrice) configPrice.value = customConfig.price;
+
+      alert("Lưu thông tin sản phẩm thành công!");
+      loadDatabase();
+    });
+  }
+}
+
+// ==========================================================================
+// BLOG EDITOR
+// ==========================================================================
+function setupBlogEditor() {
+  if (btnAddBlog && blogFormPanel) {
+    btnAddBlog.addEventListener('click', () => {
+      blogFormPanel.style.display = 'block';
+    });
+  }
+
+  if (btnCancelBlog && blogFormPanel) {
+    btnCancelBlog.addEventListener('click', () => {
+      blogFormPanel.style.display = 'none';
+      adminBlogForm.reset();
+    });
+  }
+
+  if (adminBlogForm) {
+    adminBlogForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('blog-title').value.trim();
+      const author = document.getElementById('blog-author').value.trim();
+      const summary = document.getElementById('blog-summary').value.trim();
+      const content = document.getElementById('blog-content').value.trim();
+      const date = new Date().toLocaleDateString('vi-VN');
+
+      const newPost = { title, author, date, summary, content };
+      blogPosts.push(newPost);
+
+      localStorage.setItem('thuthach21ngay_blog_posts', JSON.stringify(blogPosts));
+
+      adminBlogForm.reset();
+      if (blogFormPanel) blogFormPanel.style.display = 'none';
+      alert("Đăng bài viết Blog mới thành công!");
+      loadDatabase();
+    });
+  }
+}
+
+function renderBlogTable() {
+  if (!adminBlogList) return;
+  adminBlogList.innerHTML = '';
+
+  blogPosts.forEach((post, idx) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${idx + 1}</td>
+      <td><strong>${post.title}</strong></td>
+      <td>${post.author}</td>
+      <td>${post.date}</td>
+      <td style="max-width: 250px; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${post.summary}</td>
+      <td>
+        <button class="btn btn-danger btn-sm btn-delete-blog" data-index="${idx}">Xóa</button>
+      </td>
+    `;
+
+    row.querySelector('.btn-delete-blog').addEventListener('click', () => {
+      if (confirm(`Xóa bài viết "${post.title}"?`)) {
+        blogPosts.splice(idx, 1);
+        localStorage.setItem('thuthach21ngay_blog_posts', JSON.stringify(blogPosts));
+        loadDatabase();
+      }
+    });
+
+    adminBlogList.appendChild(row);
+  });
+}
+
+// ==========================================================================
+// CONFIGURATION EDITOR & .ENV EXPORTER
+// ==========================================================================
+function setupConfigEditor() {
+  // Populate
+  if (configSiteTitle) configSiteTitle.value = customConfig.siteTitle;
+  if (configPrice) configPrice.value = customConfig.price;
+  if (configZalo) configZalo.value = customConfig.zaloPhone;
+  if (configEmail) configEmail.value = customConfig.supportEmail;
+
+  if (adminConfigForm) {
+    adminConfigForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      customConfig.siteTitle = configSiteTitle.value.trim();
+      customConfig.price = configPrice.value.trim();
+      customConfig.zaloPhone = configZalo.value.trim();
+      customConfig.supportEmail = configEmail.value.trim();
+
+      localStorage.setItem('thuthach21ngay_custom_config', JSON.stringify(customConfig));
+
+      // Also sync custom product price
+      customProduct.price = customConfig.price;
+      localStorage.setItem('thuthach21ngay_custom_product', JSON.stringify(customProduct));
+      if (productPriceInput) productPriceInput.value = customProduct.price;
+
+      alert("Lưu cấu hình hệ thống thành công! Các thay đổi đã được áp dụng trực tiếp cho trang học viên.");
+      loadDatabase();
+    });
+  }
+
+  if (btnExportConfig) {
+    btnExportConfig.addEventListener('click', () => {
+      // Create .env file content
+      const envContent = `VITE_SITE_TITLE="${customConfig.siteTitle}"
+VITE_PRICE="${customConfig.price}"
+VITE_ZALO_PHONE="${customConfig.zaloPhone}"
+VITE_SUPPORT_EMAIL="${customConfig.supportEmail}"
+`;
+      const dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(envContent);
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href",     dataStr);
+      downloadAnchor.setAttribute("download", ".env");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      alert("Đã tải xuống file '.env' mới. Hãy copy đè file này vào thư mục dự án của anh và đẩy lên GitHub.");
+    });
+  }
 }
 
 // ==========================================================================
@@ -236,7 +615,6 @@ function setupStudentManager() {
 
       const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
 
-      // Check duplicates
       const exists = localUsers.some(u => u.email === email) || allowedAccounts.some(u => u.email === email);
       if (exists) {
         alert("Email hoặc số điện thoại này đã tồn tại!");
@@ -296,7 +674,6 @@ function renderStudentsTable() {
       </td>
     `;
 
-    // Bind Activation action
     const btnActivate = row.querySelector('.btn-activate');
     if (btnActivate) {
       btnActivate.addEventListener('click', () => {
@@ -304,7 +681,6 @@ function renderStudentsTable() {
       });
     }
 
-    // Bind Delete action
     const btnDelete = row.querySelector('.btn-delete-student');
     if (btnDelete) {
       btnDelete.addEventListener('click', () => {
@@ -469,63 +845,114 @@ function renderProgressTable() {
 }
 
 // ==========================================================================
-// COURSE LESSON VIDEOS EDITOR
+// CERTIFICATES MANAGEMENT
 // ==========================================================================
-function setupVideoManager() {
-  if (btnExportJson) {
-    btnExportJson.addEventListener('click', () => {
-      // Export current courseData to a downloadable JSON file
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(courseData, null, 4));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href",     dataStr);
-      downloadAnchor.setAttribute("download", "course_curriculum_database.json");
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-      alert("Đã xuất file. Hãy sao chép đè file vừa tải về vào thư mục 'public/course_curriculum_database.json' trong thư mục dự án của anh và đẩy lên GitHub nhé.");
-    });
+function renderCertsTable() {
+  if (!adminCertsList) return;
+  adminCertsList.innerHTML = '';
+
+  const activeUserSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session'));
+  const completedLessons = JSON.parse(localStorage.getItem('thuthach21ngay_completed_lessons')) || [];
+  
+  let rowsFound = false;
+
+  studentsList.forEach(student => {
+    let percent = 0;
+    let dateStr = "01/06/2026";
+    
+    if (activeUserSession && student.email === activeUserSession.email) {
+      const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
+      percent = Math.round((trainingDays.length / 21) * 100);
+      dateStr = new Date().toLocaleDateString('vi-VN');
+    } else if (student.name === "Thanh Bảo") {
+      percent = 76;
+    } else if (student.name === "Học Viên Thử Nghiệm") {
+      percent = 14;
+    }
+
+    // Only show if 100% complete (issued certificate)
+    if (percent >= 100) {
+      rowsFound = true;
+      const certId = `MATMA21-CERT-${student.email.slice(0, 3).toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong>${student.name}</strong></td>
+        <td>${student.email}</td>
+        <td><span class="badge-status active">Đã hoàn thành 100%</span></td>
+        <td>${dateStr}</td>
+        <td style="font-family: monospace; font-weight: 700; color: var(--secondary);">${certId}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm btn-view-cert" data-name="${student.name}" data-id="${certId}">
+            <i class="fa-solid fa-eye"></i> Xem
+          </button>
+        </td>
+      `;
+
+      row.querySelector('.btn-view-cert').addEventListener('click', () => {
+        alert(`=== CHỨNG CHỈ TỐT NGHIỆP ===\nHệ thống Mật Mã 21 chứng nhận:\n\nHọc viên: ${student.name}\nEmail: ${student.email}\nĐã hoàn thành xuất sắc Lộ trình 21 ngày Tái sinh bản lĩnh phái mạnh tại nhà.\n\nSố hiệu: ${certId}\nNgày cấp: ${dateStr}`);
+      });
+
+      adminCertsList.appendChild(row);
+    }
+  });
+
+  if (!rowsFound) {
+    adminCertsList.innerHTML = `
+      <tr class="empty-row">
+        <td colspan="6">Chưa có học viên nào hoàn thành 100% lộ trình để cấp chứng chỉ.</td>
+      </tr>
+    `;
   }
 }
 
-function renderVideosTable() {
-  if (!adminVideoEditList) return;
-  adminVideoEditList.innerHTML = '';
+// ==========================================================================
+// STUDENT HOMEWORK MANAGEMENT
+// ==========================================================================
+function renderHomeworkTable() {
+  if (!adminHomeworkList) return;
+  adminHomeworkList.innerHTML = '';
 
-  courseData.forEach(mod => {
-    mod.lessons.forEach(lesson => {
-      if (lesson.type === 'video') {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><strong>#${lesson.lesson_id}</strong></td>
-          <td style="font-size: 13px; font-weight: 600;">${lesson.title}</td>
-          <td>
-            <input type="text" class="form-control" id="vid-input-${lesson.lesson_id}" 
-                   value="${lesson.video_url || ''}" 
-                   style="width: 100%; font-size: 13px; padding: 6px 10px; border-radius: 4px; border: 1px solid rgba(61, 107, 74, 0.2); background-color: #FBF9F4;" 
-                   placeholder="Dán link YouTube (ví dụ: https://www.youtube.com/watch?v=...)">
-          </td>
-          <td>
-            <button class="btn btn-success btn-sm btn-save-video" data-id="${lesson.lesson_id}">
-              <i class="fa-solid fa-floppy-disk"></i> Lưu
-            </button>
-          </td>
-        `;
+  const activeUserSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session'));
+  const ieltLogs = JSON.parse(localStorage.getItem('thuthach21ngay_logs')) || [];
 
-        row.querySelector('.btn-save-video').addEventListener('click', () => {
-          const inputVal = document.getElementById(`vid-input-${lesson.lesson_id}`).value.trim();
-          
-          // Update lesson video_url in local courseData
-          lesson.video_url = inputVal;
-          
-          // Save database state
-          localStorage.setItem('thuthach21ngay_custom_course_db', JSON.stringify(courseData));
-          
-          alert(`Đã lưu video mới cho bài: ${lesson.title}`);
-          loadDatabase();
-        });
-
-        adminVideoEditList.appendChild(row);
-      }
+  // Seed some mock homework logs if list empty
+  let mockLogs = [];
+  if (ieltLogs.length === 0) {
+    mockLogs = [
+      { name: "Thanh Bảo", email: "thanhbaotran.business@gmail.com", week: "Tuần 3", ielt: 180, control: 8, confidence: 9, note: "Thực hành dừng nhịp rất ổn, kiểm soát tốt ở tư thế đứng.", date: "08/06/2026" },
+      { name: "Học Viên Thử Nghiệm", email: "hocvien@thuthach21ngay.us", week: "Tuần 1", ielt: 45, control: 4, confidence: 5, note: "Bắt đầu nhận diện cơ PC hơi mỏi, thở bụng 4-2-6 tốt.", date: "02/06/2026" }
+    ];
+  } else {
+    // If the active user has logs, load them
+    ieltLogs.forEach(log => {
+      mockLogs.push({
+        name: activeUserSession ? activeUserSession.name : "Học Viên",
+        email: activeUserSession ? activeUserSession.email : "-",
+        week: log.week,
+        ielt: log.ielt,
+        control: log.control,
+        confidence: log.confidence,
+        note: log.note,
+        date: log.date
+      });
     });
+    // Add default mock logs to populate
+    mockLogs.push({ name: "Thanh Bảo", email: "thanhbaotran.business@gmail.com", week: "Tuần 3", ielt: 180, control: 8, confidence: 9, note: "Thực hành dừng nhịp rất ổn, kiểm soát tốt ở tư thế đứng.", date: "08/06/2026" });
+  }
+
+  // Sort logs by date newest first
+  mockLogs.forEach(log => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><strong>${log.name}</strong></td>
+      <td>${log.week}</td>
+      <td style="color: var(--primary); font-weight: 700;">${log.ielt} giây</td>
+      <td><span style="color: var(--secondary); font-weight: 600;">${log.control}/10</span></td>
+      <td><span style="color: var(--warning); font-weight: 600;">${log.confidence}/10</span></td>
+      <td style="max-width: 250px; font-size: 13px; color: var(--text-muted);">${log.note || '-'}</td>
+      <td style="font-size: 12px; color: var(--text-dimmed);">${log.date}</td>
+    `;
+    adminHomeworkList.appendChild(row);
   });
 }

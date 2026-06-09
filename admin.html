@@ -69,6 +69,15 @@
         <li class="admin-menu-item active" data-target="admin-tab-dashboard">
           <button><i class="fa-solid fa-table-columns"></i> Dashboard</button>
         </li>
+        <li class="admin-menu-item" data-target="admin-tab-courses">
+          <button><i class="fa-solid fa-book"></i> Khoá học & Bài học</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-products">
+          <button><i class="fa-solid fa-box-open"></i> Sản phẩm</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-blog">
+          <button><i class="fa-solid fa-blog"></i> Blog</button>
+        </li>
         <li class="admin-menu-item" data-target="admin-tab-students">
           <button><i class="fa-solid fa-user-graduate"></i> Học viên</button>
         </li>
@@ -78,31 +87,14 @@
         <li class="admin-menu-item" data-target="admin-tab-progress">
           <button><i class="fa-solid fa-chart-line"></i> Quan sát tiến độ</button>
         </li>
-        <li class="admin-menu-item" data-target="admin-tab-videos">
-          <button><i class="fa-solid fa-circle-play"></i> Quản lý video bài học</button>
+        <li class="admin-menu-item" data-target="admin-tab-certificates">
+          <button><i class="fa-solid fa-award"></i> Chứng chỉ</button>
         </li>
-        
-        <!-- Mock Competitor Items -->
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-book"></i> Khoá học</button>
+        <li class="admin-menu-item" data-target="admin-tab-homework">
+          <button><i class="fa-solid fa-file-invoice"></i> Bài tập học viên</button>
         </li>
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-box-open"></i> Sản phẩm</button>
-        </li>
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-circle-info"></i> Về Noli Sales</button>
-        </li>
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-blog"></i> Blog</button>
-        </li>
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-certificate"></i> Chứng chỉ</button>
-        </li>
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-file-invoice"></i> Bài tập học viên</button>
-        </li>
-        <li class="admin-menu-item mock-item">
-          <button style="opacity: 0.6; cursor: not-allowed;"><i class="fa-solid fa-gears"></i> Cấu hình</button>
+        <li class="admin-menu-item" data-target="admin-tab-config">
+          <button><i class="fa-solid fa-gears"></i> Cấu hình Website</button>
         </li>
         
         <li class="admin-menu-item" id="admin-logout-btn" style="margin-top: auto;">
@@ -118,7 +110,7 @@
       <header class="admin-header">
         <h2 id="admin-header-title">Tổng quan hoạt động Noli Sales</h2>
         <div class="admin-header-right">
-          <a href="/index.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-globe"></i> Xem Website</a>
+          <a href="/index.html" class="btn btn-secondary btn-sm" target="_blank"><i class="fa-solid fa-globe"></i> Xem Website</a>
         </div>
       </header>
       
@@ -147,7 +139,7 @@
                 <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-award"></i></div>
               </div>
               <div class="admin-stat-main">
-                <p class="admin-stat-value">1</p>
+                <p class="admin-stat-value" id="dash-total-certs">1</p>
                 <span class="admin-stat-desc">Hoàn thành khoá học</span>
               </div>
             </div>
@@ -169,8 +161,8 @@
                 <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-bookmark"></i></div>
               </div>
               <div class="admin-stat-main">
-                <p class="admin-stat-value">16</p>
-                <span class="admin-stat-desc">16 đã xuất bản</span>
+                <p class="admin-stat-value">1</p>
+                <span class="admin-stat-desc">1 khóa học (22 bài)</span>
               </div>
             </div>
             
@@ -180,8 +172,8 @@
                 <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-newspaper"></i></div>
               </div>
               <div class="admin-stat-main">
-                <p class="admin-stat-value">28</p>
-                <span class="admin-stat-desc">28 đã đăng</span>
+                <p class="admin-stat-value" id="dash-total-blogs">28</p>
+                <span class="admin-stat-desc">Đã đăng</span>
               </div>
             </div>
             
@@ -202,7 +194,7 @@
                 <div class="admin-stat-icon-wrapper"><i class="fa-solid fa-money-bill-wave"></i></div>
               </div>
               <div class="admin-stat-main">
-                <p class="admin-stat-value">0.0Mđ</p>
+                <p class="admin-stat-value" id="dash-total-revenue">0.0Mđ</p>
                 <span class="admin-stat-desc">0 giao dịch</span>
               </div>
             </div>
@@ -241,11 +233,11 @@
               </div>
             </div>
             
-            <div class="admin-quick-card" onclick="document.querySelector('[data-target=\'admin-tab-progress\']').click()">
-              <div class="admin-quick-icon"><i class="fa-solid fa-chart-pie"></i></div>
+            <div class="admin-quick-card" onclick="document.querySelector('[data-target=\'admin-tab-config\']').click()">
+              <div class="admin-quick-icon"><i class="fa-solid fa-gears"></i></div>
               <div class="admin-quick-info">
-                <h4>Cấu hình</h4>
-                <p>CTA, số liệu, tiến trình học viên</p>
+                <h4>Cấu hình website</h4>
+                <p>CTA, số liệu, thông tin liên hệ</p>
               </div>
             </div>
           </div>
@@ -277,6 +269,172 @@
             </div>
           </div>
           
+        </section>
+        
+        <!-- ================= TAB: COURSES & LESSONS ================= -->
+        <section class="admin-tab-section" id="admin-tab-courses" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Quản lý Chương trình học & Bài giảng</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-export-json"><i class="fa-solid fa-download"></i> Xuất file database mới</button>
+          </div>
+          
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+            Chỉnh sửa Tiêu đề, Thời lượng, Mô tả và Nội dung Markdown của từng bài học dưới đây. Sau khi đổi, nhấn <strong>Sửa</strong> để mở bảng soạn thảo. 
+            Để lưu vĩnh viễn, hãy bấm nút <strong>Xuất file database mới</strong>, sau đó chép đè file tải về vào thư mục <code>public/course_curriculum_database.json</code> và push lên GitHub.
+          </p>
+
+          <!-- Lesson Editing Panel (Hidden by default) -->
+          <div class="dashboard-card" id="course-edit-panel" style="display: none; margin-bottom: 28px;">
+            <h4 style="margin-bottom: 16px;"><i class="fa-solid fa-pen-to-square text-primary"></i> Đang chỉnh sửa: <span id="edit-lesson-headline">Ngày 1</span></h4>
+            <form id="admin-lesson-edit-form" class="log-form">
+              <input type="hidden" id="edit-lesson-id">
+              
+              <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                  <label for="edit-lesson-title">Tiêu đề bài học</label>
+                  <input type="text" id="edit-lesson-title" required>
+                </div>
+                <div class="form-group">
+                  <label for="edit-lesson-type">Loại bài học</label>
+                  <select id="edit-lesson-type">
+                    <option value="video">Video</option>
+                    <option value="document">Tài liệu</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="edit-lesson-duration">Thời lượng (Phút)</label>
+                  <input type="number" id="edit-lesson-duration" required>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-lesson-desc">Mô tả ngắn</label>
+                <input type="text" id="edit-lesson-desc" required>
+              </div>
+              
+              <div class="form-group" id="edit-lesson-video-group">
+                <label for="edit-lesson-video">Đường dẫn Video YouTube</label>
+                <input type="text" id="edit-lesson-video" placeholder="https://www.youtube.com/watch?v=...">
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-lesson-text">Nội dung bài học (Hỗ trợ định dạng Markdown)</label>
+                <textarea id="edit-lesson-text" rows="12" required></textarea>
+              </div>
+              
+              <div style="display: flex; gap: 12px; margin-top: 10px;">
+                <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel-lesson-edit">Hủy bỏ</button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- Lessons Table -->
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th style="width: 80px;">ID Bài</th>
+                    <th>Tên bài</th>
+                    <th>Loại</th>
+                    <th>Thời lượng</th>
+                    <th>Video URL</th>
+                    <th style="width: 100px;">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-lessons-table-body">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: PRODUCTS ================= -->
+        <section class="admin-tab-section" id="admin-tab-products" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Quản lý sản phẩm khóa học & Gói thanh toán</h3>
+          </div>
+          
+          <div class="tracker-form-card" style="width: 100%; max-width: 600px;">
+            <h3><i class="fa-solid fa-box-open"></i> Thông tin sản phẩm</h3>
+            <p class="form-desc">Cấu hình giá trị khóa học hiển thị ở trang chủ học viên.</p>
+            
+            <form id="admin-product-form" class="log-form">
+              <div class="form-group">
+                <label for="product-name">Tên sản phẩm / Khóa học</label>
+                <input type="text" id="product-name" value="Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh" required>
+              </div>
+              <div class="form-group">
+                <label for="product-price">Giá trị hiển thị (đ)</label>
+                <input type="text" id="product-price" value="686.868đ" placeholder="Ví dụ: 686.868đ" required>
+              </div>
+              <div class="form-group">
+                <label for="product-desc">Mô tả tóm tắt</label>
+                <textarea id="product-desc" rows="3" required>Lộ trình 21 ngày rèn luyện phản xạ cơ sàn chậu và điều hòa hệ thần kinh tự nhiên tại nhà.</textarea>
+              </div>
+              <button type="submit" class="btn btn-success" style="margin-top: 10px;">Lưu sản phẩm</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ================= TAB: BLOG ================= -->
+        <section class="admin-tab-section" id="admin-tab-blog" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Quản lý Bài viết Tin tức / Blog</h3>
+            <button class="btn btn-primary btn-sm" id="btn-add-blog"><i class="fa-solid fa-plus"></i> Viết bài mới</button>
+          </div>
+
+          <!-- New Blog Form (Hidden by default) -->
+          <div class="dashboard-card" id="blog-form-panel" style="display: none; margin-bottom: 24px;">
+            <h4><i class="fa-solid fa-pencil text-primary"></i> Viết bài viết mới</h4>
+            <form id="admin-blog-form" class="log-form">
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+                <div class="form-group">
+                  <label for="blog-title">Tiêu đề bài viết</label>
+                  <input type="text" id="blog-title" required>
+                </div>
+                <div class="form-group">
+                  <label for="blog-author">Tác giả</label>
+                  <input type="text" id="blog-author" value="Admin Nam Học" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="blog-summary">Mô tả ngắn / Tóm tắt bài viết</label>
+                <input type="text" id="blog-summary" required>
+              </div>
+              <div class="form-group">
+                <label for="blog-content">Nội dung chi tiết</label>
+                <textarea id="blog-content" rows="10" required></textarea>
+              </div>
+              <div style="display: flex; gap: 12px; margin-top: 10px;">
+                <button type="submit" class="btn btn-success">Đăng bài viết</button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel-blog">Hủy</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Blog List Table -->
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">STT</th>
+                    <th>Tiêu đề</th>
+                    <th>Tác giả</th>
+                    <th>Ngày đăng</th>
+                    <th>Mô tả tóm tắt</th>
+                    <th style="width: 80px;">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-blog-list">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </section>
         
         <!-- ================= TAB: STUDENTS MANAGEMENT ================= -->
@@ -412,37 +570,97 @@
           
         </section>
 
-        <!-- ================= TAB: VIDEOS MANAGEMENT ================= -->
-        <section class="admin-tab-section" id="admin-tab-videos" style="display: none;">
-          
+        <!-- ================= TAB: CERTIFICATES ================= -->
+        <section class="admin-tab-section" id="admin-tab-certificates" style="display: none;">
           <div class="admin-section-header">
-            <h3>Quản lý Video & Link bài học</h3>
-            <button class="btn btn-secondary btn-sm" id="btn-export-json"><i class="fa-solid fa-download"></i> Xuất file database mới</button>
+            <h3>Danh sách cấp Chứng chỉ tốt nghiệp</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Chứng chỉ tự động cấp khi học viên hoàn thành 100% thử thách 21 ngày.</p>
           </div>
-          
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
-            Chỉnh sửa trực tiếp link video YouTube cho từng bài học. Sau khi thay đổi, hãy nhấn <strong>Lưu</strong>. 
-            Để cập nhật vĩnh viễn lên host, hãy bấm nút <strong>Xuất file database mới</strong>, sau đó chép đè file tải về vào thư mục <code>public/course_curriculum_database.json</code> của mã nguồn và push lên GitHub.
-          </p>
           
           <div class="tracker-history-card">
             <div class="table-container">
               <table class="history-table">
                 <thead>
                   <tr>
-                    <th style="width: 80px;">ID Bài</th>
-                    <th>Tên bài</th>
-                    <th>Đường dẫn Video YouTube</th>
-                    <th style="width: 120px;">Thao tác</th>
+                    <th>Học viên</th>
+                    <th>Email</th>
+                    <th>Trạng thái học</th>
+                    <th>Ngày cấp chứng chỉ</th>
+                    <th>Số hiệu chứng chỉ</th>
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
-                <tbody id="admin-video-edit-list">
+                <tbody id="admin-certs-list">
                   <!-- Rendered dynamically -->
                 </tbody>
               </table>
             </div>
           </div>
+        </section>
+
+        <!-- ================= TAB: STUDENT HOMEWORK ================= -->
+        <section class="admin-tab-section" id="admin-tab-homework" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Nhật ký & Bài tập nộp của Học viên</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Xem toàn bộ kết quả thời gian nín thở/IELT và cảm nhận cơ sàn chậu của học viên ghi nhận.</p>
+          </div>
           
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>Học viên</th>
+                    <th>Tuần tập</th>
+                    <th>IELT (giây)</th>
+                    <th>Khả năng tự kiểm soát</th>
+                    <th>Mức độ tự tin</th>
+                    <th>Ghi chú / Nhật ký tập</th>
+                    <th>Ngày nộp</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-homework-list">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: CONFIGURATION ================= -->
+        <section class="admin-tab-section" id="admin-tab-config" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Cấu hình hệ thống Website</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-export-config"><i class="fa-solid fa-download"></i> Tải file .env cấu hình mới</button>
+          </div>
+          
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+            Thay đổi các thông tin hiển thị cơ bản của Website học tập tại đây. Các thay đổi sẽ cập nhật ngay lập tức cho học viên. 
+            Để lưu vĩnh viễn trên server, bấm **Tải file .env cấu hình mới** rồi copy chép đè vào file <code>.env</code> ở thư mục dự án và push lên Git.
+          </p>
+          
+          <div class="tracker-form-card" style="width: 100%; max-width: 600px;">
+            <h3><i class="fa-solid fa-sliders"></i> Cấu hình tham số</h3>
+            <form id="admin-config-form" class="log-form" style="margin-top: 15px;">
+              <div class="form-group">
+                <label for="config-site-title">Tiêu đề Website (VITE_SITE_TITLE)</label>
+                <input type="text" id="config-site-title" value="Mật Mã 21 - Tái Sinh Bản Lĩnh" required>
+              </div>
+              <div class="form-group">
+                <label for="config-price">Giá tiền khóa học hiển thị (VITE_PRICE)</label>
+                <input type="text" id="config-price" value="686.868đ" required>
+              </div>
+              <div class="form-group">
+                <label for="config-zalo">Số điện thoại Zalo hỗ trợ (VITE_ZALO_PHONE)</label>
+                <input type="text" id="config-zalo" value="0377014982" required>
+              </div>
+              <div class="form-group">
+                <label for="config-email">Email liên hệ hỗ trợ (VITE_SUPPORT_EMAIL)</label>
+                <input type="email" id="config-email" value="support@themencode.vn" required>
+              </div>
+              <button type="submit" class="btn btn-success" style="margin-top: 10px;">Lưu cấu hình</button>
+            </form>
+          </div>
         </section>
         
       </div>

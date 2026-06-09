@@ -1,10 +1,12 @@
 // app.js - Course Learning Portal Client Logic
 
-// Load Environment Variables using Vite's import.meta.env
-const SITE_TITLE = import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh";
-const PRICE = import.meta.env.VITE_PRICE || "686.868đ";
-const ZALO_PHONE = import.meta.env.VITE_ZALO_PHONE || "0377014982";
-const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn";
+// Load Config (prioritize localStorage custom config, fallback to env)
+const customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {};
+
+const SITE_TITLE = customConfig.siteTitle || import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh";
+const PRICE = customConfig.price || import.meta.env.VITE_PRICE || "686.868đ";
+const ZALO_PHONE = customConfig.zaloPhone || import.meta.env.VITE_ZALO_PHONE || "0377014982";
+const SUPPORT_EMAIL = customConfig.supportEmail || import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn";
 
 // State Management
 let courseData = [];
