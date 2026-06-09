@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="site-title-tag">Mật Mã 21 - Tái Sinh Bản Lĩnh</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Marked.js for rendering lesson markdown dynamically -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Global App Container -->
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <i class="fa-solid fa-shield-halved logo-icon"></i>
+        <h1 id="header-title">Mật Mã 21</h1>
+      </div>
+      
+      <!-- Overall Progress -->
+      <div class="overall-progress-container">
+        <div class="progress-info">
+          <span class="progress-label">Tiến trình thử thách:</span>
+          <span class="progress-percent" id="progress-text">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <!-- Top Navigation Tabs -->
+      <nav class="header-nav">
+        <button class="nav-tab active" data-tab="dashboard">
+          <i class="fa-solid fa-gauge-high"></i> Dashboard
+        </button>
+        <button class="nav-tab" data-tab="lessons">
+          <i class="fa-solid fa-book-open"></i> Lộ trình học
+        </button>
+        <button class="nav-tab" data-tab="tracker">
+          <i class="fa-solid fa-chart-line"></i> Theo dõi kết quả
+        </button>
+      </nav>
+
+      <!-- Header User Profile -->
+      <div class="header-user" id="header-user-info" style="display: none;">
+        <span class="header-user-name" id="user-display-name">Học Viên</span>
+        <button class="btn-logout" id="btn-logout-action" title="Đăng xuất">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      
+      <!-- ================= TAB: DASHBOARD ================= -->
+      <section class="tab-content active" id="tab-dashboard">
+        <div class="dashboard-hero">
+          <div class="hero-text">
+            <h2>Tái Sinh Bản Lĩnh Phái Mạnh Tại Nhà</h2>
+            <p>Lộ trình 21 ngày rèn luyện phản xạ cơ sàn chậu và điều hòa hệ thần kinh tự nhiên giúp bạn làm chủ cơ thể bền vững.</p>
+            <button class="btn btn-primary" id="btn-start-course">
+              Bắt đầu luyện tập <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div class="hero-badge">
+            <span class="price-tag" id="site-price">686.868đ</span>
+            <span class="badge-label">Giá trị trọn gói</span>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Metric Cards -->
+          <div class="dashboard-card card-stat">
+            <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="stat-content">
+              <h3>Số ngày đã hoàn thành</h3>
+              <p class="stat-value" id="stat-completed-days">0/21</p>
+            </div>
+          </div>
+          <div class="dashboard-card card-stat">
+            <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+            <div class="stat-content">
+              <h3>Chuỗi ngày liên tục</h3>
+              <p class="stat-value" id="stat-streak">0 ngày</p>
+            </div>
+          </div>
+          <div class="dashboard-card card-stat">
+            <div class="stat-icon"><i class="fa-solid fa-certificate"></i></div>
+            <div class="stat-content">
+              <h3>Trạng thái bản lĩnh</h3>
+              <p class="stat-value" id="stat-status">Khởi động</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Medical Screening & Partner Section -->
+        <div class="dashboard-split-panels">
+          <div class="dashboard-card screening-panel">
+            <h3><i class="fa-solid fa-heart-pulse text-danger"></i> Bộ lọc Sàng lọc Y khoa ban đầu</h3>
+            <p class="panel-subtitle">Hãy xác nhận tình trạng sức khỏe của bạn trước khi bắt đầu bài tập:</p>
+            <div class="checklist">
+              <label class="check-item">
+                <input type="checkbox" id="screen-no-pain">
+                <span>Không bị đau nhức vùng chậu, tiểu tiện bình thường (không buốt/rắt).</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="screen-no-erectile">
+                <span>Không có rối loạn cương dương nghiêm trọng đi kèm.</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="screen-no-spine">
+                <span>Không có tiền sử chấn thương cột sống hoặc phẫu thuật vùng chậu.</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" id="screen-commitment">
+                <span>Sẵn sàng tập đều đặn ít nhất 21 ngày liên tục.</span>
+              </label>
+            </div>
+            <div class="screening-alert" id="screening-result">
+              Vui lòng tích chọn đầy đủ 4 điều kiện để bắt đầu chương trình một cách an toàn.
+            </div>
+          </div>
+
+          <div class="dashboard-card partner-panel">
+            <h3><i class="fa-solid fa-users text-primary"></i> Cẩm nang đồng hành bảo mật</h3>
+            <p>Hành trình 21 ngày sẽ đạt hiệu quả gấp đôi nếu có sự thấu hiểu từ bạn đời:</p>
+            <ul class="partner-list">
+              <li>
+                <i class="fa-solid fa-lock text-success"></i>
+                <div>
+                  <strong>Bảo mật tuyệt đối:</strong>
+                  <span>Giao dịch ẩn danh và thông tin học tập của bạn được mã hóa hoàn toàn trên hệ thống.</span>
+                </div>
+              </li>
+              <li>
+                <i class="fa-solid fa-comments text-info"></i>
+                <div>
+                  <strong>Giao tiếp cởi mở:</strong>
+                  <span>Thống nhất ám hiệu dừng ở tuần thứ 3 (nhấp nhẹ hoặc nói "dừng") để thực hành Start-Stop.</span>
+                </div>
+              </li>
+              <li>
+                <i class="fa-solid fa-ban text-warning"></i>
+                <div>
+                  <strong>Không đặt áp lực:</strong>
+                  <span>Cam kết không bình luận về thời gian. Sự thư giãn tinh thần là điều kiện bắt buộc để hạ hưng phấn.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: LESSONS VIEW ================= -->
+      <section class="tab-content" id="tab-lessons">
+        <div class="lessons-layout">
+          <!-- Sidebar: Course Navigation -->
+          <aside class="lessons-sidebar">
+            <div class="sidebar-header">
+              <h3>Chương trình đào tạo</h3>
+              <p>Mục lục 21 ngày thử thách</p>
+            </div>
+            <div class="sidebar-curriculum" id="curriculum-list">
+              <!-- Dynamically populated modules and lessons -->
+              <div class="loading-spinner">Đang tải giáo trình...</div>
+            </div>
+          </aside>
+
+          <!-- Main Content Viewport -->
+          <article class="lesson-viewport">
+            <div id="lesson-content-box" style="display: none;">
+              <div class="lesson-meta-header">
+                <span class="lesson-tag" id="lesson-module-tag">Module 1</span>
+                <span class="lesson-duration"><i class="fa-regular fa-clock"></i> <span id="lesson-time">15</span> phút</span>
+              </div>
+              <h2 class="lesson-title" id="lesson-main-title">Ngày 1: Nhận diện cơ sàn chậu</h2>
+              
+              <!-- Player Tabs & Viewport -->
+              <div class="player-wrapper">
+                <div class="player-tabs" id="player-tabs-bar" style="display: none;">
+                  <button class="player-tab-btn active" id="btn-tab-video"><i class="fa-solid fa-video"></i> Video Bài Học</button>
+                  <button class="player-tab-btn" id="btn-tab-tool"><i class="fa-solid fa-gauge-high"></i> Trợ Lý Luyện Tập Trực Quan</button>
+                </div>
+                
+                <!-- Embedded Video/Audio Player -->
+                <div class="video-player-container" id="video-container">
+                  <div class="video-overlay" id="video-overlay">
+                    <i class="fa-regular fa-circle-play play-btn-overlay"></i>
+                    <p>Nhấp để phát Video/Audio hướng dẫn bài tập</p>
+                  </div>
+                  <iframe id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <!-- Custom Interactive Tools Container -->
+                <div class="interactive-tool-container" id="interactive-tool-container" style="display: none;"></div>
+              </div>
+
+              <!-- Detailed Content -->
+              <div class="lesson-body-content markdown-body" id="lesson-body">
+                <!-- Rendered Markdown goes here -->
+              </div>
+
+              <!-- Lesson Controls -->
+              <div class="lesson-footer-controls">
+                <button class="btn btn-secondary" id="btn-prev-lesson">
+                  <i class="fa-solid fa-chevron-left"></i> Bài trước
+                </button>
+                
+                <button class="btn btn-success" id="btn-complete-lesson">
+                  <i class="fa-solid fa-check"></i> Đánh dấu hoàn thành
+                </button>
+                
+                <button class="btn btn-secondary" id="btn-next-lesson">
+                  Bài tiếp theo <i class="fa-solid fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div id="lesson-empty-state">
+              <i class="fa-solid fa-book-open empty-icon"></i>
+              <h3>Chọn một bài học từ danh mục bên trái</h3>
+              <p>Hãy bắt đầu từ Module 0 để chuẩn bị các kiến thức cơ sở và sàng lọc sức khỏe.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= TAB: PROGRESS TRACKER ================= -->
+      <section class="tab-content" id="tab-tracker">
+        <div class="tracker-layout">
+          <!-- Log Input Form -->
+          <div class="tracker-form-card">
+            <h3><i class="fa-solid fa-pen-to-square"></i> Ghi nhận kết quả tập luyện</h3>
+            <p class="form-desc">Theo dõi sự thay đổi của thời gian nhịn thâm nhập (IELT) và mức độ kiểm soát qua các tuần.</p>
+            
+            <form id="tracker-form" class="log-form">
+              <div class="form-group">
+                <label for="log-week">Tuần rèn luyện</label>
+                <select id="log-week" required>
+                  <option value="Tuần 1">Tuần 1 (Kích hoạt)</option>
+                  <option value="Tuần 2">Tuần 2 (Sức bền)</option>
+                  <option value="Tuần 3">Tuần 3 (Thực chiến)</option>
+                  <option value="Duy trì">Sau 21 ngày (Bảo trì)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="log-ielt">Thời gian thâm nhập ước tính (IELT - giây)</label>
+                <input type="number" id="log-ielt" placeholder="Ví dụ: 60" min="0" required>
+              </div>
+              <div class="form-group">
+                <label for="log-control">Khả năng tự kiểm soát (Thang điểm 1 - 10)</label>
+                <input type="number" id="log-control" min="1" max="10" placeholder="1 đến 10" required>
+              </div>
+              <div class="form-group">
+                <label for="log-confidence">Mức độ tự tin (Thang điểm 1 - 10)</label>
+                <input type="number" id="log-confidence" min="1" max="10" placeholder="1 đến 10" required>
+              </div>
+              <div class="form-group full-width">
+                <label for="log-note">Ghi chú (Cảm nhận cơ chậu, tư thế tập...)</label>
+                <textarea id="log-note" rows="3" placeholder="Ví dụ: Đã kiểm soát tốt ở tư thế nằm gập chân. Khi chuyển sang đứng vẫn còn hơi mỏi mông."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-submit">
+                Lưu kết quả <i class="fa-solid fa-floppy-disk"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Logs Table / Visual History -->
+          <div class="tracker-history-card">
+            <div class="history-header">
+              <h3><i class="fa-solid fa-list-check"></i> Nhật ký lịch sử tập luyện</h3>
+              <button class="btn btn-danger btn-sm" id="btn-clear-logs">
+                <i class="fa-solid fa-trash-can"></i> Xóa lịch sử
+              </button>
+            </div>
+            <div class="table-container">
+              <table class="history-table" id="logs-table">
+                <thead>
+                  <tr>
+                    <th>Giai đoạn</th>
+                    <th>IELT (giây)</th>
+                    <th>Kiểm soát</th>
+                    <th>Tự tin</th>
+                    <th>Ghi chú</th>
+                    <th>Ngày ghi nhận</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-table-body">
+                  <!-- Dynamically populated rows -->
+                  <tr class="empty-row">
+                    <td colspan="6">Chưa có kết quả tập luyện được ghi nhận. Hãy lưu lượt tập đầu tiên của bạn!</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Support Footer -->
+    <footer class="app-footer">
+      <p>© 2026 Mật Mã 21. Bảo lưu mọi quyền.</p>
+      <div class="footer-support-links">
+        <a href="mailto:support@themencode.vn" id="site-support-email"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
+        <a href="https://zalo.me/0377014982" target="_blank" id="site-zalo-link" class="zalo-link"><i class="fa-solid fa-comment-dots"></i> Hỗ trợ Zalo 1:1</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Authentication Overlay -->
+  <div class="auth-overlay" id="auth-overlay" style="display: none;">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <i class="fa-solid fa-shield-halved logo-icon"></i>
+          <h2>Mật Mã 21</h2>
+        </div>
+        <p class="auth-subtitle">Cổng học tập bảo mật lộ trình bản lĩnh</p>
+      </div>
+      
+      <!-- Tabs to switch between Login and Register -->
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="tab-login-btn">Đăng Nhập</button>
+        <button class="auth-tab-btn" id="tab-register-btn">Đăng Ký</button>
+      </div>
+      
+      <!-- Alerts -->
+      <div class="auth-alert error" id="auth-error-alert"></div>
+      <div class="auth-alert success" id="auth-success-alert"></div>
+      
+      <!-- Login Form -->
+      <form class="auth-form" id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email hoặc Số điện thoại</label>
+          <input type="text" id="login-email" placeholder="Nhập email của bạn..." required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Mật khẩu</label>
+          <input type="password" id="login-password" placeholder="Nhập mật khẩu..." required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">
+          Đăng Nhập <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </form>
+      
+      <!-- Register Form -->
+      <form class="auth-form" id="register-form" style="display: none;">
+        <div class="form-group">
+          <label for="register-name">Họ và Tên</label>
+          <input type="text" id="register-name" placeholder="Nhập họ tên của bạn..." required>
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email hoặc Số điện thoại</label>
+          <input type="text" id="register-email" placeholder="Tài khoản đăng nhập..." required>
+        </div>
+        <div class="form-group">
+          <label for="register-password">Mật khẩu</label>
+          <input type="password" id="register-password" placeholder="Nhập mật khẩu tự chọn..." required>
+        </div>
+        <div class="form-group">
+          <label for="register-key">Mã kích hoạt khóa học (Nếu có)</label>
+          <input type="text" id="register-key" placeholder="Ví dụ: MATMA21-XXXX">
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">
+          Đăng Ký Tài Khoản <i class="fa-solid fa-user-plus"></i>
+        </button>
+      </form>
+      
+      <div class="auth-footer">
+        <p>Gặp khó khăn? <a href="https://zalo.me/0377014982" target="_blank" id="auth-zalo-support">Hỗ trợ kích hoạt Zalo</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

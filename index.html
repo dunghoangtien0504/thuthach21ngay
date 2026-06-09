@@ -3,389 +3,816 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="site-title-tag">Mật Mã 21 - Tái Sinh Bản Lĩnh</title>
+  <title>Mật Mã 21 - Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh</title>
   
-  <!-- Premium Fonts -->
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Marked.js for rendering lesson markdown dynamically -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --primary: #0D2B1A;
+      --primary-light: #1b442d;
+      --accent: #B8860B;
+      --danger: #C0390E;
+      --bg-main: #F6F0E4;
+      --text-main: #112A1D;
+      --text-muted: #5a6e61;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      --shadow-md: 0 10px 15px -3px rgba(13, 43, 26, 0.08), 0 4px 6px -2px rgba(13, 43, 26, 0.04);
+      --shadow-lg: 0 20px 25px -5px rgba(13, 43, 26, 0.12), 0 10px 10px -5px rgba(13, 43, 26, 0.06);
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  <link rel="stylesheet" href="/style.css">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header styling */
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.06);
+      position: sticky;
+      top: 0;
+      background-color: rgba(246, 240, 228, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .header-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .logo i {
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      border: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: #FFF;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #FFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-accent {
+      background-color: var(--danger);
+      color: #FFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-accent:hover {
+      background-color: #a02e0b;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0;
+      background: radial-gradient(circle at top right, rgba(184, 134, 11, 0.04) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background-color: rgba(184, 134, 11, 0.1);
+      color: var(--accent);
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .highlight-card {
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(13, 43, 26, 0.04);
+    }
+
+    .highlight-card i {
+      font-size: 20px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .highlight-card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .highlight-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Ebook Image Container */
+    .ebook-image-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .ebook-cover {
+      width: 100%;
+      max-width: 380px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 25px 50px -12px rgba(13, 43, 26, 0.25);
+      transition: var(--transition-smooth);
+    }
+
+    .ebook-cover:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 0 35px 60px -10px rgba(13, 43, 26, 0.35);
+    }
+
+    /* Section Scientific */
+    .science {
+      padding: 80px 0;
+      background-color: var(--primary);
+      color: #FFF;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .section-title.light {
+      color: #FFF;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
+    .science-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .science-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .science-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      transition: var(--transition-smooth);
+    }
+
+    .science-card:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: translateY(-4px);
+    }
+
+    .science-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: rgba(184, 134, 11, 0.15);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(184, 134, 11, 0.3);
+    }
+
+    .science-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .science-card p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+    }
+
+    /* Curriculum Week section */
+    .curriculum {
+      padding: 100px 0;
+    }
+
+    .curr-tabs-wrapper {
+      background-color: #FFF;
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(13, 43, 26, 0.04);
+    }
+
+    .curr-weeks-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+      border-bottom: 2px solid rgba(13, 43, 26, 0.05);
+      padding-bottom: 20px;
+    }
+
+    .curr-week-tab {
+      background: transparent;
+      border: none;
+      padding: 15px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .curr-week-tab.active {
+      color: var(--primary);
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .curr-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .curr-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px;
+      background-color: var(--bg-main);
+      border-radius: var(--radius-md);
+      transition: var(--transition-smooth);
+    }
+
+    .curr-item:hover {
+      transform: translateX(6px);
+      background-color: #FFF;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(184, 134, 11, 0.1);
+    }
+
+    .curr-day-badge {
+      padding: 6px 12px;
+      background-color: var(--primary);
+      color: #FFF;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .curr-item-detail h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+
+    .curr-item-detail p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Checkout & Register Order */
+    .checkout {
+      padding: 80px 0;
+      background: radial-gradient(circle at bottom left, rgba(184, 134, 11, 0.05) 0%, transparent 60%);
+    }
+
+    .checkout-card {
+      background-color: #FFF;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      border: 1px solid rgba(13, 43, 26, 0.05);
+    }
+
+    @media (max-width: 992px) {
+      .checkout-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkout-form-side {
+      padding: 50px;
+    }
+
+    .checkout-payment-side {
+      background-color: var(--primary);
+      color: #FFF;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid rgba(13, 43, 26, 0.1);
+      background-color: var(--bg-main);
+      color: var(--primary);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent);
+      background-color: #FFF;
+      box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+    }
+
+    /* Payment area */
+    .qr-container {
+      background-color: #FFF;
+      padding: 15px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-image {
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+    }
+
+    .bank-info {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.5;
+    }
+
+    .bank-info strong {
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 40px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    .footer-links a {
+      color: #FFF;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <!-- Global App Container -->
-  <div class="app-container">
-    
-    <!-- Top Header -->
-    <header class="app-header">
-      <div class="header-logo">
-        <i class="fa-solid fa-shield-halved logo-icon"></i>
-        <h1 id="header-title">Mật Mã 21</h1>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="container header-layout">
+      <a href="/" class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>Mật Mã 21</span>
+      </a>
+      <a href="/portal.html" class="btn btn-outline">
+        <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập Học Viên
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="hero-tag"><i class="fa-solid fa-star"></i> GIẢI PHÁP SỐ MỘT CHO PHÁI MẠNH</span>
+        <h1 class="hero-title">
+          Tái Sinh Bản Lĩnh Nam Giới<br>Trong <span>21 Ngày</span>
+        </h1>
+        <p class="hero-desc">
+          Ebook <strong>"Mật Mã 21"</strong> đúc kết toàn diện lộ trình thực hành y sinh học sàn chậu cơ học và chu kỳ Start-Stop tự điều hòa hệ thần kinh. Tự rèn luyện bảo mật tại nhà - 100% tự nhiên - Không phụ thuộc thuốc hay hóa chất.
+        </p>
+        
+        <div class="hero-highlights">
+          <div class="highlight-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h4>Phanh PC Cơ Học</h4>
+            <p>Làm khỏe cơ mu cụt (PC) tạo lực phanh sinh học chủ động.</p>
+          </div>
+          <div class="highlight-card">
+            <i class="fa-solid fa-wind"></i>
+            <h4>Nhịp thở 4-2-6</h4>
+            <p>Hạ kích thích Adrenaline bằng cách kích hoạt phế vị.</p>
+          </div>
+          <div class="highlight-card">
+            <i class="fa-solid fa-rotate"></i>
+            <h4>Chu kỳ Start-Stop</h4>
+            <p>Tái lập trình não bộ chịu hưng phấn ngưỡng cao.</p>
+          </div>
+        </div>
+        
+        <div style="display:flex; gap:16px; align-items:center;">
+          <a href="#order-section" class="btn btn-accent btn-lg">
+            <i class="fa-solid fa-cart-shopping"></i> ĐẶT MUA EBOOK NGAY - 686.868đ
+          </a>
+          <span style="font-size:13px; color:var(--text-muted);"><del>1.200.000đ</del> (-43% hôm nay)</span>
+        </div>
       </div>
       
-      <!-- Overall Progress -->
-      <div class="overall-progress-container">
-        <div class="progress-info">
-          <span class="progress-label">Tiến trình thử thách:</span>
-          <span class="progress-percent" id="progress-text">0%</span>
-        </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
-        </div>
-      </div>
-      
-      <!-- Top Navigation Tabs -->
-      <nav class="header-nav">
-        <button class="nav-tab active" data-tab="dashboard">
-          <i class="fa-solid fa-gauge-high"></i> Dashboard
-        </button>
-        <button class="nav-tab" data-tab="lessons">
-          <i class="fa-solid fa-book-open"></i> Lộ trình học
-        </button>
-        <button class="nav-tab" data-tab="tracker">
-          <i class="fa-solid fa-chart-line"></i> Theo dõi kết quả
-        </button>
-      </nav>
-
-      <!-- Header User Profile -->
-      <div class="header-user" id="header-user-info" style="display: none;">
-        <span class="header-user-name" id="user-display-name">Học Viên</span>
-        <button class="btn-logout" id="btn-logout-action" title="Đăng xuất">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-      </div>
-    </header>
-
-    <!-- Main Workspace -->
-    <main class="app-main">
-      
-      <!-- ================= TAB: DASHBOARD ================= -->
-      <section class="tab-content active" id="tab-dashboard">
-        <div class="dashboard-hero">
-          <div class="hero-text">
-            <h2>Tái Sinh Bản Lĩnh Phái Mạnh Tại Nhà</h2>
-            <p>Lộ trình 21 ngày rèn luyện phản xạ cơ sàn chậu và điều hòa hệ thần kinh tự nhiên giúp bạn làm chủ cơ thể bền vững.</p>
-            <button class="btn btn-primary" id="btn-start-course">
-              Bắt đầu luyện tập <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-          <div class="hero-badge">
-            <span class="price-tag" id="site-price">686.868đ</span>
-            <span class="badge-label">Giá trị trọn gói</span>
-          </div>
-        </div>
-
-        <div class="dashboard-grid">
-          <!-- Metric Cards -->
-          <div class="dashboard-card card-stat">
-            <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
-            <div class="stat-content">
-              <h3>Số ngày đã hoàn thành</h3>
-              <p class="stat-value" id="stat-completed-days">0/21</p>
-            </div>
-          </div>
-          <div class="dashboard-card card-stat">
-            <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
-            <div class="stat-content">
-              <h3>Chuỗi ngày liên tục</h3>
-              <p class="stat-value" id="stat-streak">0 ngày</p>
-            </div>
-          </div>
-          <div class="dashboard-card card-stat">
-            <div class="stat-icon"><i class="fa-solid fa-certificate"></i></div>
-            <div class="stat-content">
-              <h3>Trạng thái bản lĩnh</h3>
-              <p class="stat-value" id="stat-status">Khởi động</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Medical Screening & Partner Section -->
-        <div class="dashboard-split-panels">
-          <div class="dashboard-card screening-panel">
-            <h3><i class="fa-solid fa-heart-pulse text-danger"></i> Bộ lọc Sàng lọc Y khoa ban đầu</h3>
-            <p class="panel-subtitle">Hãy xác nhận tình trạng sức khỏe của bạn trước khi bắt đầu bài tập:</p>
-            <div class="checklist">
-              <label class="check-item">
-                <input type="checkbox" id="screen-no-pain">
-                <span>Không bị đau nhức vùng chậu, tiểu tiện bình thường (không buốt/rắt).</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" id="screen-no-erectile">
-                <span>Không có rối loạn cương dương nghiêm trọng đi kèm.</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" id="screen-no-spine">
-                <span>Không có tiền sử chấn thương cột sống hoặc phẫu thuật vùng chậu.</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" id="screen-commitment">
-                <span>Sẵn sàng tập đều đặn ít nhất 21 ngày liên tục.</span>
-              </label>
-            </div>
-            <div class="screening-alert" id="screening-result">
-              Vui lòng tích chọn đầy đủ 4 điều kiện để bắt đầu chương trình một cách an toàn.
-            </div>
-          </div>
-
-          <div class="dashboard-card partner-panel">
-            <h3><i class="fa-solid fa-users text-primary"></i> Cẩm nang đồng hành bảo mật</h3>
-            <p>Hành trình 21 ngày sẽ đạt hiệu quả gấp đôi nếu có sự thấu hiểu từ bạn đời:</p>
-            <ul class="partner-list">
-              <li>
-                <i class="fa-solid fa-lock text-success"></i>
-                <div>
-                  <strong>Bảo mật tuyệt đối:</strong>
-                  <span>Giao dịch ẩn danh và thông tin học tập của bạn được mã hóa hoàn toàn trên hệ thống.</span>
-                </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-comments text-info"></i>
-                <div>
-                  <strong>Giao tiếp cởi mở:</strong>
-                  <span>Thống nhất ám hiệu dừng ở tuần thứ 3 (nhấp nhẹ hoặc nói "dừng") để thực hành Start-Stop.</span>
-                </div>
-              </li>
-              <li>
-                <i class="fa-solid fa-ban text-warning"></i>
-                <div>
-                  <strong>Không đặt áp lực:</strong>
-                  <span>Cam kết không bình luận về thời gian. Sự thư giãn tinh thần là điều kiện bắt buộc để hạ hưng phấn.</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= TAB: LESSONS VIEW ================= -->
-      <section class="tab-content" id="tab-lessons">
-        <div class="lessons-layout">
-          <!-- Sidebar: Course Navigation -->
-          <aside class="lessons-sidebar">
-            <div class="sidebar-header">
-              <h3>Chương trình đào tạo</h3>
-              <p>Mục lục 21 ngày thử thách</p>
-            </div>
-            <div class="sidebar-curriculum" id="curriculum-list">
-              <!-- Dynamically populated modules and lessons -->
-              <div class="loading-spinner">Đang tải giáo trình...</div>
-            </div>
-          </aside>
-
-          <!-- Main Content Viewport -->
-          <article class="lesson-viewport">
-            <div id="lesson-content-box" style="display: none;">
-              <div class="lesson-meta-header">
-                <span class="lesson-tag" id="lesson-module-tag">Module 1</span>
-                <span class="lesson-duration"><i class="fa-regular fa-clock"></i> <span id="lesson-time">15</span> phút</span>
-              </div>
-              <h2 class="lesson-title" id="lesson-main-title">Ngày 1: Nhận diện cơ sàn chậu</h2>
-              
-              <!-- Player Tabs & Viewport -->
-              <div class="player-wrapper">
-                <div class="player-tabs" id="player-tabs-bar" style="display: none;">
-                  <button class="player-tab-btn active" id="btn-tab-video"><i class="fa-solid fa-video"></i> Video Bài Học</button>
-                  <button class="player-tab-btn" id="btn-tab-tool"><i class="fa-solid fa-gauge-high"></i> Trợ Lý Luyện Tập Trực Quan</button>
-                </div>
-                
-                <!-- Embedded Video/Audio Player -->
-                <div class="video-player-container" id="video-container">
-                  <div class="video-overlay" id="video-overlay">
-                    <i class="fa-regular fa-circle-play play-btn-overlay"></i>
-                    <p>Nhấp để phát Video/Audio hướng dẫn bài tập</p>
-                  </div>
-                  <iframe id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-
-                <!-- Custom Interactive Tools Container -->
-                <div class="interactive-tool-container" id="interactive-tool-container" style="display: none;"></div>
-              </div>
-
-              <!-- Detailed Content -->
-              <div class="lesson-body-content markdown-body" id="lesson-body">
-                <!-- Rendered Markdown goes here -->
-              </div>
-
-              <!-- Lesson Controls -->
-              <div class="lesson-footer-controls">
-                <button class="btn btn-secondary" id="btn-prev-lesson">
-                  <i class="fa-solid fa-chevron-left"></i> Bài trước
-                </button>
-                
-                <button class="btn btn-success" id="btn-complete-lesson">
-                  <i class="fa-solid fa-check"></i> Đánh dấu hoàn thành
-                </button>
-                
-                <button class="btn btn-secondary" id="btn-next-lesson">
-                  Bài tiếp theo <i class="fa-solid fa-chevron-right"></i>
-                </button>
-              </div>
-            </div>
-            <div id="lesson-empty-state">
-              <i class="fa-solid fa-book-open empty-icon"></i>
-              <h3>Chọn một bài học từ danh mục bên trái</h3>
-              <p>Hãy bắt đầu từ Module 0 để chuẩn bị các kiến thức cơ sở và sàng lọc sức khỏe.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ================= TAB: PROGRESS TRACKER ================= -->
-      <section class="tab-content" id="tab-tracker">
-        <div class="tracker-layout">
-          <!-- Log Input Form -->
-          <div class="tracker-form-card">
-            <h3><i class="fa-solid fa-pen-to-square"></i> Ghi nhận kết quả tập luyện</h3>
-            <p class="form-desc">Theo dõi sự thay đổi của thời gian nhịn thâm nhập (IELT) và mức độ kiểm soát qua các tuần.</p>
-            
-            <form id="tracker-form" class="log-form">
-              <div class="form-group">
-                <label for="log-week">Tuần rèn luyện</label>
-                <select id="log-week" required>
-                  <option value="Tuần 1">Tuần 1 (Kích hoạt)</option>
-                  <option value="Tuần 2">Tuần 2 (Sức bền)</option>
-                  <option value="Tuần 3">Tuần 3 (Thực chiến)</option>
-                  <option value="Duy trì">Sau 21 ngày (Bảo trì)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="log-ielt">Thời gian thâm nhập ước tính (IELT - giây)</label>
-                <input type="number" id="log-ielt" placeholder="Ví dụ: 60" min="0" required>
-              </div>
-              <div class="form-group">
-                <label for="log-control">Khả năng tự kiểm soát (Thang điểm 1 - 10)</label>
-                <input type="number" id="log-control" min="1" max="10" placeholder="1 đến 10" required>
-              </div>
-              <div class="form-group">
-                <label for="log-confidence">Mức độ tự tin (Thang điểm 1 - 10)</label>
-                <input type="number" id="log-confidence" min="1" max="10" placeholder="1 đến 10" required>
-              </div>
-              <div class="form-group full-width">
-                <label for="log-note">Ghi chú (Cảm nhận cơ chậu, tư thế tập...)</label>
-                <textarea id="log-note" rows="3" placeholder="Ví dụ: Đã kiểm soát tốt ở tư thế nằm gập chân. Khi chuyển sang đứng vẫn còn hơi mỏi mông."></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary btn-submit">
-                Lưu kết quả <i class="fa-solid fa-floppy-disk"></i>
-              </button>
-            </form>
-          </div>
-
-          <!-- Logs Table / Visual History -->
-          <div class="tracker-history-card">
-            <div class="history-header">
-              <h3><i class="fa-solid fa-list-check"></i> Nhật ký lịch sử tập luyện</h3>
-              <button class="btn btn-danger btn-sm" id="btn-clear-logs">
-                <i class="fa-solid fa-trash-can"></i> Xóa lịch sử
-              </button>
-            </div>
-            <div class="table-container">
-              <table class="history-table" id="logs-table">
-                <thead>
-                  <tr>
-                    <th>Giai đoạn</th>
-                    <th>IELT (giây)</th>
-                    <th>Kiểm soát</th>
-                    <th>Tự tin</th>
-                    <th>Ghi chú</th>
-                    <th>Ngày ghi nhận</th>
-                  </tr>
-                </thead>
-                <tbody id="logs-table-body">
-                  <!-- Dynamically populated rows -->
-                  <tr class="empty-row">
-                    <td colspan="6">Chưa có kết quả tập luyện được ghi nhận. Hãy lưu lượt tập đầu tiên của bạn!</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- Support Footer -->
-    <footer class="app-footer">
-      <p>© 2026 Mật Mã 21. Bảo lưu mọi quyền.</p>
-      <div class="footer-support-links">
-        <a href="mailto:support@themencode.vn" id="site-support-email"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
-        <a href="https://zalo.me/0377014982" target="_blank" id="site-zalo-link" class="zalo-link"><i class="fa-solid fa-comment-dots"></i> Hỗ trợ Zalo 1:1</a>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Authentication Overlay -->
-  <div class="auth-overlay" id="auth-overlay" style="display: none;">
-    <div class="auth-card">
-      <div class="auth-header">
-        <div class="auth-logo">
-          <i class="fa-solid fa-shield-halved logo-icon"></i>
-          <h2>Mật Mã 21</h2>
-        </div>
-        <p class="auth-subtitle">Cổng học tập bảo mật lộ trình bản lĩnh</p>
-      </div>
-      
-      <!-- Tabs to switch between Login and Register -->
-      <div class="auth-tabs">
-        <button class="auth-tab-btn active" id="tab-login-btn">Đăng Nhập</button>
-        <button class="auth-tab-btn" id="tab-register-btn">Đăng Ký</button>
-      </div>
-      
-      <!-- Alerts -->
-      <div class="auth-alert error" id="auth-error-alert"></div>
-      <div class="auth-alert success" id="auth-success-alert"></div>
-      
-      <!-- Login Form -->
-      <form class="auth-form" id="login-form">
-        <div class="form-group">
-          <label for="login-email">Email hoặc Số điện thoại</label>
-          <input type="text" id="login-email" placeholder="Nhập email của bạn..." required>
-        </div>
-        <div class="form-group">
-          <label for="login-password">Mật khẩu</label>
-          <input type="password" id="login-password" placeholder="Nhập mật khẩu..." required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-submit">
-          Đăng Nhập <i class="fa-solid fa-right-to-bracket"></i>
-        </button>
-      </form>
-      
-      <!-- Register Form -->
-      <form class="auth-form" id="register-form" style="display: none;">
-        <div class="form-group">
-          <label for="register-name">Họ và Tên</label>
-          <input type="text" id="register-name" placeholder="Nhập họ tên của bạn..." required>
-        </div>
-        <div class="form-group">
-          <label for="register-email">Email hoặc Số điện thoại</label>
-          <input type="text" id="register-email" placeholder="Tài khoản đăng nhập..." required>
-        </div>
-        <div class="form-group">
-          <label for="register-password">Mật khẩu</label>
-          <input type="password" id="register-password" placeholder="Nhập mật khẩu tự chọn..." required>
-        </div>
-        <div class="form-group">
-          <label for="register-key">Mã kích hoạt khóa học (Nếu có)</label>
-          <input type="text" id="register-key" placeholder="Ví dụ: MATMA21-XXXX">
-        </div>
-        <button type="submit" class="btn btn-primary btn-submit">
-          Đăng Ký Tài Khoản <i class="fa-solid fa-user-plus"></i>
-        </button>
-      </form>
-      
-      <div class="auth-footer">
-        <p>Gặp khó khăn? <a href="https://zalo.me/0377014982" target="_blank" id="auth-zalo-support">Hỗ trợ kích hoạt Zalo</a></p>
+      <div class="ebook-image-wrapper">
+        <img src="/ebook_cover.png" alt="Bìa sách Ebook Mật Mã 21" class="ebook-cover">
       </div>
     </div>
-  </div>
+  </section>
 
-  <script type="module" src="/app.js"></script>
+  <!-- ================= SCIENCE SECTION ================= -->
+  <section class="science">
+    <div class="container">
+      <h2 class="section-title light">Ba Trụ Cột <span>Y Sinh Học</span> Kiểm Soát</h2>
+      <div class="science-grid">
+        <div class="science-card">
+          <div class="science-num">01</div>
+          <h3>Phanh Cơ Học (Cơ PC)</h3>
+          <p>
+            Cơ sàn chậu (đặc biệt là nhóm cơ Mu Cụt - PC) hoạt động như một van cơ học chặn áp lực lưu dẫn tinh. Bằng việc luyện tập co thắt độc lập ở các tư thế Nằm, Ngồi, Đứng, bạn sẽ chủ động "phanh" được phản xạ xuất tinh khi muốn.
+          </p>
+        </div>
+        
+        <div class="science-card">
+          <div class="science-num">02</div>
+          <h3>Điều Hòa Đối Giao Cảm</h3>
+          <p>
+            Khi hưng phấn tăng cao, hệ giao cảm (kích thích) chiếm ưu thế làm tim đập nhanh và co thắt cơ chậu ngoài tầm kiểm soát. Kỹ thuật thở phế vị 4-2-6 sẽ kích hoạt hệ đối giao cảm (thư giãn), hạ nhịp tim và giữ bạn ở vùng an toàn.
+          </p>
+        </div>
+        
+        <div class="science-card">
+          <div class="science-num">03</div>
+          <h3>Giải Mẫn Cảm Phản Xạ</h3>
+          <p>
+            Thông qua kỹ thuật Start-Stop solo và tích hợp đối tác, não bộ được làm quen dần với xúc giác ở ngưỡng cao (mức 7.5/10) và học cách dừng đúng lúc, giải tỏa nhiệt lượng và lặp lại mà không cán mốc ranh giới xuất tinh tự phát.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CURRICULUM SECTION ================= -->
+  <section class="curriculum">
+    <div class="container">
+      <h2 class="section-title">Nội Dung Lộ Trình <span>21 Ngày Rèn Luyện</span></h2>
+      
+      <div class="curr-tabs-wrapper">
+        <div class="curr-weeks-row">
+          <button class="curr-week-tab active" onclick="switchWeek(1)">Tuần 1: Kích Hoạt & Kết Nối</button>
+          <button class="curr-week-tab" onclick="switchWeek(2)">Tuần 2: Sức Bền & Thang Đo</button>
+          <button class="curr-week-tab" onclick="switchWeek(3)">Tuần 3: Start-Stop & Thực Chiến</button>
+        </div>
+        
+        <div class="curr-list" id="curriculum-content">
+          <!-- Dynamic Week Items Go Here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHECKOUT / ORDER SECTION ================= -->
+  <section class="checkout" id="order-section">
+    <div class="container">
+      <h2 class="section-title">Nhận Tài Khoản <span>Ebook & Cổng Học Tập</span> Ngay</h2>
+      <div class="checkout-card">
+        
+        <!-- Left form side -->
+        <div class="checkout-form-side">
+          <h3 style="margin-bottom:20px; font-weight:800; font-size:20px;">Thông tin đặt mua</h3>
+          <form id="order-form">
+            <div class="form-group">
+              <label for="order-name">Họ và Tên</label>
+              <input type="text" id="order-name" placeholder="Nhập họ tên của bạn..." required>
+            </div>
+            
+            <div class="form-group">
+              <label for="order-phone">Số Điện Thoại / Zalo</label>
+              <input type="tel" id="order-phone" placeholder="Nhập số điện thoại nhận kích hoạt..." required>
+            </div>
+            
+            <div class="form-group">
+              <label for="order-email">Email nhận sách điện tử</label>
+              <input type="email" id="order-email" placeholder="Nhập email của bạn..." required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content:center; padding:15px; margin-top:10px;">
+              <i class="fa-solid fa-qrcode"></i> Tạo Mã Quét Thanh Toán
+            </button>
+          </form>
+        </div>
+        
+        <!-- Right QR side -->
+        <div class="checkout-payment-side" id="payment-area">
+          <div style="text-align:center; opacity: 0.6; padding: 40px 0;" id="qr-placeholder">
+            <i class="fa-solid fa-circle-info" style="font-size:36px; color:var(--accent); margin-bottom:12px;"></i>
+            <p style="font-size:14px; max-width:240px; margin: 0 auto;">Vui lòng điền đầy đủ thông tin bên trái để tạo mã quét QR thanh toán tự động.</p>
+          </div>
+          
+          <div id="qr-box" style="display:none; width: 100%; text-align:center; align-items:center; flex-direction:column;">
+            <div class="qr-container">
+              <img src="" alt="QR Thanh Toán" class="qr-image" id="qr-img">
+            </div>
+            <div class="bank-info">
+              <p>Chuyển khoản chính xác số tiền: <strong style="font-size:16px;">686.868đ</strong></p>
+              <p>Nội dung chuyển khoản: <strong id="qr-info-code">MA21 09xx</strong></p>
+              <p style="font-size:11px; margin-top:10px; color:rgba(255,255,255,0.6);">Hệ thống sẽ tự động gửi tài khoản đăng nhập portal đọc Ebook tương tác và gửi file PDF qua Email/Zalo của bạn ngay sau khi nhận được chuyển khoản.</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Mật Mã 21. Bảo lưu mọi quyền.</p>
+      <div class="footer-links">
+        <a href="mailto:support@themencode.vn"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
+        <a href="https://zalo.me/0377014982" target="_blank"><i class="fa-solid fa-comment-dots"></i> Hỗ trợ Zalo 1:1</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const curriculumData = {
+      1: [
+        { day: "M0", title: "Hướng dẫn sử dụng lộ trình & Sàng lọc y khoa", desc: "Sàng lọc y khoa quan trọng để xác định mức độ phù hợp và cẩm nang đồng hành bảo mật dành cho đối tác." },
+        { day: "N1", title: "Nhận diện cơ sàn chậu & Nhịp thở điều hòa", desc: "Học cách định vị chính xác cơ PC thông qua 3 kỹ thuật xúc giác và nhịp thở phế vị 4-2-6." },
+        { day: "N2", title: "Kết nối thần kinh cơ bản ở tư thế Nằm & Glute Bridge", desc: "Tạo thói quen điều khiển cơ PC độc lập ở tư thế nằm không trọng lực và tập nâng hông Glute Bridge." },
+        { day: "N3", title: "Định vị cơ chậu nâng cao & Bài tập Sit-up", desc: "Khắc phục lỗi gồng cơ phụ (mông, bụng) và thực hành bài tập gập bụng Sit-up giải phóng cơ chậu." },
+        { day: "N4", title: "Tăng thời gian giữ cơ sàn chậu & Dinh dưỡng Testosterone", desc: "Nâng thời gian siết giữ cơ ổn định lên 5 - 7 giây và thiết lập thực đơn tăng Testosterone phái mạnh." },
+        { day: "N5", title: "Kỹ thuật Kegel ngược & Bài tập Split Table Top", desc: "Học cách chủ động nới lỏng cơ sàn chậu (Kegel ngược) để hạ áp lực cơ chậu căng cứng mãn tính." },
+        { day: "N6", title: "Hóa giải áp lực hiệu suất tâm lý & Gluta Kick Back", desc: "Cắt đứt vòng lặp suy nghĩ lo âu hiệu suất và bài tập quỳ gối đá chân ra sau Gluta Kick Back." },
+        { day: "N7", title: "Đánh giá kết quả Tuần 1 & Single Leg Stretch", desc: "Hoàn thành bảng đánh giá tiến độ Tuần 1 và bài tập sức bền cơ bụng dưới Single Leg Stretch." }
+      ],
+      2: [
+        { day: "N8", title: "Luyện tập cơ chậu ở tư thế Ngồi & Single-Leg Glute Bridge", desc: "Tăng tải trọng lên cơ chậu ở tư thế ngồi thẳng ghế và biến thể cầu mông nâng 1 chân." },
+        { day: "N9", title: "Luyện tập cơ chậu ở tư thế Đứng & Sit-up liên sườn", desc: "Luyện tập cơ chậu ở tư thế khó nhất (Đứng thẳng) và thực hành bài gập bụng liên sườn chéo khuỷu." },
+        { day: "N10", title: "Nhận diện ranh giới hưng phấn & Thang đo 10 điểm", desc: "Chẩn đoán mức độ nhạy cảm của cơ thể thông qua thang đo 10 điểm chuẩn y học hành vi." },
+        { day: "N11", title: "Kỹ thuật Phanh khẩn cấp & Split Table Top nâng cao", desc: "Học cách siết nhanh 100% lực cơ chậu trong 1 giây để chặn đứng luồng hưng phấn tăng đột ngột." },
+        { day: "N12", title: "Phối hợp Phanh khẩn cấp và Thả lỏng sâu", desc: "Rèn luyện chuỗi hành động phản xạ hạ nhiệt nhanh: Siết phanh -> Thả lỏng Kegel ngược -> Thở 4-2-6." },
+        { day: "N13", title: "Kỹ thuật Sensate Focus Giai đoạn 1", desc: "Phương pháp trị liệu lâm sàng ngắt lo âu hiệu suất thông qua tiếp xúc chạm không sinh dục." },
+        { day: "N14", title: "Đánh giá kết quả Tuần 2 & Single Leg Stretch nâng cao", desc: "Kiểm tra sức bền sàn chậu đứng 10 giây và gập bụng nâng cao xoay cốt lõi." }
+      ],
+      3: [
+        { day: "N15", title: "Kỹ thuật Start-Stop một mình (GĐ 1)", desc: "Quy trình kích thích chạm ngưỡng 7.5 và dừng lại tự xả hưng phấn để não bộ thích nghi." },
+        { day: "N16", title: "Biểu đồ khoái cảm & Kỹ thuật 'Lãng tử quay đầu'", desc: "Vẽ bản đồ cảm giác cá nhân và thay đổi góc độ tiếp xúc chậu để giảm ma sát trực diện." },
+        { day: "N17", title: "Kỹ thuật ép gốc chậu (Basilar Squeeze) & Sit-up chéo", desc: "Học cách tự thực hiện ép vật lý chặn dòng tinh dịch tại gốc chậu khi chạm ngưỡng 8." },
+        { day: "N18", title: "Kịch bản giao tiếp bạn đời & Sensate Focus Giai đoạn 2", desc: "Xóa bỏ áp lực cực khoái bằng chạm sinh dục có nhịp dừng phối hợp cùng bạn đời." },
+        { day: "N19", title: "Start-Stop cùng đối tác & Kỹ thuật ép quy đầu (Coronal Squeeze)", desc: "Đối tác hỗ trợ kích thích và bóp nhẹ rãnh quy đầu khi bạn ra ám hiệu chạm ngưỡng 7.5." },
+        { day: "N20", title: "Tích hợp thâm nhập thực chiến & Tư thế kiểm soát nhịp", desc: "Quy trình phanh chậu khi bắt đầu thâm nhập, áp dụng tư thế cowgirl và nằm nghiêng ổn định." },
+        { day: "N21", title: "Tốt nghiệp thử thách & Kế hoạch duy trì trọn đời", desc: "Thiết lập kế hoạch rèn luyện bảo trì cơ chậu lâu dài để duy trì phong độ trọn đời." }
+      ]
+    };
+
+    function switchWeek(weekNum) {
+      document.querySelectorAll('.curr-week-tab').forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const contentBox = document.getElementById('curriculum-content');
+      contentBox.innerHTML = '';
+
+      curriculumData[weekNum].forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'curr-item';
+        div.innerHTML = `
+          <span class="curr-day-badge">${item.day}</span>
+          <div class="curr-item-detail">
+            <h4>${item.title}</h4>
+            <p>${item.desc}</p>
+          </div>
+        `;
+        contentBox.appendChild(div);
+      });
+    }
+
+    // Default to Week 1
+    switchWeek(1);
+
+    // Order form VietQR generator
+    const orderForm = document.getElementById('order-form');
+    const qrPlaceholder = document.getElementById('qr-placeholder');
+    const qrBox = document.getElementById('qr-box');
+    const qrImg = document.getElementById('qr-img');
+    const qrInfoCode = document.getElementById('qr-info-code');
+
+    orderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('order-name').value;
+      const phone = document.getElementById('order-phone').value;
+      const email = document.getElementById('order-email').value;
+
+      // Format clean data for bank description transfer code
+      // Format: MA21 [phone]
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const description = `MA21 ${cleanPhone}`;
+      
+      // MBBank VietQR image link
+      // Template compact2, account 0377014982, amount 686868
+      const encodedDesc = encodeURIComponent(description);
+      const vietQrUrl = `https://img.vietqr.io/image/mb-0377014982-compact2.png?amount=686868&addInfo=${encodedDesc}&accountName=HOANG%20TIEN%20DUNG`;
+
+      qrImg.src = vietQrUrl;
+      qrInfoCode.textContent = description;
+
+      qrPlaceholder.style.display = 'none';
+      qrBox.style.display = 'flex';
+
+      // Save mockup register session so they can try to enter portal easily
+      const mockSession = {
+        email: email,
+        name: name,
+        phone: phone,
+        status: "pending_payment"
+      };
+      
+      // Auto register user account locally for testing
+      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(mockSession));
+      
+      // Pre-add into account lists so they can bypass portal login for trial
+      let accounts = JSON.parse(localStorage.getItem('thuthach21ngay_accounts')) || [];
+      if (!accounts.some(a => a.email === email)) {
+        accounts.push({
+          email: email,
+          password: "123", // default temp pwd
+          name: name,
+          phone: phone,
+          role: "student"
+        });
+        localStorage.setItem('thuthach21ngay_accounts', JSON.stringify(accounts));
+      }
+
+      // Scroll smoothly to QR code on mobile
+      if (window.innerWidth < 992) {
+        document.getElementById('payment-area').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
 </body>
 </html>
