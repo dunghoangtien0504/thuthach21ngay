@@ -622,9 +622,9 @@
       
       <div class="curr-tabs-wrapper">
         <div class="curr-weeks-row">
-          <button class="curr-week-tab active" onclick="switchWeek(1)">Tuần 1: Kích Hoạt & Kết Nối</button>
-          <button class="curr-week-tab" onclick="switchWeek(2)">Tuần 2: Sức Bền & Thang Đo</button>
-          <button class="curr-week-tab" onclick="switchWeek(3)">Tuần 3: Start-Stop & Thực Chiến</button>
+          <button class="curr-week-tab active" onclick="switchWeek(1, this)">Tuần 1: Kích Hoạt & Kết Nối</button>
+          <button class="curr-week-tab" onclick="switchWeek(2, this)">Tuần 2: Sức Bền & Thang Đo</button>
+          <button class="curr-week-tab" onclick="switchWeek(3, this)">Tuần 3: Start-Stop & Thực Chiến</button>
         </div>
         
         <div class="curr-list" id="curriculum-content">
@@ -731,9 +731,11 @@
       ]
     };
 
-    function switchWeek(weekNum) {
+    function switchWeek(weekNum, btnElement) {
       document.querySelectorAll('.curr-week-tab').forEach(tab => tab.classList.remove('active'));
-      event.target.classList.add('active');
+      
+      const activeBtn = btnElement || document.querySelectorAll('.curr-week-tab')[weekNum - 1];
+      if (activeBtn) activeBtn.classList.add('active');
 
       const contentBox = document.getElementById('curriculum-content');
       contentBox.innerHTML = '';

@@ -538,6 +538,11 @@ function hasLoggedLesson(lessonId) {
 }
 
 function isLessonUnlocked(lessonId) {
+  // Always unlock for trial student
+  if (userSession && userSession.email === 'hocvien@thuthach21ngay.us') {
+    return true;
+  }
+  
   if (lessonId === 0) return true; // Day 0 is always unlocked
   
   const prevLessonId = lessonId - 1;
@@ -674,21 +679,26 @@ function setupInteractiveLessons() {
   btnNextLesson.addEventListener('click', () => {
     if (currentLessonId === null) return;
     
-    if (currentLessonId > 0) {
-      const isCompleted = completedLessons.includes(currentLessonId);
-      const isLogged = hasLoggedLesson(currentLessonId);
-      
-      if (!isCompleted || !isLogged) {
-        alert("Bạn cần hoàn thành bài học và ghi nhật ký tập luyện hôm nay trước khi chuyển sang bài học mới!");
-        if (!isLogged) {
-          showLogModalForCurrentLesson();
+    // Bypass validation for trial account
+    const isTrialUser = userSession && userSession.email === 'hocvien@thuthach21ngay.us';
+    
+    if (!isTrialUser) {
+      if (currentLessonId > 0) {
+        const isCompleted = completedLessons.includes(currentLessonId);
+        const isLogged = hasLoggedLesson(currentLessonId);
+        
+        if (!isCompleted || !isLogged) {
+          alert("Bạn cần hoàn thành bài học và ghi nhật ký tập luyện hôm nay trước khi chuyển sang bài học mới!");
+          if (!isLogged) {
+            showLogModalForCurrentLesson();
+          }
+          return;
         }
-        return;
-      }
-    } else if (currentLessonId === 0) {
-      if (!completedLessons.includes(0)) {
-        alert("Bạn cần bấm 'Đánh dấu hoàn thành' bài chuẩn bị trước khi sang bài tiếp theo!");
-        return;
+      } else if (currentLessonId === 0) {
+        if (!completedLessons.includes(0)) {
+          alert("Bạn cần bấm 'Đánh dấu hoàn thành' bài chuẩn bị trước khi sang bài tiếp theo!");
+          return;
+        }
       }
     }
     
