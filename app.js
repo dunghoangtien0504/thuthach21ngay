@@ -361,7 +361,9 @@ async function loadCourseData() {
       "/images/single_leg_stretch.svg",
       "/images/single_leg_glute_bridge.svg",
       "/images/oblique_sit_up.svg",
-      "/images/single_leg_stretch_adv.svg"
+      "/images/single_leg_stretch_adv.svg",
+      "/images/pelvic_anatomy.svg",
+      "/images/coronal_squeeze.svg"
     ];
     let dbStr = customDb;
     let hasUpdated = false;
