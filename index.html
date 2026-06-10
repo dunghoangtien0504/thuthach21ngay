@@ -301,110 +301,190 @@
       box-shadow: 0 45px 75px -12px rgba(13, 43, 26, 0.35);
     }
 
-    /* Section Scientific - Asymmetric Grid Layout */
+    /* Section Scientific - Sidebar & Vertical List Layout (Premium Re-arranged) */
     .science {
-      padding: 90px 0;
+      padding: 100px 0;
       background-color: var(--primary);
       color: #FFF;
       position: relative;
-      background-image: radial-gradient(circle at bottom right, rgba(184, 134, 11, 0.05) 0%, transparent 60%);
+      background-image: radial-gradient(circle at bottom left, rgba(184, 134, 11, 0.05) 0%, transparent 60%);
     }
 
-    .section-title {
-      text-align: center;
-      font-family: var(--font-heading);
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 50px;
-      color: var(--primary);
-    }
-
-    .section-title.light {
-      color: #FFF;
-    }
-
-    .section-title span {
-      color: var(--accent-bright);
-    }
-
-    /* Anti-Slop Asymmetric Layout (2 Columns Top, 1 Full-width Column Bottom) */
-    .science-grid {
+    .science-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    @media (max-width: 768px) {
-      .science-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .science-card {
-      background-color: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius-lg);
-      padding: 35px;
-      transition: var(--transition-smooth);
-      backdrop-filter: blur(5px);
-    }
-
-    .science-card:hover {
-      background-color: rgba(255, 255, 255, 0.06);
-      transform: translateY(-4px);
-      border-color: rgba(184, 134, 11, 0.2);
-    }
-
-    .science-card.featured {
-      grid-column: span 2;
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 40px;
-      align-items: center;
-      border: 1px solid rgba(184, 134, 11, 0.2);
-      background-color: rgba(184, 134, 11, 0.02);
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 60px;
+      align-items: start;
     }
 
     @media (max-width: 992px) {
-      .science-card.featured {
-        grid-column: span 1;
+      .science-layout {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 40px;
       }
     }
 
-    .science-num {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background-color: rgba(184, 134, 11, 0.15);
-      color: var(--accent-bright);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 20px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(184, 134, 11, 0.3);
-      font-family: var(--font-heading);
+    .science-intro {
+      position: sticky;
+      top: 110px;
     }
 
-    .science-card.featured .science-num {
-      margin-bottom: 0;
+    .science-intro h2 {
+      font-family: var(--font-heading);
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 24px;
+      color: #FFFFFF;
     }
 
-    .science-card h3 {
-      font-family: var(--font-heading);
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .science-intro h2 span {
       color: var(--accent-bright);
     }
 
-    .science-card p {
-      font-size: 15px;
+    .science-intro p {
+      font-size: 16px;
       color: rgba(255, 255, 255, 0.75);
-      line-height: 1.65;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .science-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .science-pillar-item {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      display: flex;
+      gap: 24px;
+      transition: var(--transition-smooth);
+    }
+
+    .science-pillar-item:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+      border-color: rgba(184, 134, 11, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .science-pillar-num {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent-bright);
+      line-height: 1;
+      opacity: 0.8;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding-right: 20px;
+      height: fit-content;
+    }
+
+    .science-pillar-content {
+      flex-grow: 1;
+    }
+
+    .science-pillar-content h3 {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+
+    .science-pillar-content p {
+      font-size: 14.5px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    /* Comparison Section Styling (Why other methods fail) */
+    .comparison-sec {
+      padding: 100px 0;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .comparison-card {
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      position: relative;
+      transition: var(--transition-smooth);
+      background-color: var(--bg-main);
+    }
+
+    .comparison-card.active-card {
+      border: 2px solid var(--accent);
+      background-color: #FDFBF7;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -15px;
+      right: 30px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary);
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .comparison-card h4 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--primary);
+    }
+
+    .comparison-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .comparison-card li {
+      font-size: 14.5px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      line-height: 1.6;
+    }
+
+    .comparison-card li i {
+      font-size: 18px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .comparison-card.normal li i {
+      color: var(--danger);
+    }
+
+    .comparison-card.active-card li i {
+      color: var(--secondary);
     }
 
     /* Curriculum Week section */
@@ -731,6 +811,82 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
+    /* FAQ Section Styling */
+    .faq-sec {
+      padding: 100px 0;
+      background-color: #FFFFFF;
+      border-top: 1px solid rgba(13, 43, 26, 0.04);
+    }
+
+    .faq-accordion {
+      max-width: 800px;
+      margin: 40px auto 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-main);
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(13, 43, 26, 0.15);
+    }
+
+    .faq-question {
+      padding: 22px 28px;
+      font-family: var(--font-heading);
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .faq-question i {
+      transition: var(--transition-smooth);
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: #FFFFFF;
+      border-top: 1px solid transparent;
+    }
+
+    .faq-answer p {
+      padding: 24px 28px;
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .faq-item.active {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 250px; /* arbitrary large value */
+      border-top-color: var(--border-light);
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
     /* Checkout & Register Order */
     .checkout {
       padding: 100px 0;
@@ -963,35 +1119,83 @@
     </div>
   </section>
 
-  <!-- ================= SCIENCE SECTION (Anti-Slop Asymmetric Layout) ================= -->
+  <!-- ================= SCIENCE SECTION (Sidebar & Vertical List Premium Re-arranged) ================= -->
   <section class="science">
-    <div class="container">
-      <h2 class="section-title light">Ba Trụ Cột <span>Y Sinh Học</span> Kiểm Sát Phản Xạ</h2>
-      <div class="science-grid">
-        <div class="science-card">
-          <div class="science-num">01</div>
-          <h3>Phanh Cơ Học (Cơ PC)</h3>
-          <p>
-            Cơ sàn chậu (đặc biệt là nhóm cơ Mu Cụt - PC) hoạt động như một van cơ học chặn áp lực lưu dẫn tinh. Bằng việc luyện tập co thắt độc lập ở các tư thế Nằm, Ngồi, Đứng, bạn sẽ chủ động "phanh" được phản xạ xuất tinh khi muốn.
-          </p>
+    <div class="container science-layout">
+      
+      <!-- Left column: Scientific intro -->
+      <div class="science-intro">
+        <h2>Ba Trụ Cột<br><span>Y Sinh Học</span><br>Kiểm Soát Phản Xạ</h2>
+        <p>
+          Chúng tôi không sử dụng các biện pháp can thiệp vật lý tức thời hay thuốc giảm nhạy cảm. "Mật Mã 21" tái cấu trúc và huấn luyện lại phản xạ tự nhiên của não bộ dựa trên nền tảng y học hành vi hiện đại thông qua 3 yếu tố cốt lõi.
+        </p>
+        <p style="font-size:14px; color:rgba(255,255,255,0.55); border-left: 2px solid var(--accent); padding-left: 15px;">
+          *Khuyến nghị bởi Hiệp hội Tiết niệu Châu Âu (EAU) như một phác đồ rèn luyện hành vi đầu tay cho nam giới.
+        </p>
+      </div>
+      
+      <!-- Right column: Pillars stacked list -->
+      <div class="science-pillars">
+        <div class="science-pillar-item">
+          <div class="science-pillar-num">01</div>
+          <div class="science-pillar-content">
+            <h3>Phanh Cơ Học (Cơ PC)</h3>
+            <p>
+              Cơ sàn chậu (đặc biệt là nhóm cơ Mu Cụt - PC) hoạt động như một van cơ học chặn áp lực lưu dẫn tinh. Bằng việc luyện tập co thắt độc lập ở các tư thế Nằm, Ngồi, Đứng, bạn sẽ chủ động "phanh" được phản xạ xuất tinh khi muốn.
+            </p>
+          </div>
         </div>
         
-        <div class="science-card">
-          <div class="science-num">02</div>
-          <h3>Điều Hòa Đối Giao Cảm</h3>
-          <p>
-            Khi hưng phấn tăng cao, hệ giao cảm (kích thích) chiếm ưu thế làm tim đập nhanh và co thắt cơ chậu ngoài tầm kiểm soát. Kỹ thuật thở phế vị 4-2-6 sẽ kích hoạt hệ đối giao cảm (thư giãn), hạ nhịp tim và giữ bạn ở vùng an toàn.
-          </p>
+        <div class="science-pillar-item">
+          <div class="science-pillar-num">02</div>
+          <div class="science-pillar-content">
+            <h3>Điều Hòa Đối Giao Cảm</h3>
+            <p>
+              Khi hưng phấn tăng cao, hệ giao cảm (kích thích) chiếm ưu thế làm tim đập nhanh và co thắt cơ chậu ngoài tầm kiểm soát. Kỹ thuật thở phế vị 4-2-6 sẽ kích hoạt hệ đối giao cảm (thư giãn), hạ nhịp tim và giữ bạn ở vùng an toàn.
+            </p>
+          </div>
         </div>
         
-        <div class="science-card featured">
-          <div class="science-num">03</div>
-          <div class="featured-text">
+        <div class="science-pillar-item">
+          <div class="science-pillar-num">03</div>
+          <div class="science-pillar-content">
             <h3>Giải Mẫn Cảm Phản Xạ Nhận Thức</h3>
             <p>
               Thông qua kỹ thuật Start-Stop solo và tích hợp đối tác, não bộ được làm quen dần với xúc giác ở ngưỡng cao (mức 7.5/10) và học cách dừng đúng lúc, giải tỏa nhiệt lượng và lặp lại mà không cán mốc ranh giới xuất tinh tự phát.
             </p>
           </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ================= COMPARISON SECTION (Why other methods fail) ================= -->
+  <section class="comparison-sec">
+    <div class="container">
+      <h2 class="section-title">Tại Sao Các Giải Pháp Khác <span>Lại Thất Bại?</span></h2>
+      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: -30px auto 50px auto; font-size: 16px;">
+        Nhiều nam giới đã thử đủ cách nhưng chỉ nhận lại sự thất vọng. Dưới đây là lý do tại sao các giải pháp thông thường chỉ giải quyết phần ngọn:
+      </p>
+      
+      <div class="comparison-grid">
+        <div class="comparison-card normal">
+          <h4>Chai Xịt Gây Tê / Gel Bôi / Ghìm Bằng Ý Chí</h4>
+          <ul>
+            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Làm đơ cứng, giảm khoái cảm:</strong> Triệt tiêu 80% cảm xúc của bản thân, đôi khi gây mất cảm giác cho đối tác.</span></li>
+            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Tác dụng nhất thời & Tác dụng phụ:</strong> Thuốc xịt hay ghìm ý chí chỉ là giải pháp tạm thời, gây lo âu, nhức đầu và giảm khả năng cương tự nhiên.</span></li>
+            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Không sửa được phản xạ:</strong> Ngay khi dừng thuốc xịt, phản xạ xuất tinh nhanh lập tức quay trở lại như cũ.</span></li>
+          </ul>
+        </div>
+        
+        <div class="comparison-card active-card">
+          <div class="popular-badge">GIẢI PHÁP KHOA HỌC TỰ NHIÊN</div>
+          <h4>Lộ Trình Tự Chủ Mật Mã 21</h4>
+          <ul>
+            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Huấn luyện lại phản xạ não bộ:</strong> Sửa trực tiếp cơ chế tự động kích hoạt phản xạ tại gốc chậu bằng Start-Stop và hơi thở.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Trọn vẹn cảm xúc thăng hoa:</strong> Không dùng hóa chất gây tê, giữ nguyên xúc giác và khoái cảm cho cả hai người.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Phong độ bền vững trọn đời:</strong> Sau 21 ngày, phản xạ được thiết lập vững chắc, không bao giờ bị phụ thuộc vào thuốc.</span></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -1079,7 +1283,7 @@
               <i class="fa-solid fa-kitchen-set"></i>
             </div>
             <div class="value-item-info">
-              <h4>Ebook "Thực Đơn Dinh Dưỡng Testosterone & Cẩm Nang Zn-Mg Cho Người Bận Rộn" <span class="value-price-badge free">Quà Tặng 5 - Trị giá 300.000đ</span></h4>
+              <h4>Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Cẩm Nang Zn-Mg Cho Người Bận Rộn" <span class="value-price-badge free">Quà Tặng 5 - Trị giá 300.000đ</span></h4>
               <p>Cẩm nang dinh dưỡng thiết kế riêng cho nam giới bận rộn để tăng sinh lý tự nhiên. Hướng dẫn các món ăn giàu vi chất Kẽm (Zinc) và Magie (Magnesium) giúp tăng sinh lực cơ chậu. Tích hợp cổng liên hệ mua thực phẩm bổ sung Zn & Mg chuẩn hóa trực tiếp từ chuyên gia qua Telegram.</p>
             </div>
           </div>
@@ -1122,6 +1326,54 @@
           </div>
         </div>
         
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ SECTION ================= -->
+  <section class="faq-sec">
+    <div class="container">
+      <h2 class="section-title">Giải Đáp <span>Thắc Mắc Tế Nhị</span></h2>
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Tài liệu này có thực sự hiệu quả không hay lại giống các bài tập Kegel miễn phí trên mạng?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Hoàn toàn khác biệt.</strong> Tập Kegel miễn phí trên mạng thường thiếu lộ trình khoa học và dễ mắc phải 4 lỗi sai chí mạng: nín thở, gồng cơ bụng/đùi/mông, tập quá sức gây co thắt sàn chậu mãn tính làm phản tác dụng. Mật Mã 21 là giáo trình phân cấp 21 ngày y khoa, kết hợp kỹ thuật thở bụng phế vị 4-2-6 để hạ nhịp tim và kỹ thuật giải mẫn cảm Start-Stop được kiểm chứng lâm sàng bởi Hiệp hội Tiết niệu Châu Âu.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Thanh toán xong có bị lộ thông tin không? Tên hiển thị trên sao kê tài khoản ngân hàng là gì?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Bảo mật tuyệt đối là ưu tiên số một của chúng tôi.</strong> Tên giao dịch chuyển khoản hiển thị trung tính là <strong>"FORMEN - TL Suc Khoe Nam Gioi"</strong>, hoàn toàn không chứa bất kỳ từ nhạy cảm nào. Tài liệu số và tài khoản học tập sẽ được gửi ẩn danh và bảo mật trực tiếp qua Telegram cá nhân hoặc Email của anh.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Tôi bị xuất tinh sớm từ hồi trẻ (nguyên phát), tập cái này liệu có chữa được không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Giáo trình có chương <strong>"Sàng lọc y khoa ban đầu (M0)"</strong> giúp anh tự đánh giá. Nếu nguyên nhân do cơ sàn chậu yếu, lo âu hiệu suất hoặc nhạy cảm thụ thể (chiếm hơn 80% trường hợp) thì lộ trình 21 ngày sẽ mang lại cải thiện vượt bậc. Nếu do viêm tuyến tiền liệt hoặc rối loạn nội tiết nặng, giáo trình sẽ hướng dẫn anh lộ trình kết hợp y tế chuyên sâu.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>21 ngày có thực sự đủ để cải thiện không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Đủ để thiết lập phản xạ mới.</strong> Cơ sàn chậu là nhóm cơ nhỏ, phản hồi kích thích thần kinh rất nhanh nếu tập đúng kỹ thuật co thắt độc lập. Lộ trình cung cấp "Quick Wins" (kịch bản điều hòa hơi thở bụng giảm hưng phấn) giúp anh thấy tiến bộ ngay trong tuần đầu tiên, và hình thành phản xạ tự chủ vững chắc sau 21 ngày.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1314,6 +1566,24 @@
       if (window.innerWidth < 992) {
         document.getElementById('payment-area').scrollIntoView({ behavior: 'smooth' });
       }
+    });
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const item = question.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // Close all items
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
