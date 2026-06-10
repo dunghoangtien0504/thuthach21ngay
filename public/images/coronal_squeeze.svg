@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">KỸ THUẬT ÉP QUY ĐẦU (CORONAL SQUEEZE)</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Kỹ thuật bóp rãnh quy đầu của Masters &amp; Johnson để ngắt dòng hưng phấn</text>
+  
+  <!-- Penis head anatomy mockup -->
+  <path d="M 180 200 L 330 200 C 340 200 350 170 380 170 C 430 170 430 230 380 230 C 350 230 340 200 180 200" fill="#E6DFD3" opacity="0.6" stroke="#0D2B1A" stroke-width="2" />
+  
+  <!-- Coronal groove line -->
+  <path d="M 350 174 Q 345 200 350 226" fill="none" stroke="#D4AF37" stroke-width="4" />
+  
+  <!-- Pinch point (Coronal groove) -->
+  <circle cx="347" cy="200" r="20" fill="none" stroke="#C0390E" stroke-width="4" stroke-dasharray="6" />
+  
+  <!-- Arrows indicating pinch force -->
+  <path d="M 347 165 L 347 190" fill="none" stroke="#C0390E" stroke-width="3" />
+  <polygon points="347,190 343,182 351,182" fill="#C0390E" />
+  
+  <path d="M 347 235 L 347 210" fill="none" stroke="#C0390E" stroke-width="3" />
+  <polygon points="347,210 343,218 351,218" fill="#C0390E" />
+  
+  <text x="280" y="145" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#C0390E">Rãnh quy đầu (Coronal Groove)</text>
+  <text x="300" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#0D2B1A" text-anchor="middle">Đối tác đặt ngón cái dưới dây hãm, ngón trỏ/giữa ở mặt trên rãnh quy đầu</text>
+  <text x="300" y="295" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Ép với lực vừa phải trong 10 - 20 giây để phản xạ phóng tinh dịch biến mất tức thì</text>
+
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">SENSATE FOCUS GIAI ĐOẠN 2: CHẠM SINH DỤC NHẸ</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Phối hợp bạn đời làm quen với kích thích vùng chậu có nhịp dừng</text>
+  
+  <!-- Body map guidelines for Phase 2 -->
+  <rect x="80" y="100" width="200" height="200" rx="10" fill="#FFF" stroke="#E6DFD3" stroke-width="2" />
+  <text x="180" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#0D2B1A" text-anchor="middle">ĐƯỢC PHÉP CHẠM</text>
+  <text x="180" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3D6B4A" text-anchor="middle">
+    <tspan x="180" dy="0">✓ Toàn thân (vai, lưng, tay, chân)</tspan>
+    <tspan x="180" dy="24">✓ Vùng mông và ngực</tspan>
+    <tspan x="180" dy="24">✓ Chạm nhẹ vùng sinh dục</tspan>
+    <tspan x="180" dy="24">✓ Kích thích chậm bằng tay</tspan>
+  </text>
+  
+  <rect x="320" y="100" width="200" height="200" rx="10" fill="#FFF" stroke="#E6DFD3" stroke-width="2" />
+  <text x="420" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#C0390E" text-anchor="middle">QUY TẮC NGHIÊM NGẶT</text>
+  <text x="420" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8B1E05" text-anchor="middle">
+    <tspan x="420" dy="0">✗ KHÔNG thâm nhập giao hợp</tspan>
+    <tspan x="420" dy="24">✗ KHÔNG hướng tới cực khoái</tspan>
+    <tspan x="420" dy="24">✓ Dừng lại khi chạm mức 7.5</tspan>
+    <tspan x="420" dy="24">✓ Áp dụng phanh chậu + thở</tspan>
+  </text>
+  
+  <text x="300" y="325" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Mục tiêu: Đưa việc siết phanh chậu và thở hạ hưng phấn vào trải nghiệm đôi lứa thực tế</text>
+
+</svg>

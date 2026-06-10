@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">BÀI TẬP GLUTA KICK BACK (ĐÁ CHÂN SAU)</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Quỳ gối trên thảm, đá một chân ra sau & lên cao để khỏe mông và cơ chậu</text>
+  
+  <line x1="80" y1="280" x2="520" y2="280" stroke="#E6DFD3" stroke-width="2" />
+  
+  <!-- All-fours stick figure -->
+  <!-- Hands -->
+  <line x1="200" y1="280" x2="200" y2="200" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Kneeling Leg -->
+  <path d="M 330 280 L 330 200 L 200 200" fill="none" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Head -->
+  <circle cx="160" cy="180" r="14" fill="#0D2B1A" />
+  
+  <!-- Active kick back leg -->
+  <path d="M 330 200 L 420 150 L 460 180" fill="none" stroke="#D4AF37" stroke-width="6" stroke-linecap="round" />
+  
+  <!-- Arrow for kick back movement -->
+  <path d="M 380 210 Q 430 190 420 160" fill="none" stroke="#AA7C11" stroke-width="2" stroke-dasharray="3" />
+  
+  <text x="400" y="120" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#AA7C11">Siết chặt mông & cơ chậu 2s</text>
+  <text x="230" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61">Lưng thẳng, không võng cột sống</text>
+
+</svg>

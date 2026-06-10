@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">BÀI TẬP GẬP BỤNG KIỂM SOÁT (SIT-UP)</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Gập bụng lên 45 độ, thở ra và thả lỏng hoàn toàn sàn chậu</text>
+  
+  <line x1="80" y1="280" x2="520" y2="280" stroke="#E6DFD3" stroke-width="2" />
+  
+  <!-- Stick figure in Sit-up posture -->
+  <!-- Feet on ground -->
+  <line x1="420" y1="280" x2="420" y2="220" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Thighs -->
+  <line x1="420" y1="220" x2="320" y2="280" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Torso (45 degrees up) -->
+  <line x1="320" y1="280" x2="220" y2="180" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Hands behind neck -->
+  <path d="M 220 180 L 190 190 L 180 170" fill="none" stroke="#0D2B1A" stroke-width="4" stroke-linecap="round" />
+  <!-- Head -->
+  <circle cx="200" cy="160" r="16" fill="#0D2B1A" />
+  
+  <!-- Highlight release area at pelvic base -->
+  <circle cx="320" cy="280" r="18" fill="#C0390E" opacity="0.2" />
+  <circle cx="320" cy="280" r="8" fill="#C0390E" />
+  
+  <!-- Annotations -->
+  <text x="340" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#C0390E">Thả lỏng hoàn toàn (Kegel Ngược)</text>
+  <text x="340" y="316" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61">Để không nén áp lực ruột xuống đáy chậu</text>
+  <text x="180" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61">Gập góc 45° & Thở ra chậm</text>
+
+</svg>

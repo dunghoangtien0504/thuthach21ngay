@@ -725,6 +725,15 @@ body {
   margin-bottom: 40px;
 }
 
+.lesson-body-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(13, 43, 26, 0.08);
+}
+
 /* Markdown tags style */
 .markdown-body h3 {
   font-family: var(--font-heading);

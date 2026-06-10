@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">BÀI TẬP CẦU MÔNG (GLUTE BRIDGE)</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Nằm ngửa gập gối, nâng cao hông thẳng đùi và siết cơ sàn chậu</text>
+  
+  <!-- Ground line -->
+  <line x1="80" y1="280" x2="520" y2="280" stroke="#E6DFD3" stroke-width="2" />
+  
+  <!-- Stick figure in Glute Bridge posture -->
+  <!-- Feet flat on ground -->
+  <line x1="450" y1="280" x2="450" y2="220" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Lower leg -->
+  <line x1="450" y1="220" x2="380" y2="150" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Hips to Knees (thighs) -->
+  <line x1="380" y1="150" x2="260" y2="150" stroke="#0D2B1A" stroke-width="8" stroke-linecap="round" />
+  <!-- Spine to neck -->
+  <line x1="260" y1="150" x2="160" y2="250" stroke="#0D2B1A" stroke-width="6" stroke-linecap="round" />
+  <!-- Head on ground -->
+  <circle cx="130" cy="265" r="16" fill="#0D2B1A" />
+  
+  <!-- Arrow indicating hip elevation -->
+  <path d="M 260 210 L 260 170" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)" />
+  <path d="M 255 178 L 260 170 L 265 178" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Highlight PC muscle squeeze area -->
+  <circle cx="280" cy="150" r="16" fill="url(#gold-grad)" opacity="0.3" />
+  <circle cx="280" cy="150" r="8" fill="url(#gold-grad)" />
+  
+  <!-- Annotations -->
+  <text x="290" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#AA7C11">Siết chặt cơ PC (50-60%)</text>
+  <text x="180" y="295" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61">Lưng trên chạm thảm, thả lỏng cổ</text>
+
+</svg>

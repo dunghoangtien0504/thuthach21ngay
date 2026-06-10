@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">DINH DƯỠNG THÚC ĐẨY TESTOSTERONE</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Các nhóm chất quan trọng tạo nên hoóc môn nam giới bền bỉ</text>
+  
+  <!-- Zinc -->
+  <rect x="70" y="110" width="130" height="180" rx="12" fill="#FFF" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  <circle cx="135" cy="155" r="25" fill="#0D2B1A" opacity="0.1" />
+  <text x="135" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#0D2B1A" text-anchor="middle">Zn</text>
+  <text x="135" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#0D2B1A" text-anchor="middle">Kẽm Sinh Học</text>
+  <text x="135" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">
+    <tspan x="135" dy="0">Hàu biển, hạt bí</tspan>
+    <tspan x="135" dy="16">Thịt bò nạc</tspan>
+  </text>
+
+  <!-- Vitamin D / Cholesterol -->
+  <rect x="235" y="110" width="130" height="180" rx="12" fill="#FFF" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  <circle cx="300" cy="155" r="25" fill="#D4AF37" opacity="0.1" />
+  <text x="300" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#AA7C11" text-anchor="middle">Vit D</text>
+  <text x="300" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#AA7C11" text-anchor="middle">Cholesterol Tốt</text>
+  <text x="300" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">
+    <tspan x="300" dy="0">Lòng đỏ trứng</tspan>
+    <tspan x="300" dy="16">Ánh nắng sáng</tspan>
+  </text>
+
+  <!-- Omega 3 / Fats -->
+  <rect x="400" y="110" width="130" height="180" rx="12" fill="#FFF" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  <circle cx="465" cy="155" r="25" fill="#C0390E" opacity="0.1" />
+  <text x="465" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" fill="#C0390E" text-anchor="middle">Fat</text>
+  <text x="465" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#C0390E" text-anchor="middle">Axit Béo Omega3</text>
+  <text x="465" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">
+    <tspan x="465" dy="0">Cá hồi, bơ, ô-liu</tspan>
+    <tspan x="465" dy="16">Hạt óc chó</tspan>
+  </text>
+
+</svg>

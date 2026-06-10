@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  
+  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">SENSATE FOCUS GIAI ĐOẠN 1: KHÔNG SINH DỤC</text>
+  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Tiếp xúc cơ thể giải tỏa áp lực cực khoái và lo âu hiệu suất</text>
+  
+  <!-- Male/Female body diagram outline -->
+  <rect x="120" y="100" width="150" height="200" rx="10" fill="#FFF" stroke="#E6DFD3" stroke-width="2" />
+  <text x="195" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#0D2B1A" text-anchor="middle">VÙNG ĐƯỢC CHẠM</text>
+  <text x="195" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#3D6B4A" text-anchor="middle">
+    <tspan x="195" dy="0">✓ Vai, cổ, lưng</tspan>
+    <tspan x="195" dy="20">✓ Bắp tay, cẳng tay</tspan>
+    <tspan x="195" dy="20">✓ Chân, bàn chân</tspan>
+    <tspan x="195" dy="20">✓ Da đầu, mặt</tspan>
+  </text>
+  
+  <rect x="330" y="100" width="150" height="200" rx="10" fill="#FFF" stroke="#E6DFD3" stroke-width="2" />
+  <text x="405" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#C0390E" text-anchor="middle">VÙNG CẤM KỴ</text>
+  <text x="405" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8B1E05" text-anchor="middle">
+    <tspan x="405" dy="0">✗ Vùng ngực</tspan>
+    <tspan x="405" dy="20">✗ Vùng mông</tspan>
+    <tspan x="405" dy="20">✗ Cơ quan sinh dục</tspan>
+    <tspan x="405" dy="20">✗ Tuyệt đối không giao hợp</tspan>
+  </text>
+  
+  <text x="300" y="325" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Mục tiêu: Đưa não bộ từ trạng thái lo lắng hiệu suất về tập trung vào xúc giác thuần túy</text>
+
+</svg>
