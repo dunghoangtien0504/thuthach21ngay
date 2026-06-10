@@ -58,6 +58,7 @@ let toolTimerInterval = null;
 let toolSecondaryInterval = null;
 let toolTimerSeconds = 0;
 let toolTimerRunning = false;
+let isSoundMuted = false;
 
 const btnPrevLesson = document.getElementById('btn-prev-lesson');
 const btnNextLesson = document.getElementById('btn-next-lesson');
@@ -704,6 +705,65 @@ function stopToolTimers() {
   toolTimerRunning = false;
 }
 
+function playChime(type = 'bell') {
+  if (isSoundMuted) return;
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    if (type === 'bell') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 1.0);
+    } else if (type === 'tick') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(440, ctx.currentTime); // A4
+      gain.gain.setValueAtTime(0.03, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.08);
+    } else if (type === 'success') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+      osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+      osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.3); // G5
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+    }
+  } catch (e) {
+    console.error("Audio failed", e);
+  }
+}
+
+function setupSoundToggler() {
+  const soundToggle = document.getElementById('tool-sound-toggle');
+  if (soundToggle) {
+    soundToggle.onclick = () => {
+      isSoundMuted = !isSoundMuted;
+      if (isSoundMuted) {
+        soundToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Âm thanh: <span>TẮT</span>';
+      } else {
+        soundToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i> Âm thanh: <span>BẬT</span>';
+        playChime('bell');
+      }
+    };
+    if (isSoundMuted) {
+      soundToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Âm thanh: <span>TẮT</span>';
+    }
+  }
+}
+
 
 
 function initializeInteractiveTool(toolType, lesson) {
@@ -725,6 +785,9 @@ function initializeInteractiveTool(toolType, lesson) {
 function initBreathingCoach(lesson) {
   interactiveToolContainer.innerHTML = `
     <div class="breathing-coach-box">
+      <div class="sound-switch" id="tool-sound-toggle">
+        <i class="fa-solid fa-volume-high"></i> Âm thanh: <span>BẬT</span>
+      </div>
       <div class="tool-badge">Hô Hấp Đối Giao Cảm 4-2-6</div>
       
       <div class="breathing-visual-area">
@@ -741,6 +804,8 @@ function initBreathingCoach(lesson) {
       </div>
     </div>
   `;
+  
+  setupSoundToggler();
   
   const outerCircle = document.getElementById('breathing-circle-outer');
   const innerCircle = document.getElementById('breathing-circle-inner');
@@ -766,6 +831,7 @@ function initBreathingCoach(lesson) {
       innerCircle.style.transform = "scale(1)";
       innerCircle.style.boxShadow = "0 0 40px #00ff88";
       btnStart.innerHTML = '<i class="fa-solid fa-play"></i> Bắt đầu';
+      playChime('success');
       return;
     }
     
@@ -782,6 +848,7 @@ function initBreathingCoach(lesson) {
       innerCircle.style.transform = "scale(1.4)";
       innerCircle.style.background = "radial-gradient(circle, #00ff88 0%, #0d2b1a 100%)";
       innerCircle.style.boxShadow = "0 0 40px #00ff88";
+      playChime('bell');
     } else if (cycleSec === 4) {
       // Hold phase (2 seconds)
       stateText.textContent = "GIỮ HƠI";
@@ -789,6 +856,7 @@ function initBreathingCoach(lesson) {
       innerCircle.style.transform = "scale(1.4)";
       innerCircle.style.background = "radial-gradient(circle, var(--warning) 0%, #8b6508 100%)";
       innerCircle.style.boxShadow = "0 0 50px var(--warning)";
+      playChime('bell');
     } else if (cycleSec === 6) {
       // Exhale phase (6 seconds)
       stateText.textContent = "THỞ RA";
@@ -796,6 +864,9 @@ function initBreathingCoach(lesson) {
       innerCircle.style.transform = "scale(0.85)";
       innerCircle.style.background = "radial-gradient(circle, var(--danger) 0%, #7c1a05 100%)";
       innerCircle.style.boxShadow = "0 0 30px rgba(192, 57, 14, 0.5)";
+      playChime('bell');
+    } else {
+      playChime('tick');
     }
   }
   
@@ -847,6 +918,9 @@ function initPelvicCoach(lesson) {
   interactiveToolContainer.innerHTML = `
     <div class="pelvic-coach-box">
       <div class="pelvic-coach-left">
+        <div class="sound-switch" id="tool-sound-toggle" style="position: static; margin-bottom: 10px;">
+          <i class="fa-solid fa-volume-high"></i> Âm thanh: <span>BẬT</span>
+        </div>
         <div>
           <div class="pelvic-instruction-title" id="pelvic-title-ui">${modelTitle}</div>
           <div class="pelvic-instruction-text" id="pelvic-desc-ui">${description}</div>
@@ -884,6 +958,8 @@ function initPelvicCoach(lesson) {
       </div>
     </div>
   `;
+  
+  setupSoundToggler();
   
   const btnStart = document.getElementById('btn-pelvic-start');
   const btnReset = document.getElementById('btn-pelvic-reset');
@@ -952,6 +1028,12 @@ function initPelvicCoach(lesson) {
       stateIndicator.textContent = "SIẾT CƠ CHẬU";
       stateIndicator.style.color = "var(--warning)";
       updateStickFigure(true);
+      
+      if (cycleSec === 0) {
+        playChime('bell');
+      } else {
+        playChime('tick');
+      }
     } else {
       // Relax phase (5 seconds)
       const relaxSec = cycleSec - 5;
@@ -961,6 +1043,12 @@ function initPelvicCoach(lesson) {
       stateIndicator.textContent = "THẢ LỎNG";
       stateIndicator.style.color = "#FFF";
       updateStickFigure(false);
+      
+      if (cycleSec === 5) {
+        playChime('bell');
+      } else {
+        playChime('tick');
+      }
     }
     
     step++;
@@ -978,6 +1066,7 @@ function initPelvicCoach(lesson) {
           stateIndicator.textContent = "HOÀN THÀNH";
           stateIndicator.style.color = "#00ff88";
           setText.textContent = "3/3";
+          playChime('success');
           return;
         }
         setText.textContent = `${sets}/3`;
@@ -1069,6 +1158,8 @@ function initArousalMeter(lesson) {
     const pct = ((level - 1) / 9) * 100;
     pointer.style.left = `${pct}%`;
     
+    playChime('tick');
+    
     const data = arousalData[level];
     
     let zoneClass = data.zone;
@@ -1097,6 +1188,9 @@ function initStartStopCoach(lesson) {
   interactiveToolContainer.innerHTML = `
     <div class="start-stop-box">
       <div class="start-stop-left">
+        <div class="sound-switch" id="tool-sound-toggle" style="position: static; margin-bottom: 5px;">
+          <i class="fa-solid fa-volume-high"></i> Âm thanh: <span>BẬT</span>
+        </div>
         <div>
           <div class="pelvic-instruction-title">Bộ Trợ Lý Luyện Tập Start-Stop</div>
           <div class="pelvic-instruction-text" style="margin-bottom: 15px;">Tự kích thích hoặc phối hợp đối tác. Bấm nút khi hưng phấn đạt mức 7.5 để thực hành chu kỳ dừng siết.</div>
@@ -1132,6 +1226,8 @@ function initStartStopCoach(lesson) {
       </div>
     </div>
   `;
+  
+  setupSoundToggler();
   
   const arousalInput = document.getElementById('arousal-range-input');
   const arousalNum = document.getElementById('startstop-arousal-num');
@@ -1219,6 +1315,8 @@ function initStartStopCoach(lesson) {
     btnAction.textContent = "ĐANG SIẾT PHANH CƠ CHẬU...";
     btnAction.className = "btn-tool";
     
+    playChime('bell');
+    
     toolTimerInterval = setInterval(() => {
       secondsRemaining--;
       const circle = document.getElementById('ss-countdown-circle');
@@ -1227,6 +1325,8 @@ function initStartStopCoach(lesson) {
       if (secondsRemaining <= 0) {
         clearInterval(toolTimerInterval);
         setRelaxationUI();
+      } else {
+        playChime('tick');
       }
     }, 1000);
   }
@@ -1250,6 +1350,8 @@ function initStartStopCoach(lesson) {
     `;
     btnAction.textContent = "THƯ GIÃN SÂU HẠ NHIỆT...";
     
+    playChime('bell');
+    
     toolTimerInterval = setInterval(() => {
       secondsRemaining--;
       const timerVal = document.getElementById('ss-relax-timer');
@@ -1267,6 +1369,8 @@ function initStartStopCoach(lesson) {
           updateArousalUI(1.0);
           setStimulationUI();
         }
+      } else {
+        playChime('tick');
       }
     }, 1000);
   }
@@ -1284,6 +1388,8 @@ function initStartStopCoach(lesson) {
     `;
     btnAction.disabled = true;
     btnAction.textContent = "ĐÃ HOÀN THÀNH 4 CHU KỲ!";
+    
+    playChime('success');
   }
   
   btnAction.onclick = () => {
