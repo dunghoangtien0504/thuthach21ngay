@@ -579,6 +579,16 @@ body {
   font-weight: 600;
 }
 
+.sidebar-lesson-btn.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sidebar-lesson-btn.locked:hover {
+  background: none;
+  color: var(--text-muted);
+}
+
 .lesson-btn-content {
   display: flex;
   align-items: center;
@@ -1118,7 +1128,7 @@ body {
   color: #FFFFFF;
 }
 
-.zalo-link {
+.telegram-link {
   font-weight: 600;
   color: var(--warning) !important;
 }

@@ -14,7 +14,7 @@ let blogPosts = JSON.parse(localStorage.getItem('thuthach21ngay_blog_posts')) ||
 let customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {
   siteTitle: import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh",
   price: import.meta.env.VITE_PRICE || "686.868đ",
-  zaloPhone: import.meta.env.VITE_ZALO_PHONE || "0377014982",
+  telegramUsername: import.meta.env.VITE_TELEGRAM_USERNAME || "matma21_support",
   supportEmail: import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn"
 };
 
@@ -93,7 +93,7 @@ const adminBlogList = document.getElementById('admin-blog-list');
 const adminConfigForm = document.getElementById('admin-config-form');
 const configSiteTitle = document.getElementById('config-site-title');
 const configPrice = document.getElementById('config-price');
-const configZalo = document.getElementById('config-zalo');
+const configTelegram = document.getElementById('config-telegram');
 const configEmail = document.getElementById('config-email');
 const btnExportConfig = document.getElementById('btn-export-config');
 
@@ -544,7 +544,7 @@ function setupConfigEditor() {
   // Populate
   if (configSiteTitle) configSiteTitle.value = customConfig.siteTitle;
   if (configPrice) configPrice.value = customConfig.price;
-  if (configZalo) configZalo.value = customConfig.zaloPhone;
+  if (configTelegram) configTelegram.value = customConfig.telegramUsername;
   if (configEmail) configEmail.value = customConfig.supportEmail;
 
   if (adminConfigForm) {
@@ -553,7 +553,7 @@ function setupConfigEditor() {
 
       customConfig.siteTitle = configSiteTitle.value.trim();
       customConfig.price = configPrice.value.trim();
-      customConfig.zaloPhone = configZalo.value.trim();
+      customConfig.telegramUsername = configTelegram.value.trim();
       customConfig.supportEmail = configEmail.value.trim();
 
       localStorage.setItem('thuthach21ngay_custom_config', JSON.stringify(customConfig));
@@ -573,7 +573,7 @@ function setupConfigEditor() {
       // Create .env file content
       const envContent = `VITE_SITE_TITLE="${customConfig.siteTitle}"
 VITE_PRICE="${customConfig.price}"
-VITE_ZALO_PHONE="${customConfig.zaloPhone}"
+VITE_TELEGRAM_USERNAME="${customConfig.telegramUsername}"
 VITE_SUPPORT_EMAIL="${customConfig.supportEmail}"
 `;
       const dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(envContent);

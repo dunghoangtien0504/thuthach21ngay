@@ -5,7 +5,7 @@ const customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_conf
 
 const SITE_TITLE = customConfig.siteTitle || import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh";
 const PRICE = customConfig.price || import.meta.env.VITE_PRICE || "686.868đ";
-const ZALO_PHONE = customConfig.zaloPhone || import.meta.env.VITE_ZALO_PHONE || "0377014982";
+const TELEGRAM_USERNAME = customConfig.telegramUsername || import.meta.env.VITE_TELEGRAM_USERNAME || "matma21_support";
 const SUPPORT_EMAIL = customConfig.supportEmail || import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn";
 
 // State Management
@@ -23,7 +23,7 @@ const siteTitleTag = document.getElementById('site-title-tag');
 const headerTitle = document.getElementById('header-title');
 const sitePrice = document.getElementById('site-price');
 const siteSupportEmail = document.getElementById('site-support-email');
-const siteZaloLink = document.getElementById('site-zalo-link');
+const siteTelegramLink = document.getElementById('site-telegram-link');
 
 const progressBar = document.getElementById('progress-bar');
 const progressText = document.getElementById('progress-text');
@@ -77,6 +77,16 @@ const trackerForm = document.getElementById('tracker-form');
 const logsTableBody = document.getElementById('logs-table-body');
 const btnClearLogs = document.getElementById('btn-clear-logs');
 
+// DOM Training Log Modal Elements
+const logModal = document.getElementById('log-modal');
+const modalTrackerForm = document.getElementById('modal-tracker-form');
+const btnCloseLogModal = document.getElementById('btn-close-log-modal');
+const modalLogIelt = document.getElementById('modal-log-ielt');
+const modalLogControl = document.getElementById('modal-log-control');
+const modalLogConfidence = document.getElementById('modal-log-confidence');
+const modalLogNote = document.getElementById('modal-log-note');
+const logModalTitle = document.getElementById('log-modal-title');
+
 // DOM Auth Elements
 const authOverlay = document.getElementById('auth-overlay');
 const tabLoginBtn = document.getElementById('tab-login-btn');
@@ -100,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupInteractiveLessons();
   setupScreeningChecklist();
   setupTracker();
+  setupLogModal();
 });
 
 // Configure Site Content from .env variables
@@ -113,9 +124,9 @@ function applyEnvConfigurations() {
     siteSupportEmail.innerHTML = `<i class="fa-solid fa-envelope"></i> ${SUPPORT_EMAIL}`;
   }
   
-  if (siteZaloLink) {
-    siteZaloLink.href = `https://zalo.me/${ZALO_PHONE}`;
-    siteZaloLink.innerHTML = `<i class="fa-solid fa-comment-dots"></i> Hỗ trợ Zalo 1:1`;
+  if (siteTelegramLink) {
+    siteTelegramLink.href = `https://t.me/${TELEGRAM_USERNAME}`;
+    siteTelegramLink.innerHTML = `<i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram 1:1`;
   }
 }
 
@@ -175,7 +186,7 @@ async function setupAuth() {
 
       if (matchedUser) {
         if (matchedUser.status === 'pending') {
-          showAuthError(`Tài khoản của bạn chưa được kích hoạt. Vui lòng bấm liên hệ Zalo bên dưới để Admin mở khóa!`);
+          showAuthError(`Tài khoản của bạn chưa được kích hoạt. Vui lòng bấm liên hệ Telegram bên dưới để Admin mở khóa!`);
         } else {
           // Success login
           userSession = { email: matchedUser.email, name: matchedUser.name };
@@ -248,12 +259,12 @@ async function setupAuth() {
         const msg = `Chào Admin, tôi vừa đăng ký tài khoản Mật Mã 21: ${name} (${email}). Nhờ Admin kích hoạt giúp tôi!`;
         navigator.clipboard.writeText(msg).catch(() => {});
         
-        showAuthSuccess(`Đăng ký thành công! Hãy gửi tin nhắn Zalo cho Admin để kích hoạt tài khoản của bạn. Thông tin yêu cầu đã được tự động copy.`);
+        showAuthSuccess(`Đăng ký thành công! Hãy gửi tin nhắn Telegram cho Admin để kích hoạt tài khoản của bạn. Thông tin yêu cầu đã được tự động copy.`);
         
-        const supportLink = document.getElementById('auth-zalo-support');
+        const supportLink = document.getElementById('auth-telegram-support');
         if (supportLink) {
-          supportLink.innerHTML = `<i class="fa-solid fa-comment-dots"></i> Click để nhắn Zalo kích hoạt ngay`;
-          supportLink.href = `https://zalo.me/${ZALO_PHONE}?text=${encodeURIComponent(msg)}`;
+          supportLink.innerHTML = `<i class="fa-brands fa-telegram"></i> Click để nhắn Telegram kích hoạt ngay`;
+          supportLink.href = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`;
           supportLink.className = "btn btn-success btn-submit";
           supportLink.style.display = "inline-flex";
           supportLink.style.marginTop = "15px";
@@ -397,22 +408,28 @@ function renderSidebar() {
     
     mod.lessons.forEach(lesson => {
       const isCompleted = completedLessons.includes(lesson.lesson_id);
+      const isUnlocked = isLessonUnlocked(lesson.lesson_id);
       
       const itemEl = document.createElement('li');
       itemEl.innerHTML = `
-        <button class="sidebar-lesson-btn ${currentLessonId === lesson.lesson_id ? 'active' : ''}" data-id="${lesson.lesson_id}">
+        <button class="sidebar-lesson-btn ${currentLessonId === lesson.lesson_id ? 'active' : ''} ${!isUnlocked ? 'locked' : ''}" data-id="${lesson.lesson_id}">
           <div class="lesson-btn-content">
-            <i class="fa-solid ${lesson.type === 'video' ? 'fa-video text-primary' : 'fa-file-lines text-muted'}"></i>
+            <i class="fa-solid ${!isUnlocked ? 'fa-lock text-muted' : (lesson.type === 'video' ? 'fa-video text-primary' : 'fa-file-lines text-muted')}"></i>
             <span class="lesson-btn-title">${lesson.title}</span>
           </div>
           <span class="lesson-status-icon ${isCompleted ? 'completed' : 'uncompleted'}">
-            <i class="fa-solid ${isCompleted ? 'fa-circle-check' : 'fa-circle'}"></i>
+            <i class="fa-solid ${!isUnlocked ? '' : (isCompleted ? 'fa-circle-check' : 'fa-circle')}"></i>
           </span>
         </button>
       `;
       
       const btn = itemEl.querySelector('button');
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        if (!isUnlocked) {
+          e.preventDefault();
+          alert(`Bài học này đang bị khóa. Bạn cần hoàn thành bài chuẩn bị hoặc bài tập trước đó và điền nhật ký tập luyện để mở khóa bài tiếp theo!`);
+          return;
+        }
         selectLesson(lesson.lesson_id);
       });
       
@@ -427,6 +444,19 @@ function renderSidebar() {
 // Select a lesson to view
 function selectLesson(id) {
   currentLessonId = id;
+  
+  // Sync tracker form defaults with selected lesson
+  const logDay = document.getElementById('log-day');
+  const logWeek = document.getElementById('log-week');
+  if (logDay) {
+    logDay.value = id.toString();
+  }
+  if (logWeek) {
+    if (id >= 1 && id <= 7) logWeek.value = 'Tuần 1';
+    else if (id >= 8 && id <= 14) logWeek.value = 'Tuần 2';
+    else if (id >= 15 && id <= 21) logWeek.value = 'Tuần 3';
+    else if (id === 0) logWeek.value = 'Tuần 1';
+  }
   
   let selectedLesson = null;
   let selectedModuleTitle = "";
@@ -502,24 +532,137 @@ function selectLesson(id) {
   lessonViewport.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// Helpers for Locked Progression & Diary Verification
+function hasLoggedLesson(lessonId) {
+  return progressLogs.some(log => log.lessonId === lessonId);
+}
+
+function isLessonUnlocked(lessonId) {
+  if (lessonId === 0) return true; // Day 0 is always unlocked
+  
+  const prevLessonId = lessonId - 1;
+  const prevCompleted = completedLessons.includes(prevLessonId);
+  const prevLogged = prevLessonId === 0 || hasLoggedLesson(prevLessonId);
+  
+  return prevCompleted && prevLogged;
+}
+
+function showLogModalForCurrentLesson() {
+  if (!logModal) return;
+  
+  let lessonTitle = "Bài học";
+  for (const mod of courseData) {
+    const found = mod.lessons.find(l => l.lesson_id === currentLessonId);
+    if (found) {
+      lessonTitle = found.title;
+      break;
+    }
+  }
+  
+  if (logModalTitle) {
+    logModalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square logo-icon"></i> Nhật Ký Ngày ${currentLessonId}`;
+  }
+  
+  logModal.style.display = 'flex';
+  modalTrackerForm.reset();
+  if (modalLogIelt) modalLogIelt.focus();
+}
+
+function setupLogModal() {
+  if (btnCloseLogModal && logModal) {
+    btnCloseLogModal.addEventListener('click', () => {
+      logModal.style.display = 'none';
+      modalTrackerForm.reset();
+    });
+  }
+  
+  if (modalTrackerForm) {
+    modalTrackerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      if (currentLessonId === null) return;
+      
+      let week = "Tuần 1";
+      if (currentLessonId >= 8 && currentLessonId <= 14) week = "Tuần 2";
+      else if (currentLessonId >= 15 && currentLessonId <= 21) week = "Tuần 3";
+      
+      const ielt = parseInt(modalLogIelt.value);
+      const control = parseInt(modalLogControl.value);
+      const confidence = parseInt(modalLogConfidence.value);
+      const note = modalLogNote.value.trim();
+      const date = new Date().toLocaleDateString('vi-VN');
+      
+      const newLog = { 
+        lessonId: currentLessonId, 
+        week, 
+        ielt, 
+        control, 
+        confidence, 
+        note, 
+        date 
+      };
+      
+      progressLogs.push(newLog);
+      localStorage.setItem('thuthach21ngay_logs', JSON.stringify(progressLogs));
+      
+      if (!completedLessons.includes(currentLessonId)) {
+        completedLessons.push(currentLessonId);
+        localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      }
+      
+      logModal.style.display = 'none';
+      modalTrackerForm.reset();
+      
+      alert("Đã lưu nhật ký và hoàn thành bài học thành công!");
+      updateCompletionButtonState();
+      renderSidebar();
+      updateProgressUI();
+      renderLogsTable();
+    });
+  }
+}
+
 // Setup Practice Controls
 function setupInteractiveLessons() {
   
   btnCompleteLesson.addEventListener('click', () => {
     if (currentLessonId === null) return;
     
-    const idx = completedLessons.indexOf(currentLessonId);
-    if (idx === -1) {
-      completedLessons.push(currentLessonId);
-    } else {
-      completedLessons.splice(idx, 1);
+    if (currentLessonId === 0) {
+      const idx = completedLessons.indexOf(0);
+      if (idx === -1) {
+        completedLessons.push(0);
+      } else {
+        completedLessons.splice(idx, 1);
+      }
+      localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      updateCompletionButtonState();
+      renderSidebar();
+      updateProgressUI();
+      return;
     }
     
-    localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+    const isCompleted = completedLessons.includes(currentLessonId);
+    const isLogged = hasLoggedLesson(currentLessonId);
     
-    updateCompletionButtonState();
-    renderSidebar();
-    updateProgressUI();
+    if (isCompleted) {
+      const idx = completedLessons.indexOf(currentLessonId);
+      completedLessons.splice(idx, 1);
+      localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      updateCompletionButtonState();
+      renderSidebar();
+      updateProgressUI();
+    } else {
+      if (!isLogged) {
+        showLogModalForCurrentLesson();
+      } else {
+        completedLessons.push(currentLessonId);
+        localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+        updateCompletionButtonState();
+        renderSidebar();
+        updateProgressUI();
+      }
+    }
   });
   
   btnPrevLesson.addEventListener('click', () => {
@@ -529,6 +672,26 @@ function setupInteractiveLessons() {
   });
   
   btnNextLesson.addEventListener('click', () => {
+    if (currentLessonId === null) return;
+    
+    if (currentLessonId > 0) {
+      const isCompleted = completedLessons.includes(currentLessonId);
+      const isLogged = hasLoggedLesson(currentLessonId);
+      
+      if (!isCompleted || !isLogged) {
+        alert("Bạn cần hoàn thành bài học và ghi nhật ký tập luyện hôm nay trước khi chuyển sang bài học mới!");
+        if (!isLogged) {
+          showLogModalForCurrentLesson();
+        }
+        return;
+      }
+    } else if (currentLessonId === 0) {
+      if (!completedLessons.includes(0)) {
+        alert("Bạn cần bấm 'Đánh dấu hoàn thành' bài chuẩn bị trước khi sang bài tiếp theo!");
+        return;
+      }
+    }
+    
     const flatLessons = [];
     courseData.forEach(mod => {
       mod.lessons.forEach(l => flatLessons.push(l.lesson_id));
@@ -629,22 +792,77 @@ function setupTracker() {
   
   renderLogsTable();
   
+  const logDay = document.getElementById('log-day');
+  const logWeek = document.getElementById('log-week');
+  
+  if (logDay && logWeek) {
+    logDay.addEventListener('change', () => {
+      const dayVal = logDay.value;
+      if (dayVal === 'Duy trì') {
+        logWeek.value = 'Duy trì';
+      } else {
+        const dayNum = parseInt(dayVal);
+        if (dayNum >= 1 && dayNum <= 7) {
+          logWeek.value = 'Tuần 1';
+        } else if (dayNum >= 8 && dayNum <= 14) {
+          logWeek.value = 'Tuần 2';
+        } else if (dayNum >= 15 && dayNum <= 21) {
+          logWeek.value = 'Tuần 3';
+        } else if (dayNum === 0) {
+          logWeek.value = 'Tuần 1';
+        }
+      }
+    });
+  }
+  
   trackerForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const week = document.getElementById('log-week').value;
+    const week = logWeek ? logWeek.value : 'Tuần 1';
+    const dayVal = logDay ? logDay.value : '0';
+    let targetLessonId = null;
+    if (dayVal !== 'Duy trì') {
+      targetLessonId = parseInt(dayVal);
+    }
+    
     const ielt = parseInt(document.getElementById('log-ielt').value);
     const control = parseInt(document.getElementById('log-control').value);
     const confidence = parseInt(document.getElementById('log-confidence').value);
     const note = document.getElementById('log-note').value;
     const date = new Date().toLocaleDateString('vi-VN');
     
-    const newLog = { week, ielt, control, confidence, note, date };
+    const newLog = { lessonId: targetLessonId, week, ielt, control, confidence, note, date };
     progressLogs.push(newLog);
     
     localStorage.setItem('thuthach21ngay_logs', JSON.stringify(progressLogs));
     
+    // Also mark lesson as completed if it's a valid lesson ID (> 0)
+    if (targetLessonId !== null && targetLessonId > 0 && !completedLessons.includes(targetLessonId)) {
+      completedLessons.push(targetLessonId);
+      localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      if (currentLessonId === targetLessonId) {
+        updateCompletionButtonState();
+      }
+      renderSidebar();
+      updateProgressUI();
+    } else if (targetLessonId === 0 && !completedLessons.includes(0)) {
+      completedLessons.push(0);
+      localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      if (currentLessonId === 0) {
+        updateCompletionButtonState();
+      }
+      renderSidebar();
+      updateProgressUI();
+    }
+    
     trackerForm.reset();
+    
+    // Re-sync after reset
+    if (logDay && currentLessonId !== null) {
+      logDay.value = currentLessonId.toString();
+      logDay.dispatchEvent(new Event('change'));
+    }
+    
     renderLogsTable();
   });
   
@@ -677,8 +895,15 @@ function renderLogsTable() {
   
 reversedLogs.forEach(log => {
     const row = document.createElement('tr');
+    
+    // Format week and day details
+    let phaseDisplay = log.week;
+    if (log.lessonId !== undefined && log.lessonId !== null) {
+      phaseDisplay += ` (Ngày ${log.lessonId})`;
+    }
+    
     row.innerHTML = `
-      <td><strong>${log.week}</strong></td>
+      <td><strong>${phaseDisplay}</strong></td>
       <td class="text-primary font-weight-bold">${log.ielt} giây</td>
       <td><span class="text-success">${log.control}/10</span></td>
       <td><span class="text-info">${log.confidence}/10</span></td>

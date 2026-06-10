@@ -247,6 +247,34 @@
             
             <form id="tracker-form" class="log-form">
               <div class="form-group">
+                <label for="log-day">Ngày tập</label>
+                <select id="log-day" required>
+                  <option value="0">Chuẩn bị (Ngày 0)</option>
+                  <option value="1">Ngày 1</option>
+                  <option value="2">Ngày 2</option>
+                  <option value="3">Ngày 3</option>
+                  <option value="4">Ngày 4</option>
+                  <option value="5">Ngày 5</option>
+                  <option value="6">Ngày 6</option>
+                  <option value="7">Ngày 7</option>
+                  <option value="8">Ngày 8</option>
+                  <option value="9">Ngày 9</option>
+                  <option value="10">Ngày 10</option>
+                  <option value="11">Ngày 11</option>
+                  <option value="12">Ngày 12</option>
+                  <option value="13">Ngày 13</option>
+                  <option value="14">Ngày 14</option>
+                  <option value="15">Ngày 15</option>
+                  <option value="16">Ngày 16</option>
+                  <option value="17">Ngày 17</option>
+                  <option value="18">Ngày 18</option>
+                  <option value="19">Ngày 19</option>
+                  <option value="20">Ngày 20</option>
+                  <option value="21">Ngày 21</option>
+                  <option value="Duy trì">Sau 21 ngày (Duy trì)</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="log-week">Tuần rèn luyện</label>
                 <select id="log-week" required>
                   <option value="Tuần 1">Tuần 1 (Kích hoạt)</option>
@@ -316,7 +344,7 @@
       <p>© 2026 Mật Mã 21. Bảo lưu mọi quyền.</p>
       <div class="footer-support-links">
         <a href="mailto:support@themencode.vn" id="site-support-email"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
-        <a href="https://zalo.me/0377014982" target="_blank" id="site-zalo-link" class="zalo-link"><i class="fa-solid fa-comment-dots"></i> Hỗ trợ Zalo 1:1</a>
+        <a href="https://t.me/matma21_support" target="_blank" id="site-telegram-link" class="telegram-link"><i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram 1:1</a>
       </div>
     </footer>
   </div>
@@ -381,8 +409,44 @@
       </form>
       
       <div class="auth-footer">
-        <p>Gặp khó khăn? <a href="https://zalo.me/0377014982" target="_blank" id="auth-zalo-support">Hỗ trợ kích hoạt Zalo</a></p>
+        <p>Gặp khó khăn? <a href="https://t.me/matma21_support" target="_blank" id="auth-telegram-support">Hỗ trợ kích hoạt Telegram</a></p>
       </div>
+    </div>
+  </div>
+
+  <!-- Training Log Modal -->
+  <div class="auth-overlay" id="log-modal" style="display: none;">
+    <div class="auth-card" style="max-width: 500px;">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <i class="fa-solid fa-pen-to-square logo-icon"></i>
+          <h2 id="log-modal-title">Ghi Nhật Ký Tập Luyện</h2>
+        </div>
+        <p class="auth-subtitle">Ghi lại kết quả tập luyện hôm nay để hoàn thành bài tập và mở khóa bài mới</p>
+      </div>
+      
+      <form class="auth-form" id="modal-tracker-form">
+        <div class="form-group">
+          <label for="modal-log-ielt">Thời gian thâm nhập ước tính (IELT - giây)</label>
+          <input type="number" id="modal-log-ielt" placeholder="Ví dụ: 60" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-log-control">Khả năng tự kiểm soát (Thang điểm 1 - 10)</label>
+          <input type="number" id="modal-log-control" min="1" max="10" placeholder="1 đến 10" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-log-confidence">Mức độ tự tin (Thang điểm 1 - 10)</label>
+          <input type="number" id="modal-log-confidence" min="1" max="10" placeholder="1 đến 10" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-log-note">Ghi chú (Cảm nhận cơ chậu, tư thế tập...)</label>
+          <textarea id="modal-log-note" rows="3" placeholder="Ví dụ: Đã kiểm soát tốt ở tư thế nằm gập chân. Khi chuyển sang đứng vẫn còn hơi mỏi mông."></textarea>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+          <button type="button" class="btn btn-secondary" id="btn-close-log-modal" style="flex: 1; justify-content: center;">Hủy bỏ</button>
+          <button type="submit" class="btn btn-primary" style="flex: 2; justify-content: center;">Lưu & Mở khóa <i class="fa-solid fa-unlock"></i></button>
+        </div>
+      </form>
     </div>
   </div>
 
