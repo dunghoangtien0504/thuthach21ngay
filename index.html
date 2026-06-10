@@ -1390,6 +1390,55 @@
       50% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
+
+    /* Mobile Optimization Enhancements */
+    @media (max-width: 768px) {
+      .hero-highlights {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        padding: 0 16px;
+      }
+      header {
+        padding: 12px 0;
+      }
+      .logo {
+        font-size: 17px;
+        gap: 6px;
+      }
+      .logo i {
+        font-size: 15px;
+      }
+      header .btn-outline {
+        padding: 8px 12px;
+        font-size: 11px;
+      }
+      .hero-title {
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+        margin-bottom: 16px !important;
+      }
+      .hero-desc {
+        font-size: 14.5px !important;
+        margin-bottom: 24px !important;
+      }
+      .value-item-card {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .value-item-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+      .pain-column, .pleasure-column {
+        padding: 24px 16px;
+      }
+    }
   </style>
 </head>
 <body>
