@@ -502,6 +502,114 @@
       color: var(--accent);
     }
 
+    /* Pain & Pleasure Section Styling */
+    .pain-pleasure-sec {
+      padding: 80px 0;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
+    }
+
+    .pain-pleasure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .pain-pleasure-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .pain-column {
+      background: rgba(192, 57, 14, 0.02);
+      border: 1px dashed rgba(192, 57, 14, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 35px;
+    }
+
+    .pleasure-column {
+      background: rgba(46, 125, 50, 0.02);
+      border: 1px dashed rgba(46, 125, 50, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 35px;
+    }
+
+    .pain-column h3 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      color: var(--danger);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .pleasure-column h3 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      color: #2E7D32;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .pain-pleasure-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .pain-pleasure-list li {
+      font-size: 14.5px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      line-height: 1.6;
+    }
+
+    .pain-column li i {
+      color: var(--danger);
+      font-size: 16px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .pleasure-column li i {
+      color: #2E7D32;
+      font-size: 16px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .pain-pleasure-list strong {
+      display: block;
+      color: var(--primary);
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    /* Global Section Title Styling */
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
     /* Student Feedback Section Styling */
     .feedback-sec {
       padding: 100px 0;
@@ -1269,6 +1377,12 @@
       color: var(--accent-bright);
       text-decoration: underline;
     }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -1290,42 +1404,126 @@
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <span class="hero-tag"><i class="fa-solid fa-star"></i> KHỞI ĐẦU SỰ TỰ CHỦ PHÁI MẠNH</span>
-        <h1 class="hero-title">
-          Tái Sinh Bản Lĩnh Nam Giới<br>Trong <span>21 Ngày</span>
+        <span class="hero-tag"><i class="fa-solid fa-star"></i> KHÔI PHỤC BẢN LĨNH & KIÊU HÃNH PHÁI MẠNH</span>
+        <h1 class="hero-title" style="font-size: 38px; line-height: 1.25; margin-bottom: 24px;">
+          Chấm Dứt Nỗi Ám Ảnh<br><span style="color:var(--danger)">"Chưa Đi Chợ Đã Hết Tiền"</span>
         </h1>
-        <p class="hero-desc">
-          Khóa học trực tuyến <strong>"Mật Mã 21"</strong> là chương trình huấn luyện y sinh học sàn chậu chuyên sâu giúp phục hồi bản lĩnh nam giới tự nhiên 100%. Lộ trình 21 ngày kèm bộ trợ lý đo lường sinh học, giáo trình hướng dẫn chi tiết và hỗ trợ 1:1 bảo mật từ chuyên gia.
+        <p class="hero-desc" style="font-size: 16.5px; line-height: 1.65; color: var(--text-muted); margin-bottom: 35px;">
+          Làm chủ thời gian <strong>15 - 20 phút tự nhiên</strong>, huấn luyện lại phản xạ phanh chậu tự động sau 21 ngày. Phương pháp y khoa hành vi <strong>không dùng thuốc bôi, không chai xịt gây tê</strong>, giữ trọn vẹn xúc cảm thăng hoa cho cả hai.
         </p>
         
         <div class="hero-highlights">
           <div class="highlight-card">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <h4>21 Ngày Đào Tạo</h4>
-            <p>Lộ trình hướng dẫn chi tiết từng ngày, dễ dàng thực hành tại nhà.</p>
+            <i class="fa-solid fa-shield-heart" style="color: var(--accent);"></i>
+            <h4>Phanh Phản Xạ Tự Chủ</h4>
+            <p>Thiết lập phản xạ khóa gốc chậu chủ động, dừng đúng lúc tại ngưỡng kích thích 7.5.</p>
           </div>
           <div class="highlight-card">
-            <i class="fa-solid fa-sliders"></i>
-            <h4>Trợ Lý Sinh Học</h4>
-            <p>Công cụ trực quan hỗ trợ tập thở phế vị và phản xạ Start-Stop.</p>
+            <i class="fa-solid fa-wind" style="color: var(--accent);"></i>
+            <h4>Hạ Nhiệt Hệ Thần Kinh</h4>
+            <p>Kiểm soát nhịp tim qua hơi thở phế vị 4-2-6 bụng sâu, triệt tiêu lo âu hiệu suất.</p>
           </div>
           <div class="highlight-card">
-            <i class="fa-solid fa-user-doctor"></i>
-            <h4>Chuyên Gia Đồng Hành</h4>
-            <p>Hỗ trợ Telegram 1:1 giải đáp thắc mắc và điều chỉnh lộ trình bảo mật.</p>
+            <i class="fa-solid fa-user-shield" style="color: var(--accent);"></i>
+            <h4>Bảo Mật Kín 1:1</h4>
+            <p>Hỗ trợ Telegram ẩn danh, sao kê ngân hàng trung tính, không chứa từ nhạy cảm.</p>
           </div>
         </div>
         
         <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-          <a href="#offer-section" class="btn btn-accent btn-lg">
-            <i class="fa-solid fa-graduation-cap"></i> ĐĂNG KÝ NHẬN ƯU ĐÃI NGAY - 686.868đ
+          <a href="#offer-section" class="btn btn-accent btn-lg" style="animation: pulse 2s infinite;">
+            <i class="fa-solid fa-graduation-cap"></i> ĐĂNG KÝ NHẬN LỘ TRÌNH NGAY - 686.868đ
           </a>
-          <span style="font-size:14px; color:var(--text-muted); font-weight: 600;"><del style="color:var(--text-light)">1.200.000đ</del> (-43% đợt này)</span>
+          <span style="font-size:14px; color:var(--text-muted); font-weight: 600;"><del style="color:var(--text-light)">1.200.000đ</del> (-43% ĐỢT NÀY)</span>
         </div>
       </div>
       
       <div class="ebook-image-wrapper">
         <img src="/images/course_mockup.png" alt="Hệ thống Portal học tập Mật Mã 21" class="ebook-cover">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PAIN & PLEASURE SECTION ================= -->
+  <section class="pain-pleasure-sec">
+    <div class="container">
+      <h2 class="section-title">Có Phải Bạn Đang <span>Âm Thầm Chịu Đựng?</span></h2>
+      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 50px auto; font-size: 16px;">
+        Hầu hết nam giới gặp vấn đề thời gian lâm trận đều âm thầm trải qua cơn ác mộng tâm lý mà không dám chia sẻ cùng ai...
+      </p>
+      
+      <div class="pain-pleasure-grid">
+        
+        <!-- Left: The Pain -->
+        <div class="pain-column">
+          <h3><i class="fa-solid fa-circle-exclamation"></i> CƠN ÁC MỘNG BẠN ĐANG ĐỐI MẶT</h3>
+          <ul class="pain-pleasure-list">
+            <li>
+              <i class="fa-solid fa-heart-crack"></i>
+              <div>
+                <strong>Nỗi lo âu nhịp tim & thở dốc trước giờ G:</strong>
+                <span>Chưa nhập cuộc tim đã đập liên hồi, thở gấp. Nỗi sợ "chưa đi chợ đã hết tiền" đè nặng, gián tiếp kích hoạt phản xạ xuất tinh sớm ngoài tầm kiểm soát.</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-face-frown"></i>
+              <div>
+                <strong>Tiếng thở dài hụt hẫng của bạn đời:</strong>
+                <span>Cuộc yêu chóng vánh khép lại trong 1-2 phút. Bạn tự ti, tủi thân trước sự im lặng lạnh nhạt, cái quay lưng đầy hụt hẫng của vợ hoặc bạn gái.</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-ban"></i>
+              <div>
+                <strong>Chai xịt gây tê làm đơ cứng khoái cảm:</strong>
+                <span>Các chất hóa học làm quy đầu mất sạch cảm giác chân thực. Cuộc yêu trôi qua vô cảm như khúc gỗ, thậm chí thuốc làm bạn đời bị tê rát khó chịu theo.</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-xmark"></i>
+              <div>
+                <strong>Tập Kegel miễn phí sai tư thế gây hại chậu:</strong>
+                <span>Tập theo YouTube tự phát, nín thở, gồng sai cơ bụng/đùi/mông. Kết quả gây co thắt sàn chậu mãn tính, mỏi cơ thắt lưng mà không cải thiện được thời gian.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Right: The Pleasure -->
+        <div class="pleasure-column">
+          <h3><i class="fa-solid fa-circle-check"></i> SỰ TỰ DO & PHONG ĐỘ BẠN SẼ CÓ</h3>
+          <ul class="pain-pleasure-list">
+            <li>
+              <i class="fa-solid fa-feather"></i>
+              <div>
+                <strong>Lâm trận với trạng thái thư giãn tuyệt đối:</strong>
+                <span>Kiểm soát nhịp tim qua hơi thở phế vị 4-2-6 bụng sâu. Đầu óc hoàn toàn tĩnh tại, dập tắt các luồng lo âu hiệu suất để sẵn sàng làm chủ cuộc yêu.</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-clock"></i>
+              <div>
+                <strong>Làm chủ thời gian 15-20 phút tự nhiên:</strong>
+                <span>Cảm nhận rõ bản đồ cảm giác cá nhân, chủ động co thắt phanh chậu PC biệt lập để hạ nhiệt hưng phấn đúng lúc và kéo dài cuộc chơi tùy ý.</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-venus-mars"></i>
+              <div>
+                <strong>Đưa bạn đời cùng chạm đỉnh thăng hoa:</strong>
+                <span>Giữ nguyên xúc giác chân thật 100%. Thời gian đủ lâu giúp bạn thoải mái thay đổi tư thế, đưa cả hai thăng hoa viên mãn và tự hào về bản lĩnh của mình.</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-award"></i>
+              <div>
+                <strong>Khôi phục kiêu hãnh bản năng phái mạnh:</strong>
+                <span>Chấm dứt những ngày lo sợ trốn tránh chuyện ấy. Bạn tự tin dẫn dắt cuộc yêu, khơi lại ngọn lửa hạnh phúc gia đình nồng cháy.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
       </div>
     </div>
   </section>
@@ -1390,22 +1588,22 @@
       </p>
       
       <div class="comparison-grid">
-        <div class="comparison-card normal">
-          <h4>Chai Xịt Gây Tê / Gel Bôi / Ghìm Bằng Ý Chí</h4>
-          <ul>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Làm đơ cứng, giảm khoái cảm:</strong> Triệt tiêu 80% cảm xúc của bản thân, đôi khi gây mất cảm giác cho đối tác.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Tác dụng nhất thời & Tác dụng phụ:</strong> Thuốc xịt hay ghìm ý chí chỉ là giải pháp tạm thời, gây lo âu, nhức đầu và giảm khả năng cương tự nhiên.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Không sửa được phản xạ:</strong> Ngay khi dừng thuốc xịt, phản xạ xuất tinh nhanh lập tức quay trở lại như cũ.</span></li>
+        <div class="comparison-card normal" style="border: 1px solid rgba(192, 57, 14, 0.15);">
+          <h4 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> SỰ LỆ THUỘC VÀ TỔN HẠI SỨC KHỎE</h4>
+          <ul style="margin-top: 20px;">
+            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Tê liệt khoái cảm 80%:</strong> Các hóa chất trong chai xịt làm tê liệt đầu dây thần kinh quy đầu, khiến cuộc yêu vô cảm như khúc gỗ, bạn đời cũng bị giảm cảm giác theo.</span></li>
+            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Gây rối loạn cương dương lâu dài:</strong> Phụ thuộc chất gây tê làm suy giảm độ nhạy phản xạ tự nhiên của não bộ, lâu ngày dẫn tới khó cương hoặc xìu sớm.</span></li>
+            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Hủy hoại tâm lý phái mạnh:</strong> Luôn nơm nớp lo sợ thuốc hết tác dụng giữa chừng, tạo gánh nặng áp lực cực kỳ lớn trước mỗi cuộc yêu.</span></li>
           </ul>
         </div>
         
         <div class="comparison-card active-card">
-          <div class="popular-badge">GIẢI PHÁP KHOA HỌC TỰ NHIÊN</div>
-          <h4>Lộ Trình Tự Chủ Mật Mã 21</h4>
-          <ul>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Huấn luyện lại phản xạ não bộ:</strong> Sửa trực tiếp cơ chế tự động kích hoạt phản xạ tại gốc chậu bằng Start-Stop và hơi thở.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Trọn vẹn cảm xúc thăng hoa:</strong> Không dùng hóa chất gây tê, giữ nguyên xúc giác và khoái cảm cho cả hai người.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Phong độ bền vững trọn đời:</strong> Sau 21 ngày, phản xạ được thiết lập vững chắc, không bao giờ bị phụ thuộc vào thuốc.</span></li>
+          <div class="popular-badge">PHÁC ĐỒ Y SINH HỌC TỰ NHIÊN</div>
+          <h4 style="color: var(--primary);"><i class="fa-solid fa-award"></i> TỰ CHỦ HOÀN TOÀN & BỀN VỮNG TRỌN ĐỜI</h4>
+          <ul style="margin-top: 20px;">
+            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Huấn luyện phản xạ não bộ:</strong> Tái cấu trúc cơ chế kiểm soát của hệ thần kinh thực vật, phanh chậu tự động bằng kỹ thuật hành vi tự nhiên.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Giữ nguyên xúc giác thăng hoa 100%:</strong> Không hóa chất, không đơ liệt cảm giác. Bạn cảm nhận trọn vẹn sự sung sướng và thăng hoa cùng đối tác.</span></li>
+            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Khôi phục bản lĩnh vĩnh viễn:</strong> Sau 21 ngày thiết lập phản xạ mới, phong độ nằm hoàn toàn trong tầm kiểm soát của bạn mà không phụ thuộc vào thuốc.</span></li>
           </ul>
         </div>
       </div>
@@ -1657,8 +1855,8 @@
               <i class="fa-solid fa-book-open"></i>
             </div>
             <div class="value-item-info">
-              <h4>Ebook Hướng Dẫn Từng Bước Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh Tại Nhà <span class="value-price-badge">Trị giá 1.000.000đ</span></h4>
-              <p>Giáo trình khoa học được thiết kế cô đọng thành 21 ngày thực hành hành vi liên tục, tập trung vào kỹ thuật cơ học Pelvic Floor Muscle Training (PFMT) kết hợp kỹ thuật hành vi Start-Stop (James Semans, 1956). Giúp người tập làm quen với cơ chế phản xạ có điều kiện và từng bước nâng cao khả năng tự kiểm soát.</p>
+              <h4>Bản Đồ Thực Chiến: Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh <span class="value-price-badge">Trị giá 1.000.000đ</span></h4>
+              <p>Giáo trình khoa học hướng dẫn chi tiết từng ngày, giúp bạn thay đổi phản xạ cơ chậu từ gốc thần kinh thực vật. Không lý thuyết suông, đi thẳng vào các tư thế luyện tập tĩnh tại nhà, phác đồ Start-Stop cá nhân hóa và kỹ thuật thở bụng phế vị 4-2-6 để chặn đứng ranh giới xuất tinh tự phát.</p>
             </div>
           </div>
           
@@ -1667,8 +1865,8 @@
               <i class="fa-solid fa-calendar-check"></i>
             </div>
             <div class="value-item-info">
-              <h4>Bảng Theo Dõi Tiến Trình Kiểm Soát 21 Ngày (Progress Tracker) <span class="value-price-badge free">Quà Tặng 1 - Trị giá 150.000đ</span></h4>
-              <p>File PDF in ấn hoặc điền trực tiếp trên điện thoại để ghi lại số giây siết cơ PC, số chu kỳ Start-Stop đạt được sau mỗi ngày. Hỗ trợ theo dõi tiến trình cải thiện trực quan qua từng ngày, giúp người tập kiểm soát kết quả rèn luyện cụ thể.</p>
+              <h4>Bảng Đo Lường & Theo Dõi Tiến Trình Chiến Thắng 21 Ngày <span class="value-price-badge free">Quà Tặng 1 - Trị giá 150.000đ</span></h4>
+              <p>Công cụ thông minh (điền trực tiếp trên điện thoại) giúp bạn ghi lại số giây siết cơ PC, chu kỳ Start-Stop đạt được sau mỗi ngày. Theo dõi tiến trình trực quan bằng các con số thực tế giúp phá tan sự lười biếng, tạo động lực tâm lý chinh phục mốc 15-20 phút từng ngày.</p>
             </div>
           </div>
           
@@ -1677,8 +1875,8 @@
               <i class="fa-solid fa-heart-pulse"></i>
             </div>
             <div class="value-item-info">
-              <h4>Tài Liệu "Nghệ Thuật Đồng Hành Chăn Gối" Dành Cho Bạn Đời <span class="value-price-badge free">Quà Tặng 2 - Trị giá 250.000đ</span></h4>
-              <p>Cẩm nang hướng dẫn kịch bản chia sẻ tinh tế, thỏa thuận các ám hiệu dừng (Stop-Start) và kỹ thuật ép hỗ trợ (ép quy đầu/gốc dương vật) dành cho đối tác. Giúp giải tỏa áp lực tâm lý cho cả hai, tạo sự đồng thuận và phối hợp nhịp nhàng trong quá trình rèn luyện.</p>
+              <h4>Cẩm Nang Phòng Ngủ: "Đồng Minh Đồng Hành Chăn Gối" Dành Cho Bạn Đời <span class="value-price-badge free">Quà Tặng 2 - Trị giá 250.000đ</span></h4>
+              <p>Bí kíp tinh tế giúp bạn xóa tan sự im lặng đáng sợ hay cái thở dài hụt hẫng sau mỗi cuộc yêu thất bại. Kịch bản chia sẻ khéo léo, các ám hiệu dừng nhịp Start-Stop đồng thuận và kỹ thuật ép quy đầu/gốc hỗ trợ giúp bạn đời trở thành đồng minh tiếp sức cùng thăng hoa.</p>
             </div>
           </div>
 
@@ -1687,8 +1885,8 @@
               <i class="fa-solid fa-kitchen-set"></i>
             </div>
             <div class="value-item-info">
-              <h4>Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Cẩm Nang Zn-Mg Cho Người Bận Rộn" <span class="value-price-badge free">Quà Tặng 3 - Trị giá 300.000đ</span></h4>
-              <p>Cẩm nang dinh dưỡng thiết kế riêng cho nam giới để cải thiện nồng độ testosterone nội sinh và sức bền sàn chậu một cách tự nhiên. Hướng dẫn các món ăn giàu vi chất Kẽm (Zinc) và Magie (Magnesium). Tích hợp cổng liên hệ mua thực phẩm bổ sung Zn & Mg chuẩn hóa trực tiếp từ chuyên gia qua Telegram.</p>
+              <h4>Ebook: Thực Đơn Dinh Dưỡng Testosterone & Vi Chất Zn-Mg Kích Hoạt Lực Sàn Chậu <span class="value-price-badge free">Quà Tặng 3 - Trị giá 300.000đ</span></h4>
+              <p>Bản thiết kế dinh dưỡng nam giới bận rộn để bổ sung vi chất Magie (Mg) và Kẽm (Zn) — hai vi chất cốt lõi quyết định độ co giãn cơ chậu và sản sinh testosterone tự nhiên từ bên trong, đẩy nhanh tốc độ phục hồi cơ chậu gấp 3 lần.</p>
             </div>
           </div>
         </div>
@@ -1721,11 +1919,17 @@
             <i class="fa-solid fa-shield-halved"></i> ĐĂNG KÝ NHẬN GÓI HỌC NGAY
           </a>
           
+          <!-- Urgency Banner -->
+          <div style="background-color: rgba(192, 57, 14, 0.08); border: 1px dashed rgba(192, 57, 14, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; margin: 15px 0; font-size: 12.5px; color: var(--danger); font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fa-solid fa-fire-flame-curved" style="animation: pulse 1s infinite;"></i>
+            <span>CHỈ CÒN 12 SUẤT NHẬN HỖ TRỢ 1:1 QUA TELEGRAM TRONG THÁNG NÀY</span>
+          </div>
+
           <div class="offer-guarantee-badge">
-            <i class="fa-solid fa-award"></i>
+            <i class="fa-solid fa-shield-halved" style="color: #2E7D32; font-size: 32px;"></i>
             <div>
-              <strong>BẢO ĐẢM HOÀN TIỀN TRONG 3 NGÀY</strong><br>
-              Nếu trong 3 ngày trải nghiệm thử bạn cảm thấy phương pháp không phù hợp, hãy nhắn Telegram hỗ trợ để nhận lại 100% học phí.
+              <strong>BẢO ĐẢM TRẢI NGHIỆM 3 NGÀY — KHÔNG RỦI RO, KHÔNG CÂU HỎI</strong><br>
+              Chúng tôi bảo chứng rủi ro 100%. Bạn có 3 ngày học thử toàn bộ giáo trình. Nếu thấy không phù hợp, chỉ cần nhắn Telegram `@matma21_support` để nhận lại 100% học phí ngay lập tức, vô điều kiện.
             </div>
           </div>
         </div>
