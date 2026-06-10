@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="bar-safe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B6B3A" />
+      <stop offset="100%" stop-color="#3D8B5A" />
+    </linearGradient>
+    <linearGradient id="bar-warn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="bar-danger" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="366" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  <!-- Title -->
+  <text x="300" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#0D2B1A" text-anchor="middle">BIỂU ĐỒ CẢI THIỆN SỨC BỀN IELT - 21 NGÀY</text>
+  <text x="300" y="57" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Lộ trình phát triển sức bền có kiểm soát theo từng giai đoạn</text>
+
+  <!-- Y-axis label -->
+  <text x="18" y="200" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" transform="rotate(-90 18 200)" text-anchor="middle">Thời gian kiểm soát (phút)</text>
+
+  <!-- Y axis ticks -->
+  <line x1="70" y1="80" x2="70" y2="290" stroke="#E6DFD3" stroke-width="1.5"/>
+  <line x1="65" y1="80" x2="70" y2="80" stroke="#5A6E61" stroke-width="1.5"/>
+  <text x="58" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">20p</text>
+  <line x1="65" y1="122" x2="70" y2="122" stroke="#5A6E61" stroke-width="1.5"/>
+  <text x="58" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">15p</text>
+  <line x1="65" y1="164" x2="70" y2="164" stroke="#5A6E61" stroke-width="1.5"/>
+  <text x="58" y="168" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">10p</text>
+  <line x1="65" y1="206" x2="70" y2="206" stroke="#5A6E61" stroke-width="1.5"/>
+  <text x="58" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">5p</text>
+  <line x1="65" y1="248" x2="70" y2="248" stroke="#5A6E61" stroke-width="1.5"/>
+  <text x="58" y="252" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">2p</text>
+  <line x1="65" y1="290" x2="70" y2="290" stroke="#5A6E61" stroke-width="1.5"/>
+  <text x="58" y="294" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">0</text>
+
+  <!-- Horizontal grid lines -->
+  <line x1="70" y1="80" x2="570" y2="80" stroke="#E6DFD3" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="70" y1="122" x2="570" y2="122" stroke="#E6DFD3" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="70" y1="164" x2="570" y2="164" stroke="#E6DFD3" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="70" y1="206" x2="570" y2="206" stroke="#E6DFD3" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="70" y1="248" x2="570" y2="248" stroke="#E6DFD3" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- X axis -->
+  <line x1="70" y1="290" x2="570" y2="290" stroke="#E6DFD3" stroke-width="1.5"/>
+
+  <!-- Phase backgrounds -->
+  <!-- Phase 1: Days 1-7 (green) -->
+  <rect x="70" y="78" width="160" height="214" fill="#1B442D" opacity="0.04" rx="0"/>
+  <text x="150" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#1B6B3A" text-anchor="middle">⚙️ GIAI ĐOẠN 1</text>
+  <text x="150" y="109" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Kích hoạt cơ chậu</text>
+
+  <!-- Phase 2: Days 8-14 (gold) -->
+  <rect x="230" y="78" width="170" height="214" fill="#D4AF37" opacity="0.04" rx="0"/>
+  <text x="315" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#AA7C11" text-anchor="middle">🧠 GIAI ĐOẠN 2</text>
+  <text x="315" y="109" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Tăng sức bền &amp; cảm giác</text>
+
+  <!-- Phase 3: Days 15-21 (red/gold) -->
+  <rect x="400" y="78" width="170" height="214" fill="#C0390E" opacity="0.04" rx="0"/>
+  <text x="485" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#C0390E" text-anchor="middle">🏆 GIAI ĐOẠN 3</text>
+  <text x="485" y="109" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Thực chiến &amp; tích hợp</text>
+
+  <!-- Progress curve: data points mapped to SVG coords
+       x: 70 + (day/21)*(570-70)
+       y: 290 - (minutes/20)*210
+       Points: Day 0=1min, 7=3min, 14=8min, 21=15min (typical results) -->
+  <!-- Day 0: x=70, y=290-10.5=279.5 -->
+  <!-- Day 7: x=70+166=236, y=290-31.5=258.5 -->
+  <!-- Day 14: x=70+333=403, y=290-84=206 -->
+  <!-- Day 21: x=570, y=290-157.5=132.5 -->
+
+  <!-- Fill area under curve -->
+  <path d="M70,280 C120,275 180,268 236,258 C295,248 350,230 403,206 C455,184 510,158 570,130 L570,290 L70,290 Z" fill="url(#forest-grad)" opacity="0.08"/>
+
+  <!-- Curve line -->
+  <path d="M70,280 C120,275 180,268 236,258 C295,248 350,230 403,206 C455,184 510,158 570,130" fill="none" stroke="#1B6B3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Data point dots and day labels -->
+  <circle cx="70" cy="280" r="5" fill="#1B6B3A"/>
+  <circle cx="236" cy="258" r="5" fill="#AA7C11"/>
+  <circle cx="403" cy="206" r="5" fill="#AA7C11"/>
+  <circle cx="570" cy="130" r="7" fill="#D4AF37" stroke="#FDFBF7" stroke-width="2"/>
+
+  <!-- Day labels on x axis -->
+  <text x="70" y="305" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">N0</text>
+  <text x="236" y="305" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">N7</text>
+  <text x="403" y="305" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">N14</text>
+  <text x="570" y="305" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">N21</text>
+
+  <!-- Callout at Day 21 -->
+  <rect x="460" y="108" width="105" height="34" rx="6" fill="#D4AF37" opacity="0.15"/>
+  <text x="512" y="125" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#AA7C11" text-anchor="middle">~15 phút</text>
+  <text x="512" y="139" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">kết quả trung bình</text>
+
+  <!-- Arrow from callout to dot -->
+  <line x1="512" y1="142" x2="568" y2="132" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+  <!-- Bottom bar -->
+  <rect x="18" y="318" width="564" height="40" rx="8" fill="#0D2B1A" opacity="0.04"/>
+  <text x="300" y="334" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">📈 Nam giới thực hiện đầy đủ lộ trình ghi nhận tăng trung bình 2 - 3x thời gian IELT</text>
+  <text x="300" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#0D2B1A" text-anchor="middle">Kết quả cá nhân có thể khác nhau tùy mức độ tập luyện và tần suất thực hành</text>
+</svg>

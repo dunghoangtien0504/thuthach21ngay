@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="inhale-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1B6B3A" />
+      <stop offset="100%" stop-color="#3D8B5A" />
+    </linearGradient>
+    <linearGradient id="hold-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#D4AF37" />
+    </linearGradient>
+    <linearGradient id="exhale-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="366" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  <!-- Title -->
+  <text x="300" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#0D2B1A" text-anchor="middle">KỸ THUẬT THỞ ĐIỀU HÒA THẦN KINH (4-2-6)</text>
+  <text x="300" y="57" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Chu kỳ thở kích hoạt dây thần kinh phế vị — hạ hưng phấn tức thì</text>
+
+  <!-- Three phase columns -->
+
+  <!-- INHALE: 4 seconds -->
+  <rect x="45" y="75" width="155" height="215" rx="14" fill="#F0F9F4" stroke="#A8D5B5" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- Lung icon mockup -->
+  <path d="M95,110 Q90,130 88,155 Q86,175 95,190 Q105,205 122,205 Q139,205 149,190 Q158,175 156,155 Q154,130 149,110" fill="none" stroke="#1B6B3A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M122,100 L122,160" stroke="#1B6B3A" stroke-width="4" stroke-linecap="round"/>
+  <!-- Arrows showing inflation -->
+  <path d="M90,125 L82,125 M90,145 L82,145 M90,165 L82,165" stroke="#3D8B5A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M154,125 L162,125 M154,145 L162,145 M154,165 L162,165" stroke="#3D8B5A" stroke-width="2" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="122" y="222" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="800" fill="url(#inhale-grad)" text-anchor="middle">4s</text>
+  <text x="122" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1B442D" text-anchor="middle">HÍT VÀO</text>
+  <text x="122" y="263" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">Bụng phình ra,</text>
+  <text x="122" y="276" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">hít chậm qua mũi</text>
+
+  <!-- HOLD: 2 seconds -->
+  <rect x="222" y="75" width="155" height="215" rx="14" fill="#FFFBF0" stroke="#E8D9A0" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- Pause icon -->
+  <rect x="270" y="105" width="20" height="70" rx="6" fill="url(#hold-grad)" opacity="0.7"/>
+  <rect x="298" y="105" width="20" height="70" rx="6" fill="url(#hold-grad)" opacity="0.7"/>
+  <!-- Label -->
+  <text x="299" y="222" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="800" fill="url(#hold-grad)" text-anchor="middle">2s</text>
+  <text x="299" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#AA7C11" text-anchor="middle">GIỮ HƠI</text>
+  <text x="299" y="263" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">Nín thở, giữ</text>
+  <text x="299" y="276" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">không cử động</text>
+
+  <!-- EXHALE: 6 seconds -->
+  <rect x="399" y="75" width="155" height="215" rx="14" fill="#F2F6F4" stroke="#C5CECC" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- Exhale arrows icon -->
+  <path d="M430,110 Q425,130 423,155 Q421,175 430,190 Q440,205 457,205 Q474,205 484,190 Q493,175 491,155 Q489,130 484,110" fill="none" stroke="#0D2B1A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M457,100 L457,160" stroke="#0D2B1A" stroke-width="4" stroke-linecap="round"/>
+  <!-- Arrows showing deflation (inward) -->
+  <path d="M425,125 L433,125 M425,145 L433,145 M425,165 L433,165" stroke="#0D2B1A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M489,125 L481,125 M489,145 L481,145 M489,165 L481,165" stroke="#0D2B1A" stroke-width="2" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="476" y="222" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="800" fill="url(#exhale-grad)" text-anchor="middle">6s</text>
+  <text x="476" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#0D2B1A" text-anchor="middle">THỞ RA</text>
+  <text x="476" y="263" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">Bụng xẹp xuống,</text>
+  <text x="476" y="276" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">thở chậm qua miệng</text>
+
+  <!-- Connecting arrows between phases -->
+  <!-- Inhale to Hold -->
+  <path d="M200,185 L222,185" fill="none" stroke="#D4AF37" stroke-width="3" marker-end="url(#arrow)"/>
+  <polygon points="216,181 223,185 216,189" fill="#D4AF37"/>
+
+  <!-- Hold to Exhale -->
+  <path d="M377,185 L399,185" fill="none" stroke="#D4AF37" stroke-width="3"/>
+  <polygon points="393,181 400,185 393,189" fill="#D4AF37"/>
+
+  <!-- Feedback loop arrow at bottom: from Exhale back to Inhale -->
+  <path d="M476,310 Q476,335 300,335 Q125,335 122,310" fill="none" stroke="#1B6B3A" stroke-width="2" stroke-dasharray="5 4"/>
+  <polygon points="118,316 122,308 126,316" fill="#1B6B3A"/>
+  <text x="300" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#5A6E61" text-anchor="middle">Lặp lại 5 - 10 chu kỳ</text>
+
+  <!-- Effect box -->
+  <rect x="18" y="342" width="564" height="22" rx="6" fill="#0D2B1A" opacity="0.06"/>
+  <text x="300" y="357" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#1B6B3A" text-anchor="middle">✓  Kích hoạt dây thần kinh X (Vagus) — Hạ nhịp tim — Thư giãn cơ sàn chậu</text>
+</svg>

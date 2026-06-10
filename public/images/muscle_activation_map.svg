@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="366" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  <!-- Title -->
+  <text x="300" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#0D2B1A" text-anchor="middle">BẢN ĐỒ CƠ BẮP ĐƯỢC KÍCH HOẠT</text>
+  <text x="300" y="57" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Các nhóm cơ được rèn luyện trong lộ trình 21 ngày</text>
+
+  <!-- Body silhouette (simplified front view) -->
+  <!-- Head -->
+  <circle cx="300" cy="100" r="28" fill="none" stroke="#C5CECC" stroke-width="2"/>
+  <!-- Neck -->
+  <rect x="292" y="126" width="16" height="16" rx="3" fill="none" stroke="#C5CECC" stroke-width="1.5"/>
+  <!-- Torso -->
+  <path d="M260,142 L240,220 L255,320 L345,320 L360,220 L340,142 Z" fill="#F0F4F2" stroke="#C5CECC" stroke-width="1.5"/>
+  <!-- Arms -->
+  <path d="M260,150 L225,240 L235,245 L268,158" fill="none" stroke="#C5CECC" stroke-width="2"/>
+  <path d="M340,150 L375,240 L365,245 L332,158" fill="none" stroke="#C5CECC" stroke-width="2"/>
+  <!-- Legs -->
+  <path d="M255,320 L240,360" fill="none" stroke="#C5CECC" stroke-width="12" stroke-linecap="round"/>
+  <path d="M345,320 L360,360" fill="none" stroke="#C5CECC" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Highlighted muscles with colored overlays -->
+  
+  <!-- PELVIC FLOOR (gold - primary) -->
+  <ellipse cx="300" cy="295" rx="38" ry="14" fill="#D4AF37" opacity="0.5" filter="url(#glow)"/>
+  <ellipse cx="300" cy="295" rx="38" ry="14" fill="none" stroke="#AA7C11" stroke-width="2.5"/>
+
+  <!-- GLUTES (forest green) -->
+  <ellipse cx="275" cy="275" rx="22" ry="18" fill="#1B6B3A" opacity="0.25"/>
+  <ellipse cx="325" cy="275" rx="22" ry="18" fill="#1B6B3A" opacity="0.25"/>
+  <ellipse cx="275" cy="275" rx="22" ry="18" fill="none" stroke="#1B442D" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <ellipse cx="325" cy="275" rx="22" ry="18" fill="none" stroke="#1B442D" stroke-width="1.5" stroke-dasharray="4 2"/>
+
+  <!-- CORE / LOWER ABS (blue-ish green) -->
+  <rect x="271" y="215" width="58" height="55" rx="8" fill="#3D8B5A" opacity="0.2"/>
+  <rect x="271" y="215" width="58" height="55" rx="8" fill="none" stroke="#1B6B3A" stroke-width="1.5" stroke-dasharray="4 2"/>
+
+  <!-- OBLIQUES -->
+  <path d="M258,195 L255,240 L270,240 L272,195" fill="#5A9E6F" opacity="0.2"/>
+  <path d="M342,195 L345,240 L330,240 L328,195" fill="#5A9E6F" opacity="0.2"/>
+
+  <!-- LABELS with lines -->
+
+  <!-- Pelvic floor label (PRIMARY - GOLD) -->
+  <line x1="340" y1="295" x2="420" y2="295" stroke="#AA7C11" stroke-width="1.5"/>
+  <circle cx="340" cy="295" r="3" fill="#AA7C11"/>
+  <rect x="420" y="281" width="150" height="28" rx="6" fill="#D4AF37" opacity="0.15"/>
+  <text x="495" y="294" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#AA7C11" text-anchor="middle">★ Cơ Sàn Chậu (PC)</text>
+  <text x="495" y="306" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Nhóm cơ then chốt</text>
+
+  <!-- Glutes label (GREEN) -->
+  <line x1="257" y1="275" x2="170" y2="280" stroke="#1B442D" stroke-width="1.5"/>
+  <circle cx="257" cy="275" r="3" fill="#1B442D"/>
+  <rect x="30" y="267" width="138" height="26" rx="6" fill="#1B442D" opacity="0.08"/>
+  <text x="99" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#1B442D" text-anchor="middle">Cơ Mông (Glutes)</text>
+  <text x="99" y="291" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Nâng đỡ vùng chậu</text>
+
+  <!-- Core label (GREEN) -->
+  <line x1="272" y1="240" x2="170" y2="230" stroke="#1B6B3A" stroke-width="1.5"/>
+  <circle cx="272" cy="240" r="3" fill="#1B6B3A"/>
+  <rect x="30" y="218" width="138" height="26" rx="6" fill="#1B442D" opacity="0.08"/>
+  <text x="99" y="231" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#1B442D" text-anchor="middle">Cơ Bụng Dưới (Core)</text>
+  <text x="99" y="242" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Ổn định ổ bụng</text>
+
+  <!-- Obliques label -->
+  <line x1="330" y1="220" x2="420" y2="210" stroke="#3D8B5A" stroke-width="1.5"/>
+  <circle cx="330" cy="220" r="3" fill="#3D8B5A"/>
+  <rect x="420" y="198" width="148" height="26" rx="6" fill="#3D8B5A" opacity="0.1"/>
+  <text x="494" y="211" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#2A5E3A" text-anchor="middle">Cơ Liên Sườn (Obliques)</text>
+  <text x="494" y="222" font-family="system-ui, -apple-system, sans-serif" font-size="9" fill="#5A6E61" text-anchor="middle">Xoay &amp; giữ thăng bằng</text>
+
+  <!-- Legend bottom -->
+  <rect x="18" y="332" width="564" height="28" rx="8" fill="#0D2B1A" opacity="0.04"/>
+  <circle cx="40" cy="347" r="6" fill="#D4AF37" opacity="0.6"/>
+  <text x="52" y="351" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#0D2B1A">Cơ PC (Chính)</text>
+  <circle cx="140" cy="347" r="6" fill="#1B6B3A" opacity="0.5"/>
+  <text x="152" y="351" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#0D2B1A">Cơ mông (Bổ trợ)</text>
+  <circle cx="265" cy="347" r="6" fill="#3D8B5A" opacity="0.5"/>
+  <text x="277" y="351" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#0D2B1A">Cơ bụng dưới</text>
+  <circle cx="375" cy="347" r="6" fill="#5A9E6F" opacity="0.5"/>
+  <text x="387" y="351" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#0D2B1A">Cơ liên sườn</text>
+</svg>

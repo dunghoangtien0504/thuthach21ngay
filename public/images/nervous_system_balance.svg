@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" width="100%" height="100%">
+  <defs>
+    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A" />
+      <stop offset="100%" stop-color="#1B442D" />
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="red-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#8B1E05" />
+    </linearGradient>
+    <linearGradient id="left-panel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF7F5" />
+      <stop offset="100%" stop-color="#FEF0EC" />
+    </linearGradient>
+    <linearGradient id="right-panel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5FBF7" />
+      <stop offset="100%" stop-color="#EBF6EE" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Card Container -->
+  <rect x="2" y="2" width="596" height="366" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
+  
+  <!-- Title -->
+  <text x="300" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#0D2B1A" text-anchor="middle">HỆ THẦN KINH TỰ ĐỘNG: PHANH VÀ GA</text>
+  <text x="300" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Cân bằng hai nhánh thần kinh để làm chủ phản xạ</text>
+
+  <!-- Divider line -->
+  <line x1="300" y1="75" x2="300" y2="335" stroke="#E6DFD3" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <!-- LEFT: Sympathetic (bad) -->
+  <rect x="18" y="75" width="265" height="255" rx="12" fill="url(#left-panel)" stroke="#F0C0B0" stroke-width="1.5"/>
+  <text x="150" y="100" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#C0390E" text-anchor="middle">⚡ GIAO CẢM (Lo Âu)</text>
+  <text x="150" y="118" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#8B1E05" text-anchor="middle">Chế độ "Chiến hoặc Chạy"</text>
+
+  <!-- Sympathetic effects -->
+  <circle cx="42" cy="150" r="8" fill="#C0390E" opacity="0.15"/>
+  <text x="42" y="154" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#C0390E" text-anchor="middle">↑</text>
+  <text x="62" y="154" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A3030">Nhịp tim tăng</text>
+
+  <circle cx="42" cy="178" r="8" fill="#C0390E" opacity="0.15"/>
+  <text x="42" y="182" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#C0390E" text-anchor="middle">↑</text>
+  <text x="62" y="182" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A3030">Adrenaline tăng vọt</text>
+
+  <circle cx="42" cy="206" r="8" fill="#C0390E" opacity="0.15"/>
+  <text x="42" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#C0390E" text-anchor="middle">⚡</text>
+  <text x="62" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A3030">Co thắt cơ chậu sớm</text>
+
+  <circle cx="42" cy="234" r="8" fill="#C0390E" opacity="0.15"/>
+  <text x="42" y="238" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#C0390E" text-anchor="middle">↓</text>
+  <text x="62" y="238" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A3030">Mất kiểm soát nhịp độ</text>
+
+  <circle cx="42" cy="262" r="8" fill="#C0390E" opacity="0.15"/>
+  <text x="42" y="266" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#C0390E" text-anchor="middle">!</text>
+  <text x="62" y="266" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#4A3030">Lo lắng hiệu suất</text>
+
+  <!-- "TRIGGER" box at bottom left -->
+  <rect x="30" y="290" width="225" height="28" rx="6" fill="#C0390E" opacity="0.1"/>
+  <text x="142" y="308" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#8B1E05" text-anchor="middle">Kích hoạt khi: Lo âu, căng thẳng</text>
+
+  <!-- RIGHT: Parasympathetic (good) -->
+  <rect x="317" y="75" width="265" height="255" rx="12" fill="url(#right-panel)" stroke="#A8D5B5" stroke-width="1.5"/>
+  <text x="450" y="100" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#1B6B3A" text-anchor="middle">🌿 ĐỐI GIAO CẢM (Kiểm soát)</text>
+  <text x="450" y="118" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#0D2B1A" text-anchor="middle">Chế độ "Nghỉ ngơi và Tiêu hóa"</text>
+
+  <!-- Parasympathetic effects -->
+  <circle cx="340" cy="150" r="8" fill="#1B442D" opacity="0.15"/>
+  <text x="340" y="154" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#1B6B3A" text-anchor="middle">↓</text>
+  <text x="360" y="154" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2A4A33">Nhịp tim ổn định</text>
+
+  <circle cx="340" cy="178" r="8" fill="#1B442D" opacity="0.15"/>
+  <text x="340" y="182" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#1B6B3A" text-anchor="middle">✓</text>
+  <text x="360" y="182" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2A4A33">Acetylcholine tăng</text>
+
+  <circle cx="340" cy="206" r="8" fill="#1B442D" opacity="0.15"/>
+  <text x="340" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#1B6B3A" text-anchor="middle">💪</text>
+  <text x="360" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2A4A33">Cơ chậu linh hoạt, rõ nét</text>
+
+  <circle cx="340" cy="234" r="8" fill="#1B442D" opacity="0.15"/>
+  <text x="340" y="238" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#1B6B3A" text-anchor="middle">⏱</text>
+  <text x="360" y="238" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2A4A33">Kiểm soát nhịp độ tốt hơn</text>
+
+  <circle cx="340" cy="262" r="8" fill="#1B442D" opacity="0.15"/>
+  <text x="340" y="266" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#D4AF37" text-anchor="middle">★</text>
+  <text x="360" y="266" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#2A4A33">Tự tin, thoải mái</text>
+
+  <!-- "ACTIVATE" box at bottom right -->
+  <rect x="327" y="290" width="243" height="28" rx="6" fill="#1B442D" opacity="0.1"/>
+  <text x="448" y="308" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#0D4A22" text-anchor="middle">Kích hoạt: Thở 4-2-6, thiền, thư giãn</text>
+
+  <!-- VS badge in center -->
+  <circle cx="300" cy="175" r="20" fill="url(#gold-grad)"/>
+  <text x="300" y="181" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#FFF" text-anchor="middle">VS</text>
+
+  <!-- Bottom instruction bar -->
+  <rect x="18" y="337" width="564" height="22" rx="6" fill="#0D2B1A" opacity="0.07"/>
+  <text x="300" y="352" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#0D2B1A" text-anchor="middle">Mục tiêu: Chuyển não bộ từ Giao cảm → Đối giao cảm trước &amp; trong khi thân mật</text>
+</svg>
