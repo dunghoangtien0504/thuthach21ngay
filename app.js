@@ -351,8 +351,37 @@ function setupTabSwitcher() {
 // COURSE METADATA & LESSONS LOADER
 // ==========================================================================
 async function loadCourseData() {
-  const customDb = localStorage.getItem('thuthach21ngay_custom_course_db');
+  let customDb = localStorage.getItem('thuthach21ngay_custom_course_db');
   if (customDb) {
+    const oldSvgs = [
+      "/images/glute_bridge.svg",
+      "/images/sit_up.svg",
+      "/images/split_table_top.svg",
+      "/images/gluta_kick_back.svg",
+      "/images/single_leg_stretch.svg",
+      "/images/single_leg_glute_bridge.svg",
+      "/images/oblique_sit_up.svg",
+      "/images/single_leg_stretch_adv.svg"
+    ];
+    let dbStr = customDb;
+    let hasUpdated = false;
+    
+    oldSvgs.forEach(svg => {
+      if (dbStr.includes(svg)) {
+        let png = svg.replace(".svg", ".png");
+        if (svg === "/images/single_leg_stretch_adv.svg") {
+          png = "/images/single_leg_stretch.png";
+        }
+        dbStr = dbStr.split(svg).join(png);
+        hasUpdated = true;
+      }
+    });
+    
+    if (hasUpdated) {
+      localStorage.setItem('thuthach21ngay_custom_course_db', dbStr);
+      customDb = dbStr;
+    }
+    
     courseData = JSON.parse(customDb);
     renderSidebar();
     updateProgressUI();
