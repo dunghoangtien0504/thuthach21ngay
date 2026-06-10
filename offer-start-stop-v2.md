@@ -7,7 +7,7 @@
 *   **A (Audience):** Nam giới đang gặp tình trạng xuất tinh sớm, muốn cải thiện tự nhiên.
 *   **G (Goal):** Lấy lại kiêu hãnh phái mạnh, thắp sáng ngọn lửa hạnh phúc gia đình.
 *   **I (Interval):** 21 ngày rèn luyện hành vi liên tục.
-*   **C (Container):** Lộ trình số hóa tại nhà (Ebook + Audio + Video + Portal tương tác).
+*   **C (Container):** Lộ trình số hóa tại nhà (Ebook + Portal tương tác + Quà tặng kèm).
 
 ## 2. Lời Hứa Cốt Lõi (Core Promise)
 Lộ trình rèn luyện phản xạ thần kinh tự nhiên giúp nam giới làm chủ thời gian yêu theo ý muốn, tự tin làm chủ cuộc chơi chỉ sau 21 ngày rèn luyện nghiêm túc tại nhà mà không cần dùng thuốc hay can thiệp y khoa.
@@ -27,27 +27,17 @@ Phương pháp dựa trên nền tảng y học hành vi hiện đại:
 *   **Giải quyết vấn đề gì:** Thay thế những thông tin chắp vá trên mạng bằng một lộ trình khoa học, rõ ràng từ Ngày 1 đến Ngày 21.
 *   **Trị giá:** `1.000.000đ`
 
-### 🎁 QUÀ TẶNG 1: Bộ Video Thị Phạm Động Tác Kegel Chuẩn Nam Khoa
-*   **Nó là gì:** Thư viện video hoạt họa 3D giải phẫu sàn chậu và video thực tế hướng dẫn siết cơ PC chuẩn xác ở các tư thế Nằm, Ngồi, Đứng.
-*   **Giải quyết vấn đề gì:** Hóa giải 4 lỗi sai chí mạng khi tập Kegel (nhầm cơ đùi/mông, nín thở, gồng bụng) khiến tập mãi không tiến bộ.
-*   **Trị giá:** `350.000đ`
-
-### 🎁 QUÀ TẶNG 2: Bộ Audio Dẫn Nhịp Thở Phế Vị & Đếm Giây Siết Cơ PC Tại Nhà
-*   **Nó là gì:** File âm thanh MP3 dẫn nhịp siết/thả cơ sàn chậu và điều hòa nhịp thở bụng theo tần số chuẩn của giáo trình.
-*   **Giải quyết vấn đề gì:** Bạn chỉ cần đeo tai nghe, nhắm mắt và tập theo hiệu lệnh của audio mà không phải tự đếm giây thủ công trong đầu, tăng mức độ tập trung sâu lên gấp 3 lần.
-*   **Trị giá:** `250.000đ`
-
-### 🎁 QUÀ TẶNG 3: Bảng Theo Dõi Tiến Trình Kiểm Soát 21 Ngày (Progress Tracker)
+### 🎁 QUÀ TẶNG 1: Bảng Theo Dõi Tiến Trình Kiểm Soát 21 Ngày (Progress Tracker)
 *   **Nó là gì:** File PDF thông minh (có thể in hoặc điền trực tiếp trên điện thoại) ghi lại số giây siết cơ PC, số chu kỳ Start-Stop đạt được sau mỗi ngày.
 *   **Giải quyết vấn đề gì:** Tránh bỏ cuộc giữa chừng. Giúp bạn thấy rõ sự tiến bộ của nhóm cơ sàn chậu qua các con số thực tế, tạo động lực tâm lý bền bỉ.
 *   **Trị giá:** `150.000đ`
 
-### 🎁 QUÀ TẶNG 4: Cẩm Nang "Nghệ Thuật Đồng Hành Chăn Gối" Dành Cho Bạn Đời
+### 🎁 QUÀ TẶNG 2: Cẩm Nang "Nghệ Thuật Đồng Hành Chăn Gối" Dành Cho Bạn Đời
 *   **Nó là gì:** Cẩm nang hướng dẫn kịch bản chia sẻ tế nhị, thỏa thuận ám hiệu dừng (Stop-Start) và kỹ thuật ép hỗ trợ (ép quy đầu/gốc) dành cho đối tác.
 *   **Giải quyết vấn đề gì:** Hóa giải hoàn toàn áp lực tâm lý và sự căng thẳng giữa hai vợ chồng trong phòng ngủ. Biến bạn đời từ "người phán xét" thành "đồng minh" hỗ trợ đắc lực.
 *   **Trị giá:** `250.000đ`
 
-### 🎁 QUÀ TẶNG 5: Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Bí Quyết Bổ Sung Kẽm & Magie Cho Người Bận Rộn"
+### 🎁 QUÀ TẶNG 3: Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Bí Quyết Bổ Sung Kẽm & Magie Cho Người Bận Rộn"
 *   **Nó là gì:** Cẩm nang dinh dưỡng thiết kế riêng cho nam giới bận rộn để tăng sinh lý tự nhiên. Hướng dẫn các món ăn giàu vi chất kẽm (Zinc) và magie (Magnesium) — hai nhân tố quyết định độ dẻo dai cơ sàn chậu và nồng độ Testosterone nội sinh.
 *   **Giải quyết vấn đề gì:** Cung cấp giải pháp bổ sung vi chất cấp tốc cho những người bận rộn không có thời gian chuẩn bị bữa ăn cầu kỳ. Tích hợp cổng liên hệ mua thực phẩm bổ sung Zn & Mg chuẩn hóa trực tiếp từ chuyên gia qua Telegram `@matma21_support`.
 *   **Trị giá:** `300.000đ`
@@ -55,13 +45,13 @@ Phương pháp dựa trên nền tảng y học hành vi hiện đại:
 ---
 
 ## 5. Giá Bán & Anchoring
-*   **Tổng giá trị thực tế nhận được (Value Stack):** `2.300.000đ`
+*   **Tổng giá trị thực tế nhận được (Value Stack):** `1.700.000đ`
 *   **Giá bán chính thức:** **`686.868đ`** (Thanh toán 1 lần duy nhất, sở hữu trọn đời).
 *   **Bảo mật sao kê:** Tiêu đề giao dịch chuyển khoản hiển thị tế nhị: `"FORMEN - TL Suc Khoe Nam Gioi"` (Không chứa từ nhạy cảm để bảo vệ quyền riêng tư tuyệt đối của học viên).
 
 ## 6. Chính Sách Bảo Đảm Rủi Ro Tuyệt Đối (Risk Reversal)
-**🏆 Cam Kết Hoàn Tiền Trải Nghiệm 3 Ngày Đầu Tiên (Hài Lòn 100%)**
-Chúng tôi bảo đảm rủi ro tuyệt đối cho bạn. Ngay sau khi đăng ký, bạn có 3 ngày học thử và trải nghiệm toàn bộ giáo trình, xem các video thị phạm và nghe các audio tập thở. Nếu trong vòng 3 ngày đầu tiên, bạn cảm thấy phương pháp rèn luyện tự nhiên này không phù hợp với mình, hoặc không thấy hiệu quả ban đầu như mong đợi:
+**🏆 Cam Kết Hoàn Tiền Trải Nghiệm 3 Ngày Đầu Tiên (Hài Lòng 100%)**
+Chúng tôi bảo đảm rủi ro tuyệt đối cho bạn. Ngay sau khi đăng ký, bạn có 3 ngày học thử và trải nghiệm toàn bộ giáo trình và tài liệu rèn luyện. Nếu trong vòng 3 ngày đầu tiên, bạn cảm thấy phương pháp rèn luyện tự nhiên này không phù hợp với mình, hoặc không thấy hiệu quả ban đầu như mong đợi:
 ➔ *Hãy gửi tin nhắn yêu cầu hoàn tiền cho chúng tôi qua Telegram `@matma21_support`. Chúng tôi sẽ hoàn trả 100% số tiền 686.868đ ngay lập tức mà không hỏi thêm bất kỳ câu nào.*
 
 ## 7. Khan Hiếm & Thúc Giục (Scarcity & Urgency)

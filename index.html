@@ -484,7 +484,203 @@
     }
 
     .comparison-card.active-card li i {
-      color: var(--secondary);
+      color: #2E7D32;
+    }
+
+    /* Student Feedback Section Styling */
+    .feedback-sec {
+      padding: 100px 0;
+      background-color: var(--bg-main);
+      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
+      position: relative;
+    }
+
+    .feedback-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 992px) {
+      .feedback-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .feedback-stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feedback-stat-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(13, 43, 26, 0.05);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-smooth);
+    }
+
+    .feedback-stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .feedback-stat-number {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .feedback-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 992px) {
+      .feedback-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feedback-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(13, 43, 26, 0.04);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .feedback-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(184, 134, 11, 0.2);
+    }
+
+    .feedback-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px dashed rgba(13, 43, 26, 0.08);
+      padding-bottom: 15px;
+    }
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .student-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(13, 43, 26, 0.05);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      border: 2px solid rgba(184, 134, 11, 0.3);
+    }
+
+    .student-meta h4 {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .student-meta span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .duration-badge {
+      background: rgba(220, 252, 231, 0.6);
+      color: #166534;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(74, 222, 128, 0.4);
+    }
+
+    .feedback-content {
+      font-size: 14px;
+      color: var(--text-main);
+      line-height: 1.6;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    /* Chat bubble container inside feedback card */
+    .chat-bubble-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #F4F6F4;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin-top: 10px;
+      border: 1px solid rgba(13, 43, 26, 0.03);
+    }
+
+    .chat-bubble {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .chat-bubble.student {
+      background: #E8F0EA;
+      color: #0E2519;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .chat-bubble.support {
+      background: #EAF4FC;
+      color: #1C3D5A;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .chat-time {
+      font-size: 9px;
+      color: var(--text-light);
+      text-align: right;
+      margin-top: 4px;
+      display: block;
     }
 
     /* Curriculum Week section */
@@ -879,7 +1075,7 @@
     }
 
     .faq-item.active .faq-answer {
-      max-height: 250px; /* arbitrary large value */
+      max-height: 500px; /* increased to avoid clipping longer answers */
       border-top-color: var(--border-light);
     }
 
@@ -1201,6 +1397,159 @@
     </div>
   </section>
 
+  <!-- ================= STUDENT FEEDBACK SECTION ================= -->
+  <section class="feedback-sec">
+    <div class="container">
+      <h2 class="section-title">Kết Quả Đột Phá <span>Từ Học Viên Thực Tế</span></h2>
+      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: -30px auto 50px auto; font-size: 16px;">
+        Khảo sát thực tiễn ẩn danh trên 1,420+ nam giới đã hoàn thành trọn vẹn lộ trình 21 ngày:
+      </p>
+
+      <div class="feedback-stats-grid">
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-number">+8.5 Phút</div>
+          <div class="feedback-stat-label">Thời gian cải thiện TB</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-number">94.8%</div>
+          <div class="feedback-stat-label">Học viên đạt tự chủ</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-number">100%</div>
+          <div class="feedback-stat-label">Tự nhiên & Không thuốc</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-number">3-5 Ngày</div>
+          <div class="feedback-stat-label">Cảm nhận thay đổi rõ rệt</div>
+        </div>
+      </div>
+
+      <div class="feedback-grid">
+        
+        <!-- Feedback 1 -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="student-info">
+              <div class="student-avatar">H.N</div>
+              <div class="student-meta">
+                <h4>Anh Hoàng Nam (32 tuổi)</h4>
+                <span>Nhân viên văn phòng, Hà Nội</span>
+              </div>
+            </div>
+            <div class="duration-badge">
+              <i class="fa-solid fa-clock"></i> <span>1.5m &rarr; 7m+</span>
+            </div>
+          </div>
+          <div class="feedback-content">
+            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Trước đây lo âu tâm lý cực kỳ nặng, cứ chuẩn bị lâm trận là tim đập nhanh, thở gấp, chỉ được 1-2 phút là đã tới ngưỡng không hãm nổi. Nhờ áp dụng kỹ thuật điều hòa nhịp thở bụng kết hợp siết/nhả cơ sàn chậu đúng tư thế nằm, đứng..."</p>
+            
+            <div class="chat-bubble-container">
+              <div class="chat-bubble student">
+                Chào chuyên gia, hôm nay là ngày 14 tập luyện. Em tập siết cơ PC theo file âm thanh và điều thở bụng thấy tiến bộ rõ lắm, cơ chậu có vẻ khỏe hẳn lên. Tối qua lâm trận với vợ em áp dụng nhịp thở bụng sâu và cơ chế dừng 1 nhịp (Start-Stop) thì kéo được hơn 7 phút. Vợ em bất ngờ hỏi sao hôm nay bền thế, sướng quá anh ạ!
+                <span class="chat-time">22:15</span>
+              </div>
+              <div class="chat-bubble support">
+                Chúc mừng em! Kỹ thuật điều hòa nhịp tim qua thở bụng phế vị đã bắt đầu tạo phản xạ tự chủ thần kinh rồi đó. Sang tuần thứ 3, em tiếp tục tập các tư thế thực chiến đứng/ngồi và áp dụng Stop-Start chủ động nhé. Cố lên em!
+                <span class="chat-time">22:20</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback 2 -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="student-info">
+              <div class="student-avatar">M.T</div>
+              <div class="student-meta">
+                <h4>Anh Minh Trí (27 tuổi)</h4>
+                <span>Lập trình viên, TP. Hồ Chí Minh</span>
+              </div>
+            </div>
+            <div class="duration-badge">
+              <i class="fa-solid fa-clock"></i> <span>2m &rarr; 12m+</span>
+            </div>
+          </div>
+          <div class="feedback-content">
+            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Hồi trước tập Kegel linh tinh trên mạng bị mỏi lưng với ê ẩm bụng dưới vì gồng sai cơ bụng. Sau khi sửa lại cơ chậu độc lập theo hướng dẫn chi tiết của Ebook và duy trì 3 tuần, hiệu quả thực tế vượt mong đợi..."</p>
+            
+            <div class="chat-bubble-container">
+              <div class="chat-bubble student">
+                Chào ad, em đã hoàn thành 21 ngày. Rất may mắn vì có phần sàng lọc ban đầu giúp em phát hiện ra mình bị co thắt sàn chậu mãn tính do gồng Kegel sai cách hồi trước. Sau khi giãn cơ và tập chuẩn theo lộ trình, giờ thời gian thực tế đạt 12-15 phút ổn định. Tâm lý tự tin hẳn, không còn nỗi sợ vô hình như trước nữa.
+                <span class="chat-time">14:02</span>
+              </div>
+              <div class="chat-bubble support">
+                Tuyệt vời Trí ơi! Đúng vậy, 80% mọi người tập Kegel miễn phí trên mạng đều mắc lỗi gồng cơ bụng/đùi gây căng cứng chậu. Khi em thở đúng và co thắt biệt lập, phản xạ kiểm soát sẽ quay về tự nhiên. Hãy duy trì thói quen tập nhẹ nhàng nhé!
+                <span class="chat-time">14:15</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback 3 -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="student-info">
+              <div class="student-avatar">T.D</div>
+              <div class="student-meta">
+                <h4>Anh Tiến Dũng (40 tuổi)</h4>
+                <span>Kinh doanh tự do, Đà Nẵng</span>
+              </div>
+            </div>
+            <div class="duration-badge">
+              <i class="fa-solid fa-clock"></i> <span>1m &rarr; 8m</span>
+            </div>
+          </div>
+          <div class="feedback-content">
+            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Ở độ tuổi này sức bền suy giảm rõ rệt, sinh hoạt vợ chồng thưa thớt dần vì tự ti thời gian quá ngắn. Tôi từng dùng qua thuốc bôi/thuốc xịt nhưng bị tê rát, mất hết cả hứng thú. Giáo án 21 ngày này đã cứu cánh cho đời sống vợ chồng tôi..."</p>
+            
+            <div class="chat-bubble-container">
+              <div class="chat-bubble student">
+                Ad cho hỏi thêm về chế độ ăn Testosterone trong quà tặng kèm. Tôi áp dụng thực đơn kẽm và magie được 1 tuần thấy tinh thần khỏe khoắn hẳn, chuyện ấy cũng sung mãn hơn. Cơ sàn chậu tập theo giáo án giờ giữ nhịp được khoảng 8 phút, vợ chồng rất hạnh phúc. Cảm ơn ad nhiều.
+                <span class="chat-time">09:30</span>
+              </div>
+              <div class="chat-bubble support">
+                Chào anh Dũng, rất vui vì anh phản hồi tốt! Dinh dưỡng kẽm (Zn) và Magie (Mg) giúp tăng sản sinh testosterone nội sinh tự nhiên, bổ trợ đắc lực cho sức mạnh cơ sàn chậu. Anh cứ tiếp tục duy trì thực đơn và luyện tập theo đúng giáo trình nhé.
+                <span class="chat-time">09:42</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback 4 -->
+        <div class="feedback-card">
+          <div class="feedback-header">
+            <div class="student-info">
+              <div class="student-avatar">V.A</div>
+              <div class="student-meta">
+                <h4>Anh Việt Anh (35 tuổi)</h4>
+                <span>Kỹ sư xây dựng, Hải Phòng</span>
+              </div>
+            </div>
+            <div class="duration-badge">
+              <i class="fa-solid fa-clock"></i> <span>45s &rarr; 6m+</span>
+            </div>
+          </div>
+          <div class="feedback-content">
+            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Gặp tình trạng xuất tinh sớm từ thời trẻ (nguyên phát), cứ nghĩ là do cơ địa không chữa được. Lúc đọc Ebook phần phân loại y khoa M0 thấy mình thuộc nhóm nhạy cảm cơ sàn chậu, tôi mới hạ quyết tâm kiên trì rèn luyện..."</p>
+            
+            <div class="chat-bubble-container">
+              <div class="chat-bubble student">
+                Em tập đến ngày thứ 18 rồi ad. Trước đây cứ lâm trận là xuất tinh trong vòng chưa đầy 1 phút. Nhờ rèn luyện cơ chậu phản xạ phanh chủ động và kịch bản thỏa thuận dừng với vợ (kèm kỹ thuật ép quy đầu nhẹ hỗ trợ), hôm qua em đã kéo dài được hơn 6 phút. Lần đầu tiên em cảm thấy mình làm chủ được cơ thể!
+                <span class="chat-time">23:05</span>
+              </div>
+              <div class="chat-bubble support">
+                Chúc mừng Việt Anh! Với trường hợp nhạy cảm nguyên phát, việc học cách kiểm soát phản xạ chậu qua kỹ thuật ép hỗ trợ và cơ chế phanh cơ sàn chậu là con đường khoa học duy nhất. Em duy trì phong độ và tiếp tục phối hợp ăn ý với bà xã nhé!
+                <span class="chat-time">23:12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ================= CURRICULUM SECTION ================= -->
   <section class="curriculum">
     <div class="container">
@@ -1240,30 +1589,10 @@
           
           <div class="value-item-card">
             <div class="value-item-icon">
-              <i class="fa-solid fa-circle-play"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Bộ Video Thị Phạm Động Tác Kegel Chuẩn Nam Giới <span class="value-price-badge free">Quà Tặng 1 - Trị giá 350.000đ</span></h4>
-              <p>Kho thư viện tuyển chọn các video hoạt họa 3D giải phẫu sàn chậu và video thực tế thị phạm tư thế siết cơ PC chuẩn xác (nằm, ngồi, đứng). Hướng dẫn chi tiết cách co thắt đúng cơ sàn chậu, tránh các lỗi sai phổ biến (như gồng cơ bụng, mông, đùi hoặc nín thở) để đạt hiệu quả tối ưu.</p>
-            </div>
-          </div>
-          
-          <div class="value-item-card">
-            <div class="value-item-icon">
-              <i class="fa-solid fa-headphones"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Bộ Audio Dẫn Nhịp Thở & Đếm Giây Tập Cơ Sàn Chậu Tại Nhà <span class="value-price-badge free">Quà Tặng 2 - Trị giá 250.000đ</span></h4>
-              <p>File âm thanh MP3 dẫn nhịp siết/thả cơ sàn chậu và điều hòa nhịp thở bụng theo tần số chuẩn của giáo trình. Giúp người tập dễ dàng thực hành theo hiệu lệnh nhịp thở chuẩn xác mà không cần tự đếm giây, tăng cường sự tập trung và tính đồng bộ.</p>
-            </div>
-          </div>
-          
-          <div class="value-item-card">
-            <div class="value-item-icon">
               <i class="fa-solid fa-calendar-check"></i>
             </div>
             <div class="value-item-info">
-              <h4>Bảng Theo Dõi Tiến Trình Kiểm Soát 21 Ngày (Progress Tracker) <span class="value-price-badge free">Quà Tặng 3 - Trị giá 150.000đ</span></h4>
+              <h4>Bảng Theo Dõi Tiến Trình Kiểm Soát 21 Ngày (Progress Tracker) <span class="value-price-badge free">Quà Tặng 1 - Trị giá 150.000đ</span></h4>
               <p>File PDF in ấn hoặc điền trực tiếp trên điện thoại để ghi lại số giây siết cơ PC, số chu kỳ Start-Stop đạt được sau mỗi ngày. Hỗ trợ theo dõi tiến trình cải thiện trực quan qua từng ngày, giúp người tập kiểm soát kết quả rèn luyện cụ thể.</p>
             </div>
           </div>
@@ -1273,7 +1602,7 @@
               <i class="fa-solid fa-heart-pulse"></i>
             </div>
             <div class="value-item-info">
-              <h4>Tài Liệu "Nghệ Thuật Đồng Hành Chăn Gối" Dành Cho Bạn Đời <span class="value-price-badge free">Quà Tặng 4 - Trị giá 250.000đ</span></h4>
+              <h4>Tài Liệu "Nghệ Thuật Đồng Hành Chăn Gối" Dành Cho Bạn Đời <span class="value-price-badge free">Quà Tặng 2 - Trị giá 250.000đ</span></h4>
               <p>Cẩm nang hướng dẫn kịch bản chia sẻ tinh tế, thỏa thuận các ám hiệu dừng (Stop-Start) và kỹ thuật ép hỗ trợ (ép quy đầu/gốc dương vật) dành cho đối tác. Giúp giải tỏa áp lực tâm lý cho cả hai, tạo sự đồng thuận và phối hợp nhịp nhàng trong quá trình rèn luyện.</p>
             </div>
           </div>
@@ -1283,7 +1612,7 @@
               <i class="fa-solid fa-kitchen-set"></i>
             </div>
             <div class="value-item-info">
-              <h4>Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Cẩm Nang Zn-Mg Cho Người Bận Rộn" <span class="value-price-badge free">Quà Tặng 5 - Trị giá 300.000đ</span></h4>
+              <h4>Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Cẩm Nang Zn-Mg Cho Người Bận Rộn" <span class="value-price-badge free">Quà Tặng 3 - Trị giá 300.000đ</span></h4>
               <p>Cẩm nang dinh dưỡng thiết kế riêng cho nam giới để cải thiện nồng độ testosterone nội sinh và sức bền sàn chậu một cách tự nhiên. Hướng dẫn các món ăn giàu vi chất Kẽm (Zinc) và Magie (Magnesium). Tích hợp cổng liên hệ mua thực phẩm bổ sung Zn & Mg chuẩn hóa trực tiếp từ chuyên gia qua Telegram.</p>
             </div>
           </div>
@@ -1295,7 +1624,7 @@
           <div class="pricing-stack">
             <div class="price-row">
               <span>Tổng giá trị thực tế:</span>
-              <span class="price-value-old">2.300.000đ</span>
+              <span class="price-value-old">1.700.000đ</span>
             </div>
             <div class="price-row" style="font-weight: 700;">
               <span>Gói Ebook & Quà tặng:</span>
@@ -1309,7 +1638,7 @@
           
           <ul class="offer-checklist">
             <li><i class="fa-solid fa-square-check"></i> <span>Truy cập trọn đời cổng Portal học tập tương tác</span></li>
-            <li><i class="fa-solid fa-square-check"></i> <span>Tải về toàn bộ Ebook PDF, Audio, Video đính kèm</span></li>
+            <li><i class="fa-solid fa-square-check"></i> <span>Tải về trọn bộ Ebook PDF và tài liệu đi kèm</span></li>
             <li><i class="fa-solid fa-square-check"></i> <span>Hỗ trợ 1:1 bảo mật tuyệt đối qua Telegram kín</span></li>
           </ul>
           
@@ -1330,53 +1659,6 @@
     </div>
   </section>
 
-  <!-- ================= FAQ SECTION ================= -->
-  <section class="faq-sec">
-    <div class="container">
-      <h2 class="section-title">Giải Đáp <span>Thắc Mắc Tế Nhị</span></h2>
-      <div class="faq-accordion">
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Tài liệu này có thực sự hiệu quả không hay lại giống các bài tập Kegel miễn phí trên mạng?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Hoàn toàn khác biệt.</strong> Tập Kegel miễn phí trên mạng thường thiếu lộ trình khoa học và dễ mắc phải 4 lỗi sai chí mạng: nín thở, gồng cơ bụng/đùi/mông, tập quá sức gây co thắt sàn chậu mãn tính làm phản tác dụng. Mật Mã 21 là giáo trình phân cấp 21 ngày y khoa, kết hợp kỹ thuật thở bụng phế vị 4-2-6 để hạ nhịp tim và kỹ thuật giải mẫn cảm Start-Stop được kiểm chứng lâm sàng bởi Hiệp hội Tiết niệu Châu Âu.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Thanh toán xong có bị lộ thông tin không? Tên hiển thị trên sao kê tài khoản ngân hàng là gì?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Bảo mật tuyệt đối là ưu tiên số một của chúng tôi.</strong> Tên giao dịch chuyển khoản hiển thị trung tính là <strong>"FORMEN - TL Suc Khoe Nam Gioi"</strong>, hoàn toàn không chứa bất kỳ từ nhạy cảm nào. Tài liệu số và tài khoản học tập sẽ được gửi ẩn danh và bảo mật trực tiếp qua Telegram cá nhân hoặc Email của anh.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Tôi bị xuất tinh sớm từ hồi trẻ (nguyên phát), tập cái này liệu có chữa được không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Giáo trình có chương <strong>"Sàng lọc y khoa ban đầu (M0)"</strong> giúp anh tự đánh giá. Nếu nguyên nhân do cơ sàn chậu yếu, lo âu hiệu suất hoặc nhạy cảm thụ thể (chiếm hơn 80% trường hợp) thì lộ trình 21 ngày sẽ mang lại cải thiện vượt bậc. Nếu do viêm tuyến tiền liệt hoặc rối loạn nội tiết nặng, giáo trình sẽ hướng dẫn anh lộ trình kết hợp y tế chuyên sâu.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>21 ngày có thực sự đủ để cải thiện không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Đủ để thiết lập phản xạ mới.</strong> Cơ sàn chậu là nhóm cơ nhỏ, phản hồi kích thích thần kinh rất nhanh nếu tập đúng kỹ thuật co thắt độc lập. Lộ trình cung cấp "Quick Wins" (kịch bản điều hòa hơi thở bụng giảm hưng phấn) giúp anh thấy tiến bộ ngay trong tuần đầu tiên, và hình thành phản xạ tự chủ vững chắc sau 21 ngày.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ================= CHECKOUT / ORDER SECTION ================= -->
   <section class="checkout" id="order-section">
@@ -1423,7 +1705,7 @@
             <div class="bank-info">
               <p>Chuyển khoản chính xác số tiền: <strong style="font-size:18px; color: var(--accent-bright);">686.868đ</strong></p>
               <p style="margin-top:4px;">Nội dung chuyển khoản: <strong id="qr-info-code" style="color: var(--accent-bright); font-size: 16px;">MA21 09xx</strong></p>
-              <p style="font-size:11.5px; margin-top:12px; color:rgba(255,255,255,0.65); text-align: justify; line-height: 1.5;">Hệ thống MBBank sẽ tự động khớp lệnh chuyển khoản và gửi thông tin tài khoản VIP, mã kích hoạt Portal kèm trọn bộ Ebook PDF / Audio / Video qua Email và Telegram kín của anh sau 1 phút.</p>
+              <p style="font-size:11.5px; margin-top:12px; color:rgba(255,255,255,0.65); text-align: justify; line-height: 1.5;">Hệ thống MBBank sẽ tự động khớp lệnh chuyển khoản và gửi thông tin tài khoản VIP, mã kích hoạt Portal kèm trọn bộ Ebook PDF và tài liệu đi kèm qua Email và Telegram kín của anh sau 1 phút.</p>
             </div>
             
             <div class="privacy-notice">
@@ -1436,6 +1718,116 @@
           </div>
         </div>
         
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ SECTION ================= -->
+  <section class="faq-sec">
+    <div class="container">
+      <h2 class="section-title">Giải Đáp <span>Thắc Mắc Tế Nhị</span></h2>
+      <div class="faq-accordion">
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Tài liệu này có thực sự hiệu quả không hay lại giống các bài tập Kegel miễn phí trên mạng?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Hoàn toàn khác biệt.</strong> Tập Kegel tự phát trên mạng thường thiếu lộ trình phân cấp và rất dễ mắc phải 4 sai lầm nghiêm trọng: nín thở, gồng cơ bụng/đùi/mông, tập quá sức gây co thắt sàn chậu mãn tính hoặc phản tác dụng. Mật Mã 21 kết hợp kỹ thuật thở bụng phế vị 4-2-6 để hạ nhịp tim và kỹ thuật giải mẫn cảm thần kinh Start-Stop được kiểm chứng lâm sàng bởi Hiệp hội Tiết niệu Châu Âu (EAU), giúp rèn luyện cơ chậu co thắt độc lập hiệu quả.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Thanh toán xong có bị lộ thông tin cá nhân không? Tên hiển thị trên sao kê ngân hàng là gì?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Bảo mật tuyệt đối là ưu tiên số một.</strong> Giao dịch chuyển khoản hiển thị tên trung tính là <strong>"FORMEN - TL Suc Khoe Nam Gioi"</strong>, hoàn toàn không chứa bất kỳ từ ngữ nhạy cảm nào. Tài liệu số và tài khoản VIP học tập sẽ được gửi ẩn danh và bảo mật trực tiếp qua Telegram cá nhân hoặc Email của anh.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Tôi bị xuất tinh sớm từ hồi trẻ (nguyên phát), tập lộ trình này liệu có cải thiện được không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Giáo trình có chương <strong>"Sàng lọc y khoa ban đầu (M0)"</strong> để anh tự đánh giá. Nếu nguyên nhân do cơ sàn chậu yếu, lo âu hiệu suất hoặc nhạy cảm thụ thể (chiếm hơn 80% trường hợp) thì lộ trình 21 ngày sẽ mang lại cải thiện vượt bậc. Trong trường hợp nguyên phát do bất thường cấu trúc hoặc rối loạn nội tiết nặng, giáo án cũng cung cấp kịch bản định hướng điều trị y tế chuyên sâu kết hợp.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Lộ trình 21 ngày có thực sự đủ để cải thiện phản xạ kéo dài không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Đủ để thiết lập và củng cố phản xạ mới.</strong> Cơ sàn chậu là nhóm cơ vân nhỏ, phản hồi kích thích thần kinh rất nhanh nếu co thắt biệt lập đúng kỹ thuật. Giáo trình cung cấp "Quick Wins" (kịch bản điều hòa hơi thở bụng giảm hưng phấn) giúp anh cảm nhận sự tiến triển ngay trong tuần đầu tiên, và hình thành phản xạ tự chủ vững chắc sau 21 ngày luyện tập đều đặn.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Hiện tại tôi chưa có bạn đời/đối tác thì có thực hành lộ trình này được không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Hoàn toàn được.</strong> Lộ trình 21 ngày được thiết kế linh hoạt chia làm 2 giai đoạn: Giai đoạn 1 (Solo Training) tập trung huấn luyện cơ sàn chậu độc lập và điều hòa hô hấp đơn lẻ tại nhà; Giai đoạn 2 mới tích hợp các bài tập mô phỏng thực chiến. Nếu chưa có đối tác, anh sẽ tập trung tối đa vào việc làm chủ phản xạ cá nhân ở Giai đoạn 1 để tạo nền tảng vững chắc nhất trước khi lâm trận thực tế.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Tôi có cần mua thêm thực phẩm bổ sung Testosterone hay Zn-Mg không? Mua ở đâu uy tín?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Trong quà tặng kèm có Ebook hướng dẫn chi tiết thực đơn dinh dưỡng giàu kẽm và magie từ thực phẩm tự nhiên hàng ngày. Nếu anh bận rộn và có nhu cầu bổ sung vi chất Zn & Mg chuẩn hóa y tế, giáo trình tích hợp sẵn cổng liên hệ chuyên gia qua Telegram `@matma21_support` để được tư vấn dòng sản phẩm chất lượng cao, có nguồn gốc rõ ràng với giá ưu đãi cho học viên.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Có tài liệu giấy hay sách vật lý nào được gửi về địa chỉ nhà tôi không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Không.</strong> Để đảm bảo sự riêng tư tuyệt đối cho học viên, 100% tài liệu của Mật Mã 21 (Ebook PDF, Progress Tracker) đều được phân phối dưới dạng tài liệu số (Digital). Anh sẽ được cấp tài khoản VIP để truy cập cổng Portal học tập online và tải trực tiếp các tài liệu này về điện thoại, máy tính cá nhân mà không sợ bất kỳ ai phát hiện.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Chính sách hoàn tiền hỗ trợ học viên trong vòng 3 ngày hoạt động thế nào?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Chúng tôi cam kết chất lượng nội dung bằng chính sách hỗ trợ hoàn tiền 100% trong vòng 3 ngày kể từ khi nhận tài khoản nếu anh mở giáo trình ra và thấy các kiến thức, bài tập không mang lại giá trị thực tiễn hoặc không đúng như mô tả. Anh chỉ cần nhắn tin cho Telegram hỗ trợ học viên `@matma21_support` để được giải quyết nhanh chóng, bảo mật.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Phương pháp tập luyện này có an toàn cho người bị đau lưng hay cao huyết áp không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Rất an toàn.</strong> Các bài tập cơ sàn chậu và kỹ thuật thở bụng phế vị trong Mật Mã 21 đều là các bài vận động tĩnh, lực tác động thấp (low-impact) và tự nhiên, không yêu cầu tạ hay vận động mạnh. Việc thở bụng sâu còn hỗ trợ điều hòa huyết áp và giảm căng thẳng hệ thần kinh giao cảm, rất tốt cho sức khỏe tổng thể.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Tôi có thể truy cập và học giáo trình trên điện thoại thông minh được không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Hoàn toàn tương thích.</strong> Cổng Portal học tập tương tác Mật Mã 21 được tối ưu hóa giao diện di động (Responsive 100%). Anh có thể dễ dàng đọc giáo trình Ebook PDF, điền bảng theo dõi Progress Tracker và nhắn tin trao đổi 1:1 với hỗ trợ chuyên môn trực tiếp trên màn hình điện thoại ở bất kỳ đâu, bất kỳ lúc nào.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
