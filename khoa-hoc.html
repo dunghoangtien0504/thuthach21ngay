@@ -1525,110 +1525,6 @@
         padding: 24px 16px;
       }
     }
-
-    /* Articles & Blog Preview Section */
-    .blog-preview-sec {
-      padding: 100px 0;
-      background-color: var(--bg-main);
-      border-top: 1px solid rgba(13, 43, 26, 0.04);
-    }
-
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      margin-top: 40px;
-      margin-bottom: 40px;
-    }
-
-    .article-card {
-      background-color: #FFF;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(13, 43, 26, 0.03);
-      display: flex;
-      flex-direction: column;
-      transition: var(--transition-smooth);
-    }
-
-    .article-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .article-badge {
-      background-color: rgba(184, 134, 11, 0.1);
-      color: var(--accent);
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      width: fit-content;
-      margin-bottom: 15px;
-    }
-
-    .article-content {
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .article-content h3 {
-      font-family: var(--font-heading);
-      font-size: 19px;
-      color: var(--primary);
-      margin-bottom: 12px;
-      line-height: 1.4;
-      font-weight: 700;
-    }
-
-    .article-content p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-
-    .read-more {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: var(--transition-smooth);
-      margin-top: auto;
-    }
-
-    .read-more:hover {
-      color: var(--accent);
-    }
-
-    .read-more i {
-      font-size: 12px;
-      transition: var(--transition-smooth);
-    }
-
-    .read-more:hover i {
-      transform: translateX(4px);
-    }
-
-    @media (max-width: 992px) {
-      .articles-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .articles-grid {
-        grid-template-columns: 1fr;
-      }
-    }
   </style>
 </head>
 <body>
@@ -1641,8 +1537,8 @@
         <span>Mật Mã 21</span>
       </a>
       <nav class="nav-menu">
-        <a href="/" class="nav-link active">Trang Chủ</a>
-        <a href="/khoa-hoc.html" class="nav-link">Khóa Học</a>
+        <a href="/" class="nav-link">Trang Chủ</a>
+        <a href="/khoa-hoc.html" class="nav-link active">Khóa Học</a>
         <a href="/kien-thuc.html" class="nav-link">Kiến Thức</a>
         <a href="https://t.me/matma21_support" target="_blank" class="nav-link">Hỗ Trợ 1:1</a>
         <a href="/portal.html" class="btn btn-outline btn-login" style="display: none;">
@@ -2277,54 +2173,6 @@
           </div>
         </div>
         
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= KNOWLEDGE SECTION (Blog Preview) ================= -->
-  <section class="blog-preview-sec">
-    <div class="container">
-      <h2 class="section-title">Kiến Thức <span>Sức Khỏe Nam Giới</span></h2>
-      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 16px;">
-        Các bài viết y khoa, cẩm nang tập luyện và tư duy chăn gối khoa học giúp bạn làm chủ cơ thể bền vững.
-      </p>
-
-      <div class="articles-grid">
-        <!-- Article 1 -->
-        <div class="article-card">
-          <div class="article-content">
-            <div class="article-badge">Bài Tập Sàn Chậu</div>
-            <h3>Khoa Học Kegel & Kegel Ngược PC Muscle</h3>
-            <p>Giải phẫu chi tiết cơ PC. Hướng dẫn tập siết chậu biệt lập không co mông/đùi và kỹ thuật Kegel ngược nới lỏng cơ chậu căng thẳng.</p>
-            <a href="/kien-thuc.html" class="read-more">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-
-        <!-- Article 2 -->
-        <div class="article-card">
-          <div class="article-content">
-            <div class="article-badge">Tâm Lý Học</div>
-            <h3>Bẻ Gãy Vòng Lặp Lo Âu Hiệu Suất</h3>
-            <p>Cơ chế sinh học khiến lo âu dự báo kích hoạt xuất tinh nhanh. Cách sử dụng thở phế vị 4-2-6 để hạ nhịp tim chớp nhoáng.</p>
-            <a href="/kien-thuc.html" class="read-more">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-
-        <!-- Article 3 -->
-        <div class="article-card">
-          <div class="article-content">
-            <div class="article-badge">Giải Phẫu</div>
-            <h3>Bản Đồ Điểm G & Kích Hoạt Khoái Cảm</h3>
-            <p>Định vị điểm G, điểm A và âm vật để đưa nàng lên đỉnh trước. Kỹ thuật dạo đầu giúp cởi bỏ 100% áp lực thời gian cho phái mạnh.</p>
-            <a href="/kien-thuc.html" class="read-more">Đọc tiếp <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align: center;">
-        <a href="/kien-thuc.html" class="btn btn-outline" style="border-color: var(--accent); color: var(--accent); padding: 12px 28px;">
-          Xem Tất Cả Kiến Thức Sức Khỏe <i class="fa-solid fa-chevron-right"></i>
-        </a>
       </div>
     </div>
   </section>

@@ -8,6 +8,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         portal: resolve(__dirname, 'portal.html'),
         admin: resolve(__dirname, 'admin.html'),
+        'khoa-hoc': resolve(__dirname, 'khoa-hoc.html'),
+        'kien-thuc': resolve(__dirname, 'kien-thuc.html'),
       },
     },
   },

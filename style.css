@@ -1655,6 +1655,17 @@ body {
 }
 
 @media (max-width: 768px) {
+  body {
+    height: auto;
+    overflow-y: auto;
+  }
+  
+  .app-container {
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+  }
+
   .app-header {
     height: auto;
     flex-direction: column;
