@@ -456,9 +456,14 @@ function renderSidebar() {
       
       const btn = itemEl.querySelector('button');
       btn.addEventListener('click', (e) => {
-        if (!isUnlocked) {
+        const lockReason = getLessonLockReason(lesson.lesson_id);
+        if (lockReason) {
           e.preventDefault();
-          alert(`Bài học này đang bị khóa. Bạn cần hoàn thành bài chuẩn bị hoặc bài tập trước đó và điền nhật ký tập luyện để mở khóa bài tiếp theo!`);
+          if (typeof lockReason === 'object' && lockReason.type === 'time_locked') {
+            alert(`Bài học tiếp theo này đang tạm khóa. Bạn cần đợi thêm ${lockReason.remainingHours} giờ nữa để đảm bảo có đủ 24h thực hành và phục hồi nhóm cơ chậu từ bài học trước!`);
+          } else {
+            alert(`Bài học này đang bị khóa. Bạn cần hoàn thành bài chuẩn bị hoặc bài tập trước đó và điền nhật ký tập luyện để mở khóa bài tiếp theo!`);
+          }
           return;
         }
         selectLesson(lesson.lesson_id);
@@ -568,19 +573,45 @@ function hasLoggedLesson(lessonId) {
   return progressLogs.some(log => log.lessonId === lessonId);
 }
 
-function isLessonUnlocked(lessonId) {
-  // Always unlock for trial student
-  if (userSession && userSession.email === 'hocvien@thuthach21ngay.us') {
-    return true;
+function getLessonLockReason(lessonId) {
+  // Always unlock for trial student (by email or name)
+  if (userSession && (
+    userSession.email === 'hocvien@thuthach21ngay.us' || 
+    userSession.name === 'học viên thử nghiệm' || 
+    userSession.name === 'Học Viên Thử Nghiệm'
+  )) {
+    return null; // Unlocked
   }
   
-  if (lessonId === 0) return true; // Day 0 is always unlocked
+  if (lessonId === 0) return null; // Day 0 is always unlocked
   
   const prevLessonId = lessonId - 1;
   const prevCompleted = completedLessons.includes(prevLessonId);
   const prevLogged = prevLessonId === 0 || hasLoggedLesson(prevLessonId);
   
-  return prevCompleted && prevLogged;
+  if (!prevCompleted || !prevLogged) {
+    return "previous_incomplete";
+  }
+  
+  // 24 hours lock check
+  const completionTimestamps = JSON.parse(localStorage.getItem('thuthach21ngay_completion_timestamps')) || {};
+  const prevCompletedTime = completionTimestamps[prevLessonId];
+  
+  if (prevCompletedTime) {
+    const elapsedMs = Date.now() - prevCompletedTime;
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    if (elapsedMs < oneDayMs) {
+      const remainingMs = oneDayMs - elapsedMs;
+      const hours = Math.ceil(remainingMs / (1000 * 60 * 60));
+      return { type: "time_locked", remainingHours: hours };
+    }
+  }
+  
+  return null; // Unlocked
+}
+
+function isLessonUnlocked(lessonId) {
+  return getLessonLockReason(lessonId) === null;
 }
 
 function showLogModalForCurrentLesson() {
@@ -644,6 +675,11 @@ function setupLogModal() {
       if (!completedLessons.includes(currentLessonId)) {
         completedLessons.push(currentLessonId);
         localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+        
+        // Save completion timestamp
+        const completionTimestamps = JSON.parse(localStorage.getItem('thuthach21ngay_completion_timestamps')) || {};
+        completionTimestamps[currentLessonId] = Date.now();
+        localStorage.setItem('thuthach21ngay_completion_timestamps', JSON.stringify(completionTimestamps));
       }
       
       logModal.style.display = 'none';
@@ -664,14 +700,19 @@ function setupInteractiveLessons() {
   btnCompleteLesson.addEventListener('click', () => {
     if (currentLessonId === null) return;
     
+    const completionTimestamps = JSON.parse(localStorage.getItem('thuthach21ngay_completion_timestamps')) || {};
+    
     if (currentLessonId === 0) {
       const idx = completedLessons.indexOf(0);
       if (idx === -1) {
         completedLessons.push(0);
+        completionTimestamps[0] = Date.now();
       } else {
         completedLessons.splice(idx, 1);
+        delete completionTimestamps[0];
       }
       localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      localStorage.setItem('thuthach21ngay_completion_timestamps', JSON.stringify(completionTimestamps));
       updateCompletionButtonState();
       renderSidebar();
       updateProgressUI();
@@ -684,7 +725,9 @@ function setupInteractiveLessons() {
     if (isCompleted) {
       const idx = completedLessons.indexOf(currentLessonId);
       completedLessons.splice(idx, 1);
+      delete completionTimestamps[currentLessonId];
       localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+      localStorage.setItem('thuthach21ngay_completion_timestamps', JSON.stringify(completionTimestamps));
       updateCompletionButtonState();
       renderSidebar();
       updateProgressUI();
@@ -693,7 +736,9 @@ function setupInteractiveLessons() {
         showLogModalForCurrentLesson();
       } else {
         completedLessons.push(currentLessonId);
+        completionTimestamps[currentLessonId] = Date.now();
         localStorage.setItem('thuthach21ngay_completed_lessons', JSON.stringify(completedLessons));
+        localStorage.setItem('thuthach21ngay_completion_timestamps', JSON.stringify(completionTimestamps));
         updateCompletionButtonState();
         renderSidebar();
         updateProgressUI();
