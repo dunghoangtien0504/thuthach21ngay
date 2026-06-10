@@ -317,17 +317,6 @@
       align-items: start;
     }
 
-    @media (max-width: 992px) {
-      .science-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .science-intro {
-        position: static;
-        margin-bottom: 10px;
-      }
-    }
-
     .science-intro {
       position: sticky;
       top: 110px;
@@ -403,6 +392,17 @@
       font-size: 14.5px;
       color: rgba(255, 255, 255, 0.7);
       line-height: 1.6;
+    }
+
+    @media (max-width: 992px) {
+      .science-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .science-intro {
+        position: static;
+        margin-bottom: 20px;
+      }
     }
 
     /* Comparison Section Styling (Why other methods fail) */
@@ -928,16 +928,6 @@
       align-items: start;
     }
 
-    @media (max-width: 992px) {
-      .value-stack-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .value-summary-card {
-        position: static;
-      }
-    }
-
     .value-items {
       display: flex;
       flex-direction: column;
@@ -1135,6 +1125,16 @@
       font-size: 11.5px;
       line-height: 1.5;
       color: rgba(255, 255, 255, 0.8);
+    }
+
+    @media (max-width: 992px) {
+      .value-stack-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .value-summary-card {
+        position: static !important;
+      }
     }
 
     /* FAQ Section Styling */
