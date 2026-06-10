@@ -563,7 +563,7 @@ body {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   transition: var(--transition-smooth);
 }
 
@@ -591,7 +591,7 @@ body {
 
 .lesson-btn-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   max-width: 85%;
 }
@@ -600,18 +600,19 @@ body {
   font-size: 13px;
   width: 16px;
   text-align: center;
+  margin-top: 3px;
 }
 
 .lesson-btn-title {
   font-size: 13px;
   font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .lesson-status-icon {
   font-size: 12px;
+  margin-top: 3px;
 }
 
 .lesson-status-icon.completed {
