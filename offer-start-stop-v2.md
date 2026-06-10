@@ -1,16 +1,16 @@
-# LỜI ĐỀ NGHỊ KHÔNG THỂ TỪ CHỐI (GODFATHER OFFER V2) — FORMEN SYSTEM
+# LỜI ĐỀ NGHỊ KHÔNG THỂ TỪ CHỐI (GODFATHER OFFER V2.1) — FORMEN SYSTEM
 *Được thiết kế dựa trên công thức Godfather Strategy & Value Equation của Sabri Suby và Alex Hormozi*
 
 ## 1. Tên Sản Phẩm M-A-G-I-C
 **LỘ TRÌNH 21 NGÀY TÁI SINH BẢN LĨNH PHÁI MẠNH TẠI NHÀ**
-*   **M (Magnet):** Tái sinh bản lĩnh, tự chủ 100% phản xạ lâm trận.
+*   **M (Magnet):** Tái sinh bản lĩnh, tự chủ 100% phản xạ lâm trận, chấm dứt vòng lặp lo âu.
 *   **A (Audience):** Nam giới đang gặp tình trạng xuất tinh sớm, muốn cải thiện tự nhiên.
 *   **G (Goal):** Lấy lại kiêu hãnh phái mạnh, thắp sáng ngọn lửa hạnh phúc gia đình.
 *   **I (Interval):** 21 ngày rèn luyện hành vi liên tục.
-*   **C (Container):** Lộ trình số hóa tại nhà (Ebook + Portal tương tác + Quà tặng kèm).
+*   **C (Container):** Lộ trình số hóa tại nhà (Ebook + Portal tương tác + Quà tặng kèm + Hỗ trợ chuyên gia).
 
 ## 2. Lời Hứa Cốt Lõi (Core Promise)
-Lộ trình rèn luyện phản xạ thần kinh tự nhiên giúp nam giới làm chủ thời gian yêu theo ý muốn, tự tin làm chủ cuộc chơi chỉ sau 21 ngày rèn luyện nghiêm túc tại nhà mà không cần dùng thuốc hay can thiệp y khoa.
+Lộ trình rèn luyện phản xạ thần kinh tự nhiên giúp nam giới bẻ gãy "vòng lặp lo âu dự báo", làm chủ thời gian yêu 15-20 phút theo ý muốn, tự tin làm chủ cuộc chơi chỉ sau 21 ngày rèn luyện nghiêm túc tại nhà mà không cần dùng thuốc hay can thiệp y khoa.
 
 ## 3. Lý Do Bạn Dám Đưa Ra Lời Đề Nghị (Credibility)
 Phương pháp dựa trên nền tảng y học hành vi hiện đại:
@@ -25,27 +25,37 @@ Phương pháp dựa trên nền tảng y học hành vi hiện đại:
 ### 🎁 PHẦN CỐT LÕI: Ebook Hướng Dẫn Chi Tiết Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh
 *   **Nó là gì:** Giáo trình số hóa 21 ngày, hướng dẫn chi tiết từng kỹ thuật Kegel, Kegel ngược, hơi thở phế vị 4-2-6 và các tư thế thực chiến kiểm soát nhịp độ.
 *   **Giải quyết vấn đề gì:** Thay thế những thông tin chắp vá trên mạng bằng một lộ trình khoa học, rõ ràng từ Ngày 1 đến Ngày 21.
-*   **Trị giá:** `1.000.000đ`
+*   **Trị giá:** `1.500.000đ`
 
 ### 🎁 QUÀ TẶNG 1: Bảng Theo Dõi Tiến Trình Kiểm Soát 21 Ngày (Progress Tracker)
 *   **Nó là gì:** File PDF thông minh (có thể in hoặc điền trực tiếp trên điện thoại) ghi lại số giây siết cơ PC, số chu kỳ Start-Stop đạt được sau mỗi ngày.
 *   **Giải quyết vấn đề gì:** Tránh bỏ cuộc giữa chừng. Giúp bạn thấy rõ sự tiến bộ của nhóm cơ sàn chậu qua các con số thực tế, tạo động lực tâm lý bền bỉ.
-*   **Trị giá:** `150.000đ`
+*   **Trị giá:** `300.000đ`
 
 ### 🎁 QUÀ TẶNG 2: Cẩm Nang "Nghệ Thuật Đồng Hành Chăn Gối" Dành Cho Bạn Đời
 *   **Nó là gì:** Cẩm nang hướng dẫn kịch bản chia sẻ tế nhị, thỏa thuận ám hiệu dừng (Stop-Start) và kỹ thuật ép hỗ trợ (ép quy đầu/gốc) dành cho đối tác.
 *   **Giải quyết vấn đề gì:** Hóa giải hoàn toàn áp lực tâm lý và sự căng thẳng giữa hai vợ chồng trong phòng ngủ. Biến bạn đời từ "người phán xét" thành "đồng minh" hỗ trợ đắc lực.
-*   **Trị giá:** `250.000đ`
+*   **Trị giá:** `550.000đ`
 
 ### 🎁 QUÀ TẶNG 3: Ebook "Thực Đơn Dinh Dưỡng Kích Hoạt Testosterone & Bí Quyết Bổ Sung Kẽm & Magie Cho Người Bận Rộn"
 *   **Nó là gì:** Cẩm nang dinh dưỡng thiết kế riêng cho nam giới bận rộn để tăng sinh lý tự nhiên. Hướng dẫn các món ăn giàu vi chất kẽm (Zinc) và magie (Magnesium) — hai nhân tố quyết định độ dẻo dai cơ sàn chậu và nồng độ Testosterone nội sinh.
-*   **Giải quyết vấn đề gì:** Cung cấp giải pháp bổ sung vi chất cấp tốc cho những người bận rộn không có thời gian chuẩn bị bữa ăn cầu kỳ. Tích hợp cổng liên hệ mua thực phẩm bổ sung Zn & Mg chuẩn hóa trực tiếp từ chuyên gia qua Telegram `@matma21_support`.
-*   **Trị giá:** `300.000đ`
+*   **Giải quyết vấn đề gì:** Cung cấp giải pháp bổ sung vi chất cấp tốc cho những người bận rộn không có thời gian chuẩn bị bữa ăn cầu kỳ.
+*   **Trị giá:** `450.000đ`
+
+### 🎁 QUÀ TẶNG 4: Thẻ VIP Hỗ Trợ 1:1 Qua Telegram Bảo Mật Kín Trong 21 Ngày
+*   **Nó là gì:** Quyền kết nối trực tiếp ẩn danh với đội ngũ hỗ trợ chuyên môn của FORMEN qua Telegram để kiểm tra bảng theo dõi hàng ngày, chỉnh sửa kỹ thuật tập Kegel sai cách (lỗi nín thở, gồng bụng/đùi/mông) và tháo gỡ rào cản tâm lý phòng ngủ kịp thời.
+*   **Giải quyết vấn đề gì:** Loại bỏ hoàn toàn cảm giác bơ vơ tập luyện mù mờ không biết đúng sai, bảo chứng hiệu quả tập luyện tốt nhất.
+*   **Trị giá:** `1.000.000đ` (MIỄN PHÍ)
+
+### 🎁 QUÀ TẶNG 5: Ebook "Bản Đồ Điểm G & Nghệ Thuật Kích Hoạt Khoái Cảm Bạn Đời"
+*   **Nó là gì:** Tuyệt kỹ dạo đầu chuẩn xác, hướng dẫn định vị các vùng nhạy cảm và điểm G để đưa nàng chạm đỉnh thỏa mãn trước cuộc yêu.
+*   **Giải quyết vấn đề gì:** Giúp bạn xóa bỏ 100% áp lực thời gian ban đầu, tạo ra sự thăng hoa trọn vẹn và củng cố hạnh phúc gia đình nồng cháy.
+*   **Trị giá:** `500.000đ` (MIỄN PHÍ)
 
 ---
 
 ## 5. Giá Bán & Anchoring
-*   **Tổng giá trị thực tế nhận được (Value Stack):** `1.700.000đ`
+*   **Tổng giá trị thực tế nhận được (Value Stack):** **`4.300.000đ`**
 *   **Giá bán chính thức:** **`686.868đ`** (Thanh toán 1 lần duy nhất, sở hữu trọn đời).
 *   **Bảo mật sao kê:** Tiêu đề giao dịch chuyển khoản hiển thị tế nhị: `"FORMEN - TL Suc Khoe Nam Gioi"` (Không chứa từ nhạy cảm để bảo vệ quyền riêng tư tuyệt đối của học viên).
 
