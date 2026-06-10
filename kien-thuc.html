@@ -486,197 +486,7 @@
       }
     }
 
-    /* Modal Styling */
-    .article-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
 
-    .article-modal.show {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(13, 43, 26, 0.45);
-      backdrop-filter: blur(12px);
-    }
-
-    .modal-wrapper {
-      background-color: var(--bg-main);
-      border: 1px solid rgba(13, 43, 26, 0.08);
-      border-radius: var(--radius-lg);
-      width: 100%;
-      max-width: 780px;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      z-index: 2001;
-      box-shadow: var(--shadow-lg), 0 30px 60px -15px rgba(13, 43, 26, 0.3);
-      animation: modalSlideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-      overflow: hidden;
-    }
-
-    @keyframes modalSlideUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-close-btn {
-      position: absolute;
-      top: 20px;
-      right: 24px;
-      background: rgba(13, 43, 26, 0.05);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary);
-      cursor: pointer;
-      font-size: 18px;
-      transition: var(--transition-smooth);
-      z-index: 10;
-    }
-
-    .modal-close-btn:hover {
-      background-color: var(--danger);
-      color: #FFF;
-      transform: rotate(90deg);
-    }
-
-    .modal-header {
-      padding: 35px 40px 20px 40px;
-      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
-    }
-
-    .modal-badge {
-      background-color: rgba(184, 134, 11, 0.1);
-      color: var(--accent);
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      width: fit-content;
-      margin-bottom: 15px;
-    }
-
-    .modal-title {
-      font-family: var(--font-heading);
-      font-size: 26px;
-      color: var(--primary);
-      font-weight: 700;
-      line-height: 1.35;
-    }
-
-    .modal-body {
-      padding: 20px 40px 30px 40px;
-      overflow-y: auto;
-      flex-grow: 1;
-      font-size: 15.5px;
-      line-height: 1.75;
-      color: var(--text-main);
-    }
-
-    .modal-body h4 {
-      font-family: var(--font-heading);
-      font-size: 18px;
-      color: var(--primary);
-      margin-top: 25px;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    .modal-body p {
-      margin-bottom: 16px;
-    }
-
-    .modal-body ul, .modal-body ol {
-      margin-bottom: 20px;
-      padding-left: 20px;
-    }
-
-    .modal-body li {
-      margin-bottom: 8px;
-    }
-
-    .modal-body strong {
-      color: var(--primary);
-    }
-
-    .modal-body .tip-box {
-      background-color: rgba(184, 134, 11, 0.06);
-      border-left: 4px solid var(--accent);
-      padding: 18px 24px;
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      margin: 24px 0;
-      font-size: 14.5px;
-    }
-
-    .modal-body .warning-box {
-      background-color: #FFF5F2;
-      border-left: 4px solid var(--danger);
-      padding: 18px 24px;
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      margin: 24px 0;
-      color: #5C2310;
-      font-size: 14.5px;
-    }
-
-    .modal-body .warning-box strong {
-      color: var(--danger);
-    }
-
-    .modal-body img {
-      max-width: 100%;
-      border-radius: var(--radius-md);
-      margin: 20px 0;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .modal-footer {
-      padding: 20px 40px 35px 40px;
-      border-top: 1px solid rgba(13, 43, 26, 0.04);
-      display: flex;
-      justify-content: flex-end;
-      gap: 15px;
-      background-color: rgba(13, 43, 26, 0.01);
-    }
-
-    @media (max-width: 768px) {
-      .modal-wrapper {
-        max-height: 95vh;
-      }
-      .modal-header, .modal-body, .modal-footer {
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-      .modal-title {
-        font-size: 22px;
-      }
-      .article-card {
-        cursor: pointer;
-      }
-    }
   </style>
 </head>
 <body>
@@ -729,62 +539,62 @@
     <div class="articles-grid" id="articles-box">
       
       <!-- Article 1 -->
-      <div class="article-card" data-category="training" data-id="1" style="cursor: pointer;">
+      <div class="article-card" data-category="training" onclick="window.location.href='/kien-thuc/khoa-hoc-kegel-pc-muscle.html'" style="cursor: pointer;">
         <div class="article-content">
           <div class="article-badge">Bài Tập Sàn Chậu</div>
           <h3>Khoa Học Kegel & Kegel Ngược PC Muscle</h3>
           <p>Tìm hiểu chi tiết giải phẫu học cơ PC (Pubococcygeus). Hướng dẫn siết cơ chậu độc lập không gồng bụng/mông/đùi và kỹ thuật Kegel ngược nới lỏng sàn chậu căng thẳng.</p>
-          <a href="#" class="read-more" onclick="event.preventDefault();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/kien-thuc/khoa-hoc-kegel-pc-muscle.html" class="read-more" onclick="event.stopPropagation();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
       <!-- Article 2 -->
-      <div class="article-card" data-category="psychology" data-id="2" style="cursor: pointer;">
+      <div class="article-card" data-category="psychology" onclick="window.location.href='/kien-thuc/be-gay-vong-lap-lo-au-hieu-suat.html'" style="cursor: pointer;">
         <div class="article-content">
           <div class="article-badge">Tâm Lý & Thần Kinh</div>
           <h3>Bẻ Gãy Vòng Lặp Lo Âu Hiệu Suất</h3>
           <p>Cơ chế tại sao lo âu làm tăng nhịp tim và adrenaline, thúc đẩy xuất tinh sớm. Cách áp dụng hơi thở phế vị đối giao cảm 4-2-6 để giải tỏa áp lực tâm lý chăn gối.</p>
-          <a href="#" class="read-more" onclick="event.preventDefault();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/kien-thuc/be-gay-vong-lap-lo-au-hieu-suat.html" class="read-more" onclick="event.stopPropagation();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
       <!-- Article 3 -->
-      <div class="article-card" data-category="nutrition" data-id="3" style="cursor: pointer;">
+      <div class="article-card" data-category="nutrition" onclick="window.location.href='/kien-thuc/kem-magie-than-duoc-suc-ben.html'" style="cursor: pointer;">
         <div class="article-content">
           <div class="article-badge">Dinh Dưỡng</div>
           <h3>Kẽm & Magiê: Thần Dược Sức Bền</h3>
           <p>Mối quan hệ mật thiết giữa vi chất Zn/Mg đối với sự dẻo dai cơ sàn chậu và nồng độ Testosterone nội sinh. Cách lựa chọn thực phẩm tự nhiên và thực phẩm bổ sung tối ưu.</p>
-          <a href="#" class="read-more" onclick="event.preventDefault();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/kien-thuc/kem-magie-than-duoc-suc-ben.html" class="read-more" onclick="event.stopPropagation();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
       <!-- Article 4 -->
-      <div class="article-card" data-category="training" data-id="4" style="cursor: pointer;">
+      <div class="article-card" data-category="training" onclick="window.location.href='/kien-thuc/ky-thuat-start-stop.html'" style="cursor: pointer;">
         <div class="article-content">
           <div class="article-badge">Bài Tập Sàn Chậu</div>
           <h3>Kỹ Thuật Start-Stop (Semans, 1956)</h3>
           <p>Tìm hiểu lịch sử và cơ chế sinh học đằng sau kỹ thuật kiểm soát phản xạ xuất tinh kinh điển. Các chu kỳ tự tập luyện và phối hợp tay đôi cùng bạn đời tinh tế.</p>
-          <a href="#" class="read-more" onclick="event.preventDefault();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/kien-thuc/ky-thuat-start-stop.html" class="read-more" onclick="event.stopPropagation();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
       <!-- Article 5 -->
-      <div class="article-card" data-category="anatomy" data-id="5" style="cursor: pointer;">
+      <div class="article-card" data-category="anatomy" onclick="window.location.href='/kien-thuc/ban-do-diem-g-kich-hoat-khoai-cam.html'" style="cursor: pointer;">
         <div class="article-content">
           <div class="article-badge">Giải Phẫu Khoái Cảm</div>
           <h3>Bản Đồ Điểm G & Kích Hoạt Khoái Cảm</h3>
           <p>Cách xác định vị trí nhạy cảm điểm G, điểm A và âm vật để đưa bạn đời chạm đỉnh. Các tư thế chăn gối miết điểm G giảm áp lực thời gian lâm trận cho phái mạnh.</p>
-          <a href="#" class="read-more" onclick="event.preventDefault();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/kien-thuc/ban-do-diem-g-kich-hoat-khoai-cam.html" class="read-more" onclick="event.stopPropagation();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
       <!-- Article 6 -->
-      <div class="article-card" data-category="anatomy" data-id="6" style="cursor: pointer;">
+      <div class="article-card" data-category="anatomy" onclick="window.location.href='/kien-thuc/ky-thuat-ep-quy-dau-ep-goc-chau.html'" style="cursor: pointer;">
         <div class="article-content">
           <div class="article-badge">Giải Phẫu Khoái Cảm</div>
           <h3>Kỹ Thuật Ép Quy Đầu & Ép Gốc Chậu</h3>
           <p>Hướng dẫn chi tiết kỹ thuật ép quy đầu (Coronal Squeeze) và ép gốc (Basilar Squeeze) của Masters & Johnson để triệt tiêu phản xạ phóng tinh lâm sàng tức thì.</p>
-          <a href="#" class="read-more" onclick="event.preventDefault();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/kien-thuc/ky-thuat-ep-quy-dau-ep-goc-chau.html" class="read-more" onclick="event.stopPropagation();">Đọc chi tiết <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -824,29 +634,6 @@
     </div>
   </footer>
 
-  <!-- ================= ARTICLE MODAL ================= -->
-  <div class="article-modal" id="article-modal">
-    <div class="modal-overlay" id="modal-overlay"></div>
-    <div class="modal-wrapper">
-      <button class="modal-close-btn" id="modal-close-btn" aria-label="Đóng">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div class="modal-header">
-        <div class="modal-badge" id="modal-badge">Danh Mục</div>
-        <h2 class="modal-title" id="modal-title">Tiêu Đề Bài Viết</h2>
-      </div>
-      <div class="modal-body" id="modal-body">
-        <!-- Loaded dynamically -->
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" id="modal-close-footer">Đóng Lại</button>
-        <a href="/khoa-hoc.html" class="btn btn-primary" style="background-color: var(--accent-bright); color: var(--primary);">
-          Khám Phá Lộ Trình 21 Ngày <i class="fa-solid fa-chevron-right"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <script>
     // Mobile menu toggle
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -883,223 +670,6 @@
           }
         });
       });
-    });
-
-    // Detailed article database
-    const articleDetails = {
-      1: {
-        badge: "Bài Tập Sàn Chậu",
-        title: "Khoa Học Kegel & Kegel Ngược PC Muscle",
-        content: `
-          <p>Cơ sàn chậu (đặc biệt là cơ PC - Pubococcygeus) đóng vai trò quyết định trong việc kiểm soát phản xạ xuất tinh và duy trì độ cương cứng của nam giới. Tuy nhiên, việc luyện tập không đúng cách hoặc lạm dụng cơ chậu căng thẳng có thể dẫn đến kết quả ngược lại.</p>
-          <h4>1. Giải Phẫu Học Cơ Sàn Chậu Nam Giới</h4>
-          <p>Hệ sàn chậu nam giới bao gồm các nhóm cơ quan trọng:</p>
-          <ul>
-            <li><strong>Cơ PC (Pubococcygeus):</strong> Chạy từ xương mu đến xương cụt, nâng đỡ bàng quang, ruột và kiểm soát niệu đạo. Đây là "phanh" chính điều phối dòng tinh dịch.</li>
-            <li><strong>Cơ BC (Bulbocavernosus):</strong> Bao quanh gốc dương vật, chịu trách nhiệm bơm máu tạo độ cương và đẩy tinh dịch ra ngoài.</li>
-            <li><strong>Cơ IC (Ischiocavernosus):</strong> Nằm dọc hai bên xương ngồi, giúp duy trì áp lực máu ổn định trong vật hang để giữ độ cứng vững.</li>
-          </ul>
-          <h4>2. Sự Nguy Hiểm Của "Cơ Chậu Căng Cứng" (Hypertonic Pelvic Floor)</h4>
-          <p>Hơn 70% nam giới bị xuất tinh sớm kinh niên có cơ sàn chậu luôn trong trạng thái co thắt, căng cứng quá mức (Hypertonic). Trạng thái này khiến ngưỡng kích hoạt phản xạ xuất tinh bị hạ xuống rất thấp. Chỉ một kích thích nhẹ hoặc va chạm ban đầu cũng đủ để kích hoạt cơ PC siết lại tự động, dẫn đến tình trạng xuất tinh sớm ngoài ý muốn.</p>
-          <div class="tip-box">
-            <strong>Giải pháp y khoa hành vi:</strong> Để điều trị triệt để, bạn phải rèn luyện khả năng <strong>thả lỏng chủ động (Kegel ngược)</strong> để đưa cơ sàn chậu trở về trạng thái thư giãn bình thường trước khi áp dụng các bài tập nâng cao sức bền.
-          </div>
-          <h4>3. Hướng Dẫn Thực Hành Kegel Xuôi & Kegel Ngược</h4>
-          <ul>
-            <li><strong>Kegel xuôi (Co siết):</strong> Tưởng tượng bạn đang buồn tiểu và chủ động siết cơ để ngắt dòng nước tiểu giữa chừng. Bạn sẽ cảm nhận vùng đáy chậu (giữa hậu môn và tinh hoàn) co rút và kéo ngược lên trên. <em>Lưu ý: Giữ bụng dưới, đùi và mông hoàn toàn thả lỏng. Duy trì thở đều.</em></li>
-            <li><strong>Kegel ngược (Thả lỏng giãn mở):</strong> Ngược lại với siết, hãy hít hơi vào bụng sâu, sau đó chủ động nới lỏng vùng chậu hướng xuống dưới, tưởng tượng như bạn đang bắt đầu đi tiểu hoặc nới lỏng cơ hậu môn để xì hơi nhẹ nhàng. Tinh hoàn sẽ buông thõng sâu xuống.</li>
-          </ul>
-          <div class="warning-box">
-            <strong>Lưu ý quan trọng:</strong> Tuyệt đối không rặn mạnh như khi táo bón khi tập Kegel ngược, để tránh gây trĩ hoặc thoát vị bẹn vùng chậu. Chỉ dùng lực nới lỏng và thở xả nhẹ nhàng.
-          </div>
-        `
-      },
-      2: {
-        badge: "Tâm Lý Học",
-        title: "Bẻ Gãy Vòng Lặp Lo Âu Hiệu Suất",
-        content: `
-          <p>Hơn 90% các ca xuất tinh sớm có sự đóng góp lớn từ yếu tố tâm lý, cụ thể là hội chứng <strong>Lo âu hiệu suất (Performance Anxiety)</strong>. Đây là hiện tượng thần kinh tự động kích hoạt trạng thái "chiến đấu hoặc bỏ chạy" khi bước vào cuộc yêu.</p>
-          <h4>1. Cơ Chế "Vòng Lặp Lo Âu Dự Báo"</h4>
-          <p>Khi một người đàn ông từng có trải nghiệm xuất tinh sớm, anh ta sẽ hình thành nỗi sợ dự báo trước cuộc yêu tiếp theo: <em>"Liệu hôm nay mình có bị nhanh nữa không?"</em>. Nỗi sợ thầm kín này kích hoạt vùng dưới đồi trong não giải phóng cortisol và adrenaline vào máu:</p>
-          <ol>
-            <li>Nhịp tim tăng nhanh đột ngột.</li>
-            <li>Hệ thần kinh giao cảm (Sympathetic) bị kích hoạt tối đa.</li>
-            <li>Hệ giao cảm phát tín hiệu kích hoạt phản xạ co thắt cơ PC phóng tinh trước khi cơ thể kịp thích nghi, tạo ra vòng lặp thất bại luẩn quẩn.</li>
-          </ol>
-          <h4>2. Hơi Thở Phế Vị 4-2-6 (Vagal Breathing)</h4>
-          <p>Để bẻ gãy vòng lặp này, bạn cần kích hoạt <strong>Hệ thần kinh đối giao cảm (Parasympathetic)</strong> thông qua dây thần kinh phế vị (Vagus Nerve). Nhịp thở sâu 4-2-6 bụng dưới là công cụ hạ adrenaline hiệu quả nhất:</p>
-          <ul>
-            <li><strong>Hít vào bằng mũi (4 giây):</strong> Đẩy bụng phồng lên để cơ hoành hạ xuống, kích thích dây thần kinh phế vị vùng bụng.</li>
-            <li><strong>Giữ hơi (2 giây):</strong> Ổn định áp suất trong phổi và nhịp sinh học thần kinh.</li>
-            <li><strong>Thở ra nhẹ nhàng bằng miệng (6 giây):</strong> Thời gian thở ra dài hơn hít vào giúp phát tín hiệu thư giãn tuyệt đối cho não bộ, hạ nhịp tim lập tức từ 5-10 nhịp/phút.</li>
-          </ul>
-          <div class="tip-box">
-            <strong>Cách ứng dụng lâm sàng:</strong> Hãy tập thở 4-2-6 hàng ngày 5-10 phút. Khi lâm trận, nếu cảm thấy mức độ hưng phấn vượt ngưỡng cảnh báo (mức 7-8), hãy dừng chuyển động và áp dụng ngay 3 chu kỳ thở 4-2-6 để hạ nhiệt toàn bộ hệ thần kinh.
-          </div>
-        `
-      },
-      3: {
-        badge: "Dinh Dưỡng",
-        title: "Kẽm & Magiê: Thần Dược Sức Bền",
-        content: `
-          <p>Dinh dưỡng đóng vai trò cốt lõi trong việc phục hồi tế bào cơ, tổng hợp Testosterone nội sinh và duy trì sự nhạy bén của hệ dẫn truyền thần kinh trung ương kiểm soát phản xạ xuất tinh.</p>
-          <h4>1. Vai Trò Của Kẽm (Zinc) Đối Với Nam Giới</h4>
-          <p>Kẽm là vi chất quan trọng nhất cho hệ sinh lý nam. Nó tập trung nhiều nhất ở tuyến tiền liệt và tinh dịch:</p>
-          <ul>
-            <li><strong>Tăng nồng độ Testosterone:</strong> Thiếu kẽm trực tiếp làm suy giảm hormone sinh dục nam và giảm mật độ thụ thể androgen.</li>
-            <li><strong>Phục hồi sàn chậu:</strong> Kẽm hỗ trợ quá trình sửa chữa tế bào cơ PC sau các bài tập kháng lực cường độ cao.</li>
-            <li><strong>Khuyên dùng:</strong> Nhu cầu hàng ngày (RDA) cho nam giới trưởng thành là 11 - 15mg.</li>
-          </ul>
-          <h4>2. Vai Trò Của Magiê (Magnesium)</h4>
-          <p>Magiê hoạt động như một chất giãn cơ tự nhiên và điều hòa thần kinh đối kháng với Canxi:</p>
-          <ul>
-            <li><strong>Giảm lo âu:</strong> Magiê giúp điều hòa thụ thể GABA, làm dịu hoạt động của vỏ não và ngăn hệ thần kinh giao cảm bị kích thích quá mức khi lo lắng hiệu suất.</li>
-            <li><strong>Chống co thắt cơ chậu:</strong> Giúp cơ PC thư giãn hoàn toàn sau khi siết, ngăn ngừa hội chứng hypertonic sàn chậu.</li>
-            <li><strong>Khuyên dùng:</strong> Nhu cầu hàng ngày (RDA) khoảng 400 - 420mg.</li>
-          </ul>
-          <h4>3. Thực Phẩm Việt Nam Giàu Kẽm & Magiê Tự Nhiên</h4>
-          <p>Để tối ưu hóa nồng độ Zn/Mg mà không phụ thuộc hoàn toàn vào thực phẩm bổ sung nhân tạo, hãy thêm các món sau vào chế độ ăn:</p>
-          <ul>
-            <li><strong>Hải sản vỏ cứng:</strong> Hàu biển (hàu sữa), sò huyết, tôm, cua. 100g hàu cung cấp đến hơn 50mg kẽm tự nhiên.</li>
-            <li><strong>Các loại hạt:</strong> Hạt bí ngô (giàu Zn), hạnh nhân, hạt điều (giàu Mg).</li>
-            <li><strong>Rau xanh đậm:</strong> Rau bina (cải bó xôi), bông cải xanh, măng tây.</li>
-            <li><strong>Thịt đỏ:</strong> Thịt bò nạc, thịt dê.</li>
-          </ul>
-          <div class="warning-box">
-            <strong>Lưu ý hấp thụ:</strong> Không uống bổ sung Kẽm chung với Sắt hoặc Canxi liều cao cùng lúc, vì chúng cạnh tranh hấp thụ chéo ở ruột non. Hãy uống cách nhau ít nhất 2 giờ.
-          </div>
-        `
-      },
-      4: {
-        badge: "Bài Tập Sàn Chậu",
-        title: "Kỹ Thuật Start-Stop (Semans, 1956)",
-        content: `
-          <p>Được phát triển bởi bác sĩ niệu khoa James Semans vào năm 1956, kỹ thuật <strong>Start-Stop (Dừng - Bắt đầu lại)</strong> là tiêu chuẩn vàng trong y học hành vi giúp điều trị dứt điểm tình trạng nhạy cảm quá mức của bao quy đầu và phản xạ xuất tinh sớm.</p>
-          <h4>1. Cơ Chế Nhạy Cảm Bản Thể (Bio-desensitization)</h4>
-          <p>Não bộ nam giới xuất tinh sớm bị lập trình một phản xạ sai lệch: <em>Kích thích tăng -> Đạt ngưỡng -> Phóng tinh lập tức</em>. Kỹ thuật Start-Stop rèn luyện cho các khớp thần kinh làm quen với kích thích cường độ cao, giúp não bộ nhận diện ngưỡng cận kề xuất tinh và "kéo giãn" thời gian chịu đựng của cơ thể.</p>
-          <h4>2. Quy Trình Thực Hành 4 Giai Đoạn Từ Dễ Đến Khó</h4>
-          <ol>
-            <li><strong>Giai đoạn 1: Tập khô một mình (Solo Dry).</strong> Tự kích thích bằng tay khô không dùng chất bôi trơn. Khi hưng phấn đạt mức 7.5/10 (ngay trước điểm không thể đảo ngược), dừng lại hoàn toàn. Thả lỏng chậu (Kegel ngược) kết hợp thở 4-2-6 để hạ hưng phấn về mức 4. Thực hiện 3 chu kỳ rồi mới xuất tinh ở chu kỳ thứ 4.</li>
-            <li><strong>Giai đoạn 2: Tập ướt một mình (Solo Wet).</strong> Sử dụng gel bôi trơn để mô phỏng chân thực môi trường âm đạo ấm ướt nhạy cảm. Thực hiện tương tự Giai đoạn 1.</li>
-            <li><strong>Giai đoạn 3: Phối hợp tay đôi (Partner Manual).</strong> Bạn đời dùng tay kích thích dương vật của bạn. Điểm mấu chốt là bạn phải giao tiếp bằng ngôn ngữ hoặc ám hiệu (ví dụ nói "Dừng" hoặc nhấp nhẹ) để bạn đời dừng tay ngay lập tức khi bạn chạm mức 7.5.</li>
-            <li><strong>Giai đoạn 4: Thực chiến thâm nhập (Active Intercourse).</strong> Thâm nhập chậm và dừng nhấp khi đạt mức 7.5, áp dụng kỹ thuật Kegel ngược và thở sâu dưới sự hợp tác thấu hiểu của bạn đời.</li>
-          </ol>
-          <div class="warning-box">
-            <strong>Cảnh báo lâm sàng quan trọng:</strong> Nếu hưng phấn đã lọt sang mức 9 hoặc 10 (ngưỡng không thể đảo ngược), bạn <strong>bắt buộc phải cho xuất tinh tự nhiên</strong>. Tuyệt đối không dùng tay bóp chặn quy đầu hoặc siết chặt cơ chậu để kìm nén, điều này sẽ gây hiện tượng xuất tinh ngược dòng vào bàng quang cực kỳ nguy hiểm.
-          </div>
-        `
-      },
-      5: {
-        badge: "Giải Phẫu Khoái Cảm",
-        title: "Bản Đồ Điểm G & Kích Hoạt Khoái Cảm",
-        content: `
-          <p>Chìa khóa để giải tỏa áp lực thời gian cho nam giới là khả năng đưa bạn đời lên đỉnh trước hoặc đồng thời thông qua việc thấu hiểu giải phẫu học khoái cảm nữ giới.</p>
-          <h4>1. Vị Trí Điểm G (Grafenberg Spot) & Điểm A</h4>
-          <ul>
-            <li><strong>Điểm G:</strong> Nằm ở thành trước âm đạo, cách cửa mình khoảng 3 - 5cm. Bề mặt điểm G hơi sần sùi giống quả óc chó. Kích thích điểm G tốt nhất bằng ngón tay uốn cong nhẹ theo chuyển động "hãy lại đây".</li>
-            <li><strong>Điểm A (Anterior Fornix Zone):</strong> Nằm sâu hơn điểm G ở thành trước âm đạo, gần cổ tử cung. Điểm A rất nhạy cảm và giúp tiết dịch nhờn bôi trơn nhanh chóng khi được miết nhẹ.</li>
-            <li><strong>Mạng lưới Âm Vật (Clitoral Complex):</strong> Mặc dù chỉ lộ một đầu nhỏ ra ngoài, âm vật thực chất là một mạng lưới mô cương khổng lồ ôm quanh âm đạo với hơn 8.000 đầu dây thần kinh cảm giác.</li>
-          </ul>
-          <h4>2. Tư Thế Chăn Gối Giảm Căng Thẳng Cho Phái Mạnh</h4>
-          <p>Các tư thế có góc thâm nhập phù hợp giúp kích thích điểm G của nữ giới đồng thời giảm lực gồng đùi/mông cho nam giới, ngăn xuất tinh sớm:</p>
-          <ul>
-            <li><strong>Nữ ở trên (Cowgirl):</strong> Bạn nam nằm ngửa thả lỏng cơ chậu, bạn nữ chủ động điều khiển nhịp độ. Tư thế này giảm áp lực giao cảm lên nam giới tối đa.</li>
-            <li><strong>Tư Thế Úp Thìa (Spooning):</strong> Hai người nằm nghiêng cùng chiều. Góc thâm nhập từ phía sau giúp miết chặt thành trước âm đạo (điểm G) tự nhiên và tạo nhịp độ chậm rãi, êm ái.</li>
-            <li><strong>Tư Thế CAT (Coital Alignment Technique):</strong> Biến thể tư thế truyền thống nhưng xương mu nam giới tì sát lên xương mu nữ giới để kích thích âm vật liên tục trong mỗi nhịp di chuyển.</li>
-          </ul>
-          <div class="tip-box">
-            <strong>Tư duy đỉnh cao:</strong> Hãy dành 15 - 20 phút dạo đầu tập trung hoàn toàn vào âm vật và điểm G của nàng bằng tay/miệng. Khi nàng đã đạt cực khoái lần 1, bạn sẽ bước vào cuộc yêu với sự tự tin tuyệt đối, xóa bỏ hoàn toàn lo âu hiệu suất và kéo dài thời gian tự nhiên.
-          </div>
-        `
-      },
-      6: {
-        badge: "Giải Phẫu Khoái Cảm",
-        title: "Kỹ Thuật Ép Quy Đầu & Ép Gốc Chậu",
-        content: `
-          <p>Được giới thiệu bởi bộ đôi nhà tình dục học nổi tiếng Masters & Johnson, kỹ thuật <strong>Ép quy đầu (Coronal Squeeze)</strong> và <strong>Ép gốc chậu (Basilar Squeeze)</strong> là biện pháp can thiệp vật lý tức thì để triệt tiêu phản xạ phóng tinh lâm sàng.</p>
-          <h4>1. Cơ Chế Sinh Học Phản Hồi Sinh Học (Biofeedback)</h4>
-          <p>Khi áp dụng lực ép trực tiếp lên quy đầu hoặc gốc dương vật, các thụ thể áp lực sẽ phát tín hiệu ức chế truyền lên tủy sống, tạm thời làm gián đoạn luồng tín hiệu hưng phấn thần kinh và làm giảm lưu lượng máu căng cứng trong vật hang, ngay lập tức đẩy lùi cơn buồn phóng tinh.</p>
-          <h4>2. Cách Thực Hiện Chi Tiết</h4>
-          <ul>
-            <li><strong>Kỹ thuật Ép Quy Đầu (Coronal Squeeze):</strong> 
-              <ul>
-                <li>Đặt ngón tay cái lên dây chãnh bao quy đầu (phần mặt dưới bao quy đầu).</li>
-                <li>Đặt ngón trỏ và ngón giữa lên mặt trên dương vật, sát rãnh quy đầu.</li>
-                <li>Dùng lực ép mạnh vừa phải trong 3 - 4 giây. Bạn sẽ thấy độ cương giảm khoảng 10 - 20% và phản xạ phóng tinh biến mất hoàn toàn. Đợi 30 giây rồi tiếp tục yêu.</li>
-              </ul>
-            </li>
-            <li><strong>Kỹ thuật Ép Gốc Chậu (Basilar Squeeze):</strong>
-              <ul>
-                <li>Dùng ngón cái và ngón trỏ tạo thành vòng chữ U ép chặt vào gốc dương vật sát xương mu.</li>
-                <li>Kỹ thuật này dễ thực hiện hơn trong lúc thâm nhập mà không cần rút hẳn dương vật ra ngoài.</li>
-              </ul>
-            </li>
-          </ul>
-          <div class="warning-box">
-            <strong>Cảnh báo y khoa:</strong> Chỉ áp dụng lực ép khi hưng phấn ở mức 7.5 - 8. Nếu đã ở mức 9 - 10, tuyệt đối không kẹp bóp quy đầu để kìm nén, vì dòng tinh dịch bị chặn cơ học lúc này bắt buộc sẽ đi ngược vào bàng quang gây ra <strong>Xuất tinh ngược dòng nguy hiểm</strong>.
-          </div>
-        `
-      }
-    };
-
-    // Modal elements
-    const articleModal = document.getElementById('article-modal');
-    const modalBadge = document.getElementById('modal-badge');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-    const modalCloseFooter = document.getElementById('modal-close-footer');
-    const modalOverlay = document.getElementById('modal-overlay');
-
-    // Function to open modal
-    function openArticle(id) {
-      const data = articleDetails[id];
-      if (!data) return;
-
-      modalBadge.textContent = data.badge;
-      modalTitle.textContent = data.title;
-      modalBody.innerHTML = data.content;
-      
-      articleModal.classList.add('show');
-      document.body.style.overflow = 'hidden'; // Block background scroll
-    }
-
-    // Function to close modal
-    function closeModal() {
-      articleModal.classList.remove('show');
-      document.body.style.overflow = ''; // Restore background scroll
-    }
-
-    // Bind click events to cards
-    const cardElements = document.querySelectorAll('.article-card');
-    cardElements.forEach(card => {
-      card.addEventListener('click', (e) => {
-        const id = card.getAttribute('data-id');
-        if (id) {
-          openArticle(id);
-        }
-      });
-    });
-
-    // Close handlers
-    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-    if (modalCloseFooter) modalCloseFooter.addEventListener('click', closeModal);
-    if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
-
-    // Escape key close
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
-    });
-
-    // Check URL parameters on load to open a specific article
-    window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const articleId = urlParams.get('id');
-      if (articleId) {
-        openArticle(articleId);
-      }
     });
   </script>
 </body>
