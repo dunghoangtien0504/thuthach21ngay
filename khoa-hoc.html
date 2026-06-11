@@ -3,55 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mật Mã 21 - Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh</title>
-  
-  <!-- Fonts & Icons -->
+  <title>Khóa Học | Mật Mã 21 - Tái Sinh Bản Lĩnh Phái Mạnh</title>
+  <meta name="description" content="Khám phá lộ trình 21 ngày tái sinh bản lĩnh phái mạnh — y khoa hành vi, không thuốc, không hóa chất.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
+    /* ===== CSS VARIABLES ===== */
     :root {
       --font-heading: 'Lora', Georgia, serif;
       --font-body: 'Raleway', system-ui, -apple-system, sans-serif;
-      
-      /* Biophilic Clinical Color Palette */
-      --primary: #0D2B1A;         /* Deep Forest Green - Trust & Medical Vibe */
+      --primary: #0D2B1A;
       --primary-light: #163f27;
-      --accent: #B8860B;          /* Muted Gold */
-      --accent-bright: #D4AF37;   /* Metallic Gold */
-      --danger: #C0390E;          /* Rust Red - Action & Urgency */
+      --accent: #B8860B;
+      --accent-bright: #D4AF37;
+      --danger: #C0390E;
       --danger-hover: #9E2E0A;
-      --bg-main: #FBF9F4;         /* Premium Cream / Ivory */
+      --bg-main: #FBF9F4;
       --bg-card: #FFFFFF;
-      --text-main: #0E2519;       /* Dark Green-Black */
-      --text-muted: #485A4F;      /* Muted Sage Green */
+      --text-main: #0E2519;
+      --text-muted: #485A4F;
       --text-light: #8FA497;
-      
       --radius-sm: 8px;
       --radius-md: 16px;
       --radius-lg: 24px;
       --radius-pill: 50px;
-      
-      --shadow-sm: 0 4px 6px -1px rgba(13, 43, 26, 0.05), 0 2px 4px -1px rgba(13, 43, 26, 0.03);
-      --shadow-md: 0 10px 15px -3px rgba(13, 43, 26, 0.08), 0 4px 6px -2px rgba(13, 43, 26, 0.04);
-      --shadow-lg: 0 20px 25px -5px rgba(13, 43, 26, 0.12), 0 10px 10px -5px rgba(13, 43, 26, 0.06);
-      --shadow-gold: 0 10px 20px -5px rgba(184, 134, 11, 0.25);
-      
-      --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-sm: 0 4px 6px -1px rgba(13,43,26,0.05), 0 2px 4px -1px rgba(13,43,26,0.03);
+      --shadow-md: 0 10px 15px -3px rgba(13,43,26,0.08), 0 4px 6px -2px rgba(13,43,26,0.04);
+      --shadow-lg: 0 20px 25px -5px rgba(13,43,26,0.12), 0 10px 10px -5px rgba(13,43,26,0.06);
+      --shadow-gold: 0 10px 20px -5px rgba(184,134,11,0.25);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-body);
       background-color: var(--bg-main);
@@ -60,2431 +47,980 @@
       overflow-x: hidden;
       font-size: 16px;
     }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* Header styling */
+    /* ===== HEADER ===== */
     header {
       padding: 15px 0;
-      border-bottom: 1px solid rgba(13, 43, 26, 0.05);
-      position: sticky;
-      top: 0;
-      background-color: rgba(251, 249, 244, 0.9);
+      border-bottom: 1px solid rgba(13,43,26,0.05);
+      position: sticky; top: 0;
+      background-color: rgba(251,249,244,0.95);
       backdrop-filter: blur(16px);
       z-index: 1000;
-      transition: var(--transition-smooth);
+      transition: var(--transition);
     }
-
-    .header-layout {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-    }
-
+    .header-layout { display: flex; justify-content: space-between; align-items: center; position: relative; }
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--font-heading);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
-      letter-spacing: -0.2px;
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-heading); font-size: 22px; font-weight: 700;
+      color: var(--primary); text-decoration: none; letter-spacing: -0.2px;
     }
-
-    .logo i {
-      color: var(--accent);
-      filter: drop-shadow(0 2px 4px rgba(184, 134, 11, 0.2));
-    }
-
-    .nav-menu {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-    }
-
+    .logo i { color: var(--accent); }
+    .nav-menu { display: flex; gap: 30px; align-items: center; }
     .nav-link {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: var(--transition-smooth);
-      position: relative;
-      padding: 5px 0;
+      font-size: 15px; font-weight: 700; color: var(--text-muted);
+      text-decoration: none; transition: var(--transition);
+      position: relative; padding: 5px 0;
     }
-
-    .nav-link:hover, .nav-link.active {
-      color: var(--primary);
-    }
-
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
     .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: var(--accent);
-      transition: var(--transition-smooth);
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background-color: var(--accent);
+      transition: var(--transition);
     }
-
-    .nav-link:hover::after, .nav-link.active::after {
-      width: 100%;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
     .mobile-menu-toggle {
-      display: none;
-      background: transparent;
-      border: none;
-      font-size: 24px;
-      color: var(--primary);
-      cursor: pointer;
+      display: none; background: transparent; border: none;
+      font-size: 24px; color: var(--primary); cursor: pointer;
     }
-
     @media (max-width: 768px) {
       .nav-menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #FBF9F4;
-        border-bottom: 1px solid rgba(13, 43, 26, 0.05);
-        padding: 20px 0;
-        gap: 15px;
-        text-align: center;
-        box-shadow: var(--shadow-md);
-        z-index: 999;
+        display: none; flex-direction: column; position: absolute;
+        top: 100%; left: 0; right: 0;
+        background-color: rgba(251,249,244,0.98);
+        border-bottom: 1px solid rgba(13,43,26,0.05);
+        padding: 20px 0; gap: 15px; text-align: center;
+        box-shadow: var(--shadow-md); z-index: 999;
       }
-
-      .nav-menu.show {
-        display: flex;
-      }
-
-      .mobile-menu-toggle {
-        display: block;
-      }
-
-      .header-actions {
-        display: none;
-      }
-
-      .nav-menu .btn-login {
-        display: inline-flex !important;
-        margin-top: 10px;
-      }
+      .nav-menu.show { display: flex; }
+      .mobile-menu-toggle { display: block; }
+      .header-actions { display: none; }
+      .nav-menu .btn-login { display: inline-flex !important; margin-top: 10px; }
     }
 
+    /* ===== BUTTONS ===== */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 28px;
-      border-radius: var(--radius-pill);
-      font-weight: 700;
-      font-size: 14px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: var(--transition-smooth);
-      border: none;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 11px 24px; border-radius: var(--radius-pill);
+      font-weight: 700; font-size: 14px; text-decoration: none;
+      cursor: pointer; transition: var(--transition); border: none;
+      font-family: var(--font-body);
     }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .btn-outline:hover {
-      background-color: var(--primary);
-      color: #FFF;
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: #FFF;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-primary:hover {
-      background-color: var(--primary-light);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .btn-accent {
-      background-color: var(--danger);
-      color: #FFF;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-accent:hover {
-      background-color: var(--danger-hover);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .btn-gold {
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background-color: var(--primary); color: #fff; }
+    .btn-primary { background-color: var(--primary); color: #fff; box-shadow: var(--shadow-sm); }
+    .btn-primary:hover { background-color: var(--primary-light); transform: translateY(-2px); }
+    .btn-register {
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
-      color: var(--primary);
-      box-shadow: var(--shadow-gold);
+      color: var(--primary); box-shadow: var(--shadow-gold);
     }
+    .btn-register:hover { transform: translateY(-2px); box-shadow: 0 14px 24px -4px rgba(184,134,11,0.4); }
 
-    .btn-gold:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 25px -5px rgba(184, 134, 11, 0.4);
-    }
-
-    /* Hero Section */
-    .hero {
-      padding: 90px 0 60px 0;
-      background: radial-gradient(circle at top right, rgba(184, 134, 11, 0.06) 0%, transparent 60%);
-      position: relative;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 50px;
-      align-items: center;
-    }
-
-    @media (max-width: 992px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        text-align: center;
-      }
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
-      background-color: rgba(184, 134, 11, 0.08);
-      color: var(--accent);
-      border-radius: var(--radius-pill);
-      font-weight: 700;
-      font-size: 12px;
-      margin-bottom: 24px;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      border: 1px solid rgba(184, 134, 11, 0.15);
-    }
-
-    .hero-title {
-      font-family: var(--font-heading);
-      font-size: 46px;
-      font-weight: 700;
-      line-height: 1.25;
-      margin-bottom: 20px;
-      color: var(--primary);
-    }
-
-    .hero-title span {
-      color: var(--accent);
-      position: relative;
-    }
-
-    .hero-desc {
-      font-size: 17px;
-      color: var(--text-muted);
-      margin-bottom: 35px;
-      max-width: 90%;
-    }
-
-    @media (max-width: 992px) {
-      .hero-desc {
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-
-    .hero-highlights {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 40px;
-      text-align: left;
-    }
-
-    @media (max-width: 576px) {
-      .hero-highlights {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-    }
-
-    .highlight-card {
-      background-color: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(13, 43, 26, 0.05);
-      transition: var(--transition-smooth);
-    }
-
-    .highlight-card:hover {
-      background-color: #FFFFFF;
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .highlight-card i {
-      font-size: 24px;
-      color: var(--accent);
-      margin-bottom: 12px;
-      filter: drop-shadow(0 2px 4px rgba(184, 134, 11, 0.15));
-    }
-
-    .highlight-card h4 {
-      font-family: var(--font-heading);
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--primary);
-    }
-
-    .highlight-card p {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* Ebook Image Container */
-    .ebook-image-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    .ebook-cover {
-      width: 100%;
-      max-width: 580px;
-      border-radius: var(--radius-lg);
-      box-shadow: 0 30px 60px -15px rgba(13, 43, 26, 0.2);
-      transition: var(--transition-smooth);
-    }
-
-    .ebook-cover:hover {
-      transform: translateY(-8px) rotate(-1deg);
-      box-shadow: 0 45px 75px -12px rgba(13, 43, 26, 0.35);
-    }
-
-    /* Section Scientific - Sidebar & Vertical List Layout (Premium Re-arranged) */
-    .science {
-      padding: 100px 0;
+    /* ===== PAGE BANNER ===== */
+    .page-banner {
       background-color: var(--primary);
-      color: #FFF;
-      position: relative;
-      background-image: radial-gradient(circle at bottom left, rgba(184, 134, 11, 0.05) 0%, transparent 60%);
+      padding: 52px 0 44px;
+      position: relative; overflow: hidden;
     }
-
-    .science-layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 60px;
-      align-items: start;
+    .page-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 75% 50%, rgba(184,134,11,0.09) 0%, transparent 65%);
     }
-
-    .science-intro {
-      position: sticky;
-      top: 110px;
+    .page-banner-inner { position: relative; z-index: 1; }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 16px;
     }
-
-    .science-intro h2 {
+    .breadcrumb a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent-bright); }
+    .breadcrumb i { font-size: 9px; }
+    .page-banner h1 {
       font-family: var(--font-heading);
-      font-size: 38px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 24px;
-      color: #FFFFFF;
+      font-size: 34px; font-weight: 700; color: #fff;
+      margin-bottom: 12px; line-height: 1.3;
     }
+    .page-banner h1 span { color: var(--accent-bright); }
+    .page-banner p { font-size: 15.5px; color: rgba(255,255,255,0.65); max-width: 580px; }
 
-    .science-intro h2 span {
-      color: var(--accent-bright);
+    /* ===== CATEGORY CHIPS ROW ===== */
+    .cat-bar {
+      background: #fff;
+      border-bottom: 1px solid rgba(13,43,26,0.07);
+      padding: 18px 0;
+      position: sticky; top: 62px; z-index: 900;
     }
-
-    .science-intro p {
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.75);
-      line-height: 1.7;
-      margin-bottom: 30px;
+    .cat-scroll {
+      display: flex; gap: 10px; align-items: center;
+      overflow-x: auto; padding-bottom: 2px;
+      scrollbar-width: none;
     }
-
-    .science-pillars {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+    .cat-scroll::-webkit-scrollbar { display: none; }
+    .cat-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      cursor: pointer; flex-shrink: 0; border: none; background: none;
+      padding: 4px 10px; font-family: var(--font-body);
+      transition: var(--transition);
     }
-
-    .science-pillar-item {
-      background-color: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: var(--radius-md);
-      padding: 30px;
-      display: flex;
-      gap: 24px;
-      transition: var(--transition-smooth);
-    }
-
-    .science-pillar-item:hover {
-      background-color: rgba(255, 255, 255, 0.06);
-      border-color: rgba(184, 134, 11, 0.2);
-      transform: translateY(-2px);
-    }
-
-    .science-pillar-num {
-      font-family: var(--font-heading);
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--accent-bright);
-      line-height: 1;
-      opacity: 0.8;
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      padding-right: 20px;
-      height: fit-content;
-    }
-
-    .science-pillar-content {
-      flex-grow: 1;
-    }
-
-    .science-pillar-content h3 {
-      font-family: var(--font-heading);
-      font-size: 19px;
-      font-weight: 600;
-      color: #FFFFFF;
-      margin-bottom: 10px;
-    }
-
-    .science-pillar-content p {
-      font-size: 14.5px;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.6;
-    }
-
-    @media (max-width: 992px) {
-      .science-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .science-intro {
-        position: static;
-        margin-bottom: 20px;
-      }
-    }
-
-    /* Comparison Section Styling (Why other methods fail) */
-    .comparison-sec {
-      padding: 100px 0;
-      background-color: #FFFFFF;
-      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
-    }
-
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .comparison-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-    }
-
-    .comparison-card {
-      padding: 40px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-light);
-      position: relative;
-      transition: var(--transition-smooth);
+    .cat-icon {
+      width: 58px; height: 58px; border-radius: 50%;
       background-color: var(--bg-main);
-    }
-
-    .comparison-card.active-card {
-      border: 2px solid var(--accent);
-      background-color: #FDFBF7;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .popular-badge {
-      position: absolute;
-      top: -15px;
-      right: 30px;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
-      color: var(--primary);
-      padding: 4px 14px;
-      border-radius: var(--radius-pill);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .comparison-card h4 {
-      font-family: var(--font-heading);
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      color: var(--primary);
-    }
-
-    .comparison-card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .comparison-card li {
-      font-size: 14.5px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      line-height: 1.6;
-    }
-
-    .comparison-card li i {
-      font-size: 18px;
-      margin-top: 3px;
-      flex-shrink: 0;
-    }
-
-    .comparison-card.normal li i {
-      color: var(--danger);
-    }
-
-    .comparison-card.active-card li i {
-      color: #2E7D32;
-    }
-
-    /* Global Section Title Styling */
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 34px;
-      font-weight: 700;
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 24px;
-      line-height: 1.3;
-    }
-
-    .section-title span {
-      color: var(--accent);
-    }
-
-    /* Pain & Pleasure Section Styling */
-    .pain-pleasure-sec {
-      padding: 80px 0;
-      background-color: #FFFFFF;
-      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
-    }
-
-    .pain-pleasure-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .pain-pleasure-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-    }
-
-    .pain-column {
-      background: rgba(192, 57, 14, 0.02);
-      border: 1px dashed rgba(192, 57, 14, 0.15);
-      border-radius: var(--radius-lg);
-      padding: 35px;
-    }
-
-    .pleasure-column {
-      background: rgba(46, 125, 50, 0.02);
-      border: 1px dashed rgba(46, 125, 50, 0.15);
-      border-radius: var(--radius-lg);
-      padding: 35px;
-    }
-
-    .pain-column h3 {
-      font-family: var(--font-heading);
-      font-size: 20px;
-      color: var(--danger);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-    }
-
-    .pleasure-column h3 {
-      font-family: var(--font-heading);
-      font-size: 20px;
-      color: #2E7D32;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-    }
-
-    .pain-pleasure-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .pain-pleasure-list li {
-      font-size: 14.5px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      line-height: 1.6;
-    }
-
-    .pain-column li i {
-      color: var(--danger);
-      font-size: 16px;
-      margin-top: 4px;
-      flex-shrink: 0;
-    }
-
-    .pleasure-column li i {
-      color: #2E7D32;
-      font-size: 16px;
-      margin-top: 4px;
-      flex-shrink: 0;
-    }
-
-    .pain-pleasure-list strong {
-      display: block;
-      color: var(--primary);
-      font-size: 15px;
-      margin-bottom: 2px;
-    }
-
-    /* Global Section Title Styling */
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 34px;
-      font-weight: 700;
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 24px;
-      line-height: 1.3;
-    }
-
-    .section-title span {
-      color: var(--accent);
-    }
-
-    /* Student Feedback Section Styling */
-    .feedback-sec {
-      padding: 100px 0;
-      background-color: var(--bg-main);
-      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
-      position: relative;
-    }
-
-    .feedback-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-bottom: 60px;
-    }
-
-    @media (max-width: 992px) {
-      .feedback-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 576px) {
-      .feedback-stats-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .feedback-stat-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(13, 43, 26, 0.05);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition-smooth);
-    }
-
-    .feedback-stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--accent);
-    }
-
-    .feedback-stat-number {
-      font-family: var(--font-heading);
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .feedback-stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .feedback-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    @media (max-width: 992px) {
-      .feedback-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .feedback-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(13, 43, 26, 0.04);
-      border-radius: var(--radius-lg);
-      padding: 30px;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      transition: var(--transition-smooth);
-    }
-
-    .feedback-card:hover {
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(184, 134, 11, 0.2);
-    }
-
-    .feedback-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      border-bottom: 1px dashed rgba(13, 43, 26, 0.08);
-      padding-bottom: 15px;
-    }
-
-    .student-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .student-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: rgba(13, 43, 26, 0.05);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 16px;
-      border: 2px solid rgba(184, 134, 11, 0.3);
-    }
-
-    .student-meta h4 {
-      font-family: var(--font-heading);
-      font-size: 16px;
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    .student-meta span {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .duration-badge {
-      background: rgba(220, 252, 231, 0.6);
-      color: #166534;
-      padding: 6px 12px;
-      border-radius: var(--radius-pill);
-      font-size: 12px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid rgba(74, 222, 128, 0.4);
-    }
-
-    .feedback-content {
-      font-size: 14px;
-      color: var(--text-main);
-      line-height: 1.6;
-      margin-bottom: 10px;
-      position: relative;
-    }
-
-    /* Chat bubble container inside feedback card */
-    .chat-bubble-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: #F4F6F4;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      margin-top: 10px;
-      border: 1px solid rgba(13, 43, 26, 0.03);
-    }
-
-    .chat-bubble {
-      max-width: 85%;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 13px;
-      line-height: 1.5;
-      position: relative;
-    }
-
-    .chat-bubble.student {
-      background: #E8F0EA;
-      color: #0E2519;
-      align-self: flex-start;
-      border-bottom-left-radius: 2px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-
-    .chat-bubble.support {
-      background: #EAF4FC;
-      color: #1C3D5A;
-      align-self: flex-end;
-      border-bottom-right-radius: 2px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-
-    .chat-time {
-      font-size: 9px;
-      color: var(--text-light);
-      text-align: right;
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* Curriculum Week section */
-    .curriculum {
-      padding: 100px 0;
-    }
-
-    .curr-tabs-wrapper {
-      background-color: #FFF;
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(13, 43, 26, 0.03);
-    }
-
-    .curr-weeks-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 40px;
-      border-bottom: 2px solid rgba(13, 43, 26, 0.04);
-      padding-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .curr-weeks-row {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        padding-bottom: 0;
-        border-bottom: none;
-      }
-    }
-
-    .curr-week-tab {
-      background: transparent;
-      border: none;
-      padding: 16px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: var(--transition-smooth);
-      border-radius: var(--radius-md);
-      font-family: var(--font-heading);
-    }
-
-    .curr-week-tab.active {
-      color: #FFF;
-      background-color: var(--primary);
-      box-shadow: var(--shadow-md);
-    }
-
-    .curr-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .curr-item {
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-      padding: 24px;
-      background-color: var(--bg-main);
-      border-radius: var(--radius-md);
-      transition: var(--transition-smooth);
-      border-left: 4px solid transparent;
-    }
-
-    .curr-item:hover {
-      transform: translateX(8px);
-      background-color: #FFF;
-      box-shadow: var(--shadow-md);
-      border-left-color: var(--accent);
-    }
-
-    .curr-day-badge {
-      padding: 6px 14px;
-      background-color: var(--primary);
-      color: #FFF;
-      border-radius: 6px;
-      font-weight: 800;
-      font-size: 12px;
-      white-space: nowrap;
-      letter-spacing: 0.5px;
-    }
-
-    .curr-item-detail h4 {
-      font-family: var(--font-heading);
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--primary);
-    }
-
-    .curr-item-detail p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ==========================================================================
-       VALUE STACK SECTION (GODFATHER OFFER v2)
-       ========================================================================== */
-    .value-stack-sec {
-      padding: 100px 0;
-      background-color: #F3ECE0; /* Warm light tan background */
-      border-top: 1px solid rgba(13, 43, 26, 0.04);
-      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
-      position: relative;
-    }
-
-    .value-stack-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 40px;
-      align-items: start;
-    }
-
-    .value-items {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .value-item-card {
-      background-color: #FFFFFF;
-      border-radius: var(--radius-md);
-      padding: 24px;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      border: 1px solid rgba(13, 43, 26, 0.03);
-      transition: var(--transition-smooth);
-    }
-
-    .value-item-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .value-item-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-sm);
-      background-color: rgba(184, 134, 11, 0.08);
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-      border: 1px solid rgba(184, 134, 11, 0.15);
-    }
-
-    .value-item-icon.core {
-      background-color: rgba(13, 43, 26, 0.08);
-      color: var(--primary);
-      border-color: rgba(13, 43, 26, 0.15);
-    }
-
-    .value-item-info {
-      flex-grow: 1;
-    }
-
-    .value-item-info h4 {
-      font-family: var(--font-heading);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    @media (max-width: 576px) {
-      .value-item-info h4 {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-    }
-
-    .value-price-badge {
-      font-size: 12px;
-      padding: 4px 10px;
-      background-color: var(--bg-main);
-      color: var(--text-muted);
-      border-radius: 4px;
-      font-weight: 600;
-      border: 1px solid rgba(13, 43, 26, 0.06);
+      border: 2px solid rgba(13,43,26,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .cat-label {
+      font-size: 11.5px; font-weight: 700; color: var(--text-muted);
       white-space: nowrap;
     }
-
-    .value-price-badge.free {
-      background-color: rgba(184, 134, 11, 0.1);
-      color: var(--accent);
-      border-color: rgba(184, 134, 11, 0.2);
+    .cat-chip.active .cat-icon {
+      background-color: var(--primary); border-color: var(--primary);
+      color: #fff; box-shadow: var(--shadow-md);
     }
-
-    .value-item-info p {
-      font-size: 13.5px;
-      color: var(--text-muted);
-      line-height: 1.55;
+    .cat-chip.active .cat-label { color: var(--primary); }
+    .cat-chip:hover:not(.active) .cat-icon {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-3px);
     }
-
-    /* Summary sticky side */
-    .value-summary-card {
-      background-color: var(--primary);
-      color: #FFFFFF;
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      position: sticky;
-      top: 110px;
-    }
-
-    .summary-title {
-      font-family: var(--font-heading);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent-bright);
-      margin-bottom: 15px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 15px;
-    }
-
-    .pricing-stack {
-      margin-bottom: 30px;
-      text-align: center;
-    }
-
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 8px;
-    }
-
-    .price-value-old {
-      text-decoration: line-through;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .price-main-tag {
-      margin-top: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .price-large {
-      font-family: var(--font-heading);
-      font-size: 40px;
-      font-weight: 700;
-      color: var(--accent-bright);
-      line-height: 1;
-    }
-
-    .price-sub-note {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.6);
-      margin-top: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .offer-checklist {
-      list-style: none;
-      margin-bottom: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 20px;
-    }
-
-    .offer-checklist li {
-      font-size: 13.5px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .offer-checklist li i {
-      color: var(--accent-bright);
-      margin-top: 4px;
-    }
-
-    .offer-guarantee-badge {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      background-color: rgba(255, 255, 255, 0.04);
-      padding: 14px;
-      border-radius: var(--radius-sm);
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      margin-top: 25px;
-    }
-
-    .offer-guarantee-badge i {
-      font-size: 28px;
-      color: var(--accent-bright);
-    }
-
-    .offer-guarantee-badge div {
-      font-size: 11.5px;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    @media (max-width: 992px) {
-      .value-stack-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .value-summary-card {
-        position: static !important;
-      }
-    }
-
-    /* FAQ Section Styling */
-    .faq-sec {
-      padding: 100px 0;
-      background-color: #FFFFFF;
-      border-top: 1px solid rgba(13, 43, 26, 0.04);
-    }
-
-    .faq-accordion {
-      max-width: 800px;
-      margin: 40px auto 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .faq-item {
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      background-color: var(--bg-main);
-      overflow: hidden;
-      transition: var(--transition-smooth);
-    }
-
-    .faq-item:hover {
-      border-color: rgba(13, 43, 26, 0.15);
-    }
-
-    .faq-question {
-      padding: 22px 28px;
-      font-family: var(--font-heading);
-      font-size: 16.5px;
-      font-weight: 700;
-      color: var(--primary);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .faq-question i {
-      transition: var(--transition-smooth);
-      color: var(--accent);
-      font-size: 14px;
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      background-color: #FFFFFF;
-      border-top: 1px solid transparent;
-    }
-
-    .faq-answer p {
-      padding: 24px 28px;
-      font-size: 14.5px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      margin: 0;
-    }
-
-    .faq-item.active {
-      border-color: var(--accent);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .faq-item.active .faq-answer {
-      max-height: 500px; /* increased to avoid clipping longer answers */
-      border-top-color: var(--border-light);
-    }
-
-    .faq-item.active .faq-question i {
-      transform: rotate(180deg);
-    }
-
-    /* Checkout & Register Order */
-    .checkout {
-      padding: 100px 0;
-      background: radial-gradient(circle at bottom left, rgba(184, 134, 11, 0.05) 0%, transparent 60%);
-    }
-
-    .checkout-card {
-      background-color: #FFF;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      border: 1px solid rgba(13, 43, 26, 0.05);
-    }
-
-    @media (max-width: 992px) {
-      .checkout-card {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .checkout-form-side {
-      padding: 50px;
-    }
-
     @media (max-width: 576px) {
-      .checkout-form-side {
-        padding: 30px 20px;
-      }
+      .cat-icon { width: 50px; height: 50px; font-size: 19px; }
+      .cat-label { font-size: 11px; }
     }
 
-    .checkout-payment-side {
-      background-color: var(--primary);
-      color: #FFF;
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      border-left: 1px solid rgba(255, 255, 255, 0.05);
+    /* ===== CATALOG LAYOUT ===== */
+    .catalog-wrap { padding: 36px 0 80px; }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: 255px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .catalog-grid { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
     }
 
-    @media (max-width: 992px) {
-      .checkout-payment-side {
-        border-left: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 40px 20px;
-      }
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid rgba(13,43,26,0.06);
+      position: sticky; top: 150px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
     }
-
-    .form-group {
-      margin-bottom: 22px;
+    .sidebar-block {
+      padding: 20px 22px;
+      border-bottom: 1px solid rgba(13,43,26,0.05);
     }
-
-    .form-group label {
-      display: block;
-      font-weight: 700;
-      font-size: 13.5px;
-      margin-bottom: 8px;
-      color: var(--primary);
-      letter-spacing: 0.2px;
+    .sidebar-block:last-child { border-bottom: none; }
+    .sidebar-heading {
+      font-size: 12px; font-weight: 800; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
     }
+    .sidebar-heading i { color: var(--accent); }
+    .filter-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; cursor: pointer;
+    }
+    .filter-row input[type="radio"],
+    .filter-row input[type="checkbox"] {
+      accent-color: var(--primary); width: 15px; height: 15px; flex-shrink: 0; cursor: pointer;
+    }
+    .filter-row label {
+      font-size: 13.5px; color: var(--text-muted);
+      cursor: pointer; flex: 1; transition: color 0.2s;
+    }
+    .filter-row:hover label { color: var(--primary); }
+    .filter-count {
+      font-size: 11px; font-weight: 700;
+      background: var(--bg-main); color: var(--text-light);
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .sidebar-enroll-btn {
+      display: block; width: 100%; padding: 12px;
+      background: var(--primary); color: #fff; border: none;
+      border-radius: var(--radius-sm); font-family: var(--font-body);
+      font-size: 13.5px; font-weight: 700; cursor: pointer;
+      text-align: center; text-decoration: none;
+      transition: var(--transition);
+    }
+    .sidebar-enroll-btn:hover { background: var(--primary-light); }
 
-    .form-group input {
-      width: 100%;
-      padding: 14px 18px;
+    /* ===== TOOLBAR ===== */
+    .toolbar {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 22px; gap: 10px; flex-wrap: wrap;
+    }
+    .result-info { font-size: 14px; color: var(--text-muted); }
+    .result-info strong { color: var(--primary); }
+    .toolbar-right { display: flex; align-items: center; gap: 10px; }
+    .sort-sel {
+      padding: 9px 14px;
+      border: 1.5px solid rgba(13,43,26,0.12);
       border-radius: var(--radius-sm);
-      border: 1.5px solid rgba(13, 43, 26, 0.1);
-      background-color: var(--bg-main);
-      color: var(--primary);
-      font-family: inherit;
-      font-size: 14.5px;
-      outline: none;
-      transition: var(--transition-smooth);
+      font-family: var(--font-body); font-size: 13.5px;
+      color: var(--primary); background: #fff; cursor: pointer;
+      outline: none; transition: border-color 0.2s; min-width: 185px;
     }
-
-    .form-group input:focus {
-      border-color: var(--accent);
-      background-color: #FFF;
-      box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.12);
+    .sort-sel:focus { border-color: var(--accent); }
+    .filter-toggle-btn {
+      display: none; align-items: center; gap: 7px;
+      padding: 9px 14px; border: 1.5px solid rgba(13,43,26,0.12);
+      border-radius: var(--radius-sm); background: #fff;
+      font-family: var(--font-body); font-size: 13.5px;
+      color: var(--primary); cursor: pointer; font-weight: 700;
     }
+    @media (max-width: 1024px) { .filter-toggle-btn { display: flex; } }
 
-    /* Payment area */
-    .qr-container {
-      background-color: #FFF;
-      padding: 20px;
-      border-radius: var(--radius-md);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-      margin-bottom: 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    /* ===== COURSE GRID ===== */
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 22px;
     }
+    @media (max-width: 580px) { .courses { grid-template-columns: 1fr; } }
 
-    .qr-image {
-      width: 210px;
-      height: 210px;
-      object-fit: contain;
+    /* ===== COURSE CARD ===== */
+    .course-card {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid rgba(13,43,26,0.06);
+      box-shadow: var(--shadow-sm); overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: var(--transition);
     }
-
-    .bank-info {
-      text-align: center;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.6;
-      max-width: 320px;
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(184,134,11,0.2);
     }
-
-    .bank-info strong {
-      color: var(--accent-bright);
+    .card-thumb {
+      position: relative; overflow: hidden;
+      aspect-ratio: 16 / 9; background: var(--primary);
+    }
+    .card-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .course-card:hover .card-thumb img { transform: scale(1.06); }
+    .thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+    }
+    .card-tag {
+      position: absolute; top: 12px; left: 12px;
+      padding: 3px 11px; border-radius: var(--radius-pill);
+      font-size: 10.5px; font-weight: 800;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .tag-hit { background: var(--danger); color: #fff; }
+    .tag-new { background: var(--accent-bright); color: var(--primary); }
+    .tag-free { background: #2E7D32; color: #fff; }
+    .card-time {
+      position: absolute; bottom: 10px; right: 12px;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      color: #fff; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .card-body {
+      padding: 18px 20px; flex: 1;
+      display: flex; flex-direction: column;
+    }
+    .card-cat {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px;
+    }
+    .card-title {
       font-family: var(--font-heading);
+      font-size: 16.5px; font-weight: 700;
+      color: var(--primary); line-height: 1.4; margin-bottom: 9px;
+    }
+    .card-desc {
+      font-size: 12.5px; color: var(--text-muted);
+      line-height: 1.55; margin-bottom: 13px; flex: 1;
+    }
+    .card-stats {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      font-size: 12px; color: var(--text-light);
+      margin-bottom: 14px;
+    }
+    .card-stats span { display: flex; align-items: center; gap: 5px; }
+    .card-stats .fa-star { color: #F59E0B; }
+    .card-footer {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 10px;
+      padding-top: 13px;
+      border-top: 1px solid rgba(13,43,26,0.05);
+    }
+    .price-wrap { display: flex; flex-direction: column; line-height: 1.1; }
+    .price-now {
+      font-family: var(--font-heading);
+      font-size: 19px; font-weight: 700; color: var(--danger);
+    }
+    .price-was { font-size: 12px; color: var(--text-light); text-decoration: line-through; margin-top: 3px; }
+    .price-pct {
+      font-size: 10px; font-weight: 800;
+      background: rgba(192,57,14,0.1); color: var(--danger);
+      padding: 2px 6px; border-radius: 4px; margin-top: 3px;
+      display: inline-block;
+    }
+    .price-free { font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: #2E7D32; }
+    .price-free-was { font-size: 11px; color: var(--text-light); text-decoration: line-through; margin-top: 3px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: var(--radius-pill);
+      font-size: 12.5px; font-weight: 700; text-decoration: none;
+      cursor: pointer; border: none; white-space: nowrap;
+      font-family: var(--font-body);
+      transition: var(--transition);
+    }
+    .cta-dark { background: var(--primary); color: #fff; }
+    .cta-dark:hover { background: var(--primary-light); transform: scale(1.03); }
+    .cta-gold {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary);
+    }
+    .cta-gold:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+
+    /* ===== FEATURED CARD (full-width) ===== */
+    .course-card.featured {
+      grid-column: 1 / -1;
+      flex-direction: row;
+    }
+    .course-card.featured .card-thumb {
+      width: 360px; flex-shrink: 0; aspect-ratio: unset;
+    }
+    .course-card.featured .card-body { padding: 30px 34px; }
+    .course-card.featured .card-title { font-size: 21px; margin-bottom: 12px; }
+    .course-card.featured .card-desc { font-size: 13.5px; }
+    .course-card.featured .price-now { font-size: 24px; }
+    .featured-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(184,134,11,0.1); color: var(--accent);
+      border: 1px solid rgba(184,134,11,0.2);
+      padding: 4px 12px; border-radius: var(--radius-pill);
+      font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .incl-tags {
+      display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0 15px;
+    }
+    .incl-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: var(--radius-pill);
+      background: rgba(13,43,26,0.05); color: var(--text-muted);
+      font-size: 11.5px; font-weight: 600;
+    }
+    .incl-tag i { color: #2E7D32; font-size: 10px; }
+    @media (max-width: 960px) {
+      .course-card.featured { flex-direction: column; }
+      .course-card.featured .card-thumb { width: 100%; aspect-ratio: 16/9; }
+      .course-card.featured .card-body { padding: 20px 22px; }
+      .course-card.featured .card-title { font-size: 18px; }
     }
 
-    .privacy-notice {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 11.5px;
-      color: rgba(255, 255, 255, 0.6);
+    /* ===== NO RESULTS ===== */
+    .no-results {
+      grid-column: 1 / -1; text-align: center;
+      padding: 64px 24px; color: var(--text-muted);
+      display: none;
+    }
+    .no-results i { font-size: 44px; margin-bottom: 14px; color: var(--text-light); display: block; }
+    .no-results p { font-size: 15px; }
+
+    /* ===== MOBILE SIDEBAR DRAWER ===== */
+    .drawer-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 990;
+    }
+    .drawer-overlay.open { display: block; }
+    .drawer {
+      position: fixed; left: 0; top: 0; bottom: 0; width: 290px;
+      background: #fff; z-index: 995; padding: 0;
+      transform: translateX(-100%); transition: transform 0.3s ease;
+      overflow-y: auto; box-shadow: var(--shadow-lg);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 22px; border-bottom: 1px solid rgba(13,43,26,0.06);
+      position: sticky; top: 0; background: #fff; z-index: 1;
+    }
+    .drawer-head h3 { font-family: var(--font-heading); font-size: 17px; color: var(--primary); }
+    .close-drawer { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; }
+    .drawer .sidebar-block { padding: 18px 22px; }
+    .drawer-apply {
+      padding: 16px 22px; position: sticky; bottom: 0;
+      background: #fff; border-top: 1px solid rgba(13,43,26,0.06);
     }
 
-    .privacy-notice i {
-      color: var(--accent-bright);
-      margin-top: 2px;
-    }
-
-    /* Footer */
+    /* ===== FOOTER ===== */
     footer {
-      background-color: var(--primary);
-      color: rgba(255, 255, 255, 0.6);
-      padding: 50px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background-color: var(--primary); color: rgba(255,255,255,0.6);
+      padding: 50px 0; border-top: 1px solid rgba(255,255,255,0.05);
       text-align: center;
     }
+    footer p { font-size: 13.5px; margin-bottom: 20px; }
+    .footer-links { display: flex; justify-content: center; gap: 28px; font-size: 13.5px; flex-wrap: wrap; }
+    .footer-links a { color: #fff; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent-bright); text-decoration: underline; }
 
-    footer p {
-      font-size: 13.5px;
-      margin-bottom: 20px;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      font-size: 13.5px;
-    }
-
-    @media (max-width: 576px) {
-      .footer-links {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
-
-    .footer-links a {
-      color: #FFF;
-      text-decoration: none;
-      transition: var(--transition-smooth);
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-bright);
-      text-decoration: underline;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-      100% { transform: scale(1); }
-    }
-
-    /* Mobile Optimization Enhancements */
-    @media (max-width: 768px) {
-      .hero-highlights {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .container {
-        padding: 0 16px;
-      }
-      header {
-        padding: 12px 0;
-      }
-      .logo {
-        font-size: 17px;
-        gap: 6px;
-      }
-      .logo i {
-        font-size: 15px;
-      }
-      header .btn-outline {
-        padding: 8px 12px;
-        font-size: 11px;
-      }
-      .hero-title {
-        font-size: 28px !important;
-        line-height: 1.25 !important;
-        margin-bottom: 16px !important;
-      }
-      .hero-desc {
-        font-size: 14.5px !important;
-        margin-bottom: 24px !important;
-      }
-      .value-item-card {
-        flex-direction: column;
-        gap: 12px;
-      }
-      .value-item-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-      }
-      .pain-column, .pleasure-column {
-        padding: 24px 16px;
-      }
-    }
-
-    /* Accessibility: visible focus rings for keyboard users */
-    :focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-
-    button, a, input, select, textarea {
-      touch-action: manipulation;
-    }
-
-    /* Respect users who prefer reduced motion */
+    /* ===== A11Y ===== */
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    button, a, input, select { touch-action: manipulation; }
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
     }
+    @media (max-width: 576px) {
+      .container { padding: 0 16px; }
+      .page-banner h1 { font-size: 26px; }
+      .catalog-wrap { padding: 20px 0 60px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ================= HEADER ================= -->
+  <!-- ============ HEADER ============ -->
   <header>
     <div class="container header-layout">
       <a href="/" class="logo">
         <i class="fa-solid fa-shield-halved"></i>
         <span>Mật Mã 21</span>
       </a>
-      <nav class="nav-menu">
+      <nav class="nav-menu" id="nav-menu">
         <a href="/" class="nav-link">Trang Chủ</a>
         <a href="/khoa-hoc.html" class="nav-link active">Khóa Học</a>
         <a href="/kien-thuc.html" class="nav-link">Kiến Thức</a>
         <a href="https://t.me/matma21_support" target="_blank" class="nav-link">Hỗ Trợ 1:1</a>
-        <a href="/portal.html" class="btn btn-outline btn-login" style="display: none;">
+        <a href="/portal.html" class="btn btn-outline btn-login" style="display:none;">
           <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
         </a>
       </nav>
       <div class="header-actions">
-        <a href="/portal.html" class="btn btn-outline">
+        <a href="/portal.html" class="btn btn-outline" id="login-btn-desktop">
           <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
         </a>
+        <a href="#register-section" class="btn btn-register" id="register-btn-desktop">
+          <i class="fa-solid fa-user-plus"></i> Đăng Ký
+        </a>
       </div>
-      <button class="mobile-menu-toggle" id="mobile-menu-btn">
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Mở menu">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <!-- ================= HERO ================= -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="hero-tag"><i class="fa-solid fa-star"></i> KHÔI PHỤC BẢN LĨNH & KIÊU HÃNH PHÁI MẠNH</span>
-        <h1 class="hero-title" style="font-size: 38px; line-height: 1.25; margin-bottom: 24px;">
-          Chấm Dứt Nỗi Ám Ảnh<br><span style="color:var(--danger)">"Chưa Đi Chợ Đã Hết Tiền"</span>
-        </h1>
-        <p class="hero-desc" style="font-size: 16.5px; line-height: 1.65; color: var(--text-muted); margin-bottom: 35px;">
-          Bẻ gãy <strong>"vòng lặp lo âu dự báo"</strong> (càng sợ xuất sớm thì thần kinh giao cảm càng kích hoạt xuất sớm). Làm chủ thời gian <strong>15 - 20 phút tự nhiên</strong>, thiết lập phản xạ phanh chậu tự động sau 21 ngày. Phương pháp y khoa hành vi <strong>không dùng thuốc bôi, không chai xịt gây tê</strong>, giữ trọn vẹn xúc cảm thăng hoa cho cả hai.
-        </p>
-        
-        <div class="hero-highlights">
-          <div class="highlight-card">
-            <i class="fa-solid fa-shield-heart" style="color: var(--accent);"></i>
-            <h4>Phanh Phản Xạ Tự Chủ</h4>
-            <p>Thiết lập phản xạ khóa gốc chậu chủ động, dừng đúng lúc tại ngưỡng kích thích 7.5.</p>
-          </div>
-          <div class="highlight-card">
-            <i class="fa-solid fa-wind" style="color: var(--accent);"></i>
-            <h4>Hạ Nhiệt Hệ Thần Kinh</h4>
-            <p>Kiểm soát nhịp tim qua hơi thở phế vị 4-2-6 bụng sâu, triệt tiêu lo âu hiệu suất.</p>
-          </div>
-          <div class="highlight-card">
-            <i class="fa-solid fa-user-shield" style="color: var(--accent);"></i>
-            <h4>Bảo Mật Kín 1:1</h4>
-            <p>Hỗ trợ Telegram ẩn danh, sao kê ngân hàng trung tính, không chứa từ nhạy cảm.</p>
-          </div>
-        </div>
-        
-        <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-          <a href="#offer-section" class="btn btn-accent btn-lg" style="animation: pulse 2s infinite;">
-            <i class="fa-solid fa-graduation-cap"></i> ĐĂNG KÝ NHẬN LỘ TRÌNH NGAY - 686.868đ
-          </a>
-          <span style="font-size:14px; color:var(--text-muted); font-weight: 600;"><del style="color:var(--text-light)">1.200.000đ</del> (-43% ĐỢT NÀY)</span>
-        </div>
+  <!-- ============ PAGE BANNER ============ -->
+  <section class="page-banner">
+    <div class="container page-banner-inner">
+      <div class="breadcrumb">
+        <a href="/">Trang Chủ</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span>Khóa Học</span>
       </div>
-      
-      <div class="ebook-image-wrapper">
-        <img src="/images/course_mockup.png" alt="Hệ thống Portal học tập Mật Mã 21" class="ebook-cover">
-      </div>
+      <h1>Danh Mục <span>Khóa Học</span></h1>
+      <p>Lộ trình y khoa hành vi 21 ngày — không thuốc, không hóa chất, thiết lập lại phản xạ từ gốc rễ sinh lý.</p>
     </div>
   </section>
 
-  <!-- ================= PAIN & PLEASURE SECTION ================= -->
-  <section class="pain-pleasure-sec">
+  <!-- ============ CATEGORY CHIPS ============ -->
+  <div class="cat-bar" id="cat-bar">
     <div class="container">
-      <h2 class="section-title">Có Phải Bạn Đang <span>Âm Thầm Chịu Đựng?</span></h2>
-      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 50px auto; font-size: 16px;">
-        Đằng sau vẻ ngoài tự chủ, thành đạt ngoài xã hội là những đêm dài đối mặt với mặc cảm bất lực mà không thể sẻ chia cùng ai...
-      </p>
-      
-      <div class="pain-pleasure-grid">
-        
-        <!-- Left: The Pain -->
-        <div class="pain-column">
-          <h3><i class="fa-solid fa-circle-exclamation"></i> CƠN ÁC MỘNG BẠN ĐANG ĐỐI MẶT</h3>
-          <ul class="pain-pleasure-list">
-            <li>
-              <i class="fa-solid fa-heart-crack"></i>
-              <div>
-                <strong>Vòng lặp "lo âu dự báo" trước cuộc yêu:</strong>
-                <span>Chưa lâm trận đầu óc đã căng thẳng lo âu "lần này có sớm nữa không". Nỗi sợ thất bại khiến tim đập nhanh, thở gấp, trực tiếp kích hoạt hệ giao cảm phóng tinh ngoài tầm kiểm soát.</span>
-              </div>
-            </li>
-            <li>
-              <i class="fa-solid fa-face-frown"></i>
-              <div>
-                <strong>Cái thở dài im lặng lúc 3 giờ sáng:</strong>
-                <span>Cuộc yêu kết thúc chóng vánh sau 1-2 phút. Bạn tự ti, tủi hổ trước cái quay lưng đầy hụt hẫng của vợ. Nỗi sợ âm thầm về sự nguội lạnh, gia đình rạn nứt vì không làm tròn bổn phận đàn ông.</span>
-              </div>
-            </li>
-            <li>
-              <i class="fa-solid fa-ban"></i>
-              <div>
-                <strong>Yêu như "khúc gỗ vô cảm" do chất gây tê:</strong>
-                <span>Dùng bao cao su dày, chai xịt/gel bôi tê làm quy đầu mất sạch cảm giác chân thực. Bạn lâm trận vô cảm như khúc gỗ, thậm chí hóa chất lem ra làm bạn đời bị tê rát, hụt hẫng theo.</span>
-              </div>
-            </li>
-            <li>
-              <i class="fa-solid fa-circle-xmark"></i>
-              <div>
-                <strong>Tập Kegel tự phát sai cách gây phản tác dụng:</strong>
-                <span>Tập theo YouTube, nín thở, gồng sai cơ bụng/đùi/mông. Hậu quả gây co thắt sàn chậu mãn tính, mỏi cơ thắt lưng và khiến phản xạ nhạy cảm càng tệ hơn, khó cải thiện.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-        
-        <!-- Right: The Pleasure -->
-        <div class="pleasure-column">
-          <h3><i class="fa-solid fa-circle-check"></i> SỰ TỰ DO & PHONG ĐỘ BẠN SẼ CÓ</h3>
-          <ul class="pain-pleasure-list">
-            <li>
-              <i class="fa-solid fa-feather"></i>
-              <div>
-                <strong>Lâm trận với trạng thái thư giãn tuyệt đối:</strong>
-                <span>Triệt tiêu hoàn toàn lo âu hiệu suất qua hơi thở phế vị 4-2-6 bụng sâu. Hạ nhịp tim, làm chủ hệ thần kinh đối giao cảm để bước vào cuộc yêu đầy tĩnh tại, thoải mái.</span>
-              </div>
-            </li>
-            <li>
-              <i class="fa-solid fa-clock"></i>
-              <div>
-                <strong>Làm chủ thời gian 15-20 phút tự nhiên:</strong>
-                <span>Cảm nhận rõ bản đồ xúc giác cá nhân, chủ động siết nhả cơ PC độc lập để "phanh" phản xạ phóng tinh đúng ngưỡng kích thích 7.5 và kéo dài cuộc yêu tùy ý.</span>
-              </div>
-            </li>
-            <li>
-              <i class="fa-solid fa-venus-mars"></i>
-              <div>
-                <strong>Đưa bạn đời cùng thăng hoa mãn nguyện:</strong>
-                <span>Giữ nguyên cảm xúc chân thực 100%. Thời gian đủ lâu giúp bạn tự tin thay đổi tư thế, đưa cả hai thăng hoa viên mãn, thắp sáng lại ngọn lửa hạnh phúc gia đình.</span>
-              </div>
-            </li>
-            <li>
-              <i class="fa-solid fa-award"></i>
-              <div>
-                <strong>Người hùng đích thực trong phòng ngủ:</strong>
-                <span>Xóa bỏ hoàn toàn sự e ngại trốn tránh chuyện ấy. Bạn kiêu hãnh ngẩng cao đầu, lấy lại bản lĩnh đàn ông và nhận lấy nụ cười hạnh phúc, sự ôm ấp ngọt ngào từ bạn đời.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-        
+      <div class="cat-scroll" role="tablist" aria-label="Lọc theo danh mục">
+        <button class="cat-chip active" data-cat="all" role="tab" aria-selected="true">
+          <div class="cat-icon"><i class="fa-solid fa-grip"></i></div>
+          <span class="cat-label">Tất Cả</span>
+        </button>
+        <button class="cat-chip" data-cat="suc-khoe" role="tab" aria-selected="false">
+          <div class="cat-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+          <span class="cat-label">Sức Khỏe Nam</span>
+        </button>
+        <button class="cat-chip" data-cat="tam-ly" role="tab" aria-selected="false">
+          <div class="cat-icon"><i class="fa-solid fa-brain"></i></div>
+          <span class="cat-label">Tâm Lý</span>
+        </button>
+        <button class="cat-chip" data-cat="the-chat" role="tab" aria-selected="false">
+          <div class="cat-icon"><i class="fa-solid fa-dumbbell"></i></div>
+          <span class="cat-label">Thể Chất</span>
+        </button>
+        <button class="cat-chip" data-cat="dinh-duong" role="tab" aria-selected="false">
+          <div class="cat-icon"><i class="fa-solid fa-bowl-food"></i></div>
+          <span class="cat-label">Dinh Dưỡng</span>
+        </button>
+        <button class="cat-chip" data-cat="mien-phi" role="tab" aria-selected="false">
+          <div class="cat-icon"><i class="fa-solid fa-gift"></i></div>
+          <span class="cat-label">Miễn Phí</span>
+        </button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ================= SCIENCE SECTION (Sidebar & Vertical List Premium Re-arranged) ================= -->
-  <section class="science">
-    <div class="container science-layout">
-      
-      <!-- Left column: Scientific intro -->
-      <div class="science-intro">
-        <h2>Ba Trụ Cột<br><span>Y Sinh Học</span><br>Kiểm Soát Phản Xạ</h2>
-        <p>
-          Chúng tôi không sử dụng các biện pháp can thiệp vật lý tức thời hay thuốc giảm nhạy cảm. "Mật Mã 21" tái cấu trúc và huấn luyện lại phản xạ tự nhiên của não bộ dựa trên nền tảng y học hành vi hiện đại thông qua 3 yếu tố cốt lõi.
-        </p>
-        <p style="font-size:14px; color:rgba(255,255,255,0.55); border-left: 2px solid var(--accent); padding-left: 15px;">
-          *Khuyến nghị bởi Hiệp hội Tiết niệu Châu Âu (EAU) như một phác đồ rèn luyện hành vi đầu tay cho nam giới.
-        </p>
-      </div>
-      
-      <!-- Right column: Pillars stacked list -->
-      <div class="science-pillars">
-        <div class="science-pillar-item">
-          <div class="science-pillar-num">01</div>
-          <div class="science-pillar-content">
-            <h3>Phanh Cơ Học (Cơ PC)</h3>
-            <p>
-              Cơ sàn chậu (đặc biệt là nhóm cơ Mu Cụt - PC) hoạt động như một van cơ học chặn áp lực lưu dẫn tinh. Bằng việc luyện tập co thắt độc lập ở các tư thế Nằm, Ngồi, Đứng, bạn sẽ chủ động "phanh" được phản xạ xuất tinh khi muốn.
+  <!-- ============ CATALOG ============ -->
+  <section class="catalog-wrap">
+    <div class="container">
+      <div class="catalog-grid">
+
+        <!-- SIDEBAR (Desktop) -->
+        <aside class="sidebar" id="sidebar-desktop">
+          <div class="sidebar-block">
+            <p class="sidebar-heading"><i class="fa-solid fa-sliders"></i> Lọc theo giá</p>
+            <div class="filter-row">
+              <input type="radio" name="price" id="p-all" value="all" checked>
+              <label for="p-all">Tất cả</label>
+              <span class="filter-count">6</span>
+            </div>
+            <div class="filter-row">
+              <input type="radio" name="price" id="p-free" value="free">
+              <label for="p-free">Miễn phí</label>
+              <span class="filter-count">5</span>
+            </div>
+            <div class="filter-row">
+              <input type="radio" name="price" id="p-paid" value="paid">
+              <label for="p-paid">Có phí (dưới 1tr)</label>
+              <span class="filter-count">1</span>
+            </div>
+          </div>
+          <div class="sidebar-block">
+            <p class="sidebar-heading"><i class="fa-solid fa-layer-group"></i> Cấp độ</p>
+            <div class="filter-row">
+              <input type="checkbox" id="lv1" checked>
+              <label for="lv1">Mới bắt đầu</label>
+            </div>
+            <div class="filter-row">
+              <input type="checkbox" id="lv2" checked>
+              <label for="lv2">Trung cấp</label>
+            </div>
+            <div class="filter-row">
+              <input type="checkbox" id="lv3" checked>
+              <label for="lv3">Nâng cao</label>
+            </div>
+          </div>
+          <div class="sidebar-block">
+            <p class="sidebar-heading"><i class="fa-solid fa-shield-halved"></i> Về chương trình</p>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:14px;">
+              Hệ thống y khoa hành vi dựa trên nghiên cứu EAU & Sapienza University. 1.420+ học viên đã hoàn thành.
             </p>
+            <a href="/#offer-section" class="sidebar-enroll-btn">
+              <i class="fa-solid fa-graduation-cap"></i> Đăng Ký Ngay
+            </a>
           </div>
-        </div>
-        
-        <div class="science-pillar-item">
-          <div class="science-pillar-num">02</div>
-          <div class="science-pillar-content">
-            <h3>Điều Hòa Đối Giao Cảm</h3>
-            <p>
-              Khi hưng phấn tăng cao, hệ giao cảm (kích thích) chiếm ưu thế làm tim đập nhanh và co thắt cơ chậu ngoài tầm kiểm soát. Kỹ thuật thở phế vị 4-2-6 sẽ kích hoạt hệ đối giao cảm (thư giãn), hạ nhịp tim và giữ bạn ở vùng an toàn.
-            </p>
+        </aside>
+
+        <!-- MAIN AREA -->
+        <main>
+          <!-- Toolbar -->
+          <div class="toolbar">
+            <p class="result-info" id="result-info"><strong>6</strong> khóa học &amp; tài nguyên</p>
+            <div class="toolbar-right">
+              <button class="filter-toggle-btn" id="open-drawer-btn" aria-label="Mở bộ lọc">
+                <i class="fa-solid fa-sliders"></i> Bộ lọc
+              </button>
+              <select class="sort-sel" id="sort-sel" aria-label="Sắp xếp">
+                <option value="default">Sắp xếp: Mặc định</option>
+                <option value="price-asc">Giá: Thấp → Cao</option>
+                <option value="price-desc">Giá: Cao → Thấp</option>
+                <option value="popular">Phổ biến nhất</option>
+                <option value="newest">Mới nhất</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="science-pillar-item">
-          <div class="science-pillar-num">03</div>
-          <div class="science-pillar-content">
-            <h3>Giải Mẫn Cảm Phản Xạ Nhận Thức</h3>
-            <p>
-              Thông qua kỹ thuật Start-Stop solo và tích hợp đối tác, não bộ được làm quen dần với xúc giác ở ngưỡng cao (mức 7.5/10) và học cách dừng đúng lúc, giải tỏa nhiệt lượng và lặp lại mà không cán mốc ranh giới xuất tinh tự phát.
-            </p>
-          </div>
-        </div>
-      </div>
-      
-    </div>
+
+          <!-- Cards -->
+          <div class="courses" id="courses-grid">
+
+            <!-- ★ FEATURED — Khóa học chính ★ -->
+            <article class="course-card featured" data-cat="suc-khoe tam-ly the-chat" data-price="paid" data-pop="1420" data-new="0">
+              <div class="card-thumb">
+                <img src="/images/course_mockup.png" alt="Mật Mã 21 — Lộ Trình 21 Ngày" loading="eager"
+                     onerror="this.parentElement.querySelector('.thumb-placeholder').style.display='flex'; this.style.display='none'">
+                <div class="thumb-placeholder" style="display:none; background:linear-gradient(135deg,#0D2B1A 0%,#1a4a2e 100%);">
+                  <i class="fa-solid fa-shield-halved" style="color:rgba(255,255,255,0.15);"></i>
+                </div>
+                <span class="card-tag tag-hit">Bán Chạy #1</span>
+                <span class="card-time"><i class="fa-solid fa-clock"></i> 21 Ngày</span>
+              </div>
+              <div class="card-body">
+                <div class="featured-tag"><i class="fa-solid fa-star"></i> Khóa Học Chính</div>
+                <p class="card-cat">Sức Khỏe Nam · Tâm Lý · Thể Chất</p>
+                <h2 class="card-title">Mật Mã 21 — Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh</h2>
+                <p class="card-desc">
+                  Hệ thống y khoa hành vi hoàn chỉnh: bài tập cơ sàn chậu chuẩn PFMT, kỹ thuật thở phế vị 4-2-6, liệu pháp giải mẫn cảm lo âu hiệu suất. Thiết lập phản xạ phanh chậu tự động, làm chủ 15–20 phút tự nhiên mà không cần thuốc hay hóa chất.
+                </p>
+                <div class="incl-tags">
+                  <span class="incl-tag"><i class="fa-solid fa-check"></i> 22 bài học</span>
+                  <span class="incl-tag"><i class="fa-solid fa-check"></i> Nhật Ký Tracker</span>
+                  <span class="incl-tag"><i class="fa-solid fa-check"></i> Hỗ trợ 1:1 Telegram</span>
+                  <span class="incl-tag"><i class="fa-solid fa-check"></i> 5 tài nguyên miễn phí kèm</span>
+                </div>
+                <div class="card-stats">
+                  <span><i class="fa-solid fa-users"></i> 1.420+ học viên</span>
+                  <span><i class="fa-solid fa-star"></i> 4.9 (287 đánh giá)</span>
+                  <span><i class="fa-solid fa-signal"></i> Mọi trình độ</span>
+                </div>
+                <div class="card-footer">
+                  <div class="price-wrap">
+                    <span class="price-now">686.868đ</span>
+                    <span class="price-was">1.200.000đ</span>
+                    <span class="price-pct">-43% đợt này</span>
+                  </div>
+                  <a href="/#offer-section" class="cta-btn cta-gold">
+                    <i class="fa-solid fa-graduation-cap"></i> Đăng Ký Ngay
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bonus 1: Nhật Ký Tracker -->
+            <article class="course-card" data-cat="the-chat" data-price="free" data-pop="1420" data-new="0">
+              <div class="card-thumb">
+                <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1a3a25 0%,#0D2B1A 100%);">
+                  <i class="fa-solid fa-table-list" style="color:rgba(255,255,255,0.15);"></i>
+                </div>
+                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-time"><i class="fa-solid fa-calendar-days"></i> 21 ngày</span>
+              </div>
+              <div class="card-body">
+                <p class="card-cat">Thể Chất · Theo Dõi Tiến Trình</p>
+                <h3 class="card-title">Nhật Ký Tracker 21 Ngày</h3>
+                <p class="card-desc">Bảng theo dõi chi tiết từng ngày: thời gian thực tế, chỉ số kiểm soát, mức độ lo âu. Hệ thống tự lưu — dùng làm bằng chứng khi cần thiết.</p>
+                <div class="card-stats">
+                  <span><i class="fa-solid fa-users"></i> 1.420+ dùng</span>
+                  <span><i class="fa-solid fa-file-lines"></i> 1 tài liệu</span>
+                </div>
+                <div class="card-footer">
+                  <div class="price-wrap">
+                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-free-was">300.000đ</span>
+                  </div>
+                  <a href="/#offer-section" class="cta-btn cta-dark">
+                    <i class="fa-solid fa-gift"></i> Nhận Kèm
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bonus 2: Thực Đơn Testosterone -->
+            <article class="course-card" data-cat="dinh-duong" data-price="free" data-pop="1420" data-new="0">
+              <div class="card-thumb">
+                <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1a3510 0%,#0f2a0a 100%);">
+                  <i class="fa-solid fa-bowl-food" style="color:rgba(255,255,255,0.15);"></i>
+                </div>
+                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-time"><i class="fa-solid fa-calendar-days"></i> 14 ngày</span>
+              </div>
+              <div class="card-body">
+                <p class="card-cat">Dinh Dưỡng · Nội Tiết Tố</p>
+                <h3 class="card-title">Thực Đơn Testosterone Cao 14 Ngày</h3>
+                <p class="card-desc">Thực đơn tối ưu Zinc–Magnesium–D3 theo nghiên cứu andrology. Tăng nội tiết tố nam tự nhiên, nâng ngưỡng kích thích bền vững.</p>
+                <div class="card-stats">
+                  <span><i class="fa-solid fa-users"></i> 1.420+ dùng</span>
+                  <span><i class="fa-solid fa-utensils"></i> 14 thực đơn</span>
+                </div>
+                <div class="card-footer">
+                  <div class="price-wrap">
+                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-free-was">200.000đ</span>
+                  </div>
+                  <a href="/#offer-section" class="cta-btn cta-dark">
+                    <i class="fa-solid fa-gift"></i> Nhận Kèm
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bonus 3: Giải Mẫn Cảm Lo Âu -->
+            <article class="course-card" data-cat="tam-ly" data-price="free" data-pop="1420" data-new="0">
+              <div class="card-thumb">
+                <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1c1a35 0%,#0d0b24 100%);">
+                  <i class="fa-solid fa-brain" style="color:rgba(255,255,255,0.15);"></i>
+                </div>
+                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-time"><i class="fa-solid fa-calendar-days"></i> 7 ngày</span>
+              </div>
+              <div class="card-body">
+                <p class="card-cat">Tâm Lý · Liệu Pháp Hành Vi</p>
+                <h3 class="card-title">Giải Mẫn Cảm Lo Âu Hiệu Suất</h3>
+                <p class="card-desc">Bài tập Sensate Focus + CBT viết tay 7 ngày. Phá vỡ vòng lặp lo âu dự báo, tái lập kết nối cảm xúc tự nhiên với bạn đời.</p>
+                <div class="card-stats">
+                  <span><i class="fa-solid fa-users"></i> 1.420+ dùng</span>
+                  <span><i class="fa-solid fa-book-open"></i> 7 bài tập</span>
+                </div>
+                <div class="card-footer">
+                  <div class="price-wrap">
+                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-free-was">500.000đ</span>
+                  </div>
+                  <a href="/#offer-section" class="cta-btn cta-dark">
+                    <i class="fa-solid fa-gift"></i> Nhận Kèm
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bonus 4: Thẻ VIP Telegram -->
+            <article class="course-card" data-cat="suc-khoe" data-price="free" data-pop="1420" data-new="0">
+              <div class="card-thumb">
+                <div class="thumb-placeholder" style="background:linear-gradient(135deg,#002e47 0%,#001929 100%);">
+                  <i class="fa-brands fa-telegram" style="color:rgba(255,255,255,0.15);"></i>
+                </div>
+                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-time"><i class="fa-solid fa-clock"></i> 21 ngày</span>
+              </div>
+              <div class="card-body">
+                <p class="card-cat">Hỗ Trợ · 1:1 Chuyên Gia</p>
+                <h3 class="card-title">Thẻ VIP Hỗ Trợ 1:1 Telegram 21 Ngày</h3>
+                <p class="card-desc">Nhắn tin trực tiếp chuyên gia trong 21 ngày luyện tập. Giải đáp kỹ thuật, điều chỉnh bài tập theo thể trạng cá nhân, hoàn toàn bảo mật.</p>
+                <div class="card-stats">
+                  <span><i class="fa-solid fa-users"></i> Giới hạn suất</span>
+                  <span><i class="fa-solid fa-lock"></i> Bảo mật</span>
+                </div>
+                <div class="card-footer">
+                  <div class="price-wrap">
+                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-free-was">1.000.000đ</span>
+                  </div>
+                  <a href="/#offer-section" class="cta-btn cta-dark">
+                    <i class="fa-solid fa-gift"></i> Nhận Kèm
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Bonus 5: Thẻ SOS Phòng The -->
+            <article class="course-card" data-cat="suc-khoe" data-price="free" data-pop="800" data-new="1">
+              <div class="card-thumb">
+                <div class="thumb-placeholder" style="background:linear-gradient(135deg,#3a1a0a 0%,#1a0d05 100%);">
+                  <i class="fa-solid fa-id-card" style="color:rgba(255,255,255,0.15);"></i>
+                </div>
+                <span class="card-tag tag-new">Mới</span>
+                <span class="card-time"><i class="fa-solid fa-bolt"></i> Dùng ngay</span>
+              </div>
+              <div class="card-body">
+                <p class="card-cat">Kỹ Thuật · Xử Lý Khẩn Cấp</p>
+                <h3 class="card-title">Thẻ SOS Phòng The</h3>
+                <p class="card-desc">Thẻ tóm tắt 1 trang: kỹ thuật thở hãm xung khẩn cấp, điểm dừng an toàn, thao tác giảm ngưỡng nhanh — dùng được ngay từ đêm đầu tiên.</p>
+                <div class="card-stats">
+                  <span><i class="fa-solid fa-users"></i> 800+ dùng</span>
+                  <span><i class="fa-solid fa-mobile-screen"></i> Lưu điện thoại</span>
+                </div>
+                <div class="card-footer">
+                  <div class="price-wrap">
+                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-free-was">200.000đ</span>
+                  </div>
+                  <a href="/#offer-section" class="cta-btn cta-dark">
+                    <i class="fa-solid fa-gift"></i> Nhận Kèm
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- No results -->
+            <div class="no-results" id="no-results">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <p>Không tìm thấy khóa học phù hợp. Thử thay đổi bộ lọc.</p>
+            </div>
+
+          </div><!-- /.courses -->
+        </main>
+
+      </div><!-- /.catalog-grid -->
+    </div><!-- /.container -->
   </section>
 
-  <!-- ================= COMPARISON SECTION (Why other methods fail) ================= -->
-  <section class="comparison-sec">
-    <div class="container">
-      <h2 class="section-title">Tại Sao Các Giải Pháp Khác <span>Lại Thất Bại?</span></h2>
-      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 50px auto; font-size: 16px;">
-        Nhiều nam giới đã thử đủ cách nhưng chỉ nhận lại sự thất vọng. Dưới đây là lý do tại sao các giải pháp thông thường chỉ giải quyết phần ngọn:
-      </p>
-      
-      <div class="comparison-grid">
-        <div class="comparison-card normal" style="border: 1px solid rgba(192, 57, 14, 0.15);">
-          <h4 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> SỰ LỆ THUỘC VÀ TỔN HẠI SỨC KHỎE</h4>
-          <ul style="margin-top: 20px;">
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Tê liệt khoái cảm 80%:</strong> Các hóa chất trong chai xịt làm tê liệt đầu dây thần kinh quy đầu, khiến cuộc yêu vô cảm như khúc gỗ, bạn đời cũng bị giảm cảm giác theo.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Gây rối loạn cương dương lâu dài:</strong> Phụ thuộc chất gây tê làm suy giảm độ nhạy phản xạ tự nhiên của não bộ, lâu ngày dẫn tới khó cương hoặc xìu sớm.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Hủy hoại tâm lý phái mạnh:</strong> Luôn nơm nớp lo sợ thuốc hết tác dụng giữa chừng, tạo gánh nặng áp lực cực kỳ lớn trước mỗi cuộc yêu.</span></li>
-          </ul>
-        </div>
-        
-        <div class="comparison-card active-card">
-          <div class="popular-badge">PHÁC ĐỒ Y SINH HỌC TỰ NHIÊN</div>
-          <h4 style="color: var(--primary);"><i class="fa-solid fa-award"></i> TỰ CHỦ HOÀN TOÀN & BỀN VỮNG TRỌN ĐỜI</h4>
-          <ul style="margin-top: 20px;">
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Huấn luyện phản xạ não bộ:</strong> Tái cấu trúc cơ chế kiểm soát của hệ thần kinh thực vật, phanh chậu tự động bằng kỹ thuật hành vi tự nhiên.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Giữ nguyên xúc giác thăng hoa 100%:</strong> Không hóa chất, không đơ liệt cảm giác. Bạn cảm nhận trọn vẹn sự sung sướng và thăng hoa cùng đối tác.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Khôi phục bản lĩnh vĩnh viễn:</strong> Sau 21 ngày thiết lập phản xạ mới, phong độ nằm hoàn toàn trong tầm kiểm soát của bạn mà không phụ thuộc vào thuốc.</span></li>
-          </ul>
-        </div>
+  <!-- Mobile sidebar drawer -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <div class="drawer" id="mobile-drawer" aria-label="Bộ lọc">
+    <div class="drawer-head">
+      <h3>Bộ lọc</h3>
+      <button class="close-drawer" id="close-drawer-btn" aria-label="Đóng">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="sidebar-block">
+      <p class="sidebar-heading"><i class="fa-solid fa-sliders"></i> Lọc theo giá</p>
+      <div class="filter-row">
+        <input type="radio" name="price-m" id="pm-all" value="all" checked>
+        <label for="pm-all">Tất cả</label>
+        <span class="filter-count">6</span>
+      </div>
+      <div class="filter-row">
+        <input type="radio" name="price-m" id="pm-free" value="free">
+        <label for="pm-free">Miễn phí</label>
+        <span class="filter-count">5</span>
+      </div>
+      <div class="filter-row">
+        <input type="radio" name="price-m" id="pm-paid" value="paid">
+        <label for="pm-paid">Có phí</label>
+        <span class="filter-count">1</span>
       </div>
     </div>
-  </section>
-
-  <!-- ================= STUDENT FEEDBACK SECTION ================= -->
-  <section class="feedback-sec">
-    <div class="container">
-      <h2 class="section-title">Kết Quả Đột Phá <span>Từ Học Viên Thực Tế</span></h2>
-      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 50px auto; font-size: 16px;">
-        Khảo sát thực tiễn ẩn danh trên 1,420+ nam giới đã hoàn thành trọn vẹn lộ trình 21 ngày:
-      </p>
-
-      <div class="feedback-stats-grid">
-        <div class="feedback-stat-card">
-          <div class="feedback-stat-number">15 - 20 Phút</div>
-          <div class="feedback-stat-label">Thời gian cải thiện TB</div>
-        </div>
-        <div class="feedback-stat-card">
-          <div class="feedback-stat-number">94.8%</div>
-          <div class="feedback-stat-label">Học viên đạt tự chủ</div>
-        </div>
-        <div class="feedback-stat-card">
-          <div class="feedback-stat-number">100%</div>
-          <div class="feedback-stat-label">Tự nhiên & Không thuốc</div>
-        </div>
-        <div class="feedback-stat-card">
-          <div class="feedback-stat-number">15 - 21 Ngày</div>
-          <div class="feedback-stat-label">Cảm nhận thay đổi rõ rệt</div>
-        </div>
+    <div class="sidebar-block">
+      <p class="sidebar-heading"><i class="fa-solid fa-layer-group"></i> Cấp độ</p>
+      <div class="filter-row">
+        <input type="checkbox" id="lvm1" checked><label for="lvm1">Mới bắt đầu</label>
       </div>
-
-      <div class="feedback-grid">
-        
-        <!-- Feedback 1 -->
-        <div class="feedback-card">
-          <div class="feedback-header">
-            <div class="student-info">
-              <div class="student-avatar">H.N</div>
-              <div class="student-meta">
-                <h4>Anh Hoàng Nam (32 tuổi)</h4>
-                <span>Nhân viên văn phòng, Hà Nội</span>
-              </div>
-            </div>
-            <div class="duration-badge">
-              <i class="fa-solid fa-clock"></i> <span>1.5m &rarr; 16m+</span>
-            </div>
-          </div>
-          <div class="feedback-content">
-            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Trước đây lo âu tâm lý cực kỳ nặng, cứ chuẩn bị lâm trận là tim đập nhanh, thở gấp, chỉ được 1-2 phút là đã tới ngưỡng không hãm nổi. Nhờ áp dụng kỹ thuật điều hòa nhịp thở bụng kết hợp siết/nhả cơ sàn chậu đúng tư thế nằm, đứng..."</p>
-            
-            <div class="chat-bubble-container">
-              <div class="chat-bubble student">
-                Chào chuyên gia, hôm nay là ngày 18 tập luyện. Em tập siết cơ PC theo tài liệu và điều thở bụng thấy tiến bộ rõ lắm, cơ chậu khỏe hẳn lên. Tối qua lâm trận với vợ em áp dụng nhịp thở bụng sâu và cơ chế dừng 1 nhịp (Start-Stop) thì kéo được hơn 16 phút. Vợ em bất ngờ hỏi sao hôm nay bền thế, sướng quá anh ạ!
-                <span class="chat-time">22:15</span>
-              </div>
-              <div class="chat-bubble support">
-                Chúc mừng em! Kỹ thuật điều hòa nhịp tim qua thở bụng phế vị đã bắt đầu tạo phản xạ tự chủ thần kinh rồi đó. Sang tuần thứ 3, em tiếp tục tập các tư thế thực chiến đứng/ngồi và áp dụng Stop-Start chủ động nhé. Cố lên em!
-                <span class="chat-time">22:20</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback 2 -->
-        <div class="feedback-card">
-          <div class="feedback-header">
-            <div class="student-info">
-              <div class="student-avatar">M.T</div>
-              <div class="student-meta">
-                <h4>Anh Minh Trí (27 tuổi)</h4>
-                <span>Lập trình viên, TP. Hồ Chí Minh</span>
-              </div>
-            </div>
-            <div class="duration-badge">
-              <i class="fa-solid fa-clock"></i> <span>2m &rarr; 18m+</span>
-            </div>
-          </div>
-          <div class="feedback-content">
-            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Hồi trước tập Kegel linh tinh trên mạng bị mỏi lưng với ê ẩm bụng dưới vì gồng sai cơ bụng. Sau khi sửa lại cơ chậu độc lập theo hướng dẫn chi tiết của Ebook và duy trì 3 tuần, hiệu quả thực tế vượt mong đợi..."</p>
-            
-            <div class="chat-bubble-container">
-              <div class="chat-bubble student">
-                Chào ad, em đã hoàn thành 21 ngày. Rất may mắn vì có phần sàng lọc ban đầu giúp em phát hiện ra mình bị co thắt sàn chậu do gồng Kegel sai cách hồi trước. Sau khi giãn cơ và tập chuẩn theo lộ trình, giờ thời gian thực tế đạt 18-20 phút ổn định. Tâm lý tự tin hẳn, không còn nỗi sợ vô hình như trước nữa.
-                <span class="chat-time">14:02</span>
-              </div>
-              <div class="chat-bubble support">
-                Tuyệt vời Trí ơi! Đúng vậy, 80% mọi người tập Kegel miễn phí trên mạng đều mắc lỗi gồng cơ bụng/đùi gây căng cứng chậu. Khi em thở đúng và co thắt biệt lập, phản xạ kiểm soát sẽ quay về tự nhiên. Hãy duy trì thói quen tập nhẹ nhàng nhé!
-                <span class="chat-time">14:15</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback 3 -->
-        <div class="feedback-card">
-          <div class="feedback-header">
-            <div class="student-info">
-              <div class="student-avatar">K.A</div>
-              <div class="student-meta">
-                <h4>Anh Khánh An (24 tuổi)</h4>
-                <span>Kinh doanh tự do, Hải Dương</span>
-              </div>
-            </div>
-            <div class="duration-badge">
-              <i class="fa-solid fa-clock"></i> <span>1m &rarr; 15m</span>
-            </div>
-          </div>
-          <div class="feedback-content">
-            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Tôi mới 24 tuổi mà đã bị tình trạng này từ lúc bắt đầu có bạn gái, stress kinh khủng, lúc nào cũng lo sợ mình bị yếu sinh lý sớm. Tập theo giáo trình được gần 3 tuần, rèn luyện phanh cơ chậu phản xạ và điều thở bụng..."</p>
-            
-            <div class="chat-bubble-container">
-              <div class="chat-bubble student">
-                Em tập theo giáo trình được gần 3 tuần rồi ad. Luyện tập siết cơ PC và điều hòa hơi thở bụng phế vị giúp em phanh nhịp tim hiệu quả cực kỳ. Hôm nay thực chiến lần đầu áp dụng Start-Stop đã kéo dài lên được 15 phút, bạn gái em bất ngờ và vui lắm. Cảm ơn ad rất nhiều!
-                <span class="chat-time">09:30</span>
-              </div>
-              <div class="chat-bubble support">
-                Chào Khánh An! Ở độ tuổi trẻ như em, lo âu tâm lý và nhạy cảm thần kinh cơ chậu là rất phổ biến. Khi em học cách thở điều hòa nhịp tim và làm chủ cơ PC độc lập, phản xạ phanh chậu sẽ tự động vận hành cực tốt. Tiếp tục duy trì em nhé!
-                <span class="chat-time">09:42</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback 4 -->
-        <div class="feedback-card">
-          <div class="feedback-header">
-            <div class="student-info">
-              <div class="student-avatar">V.A</div>
-              <div class="student-meta">
-                <h4>Anh Việt Anh (35 tuổi)</h4>
-                <span>Kỹ sư xây dựng, Hải Phòng</span>
-              </div>
-            </div>
-            <div class="duration-badge">
-              <i class="fa-solid fa-clock"></i> <span>45s &rarr; 15m+</span>
-            </div>
-          </div>
-          <div class="feedback-content">
-            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Gặp tình trạng xuất tinh sớm từ thời trẻ (nguyên phát), cứ nghĩ là do cơ địa không chữa được. Lúc đọc Ebook phần phân loại y khoa M0 thấy mình thuộc nhóm nhạy cảm cơ sàn chậu, tôi mới hạ quyết tâm kiên trì rèn luyện..."</p>
-            
-            <div class="chat-bubble-container">
-              <div class="chat-bubble student">
-                Em tập đến ngày thứ 20 rồi ad. Trước đây cứ lâm trận là xuất tinh trong vòng chưa đầy 1 phút. Nhờ rèn luyện cơ chậu phản xạ phanh chủ động và kịch bản thỏa thuận dừng với vợ (kèm kỹ thuật ép quy đầu nhẹ hỗ trợ), hôm qua em đã kéo dài được hơn 15 phút. Lần đầu tiên em cảm thấy mình làm chủ được cơ thể!
-                <span class="chat-time">23:05</span>
-              </div>
-              <div class="chat-bubble support">
-                Chúc mừng Việt Anh! Với trường hợp nhạy cảm nguyên phát, việc học cách kiểm soát phản xạ chậu qua kỹ thuật ép hỗ trợ và cơ chế phanh cơ sàn chậu là con đường khoa học duy nhất. Em duy trì phong độ và tiếp tục phối hợp ăn ý với bà xã nhé!
-                <span class="chat-time">23:12</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback 5 -->
-        <div class="feedback-card">
-          <div class="feedback-header">
-            <div class="student-info">
-              <div class="student-avatar">Q.K</div>
-              <div class="student-meta">
-                <h4>Anh Quốc Khánh (22 tuổi)</h4>
-                <span>Sinh viên đại học, Cần Thơ</span>
-              </div>
-            </div>
-            <div class="duration-badge">
-              <i class="fa-solid fa-clock"></i> <span>30s &rarr; 12m+</span>
-            </div>
-          </div>
-          <div class="feedback-content">
-            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Bị nhạy cảm thụ thể và tâm lý lo âu hiệu suất từ khi bắt đầu quan hệ lúc 22 tuổi. Em tự ti vô cùng và nghĩ do cơ địa mình yếu. Nhờ phương pháp khoa học tự chủ 21 ngày, em đã thiết lập lại phản xạ tự nhiên..."</p>
-            
-            <div class="chat-bubble-container">
-              <div class="chat-bubble student">
-                Ad ơi, em 22 tuổi bị xuất tinh nhanh từ hồi đầu quan hệ. Em kiên trì tập xong lộ trình 21 ngày, học cách siết cơ PC độc lập và nhịp thở bụng sâu 4-2-6 để giải tỏa lo lắng. Hôm qua em gần gũi bạn gái và kéo dài hơn 12 phút rất thoải mái, không cần xịt tê gì luôn. Giáo trình khoa học hiệu quả thật sự!
-                <span class="chat-time">18:40</span>
-              </div>
-              <div class="chat-bubble support">
-                Chúc mừng Quốc Khánh! Tuổi 22 còn rất nhiều cơ hội để định hình phản xạ chậu. Việc tránh xa các chai xịt gây tê và tập trung thở bụng phế vị để dập tắt lo âu hiệu suất chính là chìa khóa giúp em đạt 12 phút tự chủ tự nhiên. Duy trì thói quen tập nhé!
-                <span class="chat-time">18:52</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feedback 6 -->
-        <div class="feedback-card">
-          <div class="feedback-header">
-            <div class="student-info">
-              <div class="student-avatar">Đ.H</div>
-              <div class="student-meta">
-                <h4>Anh Đức Hải (38 tuổi)</h4>
-                <span>Quản lý dự án, Bình Dương</span>
-              </div>
-            </div>
-            <div class="duration-badge">
-              <i class="fa-solid fa-clock"></i> <span>3m &rarr; 20m</span>
-            </div>
-          </div>
-          <div class="feedback-content">
-            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 12px;">"Ở tuổi 38, sức dẻo dai suy giảm rõ rệt và thời gian lâm trận ngắn đi làm quan hệ vợ chồng có phần lạnh nhạt. Tôi tập lộ trình và áp dụng thực đơn Testosterone Zn-Mg đính kèm để khôi phục phong độ..."</p>
-            
-            <div class="chat-bubble-container">
-              <div class="chat-bubble student">
-                Chào chuyên gia, tôi đã hoàn thành 21 ngày. Các bài tập cơ chậu tĩnh và thở phế vị rất an toàn, giúp tôi giảm căng thẳng sau giờ làm. Tôi bổ sung Zn-Mg và ăn thực đơn Testosterone kẽm thấy cơ thể sung mãn, thời gian thực tế giờ đạt mốc 20 phút. Vợ chồng tôi rất hạnh phúc.
-                <span class="chat-time">10:15</span>
-              </div>
-              <div class="chat-bubble support">
-                Cảm ơn anh Hải đã chia sẻ! Ở tuổi 38, kết hợp huấn luyện cơ chậu bền bỉ với dinh dưỡng tăng Testosterone kẽm và magie tự nhiên là công thức hoàn hảo để giữ vững phong độ phái mạnh. Chúc anh chị luôn giữ vững ngọn lửa hạnh phúc!
-                <span class="chat-time">10:28</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div class="filter-row">
+        <input type="checkbox" id="lvm2" checked><label for="lvm2">Trung cấp</label>
       </div>
     </div>
-  </section>
-
-  <!-- ================= CURRICULUM SECTION ================= -->
-  <section class="curriculum">
-    <div class="container">
-      <h2 class="section-title">Nội Dung Lộ Trình <span>21 Ngày Rèn Luyện</span></h2>
-      
-      <div class="curr-tabs-wrapper">
-        <div class="curr-weeks-row">
-          <button class="curr-week-tab active" onclick="switchWeek(1, this)">Tuần 1: Kích Hoạt & Kết Nối</button>
-          <button class="curr-week-tab" onclick="switchWeek(2, this)">Tuần 2: Sức Bền & Thang Đo</button>
-          <button class="curr-week-tab" onclick="switchWeek(3, this)">Tuần 3: Start-Stop & Thực Chiến</button>
-        </div>
-        
-        <div class="curr-list" id="curriculum-content">
-          <!-- Dynamic Week Items Go Here -->
-        </div>
-      </div>
+    <div class="drawer-apply">
+      <button class="sidebar-enroll-btn" id="apply-drawer-btn">
+        <i class="fa-solid fa-check"></i> Áp dụng bộ lọc
+      </button>
     </div>
-  </section>
+  </div>
 
-  <!-- ================= VALUE STACK SECTION (GODFATHER OFFER v2) ================= -->
-  <section class="value-stack-sec" id="offer-section">
-    <div class="container">
-      <h2 class="section-title">Hộp Công Cụ Số <span>Bạn Sẽ Nhận Được</span></h2>
-      <div class="value-stack-grid">
-        
-        <!-- Left: Value list items -->
-        <div class="value-items">
-          <div class="value-item-card">
-            <div class="value-item-icon core">
-              <i class="fa-solid fa-book-open"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Bản Đồ Thực Chiến: Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh <span class="value-price-badge">Trị giá 1.500.000đ</span></h4>
-              <p>Giáo trình khoa học hướng dẫn chi tiết từng ngày, giúp bạn thay đổi phản xạ cơ chậu từ gốc thần kinh thực vật. Không lý thuyết suông, đi thẳng vào các tư thế luyện tập tĩnh tại nhà, phác đồ Start-Stop cá nhân hóa và kỹ thuật thở bụng phế vị 4-2-6 để chặn đứng ranh giới xuất tinh tự phát.</p>
-            </div>
-          </div>
-          
-          <div class="value-item-card">
-            <div class="value-item-icon">
-              <i class="fa-solid fa-calendar-check"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Bảng Đo Lường & Theo Dõi Tiến Trình Chiến Thắng 21 Ngày <span class="value-price-badge free">Quà Tặng 1 - Trị giá 300.000đ</span></h4>
-              <p>Công cụ thông minh (điền trực tiếp trên điện thoại) giúp bạn ghi lại số giây siết cơ PC, chu kỳ Start-Stop đạt được sau mỗi ngày. Theo dõi tiến trình trực quan bằng các con số thực tế giúp phá tan sự lười biếng, tạo động lực tâm lý chinh phục mốc 15-20 phút từng ngày.</p>
-            </div>
-          </div>
-          
-          <div class="value-item-card">
-            <div class="value-item-icon">
-              <i class="fa-solid fa-heart-pulse"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Cẩm Nang Phòng Ngủ: "Đồng Minh Đồng Hành Chăn Gối" Dành Cho Bạn Đời <span class="value-price-badge free">Quà Tặng 2 - Trị giá 550.000đ</span></h4>
-              <p>Bí kíp tinh tế giúp bạn xóa tan sự im lặng đáng sợ hay cái thở dài hụt hẫng sau mỗi cuộc yêu thất bại. Kịch bản chia sẻ khéo léo, các ám hiệu dừng nhịp Start-Stop đồng thuận và kỹ thuật ép quy đầu/gốc hỗ trợ giúp bạn đời trở thành đồng minh tiếp sức cùng thăng hoa.</p>
-            </div>
-          </div>
-
-          <div class="value-item-card">
-            <div class="value-item-icon">
-              <i class="fa-solid fa-kitchen-set"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Ebook: Thực Đơn Dinh Dưỡng Testosterone & Vi Chất Zn-Mg Kích Hoạt Lực Sàn Chậu <span class="value-price-badge free">Quà Tặng 3 - Trị giá 450.000đ</span></h4>
-              <p>Bản thiết kế dinh dưỡng nam giới bận rộn để bổ sung vi chất Magie (Mg) và Kẽm (Zn) — hai vi chất cốt lõi quyết định độ co giãn cơ chậu và sản sinh testosterone tự nhiên từ bên trong, đẩy nhanh tốc độ phục hồi cơ chậu gấp 3 lần.</p>
-            </div>
-          </div>
-
-          <div class="value-item-card">
-            <div class="value-item-icon">
-              <i class="fa-solid fa-user-shield"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Thẻ VIP Hỗ Trợ 1:1 Qua Telegram Bảo Mật Kín Trong 21 Ngày <span class="value-price-badge free">Quà Tặng 4 - Trị giá 1.000.000đ</span></h4>
-              <p>Quyền kết nối trực tiếp ẩn danh với đội ngũ chuyên môn của FORMEN qua Telegram để kiểm tra bảng theo dõi hàng ngày, sửa lỗi tập luyện sai cách và tháo gỡ rào cản tâm lý phòng ngủ kịp thời.</p>
-            </div>
-          </div>
-
-          <div class="value-item-card">
-            <div class="value-item-icon">
-              <i class="fa-solid fa-venus-mars"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Ebook: "Bản Đồ Điểm G & Nghệ Thuật Kích Hoạt Khoái Cảm Bạn Đời" <span class="value-price-badge free">Quà Tặng 5 - Trị giá 500.000đ</span></h4>
-              <p>Tuyệt kỹ dạo đầu chuẩn xác, định vị điểm G nhạy cảm để đưa nàng chạm đỉnh thỏa mãn trước cuộc yêu. Giúp bạn xóa tan 100% áp lực thời gian ban đầu, tạo ra sự thăng hoa trọn vẹn cho cả hai.</p>
-            </div>
-          </div>
-
-          <div class="value-item-card" style="border: 1.5px dashed var(--accent); position: relative;">
-            <span style="position:absolute; top:-11px; left:20px; background:var(--accent); color:#fff; font-size:10.5px; font-weight:800; letter-spacing:0.5px; padding:3px 12px; border-radius:var(--radius-pill);">MỚI — CHỈ DÀNH CHO ĐỢT NÀY</span>
-            <div class="value-item-icon">
-              <i class="fa-solid fa-kit-medical"></i>
-            </div>
-            <div class="value-item-info">
-              <h4>Thẻ SOS Phòng The: 3 Kỹ Thuật "Hãm Phanh" Khẩn Cấp Dùng Ngay Đêm Nay <span class="value-price-badge free">Quà Tặng 6 - Trị giá 200.000đ</span></h4>
-              <p>Thẻ tóm tắt 1 trang lưu kín trong điện thoại: kỹ thuật thở hãm xung khẩn cấp, điểm dừng an toàn và thao tác giảm ngưỡng hưng phấn nhanh. Bạn không phải đợi 21 ngày — vẫn tự tin "lâm trận" ngay trong khi phản xạ mới đang được hình thành.</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Right: Sticky pricing summary -->
-        <div class="value-summary-card">
-          <h3 class="summary-title">TỔNG HỢP GIÁ TRỊ</h3>
-          <div class="pricing-stack">
-            <div class="price-row">
-              <span>Tổng giá trị thực tế:</span>
-              <span class="price-value-old">4.500.000đ</span>
-            </div>
-            <div class="price-row" style="font-weight: 700;">
-              <span>Gói Portal & 6 Quà tặng:</span>
-              <span style="color:var(--accent-bright);">Sở Hữu Trọn Đời</span>
-            </div>
-            <div class="price-main-tag">
-              <span class="price-large">686.868đ</span>
-              <span class="price-sub-note">THANH TOÁN 1 LẦN DUY NHẤT</span>
-            </div>
-            <p style="font-size:12.5px; text-align:center; margin-top:10px; color:rgba(255,255,255,0.75); line-height:1.5;">
-              Tương đương <strong style="color:var(--accent-bright);">32.708đ/ngày</strong> trong đúng 21 ngày — rẻ hơn ly cà phê sáng, đổi lấy bản lĩnh dùng cả đời.
-            </p>
-          </div>
-          
-          <ul class="offer-checklist">
-            <li><i class="fa-solid fa-square-check"></i> <span>Truy cập trọn đời cổng Portal học tập tương tác</span></li>
-            <li><i class="fa-solid fa-square-check"></i> <span>Tải về trọn bộ Ebook PDF và tài liệu đi kèm</span></li>
-            <li><i class="fa-solid fa-square-check"></i> <span>Hỗ trợ 1:1 bảo mật tuyệt đối qua Telegram kín</span></li>
-          </ul>
-          
-          <a href="#order-section" class="btn btn-gold" style="width:100%; font-size:15px; padding:16px;">
-            <i class="fa-solid fa-shield-halved"></i> ĐĂNG KÝ NHẬN GÓI HỌC NGAY
-          </a>
-          
-          <!-- Urgency Banner -->
-          <div style="background-color: rgba(192, 57, 14, 0.08); border: 1px dashed rgba(192, 57, 14, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; margin: 15px 0; font-size: 12.5px; color: var(--danger); font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <i class="fa-solid fa-fire-flame-curved" style="animation: pulse 1s infinite;"></i>
-            <span>CHỈ CÒN 12 SUẤT NHẬN HỖ TRỢ 1:1 QUA TELEGRAM TRONG THÁNG NÀY</span>
-          </div>
-
-          <div class="offer-guarantee-badge">
-            <i class="fa-solid fa-shield-halved" style="color: #2E7D32; font-size: 32px;"></i>
-            <div>
-              <strong>CAM KẾT BẢN LĨNH KÉP — RỦI RO BẰNG 0 CHO BẠN</strong><br>
-              <strong>Lớp 1:</strong> 7 ngày trải nghiệm toàn bộ hệ thống. Không phù hợp vì bất kỳ lý do gì — nhắn Telegram `@matma21_support`, hoàn 100% trong 24 giờ, không hỏi một câu.<br>
-              <strong>Lớp 2:</strong> Tập đủ 21 ngày có Nhật Ký Tracker mà không thấy cải thiện — hoàn 100% tiền và bạn giữ lại toàn bộ 6 quà tặng.
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ================= CHECKOUT / ORDER SECTION ================= -->
-  <section class="checkout" id="order-section">
-    <div class="container">
-      <h2 class="section-title">Điền Thông Tin <span>Đăng Ký & Quét QR Nhận Kích Hoạt</span> VIP</h2>
-      <div class="checkout-card">
-        
-        <!-- Left form side -->
-        <div class="checkout-form-side">
-          <h3 style="margin-bottom:25px; font-family: var(--font-heading); font-weight:700; font-size:22px; color: var(--primary);">Thông tin học viên</h3>
-          <form id="order-form">
-            <div class="form-group">
-              <label for="order-name">Họ và Tên</label>
-              <input type="text" id="order-name" placeholder="Nhập đầy đủ họ tên của anh..." required>
-            </div>
-            
-            <div class="form-group">
-              <label for="order-phone">Số Điện Thoại / Telegram</label>
-              <input type="tel" id="order-phone" placeholder="Nhập số điện thoại nhận mã kích hoạt..." required>
-            </div>
-            
-            <div class="form-group">
-              <label for="order-email">Email nhận tài khoản & tài liệu số</label>
-              <input type="email" id="order-email" placeholder="Nhập email của anh..." required>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content:center; padding:16px; margin-top:10px; font-size:15px;">
-              <i class="fa-solid fa-qrcode"></i> ĐĂNG KÝ & TẠO MÃ THANH TOÁN QR
-            </button>
-          </form>
-        </div>
-        
-        <!-- Right QR side -->
-        <div class="checkout-payment-side" id="payment-area">
-          <div style="text-align:center; opacity: 0.7; padding: 40px 0;" id="qr-placeholder">
-            <i class="fa-solid fa-circle-info" style="font-size:42px; color:var(--accent-bright); margin-bottom:16px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"></i>
-            <p style="font-size:14px; max-width:260px; margin: 0 auto; line-height:1.6;">Vui lòng nhập đầy đủ thông tin học viên bên trái, sau đó bấm nút để tạo mã QR Code thanh toán tự động.</p>
-          </div>
-          
-          <div id="qr-box" style="display:none; width: 100%; text-align:center; align-items:center; flex-direction:column;">
-            <div class="qr-container">
-              <img src="" alt="QR Thanh Toán" class="qr-image" id="qr-img">
-            </div>
-            <div class="bank-info">
-              <p>Chuyển khoản chính xác số tiền: <strong style="font-size:18px; color: var(--accent-bright);">686.868đ</strong></p>
-              <p style="margin-top:4px;">Nội dung chuyển khoản: <strong id="qr-info-code" style="color: var(--accent-bright); font-size: 16px;">MA21 09xx</strong></p>
-              <p style="font-size:11.5px; margin-top:12px; color:rgba(255,255,255,0.65); text-align: justify; line-height: 1.5;">Hệ thống MBBank sẽ tự động khớp lệnh chuyển khoản và gửi thông tin tài khoản VIP, mã kích hoạt Portal kèm trọn bộ Ebook PDF và tài liệu đi kèm qua Email và Telegram kín của anh sau 1 phút.</p>
-            </div>
-            
-            <div class="privacy-notice">
-              <i class="fa-solid fa-user-shield"></i>
-              <div style="text-align: left;">
-                <strong>BẢO MẬT SAO KÊ TUYỆT ĐỐI:</strong><br>
-                Giao dịch hiển thị tế nhị là <strong>"FORMEN - TL Suc Khoe Nam Gioi"</strong> để bảo vệ quyền riêng tư tuyệt đối của anh.
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= FAQ SECTION ================= -->
-  <section class="faq-sec">
-    <div class="container">
-      <h2 class="section-title">Giải Đáp <span>Thắc Mắc Tế Nhị</span></h2>
-      <div class="faq-accordion">
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Tài liệu này có thực sự hiệu quả không hay lại giống các bài tập Kegel miễn phí trên mạng?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Hoàn toàn khác biệt.</strong> Tập Kegel tự phát trên mạng thường thiếu lộ trình phân cấp và rất dễ mắc phải 4 sai lầm nghiêm trọng: nín thở, gồng cơ bụng/đùi/mông, tập quá sức gây co thắt sàn chậu mãn tính hoặc phản tác dụng. Mật Mã 21 kết hợp kỹ thuật thở bụng phế vị 4-2-6 để hạ nhịp tim và kỹ thuật giải mẫn cảm thần kinh Start-Stop được kiểm chứng lâm sàng bởi Hiệp hội Tiết niệu Châu Âu (EAU), giúp rèn luyện cơ chậu co thắt độc lập hiệu quả.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Thanh toán xong có bị lộ thông tin cá nhân không? Tên hiển thị trên sao kê ngân hàng là gì?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Bảo mật tuyệt đối là ưu tiên số một.</strong> Giao dịch chuyển khoản hiển thị tên trung tính là <strong>"FORMEN - TL Suc Khoe Nam Gioi"</strong>, hoàn toàn không chứa bất kỳ từ ngữ nhạy cảm nào. Tài liệu số và tài khoản VIP học tập sẽ được gửi ẩn danh và bảo mật trực tiếp qua Telegram cá nhân hoặc Email của anh.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Tôi bị xuất tinh sớm từ hồi trẻ (nguyên phát), tập lộ trình này liệu có cải thiện được không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Giáo trình có chương <strong>"Sàng lọc y khoa ban đầu (M0)"</strong> để anh tự đánh giá. Nếu nguyên nhân do cơ sàn chậu yếu, lo âu hiệu suất hoặc nhạy cảm thụ thể (chiếm hơn 80% trường hợp) thì lộ trình 21 ngày sẽ mang lại cải thiện vượt bậc. Trong trường hợp nguyên phát do bất thường cấu trúc hoặc rối loạn nội tiết nặng, giáo án cũng cung cấp kịch bản định hướng điều trị y tế chuyên sâu kết hợp.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Lộ trình 21 ngày có thực sự đủ để cải thiện phản xạ kéo dài không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Đủ để thiết lập và củng cố phản xạ mới.</strong> Cơ sàn chậu là nhóm cơ vân nhỏ, phản hồi kích thích thần kinh rất nhanh nếu co thắt biệt lập đúng kỹ thuật. Giáo trình cung cấp "Quick Wins" (kịch bản điều hòa hơi thở bụng giảm hưng phấn) giúp anh cảm nhận sự tiến triển ngay trong tuần đầu tiên, và hình thành phản xạ tự chủ vững chắc sau 21 ngày luyện tập đều đặn.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Hiện tại tôi chưa có bạn đời/đối tác thì có thực hành lộ trình này được không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Hoàn toàn được.</strong> Lộ trình 21 ngày được thiết kế linh hoạt chia làm 2 giai đoạn: Giai đoạn 1 (Solo Training) tập trung huấn luyện cơ sàn chậu độc lập và điều hòa hô hấp đơn lẻ tại nhà; Giai đoạn 2 mới tích hợp các bài tập mô phỏng thực chiến. Nếu chưa có đối tác, anh sẽ tập trung tối đa vào việc làm chủ phản xạ cá nhân ở Giai đoạn 1 để tạo nền tảng vững chắc nhất trước khi lâm trận thực tế.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Tôi có cần mua thêm thực phẩm bổ sung Testosterone hay Zn-Mg không? Mua ở đâu uy tín?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Trong quà tặng kèm có Ebook hướng dẫn chi tiết thực đơn dinh dưỡng giàu kẽm và magie từ thực phẩm tự nhiên hàng ngày. Nếu anh bận rộn và có nhu cầu bổ sung vi chất Zn & Mg chuẩn hóa y tế, giáo trình tích hợp sẵn cổng liên hệ chuyên gia qua Telegram `@matma21_support` để được tư vấn dòng sản phẩm chất lượng cao, có nguồn gốc rõ ràng với giá ưu đãi cho học viên.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Có tài liệu giấy hay sách vật lý nào được gửi về địa chỉ nhà tôi không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Không.</strong> Để đảm bảo sự riêng tư tuyệt đối cho học viên, 100% tài liệu của Mật Mã 21 (Ebook PDF, Progress Tracker) đều được phân phối dưới dạng tài liệu số (Digital). Anh sẽ được cấp tài khoản VIP để truy cập cổng Portal học tập online và tải trực tiếp các tài liệu này về điện thoại, máy tính cá nhân mà không sợ bất kỳ ai phát hiện.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Chính sách "Cam Kết Bản Lĩnh Kép" hoàn tiền cho học viên hoạt động thế nào?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p>Anh được bảo vệ bởi 2 lớp cam kết. <strong>Lớp 1 — 7 ngày vô điều kiện:</strong> trọn 7 ngày học thật, tập thật với toàn bộ hệ thống; nếu thấy không phù hợp vì bất kỳ lý do gì, nhắn Telegram `@matma21_support` để nhận lại 100% học phí trong 24 giờ, không cần giải thích. <strong>Lớp 2 — theo kết quả 21 ngày:</strong> nếu anh hoàn thành đủ 21 ngày luyện tập, ghi Nhật Ký Tracker đầy đủ (hệ thống tự lưu) mà không thấy bất kỳ cải thiện nào về khả năng kiểm soát — gửi tracker cho chúng tôi và nhận lại 100% tiền, đồng thời giữ lại toàn bộ 6 quà tặng. Người duy nhất không có kết quả là người không tập — và người không tập đã được Lớp 1 bảo vệ.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Phương pháp tập luyện này có an toàn cho người bị đau lưng hay cao huyết áp không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Rất an toàn.</strong> Các bài tập cơ sàn chậu và kỹ thuật thở bụng phế vị trong Mật Mã 21 đều là các bài vận động tĩnh, lực tác động thấp (low-impact) và tự nhiên, không yêu cầu tạ hay vận động mạnh. Việc thở bụng sâu còn hỗ trợ điều hòa huyết áp và giảm căng thẳng hệ thần kinh giao cảm, rất tốt cho sức khỏe tổng thể.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span>Tôi có thể truy cập và học giáo trình trên điện thoại thông minh được không?</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Hoàn toàn tương thích.</strong> Cổng Portal học tập tương tác Mật Mã 21 được tối ưu hóa giao diện di động (Responsive 100%). Anh có thể dễ dàng đọc giáo trình Ebook PDF, điền bảng theo dõi Progress Tracker và nhắn tin trao đổi 1:1 với hỗ trợ chuyên môn trực tiếp trên màn hình điện thoại ở bất kỳ đâu, bất kỳ lúc nào.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= FOOTER ================= -->
+  <!-- ============ FOOTER ============ -->
   <footer>
     <div class="container">
       <p>© 2026 Mật Mã 21. Bảo lưu mọi quyền.</p>
       <div class="footer-links">
         <a href="mailto:support@themencode.vn"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
-        <a href="https://t.me/matma21_support" target="_blank" class="telegram-link"><i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram 1:1 (@matma21_support)</a>
+        <a href="https://t.me/matma21_support" target="_blank"><i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram (@matma21_support)</a>
       </div>
     </div>
   </footer>
 
   <script>
-    const curriculumData = {
-      1: [
-        { day: "M0", title: "Hướng dẫn sử dụng lộ trình & Sàng lọc y khoa", desc: "Sàng lọc y khoa quan trọng để xác định mức độ phù hợp và cẩm nang đồng hành bảo mật dành cho đối tác." },
-        { day: "N1", title: "Nhận diện cơ sàn chậu & Nhịp thở điều hòa", desc: "Học cách định vị chính xác cơ PC thông qua 3 kỹ thuật xúc giác và nhịp thở phế vị 4-2-6." },
-        { day: "N2", title: "Kết nối thần kinh cơ bản ở tư thế Nằm & Glute Bridge", desc: "Tạo thói quen điều khiển cơ PC độc lập ở tư thế nằm không trọng lực và tập nâng hông Glute Bridge." },
-        { day: "N3", title: "Định vị cơ chậu nâng cao & Bài tập Sit-up", desc: "Khắc phục lỗi gồng cơ phụ (mông, bụng) và thực hành bài tập gập bụng Sit-up giải phóng cơ chậu." },
-        { day: "N4", title: "Tăng thời gian giữ cơ sàn chậu & Dinh dưỡng Testosterone", desc: "Nâng thời gian siết giữ cơ ổn định lên 5 - 7 giây và thiết lập thực đơn tăng Testosterone phái mạnh." },
-        { day: "N5", title: "Kỹ thuật Kegel ngược & Bài tập Split Table Top", desc: "Học cách chủ động nới lỏng cơ sàn chậu (Kegel ngược) để hạ áp lực cơ chậu căng cứng mãn tính." },
-        { day: "N6", title: "Hóa giải áp lực hiệu suất tâm lý & Gluta Kick Back", desc: "Cắt đứt vòng lặp suy nghĩ lo âu hiệu suất và bài tập quỳ gối đá chân ra sau Gluta Kick Back." },
-        { day: "N7", title: "Đánh giá kết quả Tuần 1 & Single Leg Stretch", desc: "Hoàn thành bảng đánh giá tiến độ Tuần 1 và bài tập sức bền cơ bụng dưới Single Leg Stretch." }
-      ],
-      2: [
-        { day: "N8", title: "Luyện tập cơ chậu ở tư thế Ngồi & Single-Leg Glute Bridge", desc: "Tăng tải trọng lên cơ chậu ở tư thế ngồi thẳng ghế và biến thể cầu mông nâng 1 chân." },
-        { day: "N9", title: "Luyện tập cơ chậu ở tư thế Đứng & Sit-up liên sườn", desc: "Luyện tập cơ chậu ở tư thế khó nhất (Đứng thẳng) và thực hành bài gập bụng liên sườn chéo khuỷu." },
-        { day: "N10", title: "Nhận diện ranh giới hưng phấn & Thang đo 10 điểm", desc: "Chẩn đoán mức độ nhạy cảm của cơ thể thông qua thang đo 10 điểm chuẩn y học hành vi." },
-        { day: "N11", title: "Kỹ thuật Phanh khẩn cấp & Split Table Top nâng cao", desc: "Học cách siết nhanh 100% lực cơ chậu trong 1 giây để chặn đứng luồng hưng phấn tăng đột ngột." },
-        { day: "N12", title: "Phối hợp Phanh khẩn cấp và Thả lỏng sâu", desc: "Rèn luyện chuỗi hành động phản xạ hạ nhiệt nhanh: Siết phanh -> Thả lỏng Kegel ngược -> Thở 4-2-6." },
-        { day: "N13", title: "Kỹ thuật Sensate Focus Giai đoạn 1", desc: "Phương pháp trị liệu lâm sàng ngắt lo âu hiệu suất thông qua tiếp xúc chạm không sinh dục." },
-        { day: "N14", title: "Đánh giá kết quả Tuần 2 & Single Leg Stretch nâng cao", desc: "Kiểm tra sức bền sàn chậu đứng 10 giây và gập bụng nâng cao xoay cốt lõi." }
-      ],
-      3: [
-        { day: "N15", title: "Kỹ thuật Start-Stop một mình (GĐ 1)", desc: "Quy trình kích thích chạm ngưỡng 7.5 và dừng lại tự xả hưng phấn để não bộ thích nghi." },
-        { day: "N16", title: "Biểu đồ khoái cảm & Kỹ thuật 'Lãng tử quay đầu'", desc: "Vẽ bản đồ cảm giác cá nhân và thay đổi góc độ tiếp xúc chậu để giảm ma sát trực diện." },
-        { day: "N17", title: "Kỹ thuật ép gốc chậu (Basilar Squeeze) & Sit-up chéo", desc: "Học cách tự thực hiện ép vật lý chặn dòng tinh dịch tại gốc chậu khi chạm ngưỡng 8." },
-        { day: "N18", title: "Kịch bản giao tiếp bạn đời & Sensate Focus Giai đoạn 2", desc: "Xóa bỏ áp lực cực khoái bằng chạm sinh dục có nhịp dừng phối hợp cùng bạn đời." },
-        { day: "N19", title: "Start-Stop cùng đối tác & Kỹ thuật ép quy đầu (Coronal Squeeze)", desc: "Đối tác hỗ trợ kích thích và bóp nhẹ rãnh quy đầu khi bạn ra ám hiệu chạm ngưỡng 7.5." },
-        { day: "N20", title: "Tích hợp thâm nhập thực chiến & Tư thế kiểm soát nhịp", desc: "Quy trình phanh chậu khi bắt đầu thâm nhập, áp dụng tư thế cowgirl và nằm nghiêng ổn định." },
-        { day: "N21", title: "Tốt nghiệp thử thách & Kế hoạch duy trì trọn đời", desc: "Thiết lập kế hoạch rèn luyện bảo trì cơ chậu lâu dài để duy trì phong độ trọn đời." }
-      ]
-    };
+    // ===== Mobile menu =====
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+    menuBtn.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('show');
+      menuBtn.innerHTML = open
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
 
-    function switchWeek(weekNum, btnElement) {
-      document.querySelectorAll('.curr-week-tab').forEach(tab => tab.classList.remove('active'));
-      
-      const activeBtn = btnElement || document.querySelectorAll('.curr-week-tab')[weekNum - 1];
-      if (activeBtn) activeBtn.classList.add('active');
-
-      const contentBox = document.getElementById('curriculum-content');
-      contentBox.innerHTML = '';
-
-      curriculumData[weekNum].forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'curr-item';
-        div.innerHTML = `
-          <span class="curr-day-badge">${item.day}</span>
-          <div class="curr-item-detail">
-            <h4>${item.title}</h4>
-            <p>${item.desc}</p>
-          </div>
-        `;
-        contentBox.appendChild(div);
+    // ===== Category chips =====
+    const chips = document.querySelectorAll('.cat-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-selected','false'); });
+        chip.classList.add('active');
+        chip.setAttribute('aria-selected','true');
+        runFilter();
       });
+    });
+
+    // ===== Desktop price filter =====
+    document.querySelectorAll('input[name="price"]').forEach(r => r.addEventListener('change', runFilter));
+
+    // ===== Sort =====
+    document.getElementById('sort-sel').addEventListener('change', runFilter);
+
+    // ===== Mobile drawer =====
+    const drawerOverlay = document.getElementById('drawer-overlay');
+    const drawer = document.getElementById('mobile-drawer');
+    function openDrawer() {
+      drawer.classList.add('open'); drawerOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open'); drawerOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('open-drawer-btn').addEventListener('click', openDrawer);
+    document.getElementById('close-drawer-btn').addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+    document.getElementById('apply-drawer-btn').addEventListener('click', () => {
+      // sync mobile → desktop price filter
+      const mVal = document.querySelector('input[name="price-m"]:checked').value;
+      const dRadio = document.querySelector(`input[name="price"][value="${mVal}"]`);
+      if (dRadio) dRadio.checked = true;
+      runFilter(); closeDrawer();
+    });
+    document.querySelectorAll('input[name="price-m"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const dRadio = document.querySelector(`input[name="price"][value="${r.value}"]`);
+        if (dRadio) dRadio.checked = true;
+      });
+    });
+
+    // ===== FILTER + SORT ENGINE =====
+    function runFilter() {
+      const activeCat = document.querySelector('.cat-chip.active').dataset.cat;
+      const priceVal  = document.querySelector('input[name="price"]:checked').value;
+      const sortVal   = document.getElementById('sort-sel').value;
+
+      const cards = Array.from(document.querySelectorAll('#courses-grid .course-card'));
+      let shown = [];
+
+      cards.forEach(card => {
+        const cats = card.dataset.cat || '';
+        const catMatch =
+          activeCat === 'all' ||
+          (activeCat === 'mien-phi' && card.dataset.price === 'free') ||
+          cats.includes(activeCat);
+        const priceMatch =
+          priceVal === 'all' ||
+          (priceVal === 'free' && card.dataset.price === 'free') ||
+          (priceVal === 'paid' && card.dataset.price === 'paid');
+        if (catMatch && priceMatch) {
+          card.style.display = '';
+          shown.push(card);
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Sort shown cards
+      const grid = document.getElementById('courses-grid');
+      if (sortVal === 'price-asc') {
+        shown.sort((a, b) => {
+          const pa = a.dataset.price === 'free' ? 0 : 686868;
+          const pb = b.dataset.price === 'free' ? 0 : 686868;
+          return pa - pb;
+        });
+      } else if (sortVal === 'price-desc') {
+        shown.sort((a, b) => {
+          const pa = a.dataset.price === 'free' ? 0 : 686868;
+          const pb = b.dataset.price === 'free' ? 0 : 686868;
+          return pb - pa;
+        });
+      } else if (sortVal === 'popular') {
+        shown.sort((a, b) => (parseInt(b.dataset.pop)||0) - (parseInt(a.dataset.pop)||0));
+      } else if (sortVal === 'newest') {
+        shown.sort((a, b) => (parseInt(b.dataset.new)||0) - (parseInt(a.dataset.new)||0));
+      }
+      shown.forEach(card => grid.appendChild(card));
+
+      // No-results state
+      const noRes = document.getElementById('no-results');
+      if (shown.length === 0) {
+        noRes.style.display = 'block';
+      } else {
+        noRes.style.display = 'none';
+      }
+
+      document.getElementById('result-info').innerHTML =
+        `<strong>${shown.length}</strong> khóa học &amp; tài nguyên`;
     }
 
-    // Default to Week 1
-    switchWeek(1);
-
-    // Order form VietQR generator
-    const orderForm = document.getElementById('order-form');
-    const qrPlaceholder = document.getElementById('qr-placeholder');
-    const qrBox = document.getElementById('qr-box');
-    const qrImg = document.getElementById('qr-img');
-    const qrInfoCode = document.getElementById('qr-info-code');
-
-    orderForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('order-name').value;
-      const phone = document.getElementById('order-phone').value;
-      const email = document.getElementById('order-email').value;
-
-      // Format clean data for bank description transfer code
-      // Format: MA21 [phone]
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
-      const description = `MA21 ${cleanPhone}`;
-      
-      // MBBank VietQR image link
-      // Template compact2, account 0377014982, amount 686868
-      const encodedDesc = encodeURIComponent(description);
-      const vietQrUrl = `https://img.vietqr.io/image/mb-0377014982-compact2.png?amount=686868&addInfo=${encodedDesc}&accountName=HOANG%20TIEN%20DUNG`;
-
-      qrImg.src = vietQrUrl;
-      qrInfoCode.textContent = description;
-
-      qrPlaceholder.style.display = 'none';
-      qrBox.style.display = 'flex';
-
-      // Save mockup register session so they can try to enter portal easily
-      const mockSession = {
-        email: email,
-        name: name,
-        phone: phone,
-        status: "pending_payment"
-      };
-      
-      // Auto register user account locally for testing
-      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(mockSession));
-      
-      // Pre-add into account lists so they can bypass portal login for trial
-      let accounts = JSON.parse(localStorage.getItem('thuthach21ngay_accounts')) || [];
-      if (!accounts.some(a => a.email === email)) {
-        accounts.push({
-          email: email,
-          password: "123", // default temp pwd
-          name: name,
-          phone: phone,
-          role: "student"
-        });
-        localStorage.setItem('thuthach21ngay_accounts', JSON.stringify(accounts));
-      }
-
-      // Scroll smoothly to QR code on mobile
-      if (window.innerWidth < 992) {
-        document.getElementById('payment-area').scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', () => {
-        const item = question.parentElement;
-        const isActive = item.classList.contains('active');
-        
-        // Close all items
-        document.querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('active');
-        });
-        
-        // Open clicked item if it wasn't active
-        if (!isActive) {
-          item.classList.add('active');
-        }
-      });
-    });
-
-    // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navMenu = document.querySelector('.nav-menu');
-    if (mobileMenuBtn && navMenu) {
-      mobileMenuBtn.addEventListener('click', () => {
-        navMenu.classList.toggle('show');
-        const icon = mobileMenuBtn.querySelector('i');
-        if (navMenu.classList.contains('show')) {
-          icon.className = 'fa-solid fa-xmark';
-        } else {
-          icon.className = 'fa-solid fa-bars';
-        }
-      });
+    // ===== Login/Register button visibility =====
+    const loggedIn = localStorage.getItem('mm21_logged_in_user');
+    if (loggedIn) {
+      const loginBtn = document.getElementById('login-btn-desktop');
+      const regBtn = document.getElementById('register-btn-desktop');
+      if (loginBtn) loginBtn.textContent = 'Học Ngay';
+      if (loginBtn) loginBtn.href = '/portal.html';
+      if (regBtn) regBtn.style.display = 'none';
+      document.querySelectorAll('.btn-login').forEach(b => { b.style.removeProperty('display'); b.textContent = 'Học Ngay'; b.href = '/portal.html'; });
+    } else {
+      document.querySelectorAll('.btn-login').forEach(b => b.style.removeProperty('display'));
     }
   </script>
+  <script type="module" src="/register.js"></script>
 </body>
 </html>

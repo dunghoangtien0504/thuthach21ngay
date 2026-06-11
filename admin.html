@@ -78,6 +78,9 @@
         <li class="admin-menu-item" data-target="admin-tab-blog">
           <button><i class="fa-solid fa-blog"></i> Blog</button>
         </li>
+        <li class="admin-menu-item" data-target="admin-tab-registrations">
+          <button><i class="fa-solid fa-user-plus"></i> Đăng Ký Mới</button>
+        </li>
         <li class="admin-menu-item" data-target="admin-tab-students">
           <button><i class="fa-solid fa-user-graduate"></i> Học viên</button>
         </li>
@@ -624,6 +627,27 @@
                 </tbody>
               </table>
             </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: REGISTRATIONS ================= -->
+        <section class="admin-tab-section" id="admin-tab-registrations" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Danh Sách Đăng Ký Mới (CRM)</h3>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-secondary btn-sm" id="btn-export-registrations">
+                <i class="fa-solid fa-download"></i> Xuất CSV
+              </button>
+              <button class="btn btn-danger btn-sm" id="btn-clear-registrations">
+                <i class="fa-solid fa-trash"></i> Xoá tất cả
+              </button>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">
+            Danh sách email, số điện thoại từ form đăng ký tài khoản trên website. Dùng để chăm sóc và upsell.
+          </p>
+          <div id="registrations-container">
+            <p style="color:var(--text-muted);font-style:italic;">Đang tải dữ liệu...</p>
           </div>
         </section>
 

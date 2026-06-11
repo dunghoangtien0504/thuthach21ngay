@@ -222,6 +222,7 @@ function setupMenuSwitcher() {
       // Update section display
       tabSections.forEach(sec => sec.style.display = 'none');
       document.getElementById(targetId).style.display = 'block';
+      if (targetId === 'admin-tab-registrations') renderRegistrations();
 
       // Update Header Title
       const tabTitle = item.querySelector('button').textContent.trim();
@@ -229,6 +230,68 @@ function setupMenuSwitcher() {
     });
   });
 }
+
+// ==========================================================================
+// REGISTRATIONS (CRM)
+// ==========================================================================
+function getPendingRegistrations() {
+  try { return JSON.parse(localStorage.getItem('mm21_pending_registrations') || '[]'); } catch { return []; }
+}
+
+function renderRegistrations() {
+  const container = document.getElementById('registrations-container');
+  if (!container) return;
+  const regs = getPendingRegistrations();
+  if (regs.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);font-style:italic;padding:20px 0;">Chưa có đăng ký mới nào. Khi khách điền form đăng ký trên website, dữ liệu sẽ xuất hiện ở đây.</p>';
+    return;
+  }
+  const rows = regs.map((r, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td><strong>${r.email || '—'}</strong></td>
+      <td>${r.phone || '—'}</td>
+      <td><span class="status-badge ${r.status === 'active' ? 'active' : 'pending'}">${r.status || 'pending'}</span></td>
+      <td>${r.registeredAt ? new Date(r.registeredAt).toLocaleString('vi-VN') : '—'}</td>
+      <td>${r.source || '/'}</td>
+    </tr>
+  `).join('');
+  container.innerHTML = `
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Tổng: <strong>${regs.length}</strong> đăng ký</p>
+    <div style="overflow-x:auto;">
+      <table class="admin-table" style="min-width:700px;">
+        <thead><tr>
+          <th>#</th><th>Email</th><th>Số điện thoại</th>
+          <th>Trạng thái</th><th>Thời gian</th><th>Nguồn</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// Export registrations to CSV
+document.getElementById('btn-export-registrations')?.addEventListener('click', () => {
+  const regs = getPendingRegistrations();
+  if (!regs.length) { showToast('Chưa có dữ liệu để xuất.', 'warning'); return; }
+  const header = 'Email,SoDienThoai,TrangThai,ThoiGian,Nguon';
+  const csv = [header, ...regs.map(r =>
+    `${r.email},${r.phone || ''},${r.status || 'pending'},${r.registeredAt || ''},${r.source || '/'}`
+  )].join('\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = `dang-ky-moi-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Đã xuất CSV thành công!', 'success');
+});
+
+document.getElementById('btn-clear-registrations')?.addEventListener('click', () => {
+  if (!confirm('Xoá toàn bộ danh sách đăng ký mới? Hành động này không thể hoàn tác.')) return;
+  localStorage.removeItem('mm21_pending_registrations');
+  renderRegistrations();
+  showToast('Đã xoá danh sách đăng ký.', 'info');
+});
 
 // ==========================================================================
 // DATABASE & STATE MANAGER
