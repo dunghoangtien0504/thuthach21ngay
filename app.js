@@ -213,17 +213,13 @@ async function setupAuth() {
       }
 
       if (matchedUser) {
-        if (matchedUser.status === 'pending') {
-          showAuthError(`Tài khoản của bạn chưa được kích hoạt. Vui lòng bấm liên hệ Telegram bên dưới để Admin mở khóa!`);
-        } else {
-          // Success login
-          userSession = { email: matchedUser.email, name: matchedUser.name };
-          localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
-          showAuthSuccess(`Đăng nhập thành công! Đang mở khóa học...`);
-          setTimeout(() => {
-            checkSession();
-          }, 1000);
-        }
+        // Success login (allows both pending and active users to enter portal)
+        userSession = { email: matchedUser.email, name: matchedUser.name };
+        localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+        showAuthSuccess(`Đăng nhập thành công! Đang mở khóa học...`);
+        setTimeout(() => {
+          checkSession();
+        }, 1000);
       } else {
         showAuthError(`Tài khoản hoặc mật khẩu không chính xác!`);
       }
@@ -267,6 +263,10 @@ async function setupAuth() {
       localUsers.push(newUser);
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
 
+      // Always set session and log in immediately
+      userSession = { email, name };
+      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+
       if (isValidKey) {
         // Mark key as consumed if it is in generated keys list
         if (generatedKeys.includes(key)) {
@@ -275,30 +275,14 @@ async function setupAuth() {
           localStorage.setItem('thuthach21ngay_generated_keys', JSON.stringify(generatedKeys));
         }
 
-        // Set session
-        userSession = { email, name };
-        localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
-        showAuthSuccess(`Đăng ký thành công & tài khoản đã được kích hoạt tự động bằng Mã khóa! Đang chuyển hướng...`);
-        setTimeout(() => {
-          checkSession();
-        }, 1500);
+        showAuthSuccess(`Đăng ký thành công & tài khoản đã được kích hoạt VIP! Đang chuyển hướng...`);
       } else {
-        // Pending
-        const msg = `Chào Admin, tôi vừa đăng ký tài khoản Mật Mã 21: ${name} (${email}). Nhờ Admin kích hoạt giúp tôi!`;
-        navigator.clipboard.writeText(msg).catch(() => {});
-        
-        showAuthSuccess(`Đăng ký thành công! Hãy gửi tin nhắn Telegram cho Admin để kích hoạt tài khoản của bạn. Thông tin yêu cầu đã được tự động copy.`);
-        
-        const supportLink = document.getElementById('auth-telegram-support');
-        if (supportLink) {
-          supportLink.innerHTML = `<i class="fa-brands fa-telegram"></i> Click để nhắn Telegram kích hoạt ngay`;
-          supportLink.href = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`;
-          supportLink.className = "btn btn-success btn-submit";
-          supportLink.style.display = "inline-flex";
-          supportLink.style.marginTop = "15px";
-          supportLink.target = "_blank";
-        }
+        showAuthSuccess(`Đăng ký thành công! Bạn đã được truy cập để học thử các bài học miễn phí. Để mở khóa lộ trình 21 ngày, hãy kích hoạt khóa học.`);
       }
+
+      setTimeout(() => {
+        checkSession();
+      }, 1500);
     });
   }
 
@@ -487,7 +471,9 @@ function renderSidebar() {
         const lockReason = getLessonLockReason(lesson.lesson_id);
         if (lockReason) {
           e.preventDefault();
-          if (typeof lockReason === 'object' && lockReason.type === 'time_locked') {
+          if (lockReason === 'paid_only') {
+            showToast(`Bài học này thuộc chương trình trả phí Mật Mã 21. Vui lòng thanh toán hoặc nhập mã kích hoạt VIP để học tiếp bài này nhé!`, 'error');
+          } else if (typeof lockReason === 'object' && lockReason.type === 'time_locked') {
             showToast(`Bài học này đang tạm khóa. Bạn cần đợi thêm ${lockReason.remainingHours} giờ nữa để đảm bảo có đủ 24h thực hành và phục hồi nhóm cơ chậu từ bài học trước!`, 'warning');
           } else {
             showToast(`Bài học này đang bị khóa. Hãy hoàn thành bài trước đó và điền nhật ký tập luyện để mở khóa bài tiếp theo!`, 'warning');
@@ -602,11 +588,42 @@ function selectLesson(id) {
 }
 
 // Helpers for Locked Progression & Diary Verification
+function getUserStatus() {
+  if (!userSession) return 'pending';
+  
+  // Check server-side accounts
+  const serverAcc = allowedAccounts.find(u => u.email === userSession.email);
+  if (serverAcc) return serverAcc.status || 'active';
+  
+  // Check local storage accounts
+  const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+  const localAcc = localUsers.find(u => u.email === userSession.email);
+  return localAcc ? (localAcc.status || 'pending') : 'pending';
+}
+
 function hasLoggedLesson(lessonId) {
   return progressLogs.some(log => log.lessonId === lessonId);
 }
 
 function getLessonLockReason(lessonId) {
+  // Find current lesson detail to check if it's free
+  let lesson = null;
+  for (const mod of courseData) {
+    const found = mod.lessons.find(l => l.lesson_id === lessonId);
+    if (found) {
+      lesson = found;
+      break;
+    }
+  }
+
+  const isFree = lesson && lesson.is_free === true;
+  const userStatus = getUserStatus();
+
+  // Block pending users from accessing paid lessons
+  if (userStatus === 'pending' && !isFree) {
+    return "paid_only";
+  }
+
   // Always unlock for trial student (by email or name)
   if (userSession && (
     userSession.email === 'hocvien@thuthach21ngay.us' || 

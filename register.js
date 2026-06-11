@@ -5,8 +5,10 @@
  */
 
 const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || '';
+const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '';
+const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID || '';
 const LS_PENDING  = 'mm21_pending_registrations';
-const LS_ACCOUNTS = 'mm21_accounts';
+const LS_ACCOUNTS = 'thuthach21ngay_registered_users';
 
 // ── Inject modal HTML ──────────────────────────────────────────────────────
 function injectModal() {
@@ -174,6 +176,12 @@ function injectModal() {
 
           <form id="reg-form" novalidate>
             <div class="reg-form-group">
+              <label for="reg-name">Họ và Tên <span style="color:#C0390E">*</span></label>
+              <input type="text" id="reg-name" placeholder="Nhập họ tên của anh..." required>
+              <p class="reg-field-error" id="err-name"></p>
+            </div>
+
+            <div class="reg-form-group">
               <label for="reg-email">Email <span style="color:#C0390E">*</span></label>
               <input type="email" id="reg-email" placeholder="email@example.com"
                      autocomplete="email" inputmode="email" required>
@@ -217,9 +225,9 @@ function injectModal() {
         <div class="reg-success" id="reg-success">
           <i class="fa-solid fa-circle-check"></i>
           <h3>Tài Khoản Đã Được Tạo!</h3>
-          <p>Chúng tôi đã ghi nhận thông tin của anh. Kiểm tra email để nhận mã kích hoạt từ <strong>support@themencode.vn</strong>.</p>
+          <p>Tài khoản của anh đã được kích hoạt chế độ học thử miễn phí. Anh có thể bắt đầu ngay lập tức.</p>
           <a href="/portal.html" class="go-portal">
-            <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập Ngay
+            <i class="fa-solid fa-book-open"></i> Vào Học Ngay
           </a>
         </div>
       </div>
@@ -291,11 +299,13 @@ async function handleSubmit(e) {
   e.preventDefault();
   clearErrors();
 
+  const name     = document.getElementById('reg-name').value.trim();
   const email    = document.getElementById('reg-email').value.trim().toLowerCase();
   const phone    = document.getElementById('reg-phone').value.trim();
   const password = document.getElementById('reg-password').value;
 
   let valid = true;
+  if (!name)              { showError('err-name', 'Vui lòng nhập họ tên.'); valid = false; }
   if (!email)              { showError('err-email', 'Vui lòng nhập email.'); valid = false; }
   else if (!validateEmail(email)) { showError('err-email', 'Email không hợp lệ.'); valid = false; }
   if (!phone)              { showError('err-phone', 'Vui lòng nhập số điện thoại.'); valid = false; }
@@ -319,7 +329,7 @@ async function handleSubmit(e) {
     email,
     password,
     phone: phone.replace(/\s/g, ''),
-    name: '',
+    name,
     status: 'pending',
     registeredAt: new Date().toISOString(),
     source: window.location.pathname,
@@ -333,6 +343,12 @@ async function handleSubmit(e) {
   pending.push(account);
   savePending(pending);
 
+  // Set user session for auto-login
+  localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({
+    email: account.email,
+    name: account.name
+  }));
+
   // Optional: POST to CRM webhook
   if (WEBHOOK_URL) {
     try {
@@ -342,6 +358,7 @@ async function handleSubmit(e) {
         body: JSON.stringify({
           email: account.email,
           phone: account.phone,
+          name: account.name,
           registeredAt: account.registeredAt,
           source: account.source,
         }),
@@ -349,12 +366,30 @@ async function handleSubmit(e) {
     } catch (_) { /* silent — webhook optional */ }
   }
 
+  // Direct Telegram Bot notification if configured
+  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+    const messageText = `🔔 *Đăng Ký Mới - Mật Mã 21*\n\n👤 Họ tên: *${account.name}*\n📧 Email: \`${account.email}\`\n📞 SĐT: \`${account.phone}\`\n🕒 Thời gian: _${new Date(account.registeredAt).toLocaleString('vi-VN')}_\n🌐 Nguồn: ${account.source}`;
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: messageText,
+          parse_mode: 'Markdown'
+        })
+      });
+    } catch (err) {
+      console.error("Telegram notification failed:", err);
+    }
+  }
+
   submitBtn.disabled = false;
 
   // Show success state
   document.getElementById('reg-form-wrap').style.display = 'none';
   document.getElementById('reg-success').style.display = 'block';
-  toast('Tài khoản đã tạo thành công! Kiểm tra email để xác nhận.', 'success');
+  toast('Đăng ký tài khoản học thử miễn phí thành công!', 'success');
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────
