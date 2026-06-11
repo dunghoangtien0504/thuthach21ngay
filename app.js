@@ -335,7 +335,7 @@ function updatePaymentActivationUI() {
 
     // VietQR code image source link
     const encodedDesc = encodeURIComponent(description);
-    const vietQrUrl = `https://img.vietqr.io/image/mb-0377014982-compact2.png?amount=686868&addInfo=${encodedDesc}&accountName=HOANG%20TIEN%20DUNG`;
+    const vietQrUrl = `https://img.vietqr.io/image/mb-335577357-compact2.png?amount=686868&addInfo=${encodedDesc}&accountName=HOANG%20TIEN%20DUNG`;
     if (qrImg) qrImg.src = vietQrUrl;
 
     // Start background polling if not already running
