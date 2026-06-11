@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       const dateStr = payload.transactionDate || new Date().toLocaleString('vi-VN');
       const refCode = payload.referenceCode || '';
 
-      const messageText = `✅ *Thanh Toán Khóa Học Thành Công!*\n\n💰 Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n🏦 Ngân hàng: *${bankGateway}*\n💳 Số TK nhận: \`${accountNo}\`\n📝 Nội dung CK: *${content}*\n🕒 Thời gian: _${dateStr}_\n🔗 Mã đối chiếu: \`${refCode}\``;
+      const messageText = `✅ *Thanh Toán Khóa Học Thành Công!*\n\n• Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n• Ngân hàng: *${bankGateway}*\n• Số TK nhận: \`${accountNo}\`\n• Nội dung CK: *${content}*\n• Thời gian: _${dateStr}_\n• Mã đối chiếu: \`${refCode}\``;
 
       try {
         await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {

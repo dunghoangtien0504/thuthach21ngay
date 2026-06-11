@@ -369,7 +369,7 @@ async function handleSubmit(e) {
 
   // Direct Telegram Bot notification if configured
   if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-    const messageText = `🔔 *Đăng Ký Mới - Mật Mã 21*\n\n👤 Họ tên: *${account.name}*\n📧 Email: \`${account.email}\`\n📞 SĐT: \`${account.phone}\`\n🕒 Thời gian: _${new Date(account.registeredAt).toLocaleString('vi-VN')}_\n🌐 Nguồn: ${account.source}`;
+    const messageText = `🔔 *Đăng Ký Mới - Mật Mã 21*\n\n• Họ tên: *${account.name}*\n• Email: \`${account.email}\`\n• SĐT: \`${account.phone}\`\n• Thời gian: _${new Date(account.registeredAt).toLocaleString('vi-VN')}_\n• Nguồn: ${account.source}`;
     try {
       await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
