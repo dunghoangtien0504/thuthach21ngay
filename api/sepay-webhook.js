@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   console.log('Received SePay Webhook:', payload);
 
   const telegramToken = process.env.VITE_TELEGRAM_BOT_TOKEN;
-  const telegramChatId = process.env.VITE_TELEGRAM_CHAT_ID;
+  const telegramChatId = process.env.VITE_TELEGRAM_PAYMENT_CHAT_ID || process.env.VITE_TELEGRAM_CHAT_ID;
 
   // Verify it is an incoming money transaction
   const transferType = payload.transferType || payload.transfer_type || 'in';
