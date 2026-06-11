@@ -8,6 +8,34 @@ const PRICE = customConfig.price || import.meta.env.VITE_PRICE || "686.868đ";
 const TELEGRAM_USERNAME = customConfig.telegramUsername || import.meta.env.VITE_TELEGRAM_USERNAME || "matma21_support";
 const SUPPORT_EMAIL = customConfig.supportEmail || import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn";
 
+// Non-blocking toast notification (replaces alert())
+function showToast(message, type = 'info', duration = 4500) {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.setAttribute('aria-live', 'polite');
+    document.body.appendChild(container);
+  }
+  const icons = {
+    success: 'fa-circle-check',
+    warning: 'fa-triangle-exclamation',
+    error: 'fa-circle-xmark',
+    info: 'fa-circle-info'
+  };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.setAttribute('role', 'status');
+  toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span></span>`;
+  toast.querySelector('span').textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('toast-leaving');
+    toast.addEventListener('animationend', () => toast.remove());
+    setTimeout(() => toast.remove(), 400);
+  }, duration);
+}
+
 // State Management
 let courseData = [];
 let currentLessonId = null;
@@ -460,9 +488,9 @@ function renderSidebar() {
         if (lockReason) {
           e.preventDefault();
           if (typeof lockReason === 'object' && lockReason.type === 'time_locked') {
-            alert(`Bài học tiếp theo này đang tạm khóa. Bạn cần đợi thêm ${lockReason.remainingHours} giờ nữa để đảm bảo có đủ 24h thực hành và phục hồi nhóm cơ chậu từ bài học trước!`);
+            showToast(`Bài học này đang tạm khóa. Bạn cần đợi thêm ${lockReason.remainingHours} giờ nữa để đảm bảo có đủ 24h thực hành và phục hồi nhóm cơ chậu từ bài học trước!`, 'warning');
           } else {
-            alert(`Bài học này đang bị khóa. Bạn cần hoàn thành bài chuẩn bị hoặc bài tập trước đó và điền nhật ký tập luyện để mở khóa bài tiếp theo!`);
+            showToast(`Bài học này đang bị khóa. Hãy hoàn thành bài trước đó và điền nhật ký tập luyện để mở khóa bài tiếp theo!`, 'warning');
           }
           return;
         }
@@ -566,6 +594,11 @@ function selectLesson(id) {
   
   updateCompletionButtonState();
   lessonViewport.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // On stacked mobile layout, bring the lesson content into view
+  if (window.innerWidth < 992 && lessonContentBox) {
+    lessonContentBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // Helpers for Locked Progression & Diary Verification
@@ -685,7 +718,7 @@ function setupLogModal() {
       logModal.style.display = 'none';
       modalTrackerForm.reset();
       
-      alert("Đã lưu nhật ký và hoàn thành bài học thành công!");
+      showToast("Đã lưu nhật ký và hoàn thành bài học thành công!", 'success');
       updateCompletionButtonState();
       renderSidebar();
       updateProgressUI();
@@ -764,7 +797,7 @@ function setupInteractiveLessons() {
         const isLogged = hasLoggedLesson(currentLessonId);
         
         if (!isCompleted || !isLogged) {
-          alert("Bạn cần hoàn thành bài học và ghi nhật ký tập luyện hôm nay trước khi chuyển sang bài học mới!");
+          showToast("Bạn cần hoàn thành bài học và ghi nhật ký tập luyện hôm nay trước khi chuyển sang bài học mới!", 'warning');
           if (!isLogged) {
             showLogModalForCurrentLesson();
           }
@@ -772,7 +805,7 @@ function setupInteractiveLessons() {
         }
       } else if (currentLessonId === 0) {
         if (!completedLessons.includes(0)) {
-          alert("Bạn cần bấm 'Đánh dấu hoàn thành' bài chuẩn bị trước khi sang bài tiếp theo!");
+          showToast("Bạn cần bấm 'Đánh dấu hoàn thành' bài chuẩn bị trước khi sang bài tiếp theo!", 'warning');
           return;
         }
       }

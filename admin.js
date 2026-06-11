@@ -3,6 +3,34 @@
 const ADMIN_USER = "admin";
 const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASS || "123456";
 
+// Non-blocking toast notification (replaces alert())
+function showToast(message, type = 'info', duration = 4500) {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.setAttribute('aria-live', 'polite');
+    document.body.appendChild(container);
+  }
+  const icons = {
+    success: 'fa-circle-check',
+    warning: 'fa-triangle-exclamation',
+    error: 'fa-circle-xmark',
+    info: 'fa-circle-info'
+  };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.setAttribute('role', 'status');
+  toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span></span>`;
+  toast.querySelector('span').textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('toast-leaving');
+    toast.addEventListener('animationend', () => toast.remove());
+    setTimeout(() => toast.remove(), 400);
+  }, duration);
+}
+
 // State
 let studentsList = [];
 let allowedAccounts = [];
@@ -369,7 +397,7 @@ function setupCourseEditor() {
 
       if (updated) {
         localStorage.setItem('thuthach21ngay_custom_course_db', JSON.stringify(courseData));
-        alert("Cập nhật thông tin bài học thành công!");
+        showToast("Cập nhật thông tin bài học thành công!", 'success');
         courseEditPanel.style.display = 'none';
         adminLessonEditForm.reset();
         loadDatabase();
@@ -461,7 +489,7 @@ function setupProductEditor() {
       localStorage.setItem('thuthach21ngay_custom_config', JSON.stringify(customConfig));
       if (configPrice) configPrice.value = customConfig.price;
 
-      alert("Lưu thông tin sản phẩm thành công!");
+      showToast("Lưu thông tin sản phẩm thành công!", 'success');
       loadDatabase();
     });
   }
@@ -501,7 +529,7 @@ function setupBlogEditor() {
 
       adminBlogForm.reset();
       if (blogFormPanel) blogFormPanel.style.display = 'none';
-      alert("Đăng bài viết Blog mới thành công!");
+      showToast("Đăng bài viết Blog mới thành công!", 'success');
       loadDatabase();
     });
   }
@@ -562,7 +590,7 @@ function setupConfigEditor() {
       localStorage.setItem('thuthach21ngay_custom_product', JSON.stringify(customProduct));
       if (productPriceInput) productPriceInput.value = customProduct.price;
 
-      alert("Lưu cấu hình hệ thống thành công! Các thay đổi đã được áp dụng trực tiếp cho trang học viên.");
+      showToast("Lưu cấu hình hệ thống thành công! Các thay đổi đã được áp dụng trực tiếp cho trang học viên.", 'success');
       loadDatabase();
     });
   }
@@ -616,7 +644,7 @@ function setupStudentManager() {
 
       const exists = localUsers.some(u => u.email === email) || allowedAccounts.some(u => u.email === email);
       if (exists) {
-        alert("Email hoặc số điện thoại này đã tồn tại!");
+        showToast("Email hoặc số điện thoại này đã tồn tại!", 'error');
         return;
       }
 
@@ -698,7 +726,7 @@ function activateStudentAccount(email) {
   if (idx !== -1) {
     localUsers[idx].status = 'active';
     localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
-    alert("Kích hoạt tài khoản thành công!");
+    showToast("Kích hoạt tài khoản thành công!", 'success');
     loadDatabase();
   }
 }
@@ -739,7 +767,7 @@ function setupKeyGenerator() {
     btnCopyKey.addEventListener('click', () => {
       const keyStr = adminKeyResult.textContent;
       navigator.clipboard.writeText(keyStr).then(() => {
-        alert(`Đã copy mã kích hoạt: ${keyStr}`);
+        showToast(`Đã copy mã kích hoạt: ${keyStr}`, 'success');
       }).catch(err => {
         console.error("Copy failed:", err);
       });

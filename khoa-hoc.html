@@ -1525,6 +1525,29 @@
         padding: 24px 16px;
       }
     }
+
+    /* Accessibility: visible focus rings for keyboard users */
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    button, a, input, select, textarea {
+      touch-action: manipulation;
+    }
+
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2065,6 +2088,17 @@
               <p>Tuyệt kỹ dạo đầu chuẩn xác, định vị điểm G nhạy cảm để đưa nàng chạm đỉnh thỏa mãn trước cuộc yêu. Giúp bạn xóa tan 100% áp lực thời gian ban đầu, tạo ra sự thăng hoa trọn vẹn cho cả hai.</p>
             </div>
           </div>
+
+          <div class="value-item-card" style="border: 1.5px dashed var(--accent); position: relative;">
+            <span style="position:absolute; top:-11px; left:20px; background:var(--accent); color:#fff; font-size:10.5px; font-weight:800; letter-spacing:0.5px; padding:3px 12px; border-radius:var(--radius-pill);">MỚI — CHỈ DÀNH CHO ĐỢT NÀY</span>
+            <div class="value-item-icon">
+              <i class="fa-solid fa-kit-medical"></i>
+            </div>
+            <div class="value-item-info">
+              <h4>Thẻ SOS Phòng The: 3 Kỹ Thuật "Hãm Phanh" Khẩn Cấp Dùng Ngay Đêm Nay <span class="value-price-badge free">Quà Tặng 6 - Trị giá 200.000đ</span></h4>
+              <p>Thẻ tóm tắt 1 trang lưu kín trong điện thoại: kỹ thuật thở hãm xung khẩn cấp, điểm dừng an toàn và thao tác giảm ngưỡng hưng phấn nhanh. Bạn không phải đợi 21 ngày — vẫn tự tin "lâm trận" ngay trong khi phản xạ mới đang được hình thành.</p>
+            </div>
+          </div>
         </div>
         
         <!-- Right: Sticky pricing summary -->
@@ -2073,16 +2107,19 @@
           <div class="pricing-stack">
             <div class="price-row">
               <span>Tổng giá trị thực tế:</span>
-              <span class="price-value-old">4.300.000đ</span>
+              <span class="price-value-old">4.500.000đ</span>
             </div>
             <div class="price-row" style="font-weight: 700;">
-              <span>Gói Ebook & Quà tặng:</span>
+              <span>Gói Portal & 6 Quà tặng:</span>
               <span style="color:var(--accent-bright);">Sở Hữu Trọn Đời</span>
             </div>
             <div class="price-main-tag">
               <span class="price-large">686.868đ</span>
               <span class="price-sub-note">THANH TOÁN 1 LẦN DUY NHẤT</span>
             </div>
+            <p style="font-size:12.5px; text-align:center; margin-top:10px; color:rgba(255,255,255,0.75); line-height:1.5;">
+              Tương đương <strong style="color:var(--accent-bright);">32.708đ/ngày</strong> trong đúng 21 ngày — rẻ hơn ly cà phê sáng, đổi lấy bản lĩnh dùng cả đời.
+            </p>
           </div>
           
           <ul class="offer-checklist">
@@ -2104,8 +2141,9 @@
           <div class="offer-guarantee-badge">
             <i class="fa-solid fa-shield-halved" style="color: #2E7D32; font-size: 32px;"></i>
             <div>
-              <strong>BẢO ĐẢM TRẢI NGHIỆM 3 NGÀY — KHÔNG RỦI RO, KHÔNG CÂU HỎI</strong><br>
-              Chúng tôi bảo chứng rủi ro 100%. Bạn có 3 ngày học thử toàn bộ giáo trình. Nếu thấy không phù hợp, chỉ cần nhắn Telegram `@matma21_support` để nhận lại 100% học phí ngay lập tức, vô điều kiện.
+              <strong>CAM KẾT BẢN LĨNH KÉP — RỦI RO BẰNG 0 CHO BẠN</strong><br>
+              <strong>Lớp 1:</strong> 7 ngày trải nghiệm toàn bộ hệ thống. Không phù hợp vì bất kỳ lý do gì — nhắn Telegram `@matma21_support`, hoàn 100% trong 24 giờ, không hỏi một câu.<br>
+              <strong>Lớp 2:</strong> Tập đủ 21 ngày có Nhật Ký Tracker mà không thấy cải thiện — hoàn 100% tiền và bạn giữ lại toàn bộ 6 quà tặng.
             </div>
           </div>
         </div>
@@ -2255,11 +2293,11 @@
 
         <div class="faq-item">
           <div class="faq-question">
-            <span>Chính sách hoàn tiền hỗ trợ học viên trong vòng 3 ngày hoạt động thế nào?</span>
+            <span>Chính sách "Cam Kết Bản Lĩnh Kép" hoàn tiền cho học viên hoạt động thế nào?</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Chúng tôi cam kết chất lượng nội dung bằng chính sách hỗ trợ hoàn tiền 100% trong vòng 3 ngày kể từ khi nhận tài khoản nếu anh mở giáo trình ra và thấy các kiến thức, bài tập không mang lại giá trị thực tiễn hoặc không đúng như mô tả. Anh chỉ cần nhắn tin cho Telegram hỗ trợ học viên `@matma21_support` để được giải quyết nhanh chóng, bảo mật.</p>
+            <p>Anh được bảo vệ bởi 2 lớp cam kết. <strong>Lớp 1 — 7 ngày vô điều kiện:</strong> trọn 7 ngày học thật, tập thật với toàn bộ hệ thống; nếu thấy không phù hợp vì bất kỳ lý do gì, nhắn Telegram `@matma21_support` để nhận lại 100% học phí trong 24 giờ, không cần giải thích. <strong>Lớp 2 — theo kết quả 21 ngày:</strong> nếu anh hoàn thành đủ 21 ngày luyện tập, ghi Nhật Ký Tracker đầy đủ (hệ thống tự lưu) mà không thấy bất kỳ cải thiện nào về khả năng kiểm soát — gửi tracker cho chúng tôi và nhận lại 100% tiền, đồng thời giữ lại toàn bộ 6 quà tặng. Người duy nhất không có kết quả là người không tập — và người không tập đã được Lớp 1 bảo vệ.</p>
           </div>
         </div>
 

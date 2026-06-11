@@ -1629,6 +1629,54 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Accessibility: visible focus rings for keyboard users */
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    button, a, input, select, textarea {
+      touch-action: manipulation;
+    }
+
+    /* Hero milestones: stack vertically on small screens */
+    @media (max-width: 520px) {
+      .hero-milestones {
+        flex-direction: column;
+      }
+      .hero-milestones > div {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(13, 43, 26, 0.08);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left !important;
+        padding: 12px 16px !important;
+      }
+      .hero-milestones > div:last-child {
+        border-bottom: none;
+      }
+      .hero-milestones > div > div:first-child {
+        min-width: 70px;
+      }
+      .hero-milestones > div br {
+        display: none;
+      }
+    }
+
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1668,9 +1716,25 @@
         <h1 class="hero-title" style="font-size: 38px; line-height: 1.25; margin-bottom: 24px;">
           Chấm Dứt Nỗi Ám Ảnh<br><span style="color:var(--danger)">"Chưa Đi Chợ Đã Hết Tiền"</span>
         </h1>
-        <p class="hero-desc" style="font-size: 16.5px; line-height: 1.65; color: var(--text-muted); margin-bottom: 35px;">
-          Bẻ gãy <strong>"vòng lặp lo âu dự báo"</strong> (càng sợ xuất sớm thì thần kinh giao cảm càng kích hoạt xuất sớm). Làm chủ thời gian <strong>15 - 20 phút tự nhiên</strong>, thiết lập phản xạ phanh chậu tự động sau 21 ngày. Phương pháp y khoa hành vi <strong>không dùng thuốc bôi, không chai xịt gây tê</strong>, giữ trọn vẹn xúc cảm thăng hoa cho cả hai.
+        <p class="hero-desc" style="font-size: 16.5px; line-height: 1.65; color: var(--text-muted); margin-bottom: 24px;">
+          Bẻ gãy <strong>"vòng lặp lo âu dự báo"</strong> (càng sợ xuất sớm thì thần kinh giao cảm càng kích hoạt xuất sớm). Làm chủ thời gian <strong>15 - 20 phút tự nhiên</strong> chỉ với 15-20 phút luyện tập kín đáo mỗi ngày. Phương pháp y khoa hành vi <strong>không dùng thuốc bôi, không chai xịt gây tê</strong>, giữ trọn vẹn xúc cảm thăng hoa cho cả hai.
         </p>
+
+        <!-- 3 Result Milestones (Quick-Win timeline) -->
+        <div class="hero-milestones" style="display:flex; gap:0; margin-bottom:32px; border:1px solid rgba(13,43,26,0.1); border-radius: var(--radius-md); overflow:hidden; background: var(--bg-card); box-shadow: var(--shadow-sm);">
+          <div style="flex:1; padding:14px 12px; text-align:center; border-right:1px solid rgba(13,43,26,0.08);">
+            <div style="font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent);">72 giờ</div>
+            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.4;">Lần đầu cảm thấy <br><strong style="color:var(--text-main);">"mình có phanh"</strong></div>
+          </div>
+          <div style="flex:1; padding:14px 12px; text-align:center; border-right:1px solid rgba(13,43,26,0.08);">
+            <div style="font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent);">Ngày 7</div>
+            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.4;">Nền tảng Kegel đúng + <br><strong style="color:var(--text-main);">chu kỳ Start-Stop đầu tiên</strong></div>
+          </div>
+          <div style="flex:1; padding:14px 12px; text-align:center;">
+            <div style="font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent);">Ngày 21</div>
+            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.4;">Phản xạ mới được <br><strong style="color:var(--text-main);">"cài đặt" ở não bộ</strong></div>
+          </div>
+        </div>
         
         <div class="hero-highlights">
           <div class="highlight-card">
@@ -1696,6 +1760,10 @@
           </a>
           <span style="font-size:14px; color:var(--text-muted); font-weight: 600;"><del style="color:var(--text-light)">1.200.000đ</del> (-43% ĐỢT NÀY)</span>
         </div>
+        <p style="font-size:13px; color:var(--text-muted); margin-top:14px; display:flex; align-items:center; gap:8px;">
+          <i class="fa-solid fa-shield-halved" style="color:#2E7D32;"></i>
+          Được bảo vệ bởi <strong>Cam Kết Bản Lĩnh Kép</strong>: 7 ngày hoàn tiền vô điều kiện + hoàn 100% nếu tập đủ 21 ngày không cải thiện.
+        </p>
       </div>
       
       <div class="ebook-image-wrapper">
@@ -2169,6 +2237,17 @@
               <p>Tuyệt kỹ dạo đầu chuẩn xác, định vị điểm G nhạy cảm để đưa nàng chạm đỉnh thỏa mãn trước cuộc yêu. Giúp bạn xóa tan 100% áp lực thời gian ban đầu, tạo ra sự thăng hoa trọn vẹn cho cả hai.</p>
             </div>
           </div>
+
+          <div class="value-item-card" style="border: 1.5px dashed var(--accent); position: relative;">
+            <span style="position:absolute; top:-11px; left:20px; background:var(--accent); color:#fff; font-size:10.5px; font-weight:800; letter-spacing:0.5px; padding:3px 12px; border-radius:var(--radius-pill);">MỚI — CHỈ DÀNH CHO ĐỢT NÀY</span>
+            <div class="value-item-icon">
+              <i class="fa-solid fa-kit-medical"></i>
+            </div>
+            <div class="value-item-info">
+              <h4>Thẻ SOS Phòng The: 3 Kỹ Thuật "Hãm Phanh" Khẩn Cấp Dùng Ngay Đêm Nay <span class="value-price-badge free">Quà Tặng 6 - Trị giá 200.000đ</span></h4>
+              <p>Thẻ tóm tắt 1 trang lưu kín trong điện thoại: kỹ thuật thở hãm xung khẩn cấp, điểm dừng an toàn và thao tác giảm ngưỡng hưng phấn nhanh. Bạn không phải đợi 21 ngày — vẫn tự tin "lâm trận" ngay trong khi phản xạ mới đang được hình thành.</p>
+            </div>
+          </div>
         </div>
         
         <!-- Right: Sticky pricing summary -->
@@ -2177,16 +2256,19 @@
           <div class="pricing-stack">
             <div class="price-row">
               <span>Tổng giá trị thực tế:</span>
-              <span class="price-value-old">4.300.000đ</span>
+              <span class="price-value-old">4.500.000đ</span>
             </div>
             <div class="price-row" style="font-weight: 700;">
-              <span>Gói Ebook & Quà tặng:</span>
+              <span>Gói Portal & 6 Quà tặng:</span>
               <span style="color:var(--accent-bright);">Sở Hữu Trọn Đời</span>
             </div>
             <div class="price-main-tag">
               <span class="price-large">686.868đ</span>
               <span class="price-sub-note">THANH TOÁN 1 LẦN DUY NHẤT</span>
             </div>
+            <p style="font-size:12.5px; text-align:center; margin-top:10px; color:rgba(255,255,255,0.75); line-height:1.5;">
+              Tương đương <strong style="color:var(--accent-bright);">32.708đ/ngày</strong> trong đúng 21 ngày — rẻ hơn ly cà phê sáng, đổi lấy bản lĩnh dùng cả đời.
+            </p>
           </div>
           
           <ul class="offer-checklist">
@@ -2208,8 +2290,9 @@
           <div class="offer-guarantee-badge">
             <i class="fa-solid fa-shield-halved" style="color: #2E7D32; font-size: 32px;"></i>
             <div>
-              <strong>BẢO ĐẢM TRẢI NGHIỆM 3 NGÀY — KHÔNG RỦI RO, KHÔNG CÂU HỎI</strong><br>
-              Chúng tôi bảo chứng rủi ro 100%. Bạn có 3 ngày học thử toàn bộ giáo trình. Nếu thấy không phù hợp, chỉ cần nhắn Telegram `@matma21_support` để nhận lại 100% học phí ngay lập tức, vô điều kiện.
+              <strong>CAM KẾT BẢN LĨNH KÉP — RỦI RO BẰNG 0 CHO BẠN</strong><br>
+              <strong>Lớp 1:</strong> 7 ngày trải nghiệm toàn bộ hệ thống. Không phù hợp vì bất kỳ lý do gì — nhắn Telegram `@matma21_support`, hoàn 100% trong 24 giờ, không hỏi một câu.<br>
+              <strong>Lớp 2:</strong> Tập đủ 21 ngày có Nhật Ký Tracker mà không thấy cải thiện — hoàn 100% tiền và bạn giữ lại toàn bộ 6 quà tặng.
             </div>
           </div>
         </div>
@@ -2407,11 +2490,11 @@
 
         <div class="faq-item">
           <div class="faq-question">
-            <span>Chính sách hoàn tiền hỗ trợ học viên trong vòng 3 ngày hoạt động thế nào?</span>
+            <span>Chính sách "Cam Kết Bản Lĩnh Kép" hoàn tiền cho học viên hoạt động thế nào?</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Chúng tôi cam kết chất lượng nội dung bằng chính sách hỗ trợ hoàn tiền 100% trong vòng 3 ngày kể từ khi nhận tài khoản nếu anh mở giáo trình ra và thấy các kiến thức, bài tập không mang lại giá trị thực tiễn hoặc không đúng như mô tả. Anh chỉ cần nhắn tin cho Telegram hỗ trợ học viên `@matma21_support` để được giải quyết nhanh chóng, bảo mật.</p>
+            <p>Anh được bảo vệ bởi 2 lớp cam kết. <strong>Lớp 1 — 7 ngày vô điều kiện:</strong> trọn 7 ngày học thật, tập thật với toàn bộ hệ thống; nếu thấy không phù hợp vì bất kỳ lý do gì, nhắn Telegram `@matma21_support` để nhận lại 100% học phí trong 24 giờ, không cần giải thích. <strong>Lớp 2 — theo kết quả 21 ngày:</strong> nếu anh hoàn thành đủ 21 ngày luyện tập, ghi Nhật Ký Tracker đầy đủ (hệ thống tự lưu) mà không thấy bất kỳ cải thiện nào về khả năng kiểm soát — gửi tracker cho chúng tôi và nhận lại 100% tiền, đồng thời giữ lại toàn bộ 6 quà tặng. Người duy nhất không có kết quả là người không tập — và người không tập đã được Lớp 1 bảo vệ.</p>
           </div>
         </div>
 
@@ -2435,6 +2518,33 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= P.S. FINAL CTA ================= -->
+  <section style="padding: 70px 0; background: var(--primary); color: rgba(255,255,255,0.85);">
+    <div class="container" style="max-width: 760px;">
+      <h2 style="font-family: var(--font-heading); font-size: 28px; color: #fff; margin-bottom: 24px;">Tái bút — dành cho người đã đọc đến đây</h2>
+      <p style="margin-bottom: 16px; line-height: 1.75;">
+        Đêm nay, khi tắt điện thoại, bạn có 2 lựa chọn.
+      </p>
+      <p style="margin-bottom: 16px; line-height: 1.75;">
+        <strong style="color:#fff;">Lựa chọn 1:</strong> Tiếp tục như 6 tháng qua. Tiếp tục ghìm bằng ý chí, tiếp tục chai xịt, tiếp tục tìm cớ đi ngủ trước. Và chấp nhận rằng khoảng lặng trong phòng ngủ sẽ dày thêm từng đêm.
+      </p>
+      <p style="margin-bottom: 16px; line-height: 1.75;">
+        <strong style="color:#fff;">Lựa chọn 2:</strong> Dành 21 ngày — mỗi ngày 15-20 phút kín đáo — để cài đặt lại phản xạ của chính cơ thể mình, theo đúng phác đồ mà y học hành vi thế giới đã kiểm chứng. Rủi ro của bạn bằng 0: <strong style="color: var(--accent-bright);">7 ngày hoàn tiền vô điều kiện, và hoàn 100% nếu tập đủ 21 ngày không cải thiện.</strong>
+      </p>
+      <p style="margin-bottom: 32px; line-height: 1.75;">
+        Thứ duy nhất bạn có thể mất khi bỏ qua trang này — không phải là 686.868đ. Mà là thêm một năm nữa của những cái thở dài im lặng.
+      </p>
+      <div style="text-align:center;">
+        <a href="#order-section" class="btn btn-gold btn-lg" style="font-size: 16px;">
+          <i class="fa-solid fa-shield-halved"></i> TÔI CHỌN LẤY LẠI BẢN LĨNH — 686.868đ
+        </a>
+        <p style="font-size: 13px; margin-top: 14px; color: rgba(255,255,255,0.6);">
+          Chỉ 100 suất hỗ trợ 1:1 mỗi tháng · Sao kê trung tính · Không ai biết
+        </p>
       </div>
     </div>
   </section>
