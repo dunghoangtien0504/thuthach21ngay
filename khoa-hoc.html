@@ -320,6 +320,7 @@
     .tag-hit { background: var(--danger); color: #fff; }
     .tag-new { background: var(--accent-bright); color: var(--primary); }
     .tag-free { background: #2E7D32; color: #fff; }
+    .tag-bonus { background: var(--accent); color: var(--primary); }
     .card-time {
       position: absolute; bottom: 10px; right: 12px;
       background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
@@ -371,6 +372,7 @@
     }
     .price-free { font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: #2E7D32; }
     .price-free-was { font-size: 11px; color: var(--text-light); text-decoration: line-through; margin-top: 3px; }
+    .price-bonus { font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: var(--accent); }
     .cta-btn {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 9px 16px; border-radius: var(--radius-pill);
@@ -686,7 +688,7 @@
                 <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1a3a25 0%,#0D2B1A 100%);">
                   <i class="fa-solid fa-table-list" style="color:rgba(255,255,255,0.15);"></i>
                 </div>
-                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-tag tag-bonus">Tặng Kèm</span>
                 <span class="card-time"><i class="fa-solid fa-calendar-days"></i> 21 ngày</span>
               </div>
               <div class="card-body">
@@ -699,7 +701,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="price-wrap">
-                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-bonus">Tặng Kèm</span>
                     <span class="price-free-was">300.000đ</span>
                   </div>
                   <a href="/#offer-section" class="cta-btn cta-dark">
@@ -715,7 +717,7 @@
                 <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1a3510 0%,#0f2a0a 100%);">
                   <i class="fa-solid fa-bowl-food" style="color:rgba(255,255,255,0.15);"></i>
                 </div>
-                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-tag tag-bonus">Tặng Kèm</span>
                 <span class="card-time"><i class="fa-solid fa-calendar-days"></i> 14 ngày</span>
               </div>
               <div class="card-body">
@@ -728,7 +730,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="price-wrap">
-                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-bonus">Tặng Kèm</span>
                     <span class="price-free-was">200.000đ</span>
                   </div>
                   <a href="/#offer-section" class="cta-btn cta-dark">
@@ -744,7 +746,7 @@
                 <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1c1a35 0%,#0d0b24 100%);">
                   <i class="fa-solid fa-brain" style="color:rgba(255,255,255,0.15);"></i>
                 </div>
-                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-tag tag-bonus">Tặng Kèm</span>
                 <span class="card-time"><i class="fa-solid fa-calendar-days"></i> 7 ngày</span>
               </div>
               <div class="card-body">
@@ -757,7 +759,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="price-wrap">
-                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-bonus">Tặng Kèm</span>
                     <span class="price-free-was">500.000đ</span>
                   </div>
                   <a href="/#offer-section" class="cta-btn cta-dark">
@@ -773,7 +775,7 @@
                 <div class="thumb-placeholder" style="background:linear-gradient(135deg,#002e47 0%,#001929 100%);">
                   <i class="fa-brands fa-telegram" style="color:rgba(255,255,255,0.15);"></i>
                 </div>
-                <span class="card-tag tag-free">Miễn Phí</span>
+                <span class="card-tag tag-bonus">Tặng Kèm</span>
                 <span class="card-time"><i class="fa-solid fa-clock"></i> 21 ngày</span>
               </div>
               <div class="card-body">
@@ -786,7 +788,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="price-wrap">
-                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-bonus">Tặng Kèm</span>
                     <span class="price-free-was">1.000.000đ</span>
                   </div>
                   <a href="/#offer-section" class="cta-btn cta-dark">
@@ -815,7 +817,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="price-wrap">
-                    <span class="price-free">Miễn Phí</span>
+                    <span class="price-bonus">Tặng Kèm</span>
                     <span class="price-free-was">200.000đ</span>
                   </div>
                   <a href="/#offer-section" class="cta-btn cta-dark">
@@ -1017,8 +1019,6 @@
       if (loginBtn) loginBtn.href = '/portal.html';
       if (regBtn) regBtn.style.display = 'none';
       document.querySelectorAll('.btn-login').forEach(b => { b.style.removeProperty('display'); b.textContent = 'Học Ngay'; b.href = '/portal.html'; });
-    } else {
-      document.querySelectorAll('.btn-login').forEach(b => b.style.removeProperty('display'));
     }
   </script>
   <script type="module" src="/register.js"></script>
