@@ -358,6 +358,10 @@ function updatePaymentActivationUI() {
                 localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
               }
 
+              // Update active session in memory and localStorage
+              userSession.status = 'active';
+              localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+
               // Show success, hide pending payment panel
               if (paymentPanel) paymentPanel.style.display = 'none';
               if (successBanner) successBanner.style.display = 'block';
@@ -402,6 +406,10 @@ function updatePaymentActivationUI() {
                 localUsers[uIdx].key_used = 'SEPAY';
                 localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
               }
+
+              // Update active session in memory and localStorage
+              userSession.status = 'active';
+              localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
 
               if (paymentPanel) paymentPanel.style.display = 'none';
               if (successBanner) successBanner.style.display = 'block';
