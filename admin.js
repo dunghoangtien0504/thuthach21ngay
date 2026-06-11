@@ -101,11 +101,10 @@ const btnExportConfig = document.getElementById('btn-export-config');
 const adminCertsList = document.getElementById('admin-certs-list');
 const adminHomeworkList = document.getElementById('admin-homework-list');
 
-// Seed default blogs if empty
 const defaultBlogs = [
-  { title: "5 thực phẩm tăng cường Testosterone tự nhiên", author: "Dr Nam Trần", date: "05/06/2026", summary: "Chia sẻ danh sách thực phẩm vàng giúp nam giới bổ sung kẽm và vi chất tăng sinh nội tiết tố nam." },
-  { title: "Cách xác định cơ sàn chậu (cơ PC) đơn giản nhất", author: "Bác Sĩ Phong", date: "02/06/2026", summary: "Hướng dẫn xúc giác và nín tiểu để định vị cơ mu cụt chính xác mà không gồng mông đùi." },
-  { title: "Kỹ thuật Start-Stop: Bản đồ kiểm soát xuất tinh", author: "Thanh Bảo", date: "30/05/2026", summary: "Tìm hiểu phương pháp hành vi Masters & Johnson giúp điều hòa nhịp thở và hạ hưng phấn." }
+  { title: "Vai Trò Của Cơ Sàn Chậu Trong Sức Khỏe Sinh Lý Nam Giới", author: "Dr. Nam Trần", date: "05/06/2026", summary: "Tìm hiểu cơ chế giải phẫu của nhóm cơ sàn chậu (cơ PC, BC, IC) đối với sức khỏe sinh lý nam và tầm quan trọng của việc rèn luyện khoa học." },
+  { title: "Lo Âu Hiệu Suất Và Tâm Lý Phòng The Ở Nam Giới", author: "Bác Sĩ Phong", date: "02/06/2026", summary: "Tìm hiểu cơ chế sinh học của lo âu hiệu suất, cách adrenaline ảnh hưởng đến hệ thần kinh giao cảm và vai trò của việc giải tỏa tâm lý." },
+  { title: "Các Vi Chất Dinh Dưỡng Thiết Yếu Cho Sinh Lý Nam Giới", author: "Thanh Bảo", date: "30/05/2026", summary: "Vai trò của các vi chất dinh dưỡng như Kẽm, Magiê, Vitamin D đối với quá trình tổng hợp Testosterone nội sinh và hồi phục cơ chậu." }
 ];
 
 if (blogPosts.length === 0) {
@@ -198,7 +197,7 @@ function setupMenuSwitcher() {
 
       // Update Header Title
       const tabTitle = item.querySelector('button').textContent.trim();
-      adminHeaderTitle.textContent = tabTitle === 'Dashboard' ? 'Tổng quan hoạt động Noli Sales' : `Quản lý: ${tabTitle}`;
+      adminHeaderTitle.textContent = tabTitle === 'Dashboard' ? 'Tổng quan hoạt động Mật Mã 21' : `Quản lý: ${tabTitle}`;
     });
   });
 }
