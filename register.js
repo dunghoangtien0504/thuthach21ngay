@@ -208,7 +208,7 @@ function injectModal() {
             </div>
 
             <button type="submit" class="reg-submit-btn" id="reg-submit-btn">
-              <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản Miễn Phí
+              <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản
             </button>
           </form>
 
@@ -224,10 +224,10 @@ function injectModal() {
 
         <div class="reg-success" id="reg-success">
           <i class="fa-solid fa-circle-check"></i>
-          <h3>Tài Khoản Đã Được Tạo!</h3>
-          <p>Tài khoản của anh đã được kích hoạt chế độ học thử miễn phí. Anh có thể bắt đầu ngay lập tức.</p>
+          <h3>Đăng Ký Thành Công!</h3>
+          <p>Tài khoản của anh đã được tạo thành công trên hệ thống. Vui lòng kích hoạt khóa học để bắt đầu lộ trình.</p>
           <a href="/portal.html" class="go-portal">
-            <i class="fa-solid fa-book-open"></i> Vào Học Ngay
+            <i class="fa-solid fa-book-open"></i> Vào Trang Học Tập
           </a>
         </div>
       </div>
@@ -389,7 +389,7 @@ async function handleSubmit(e) {
   // Show success state
   document.getElementById('reg-form-wrap').style.display = 'none';
   document.getElementById('reg-success').style.display = 'block';
-  toast('Đăng ký tài khoản học thử miễn phí thành công!', 'success');
+  toast('Đăng ký tài khoản thành công!', 'success');
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────

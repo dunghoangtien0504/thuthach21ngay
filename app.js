@@ -277,7 +277,7 @@ async function setupAuth() {
 
         showAuthSuccess(`Đăng ký thành công & tài khoản đã được kích hoạt VIP! Đang chuyển hướng...`);
       } else {
-        showAuthSuccess(`Đăng ký thành công! Bạn đã được truy cập để học thử các bài học miễn phí. Để mở khóa lộ trình 21 ngày, hãy kích hoạt khóa học.`);
+        showAuthSuccess(`Đăng ký thành công! Tài khoản của anh đang chờ kích hoạt VIP. Hãy liên hệ hỗ trợ hoặc thanh toán để mở khóa lộ trình.`);
       }
 
       setTimeout(() => {
@@ -351,6 +351,13 @@ function setupTabSwitcher() {
 
   if (btnStartCourse) {
     btnStartCourse.addEventListener('click', () => {
+      const lockReason = getLessonLockReason(0);
+      if (lockReason) {
+        if (lockReason === 'paid_only') {
+          showToast(`Bài học này thuộc chương trình trả phí Mật Mã 21. Vui lòng thanh toán hoặc nhập mã kích hoạt VIP để học tiếp bài này nhé!`, 'error');
+        }
+        return;
+      }
       document.querySelector('[data-tab="lessons"]').click();
       if (currentLessonId === null && courseData.length > 0) {
         selectLesson(0);
@@ -616,11 +623,10 @@ function getLessonLockReason(lessonId) {
     }
   }
 
-  const isFree = lesson && lesson.is_free === true;
   const userStatus = getUserStatus();
 
-  // Block pending users from accessing paid lessons
-  if (userStatus === 'pending' && !isFree) {
+  // Block pending users from accessing any lessons
+  if (userStatus === 'pending') {
     return "paid_only";
   }
 
