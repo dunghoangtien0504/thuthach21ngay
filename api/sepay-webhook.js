@@ -29,11 +29,11 @@ export default async function handler(req, res) {
   if (transferType === 'in' && amount >= 680000) {
     // Notify the admin via Telegram Bot immediately
     if (telegramToken && telegramChatId) {
-      const bankGateway = payload.gateway || 'Ngân hàng';
-      const accountNo = payload.accountNumber || '';
-      const content = payload.content || '';
-      const dateStr = payload.transactionDate || new Date().toLocaleString('vi-VN');
-      const refCode = payload.referenceCode || '';
+      const bankGateway = payload.gateway || payload.bank_brand_name || payload.bankBrandName || 'Ngân hàng';
+      const accountNo = payload.accountNumber || payload.accumulated || payload.account_number || '';
+      const content = payload.content || payload.transaction_content || payload.transactionContent || '';
+      const dateStr = payload.transactionDate || payload.transaction_date || new Date().toLocaleString('vi-VN');
+      const refCode = payload.referenceCode || payload.reference_code || payload.id || '';
 
       const messageText = `✅ *Thanh Toán Khóa Học Thành Công!*\n\n• Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n• Ngân hàng: *${bankGateway}*\n• Số TK nhận: \`${accountNo}\`\n• Nội dung CK: *${content}*\n• Thời gian: _${dateStr}_\n• Mã đối chiếu: \`${refCode}\``;
 
