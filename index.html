@@ -2350,6 +2350,7 @@
               <p>Chuyển khoản chính xác số tiền: <strong style="font-size:18px; color: var(--accent-bright);">686.868đ</strong></p>
               <p style="margin-top:4px;">Nội dung chuyển khoản: <strong id="qr-info-code" style="color: var(--accent-bright); font-size: 16px;">MA21 09xx</strong></p>
               <p style="font-size:11.5px; margin-top:12px; color:rgba(255,255,255,0.65); text-align: justify; line-height: 1.5;">Hệ thống MBBank sẽ tự động khớp lệnh chuyển khoản và gửi thông tin tài khoản VIP, mã kích hoạt Portal kèm trọn bộ Ebook PDF và tài liệu đi kèm qua Email và Telegram kín của anh sau 1 phút.</p>
+              <p style="font-size:13px; color: var(--accent-bright); margin-top:10px;"><i class="fa-solid fa-spinner fa-spin"></i> Đang tự động kiểm tra giao dịch...</p>
             </div>
             
             <div class="privacy-notice">
@@ -2359,6 +2360,25 @@
                 Giao dịch hiển thị tế nhị là <strong>"FORMEN - TL Suc Khoe Nam Gioi"</strong> để bảo vệ quyền riêng tư tuyệt đối của anh.
               </div>
             </div>
+          </div>
+
+          <!-- Payment Success Box -->
+          <div id="payment-success-box" style="display:none; width: 100%; text-align:center; align-items:center; flex-direction:column; padding: 20px 10px;">
+            <i class="fa-solid fa-circle-check" style="font-size:54px; color: var(--accent-bright); margin-bottom: 15px; filter: drop-shadow(0 4px 8px rgba(168,213,181,0.3));"></i>
+            <h3 style="font-family: var(--font-heading); font-weight:800; font-size:22px; color: var(--accent-bright); margin-bottom:10px;">THANH TOÁN THÀNH CÔNG!</h3>
+            <p style="font-size:14px; line-height:1.5; max-width:280px; margin: 0 auto 15px auto; color: rgba(255,255,255,0.85);">Tài khoản VIP Mật Mã 21 của anh đã được kích hoạt thành công trên hệ thống.</p>
+            
+            <div style="background: rgba(168,213,181,0.08); border: 1px dashed var(--accent-light); padding: 15px; border-radius: 8px; margin-bottom: 20px; width: 100%; box-sizing: border-box;">
+              <p style="font-size:13.5px; font-weight:600; color: var(--accent-bright); margin-bottom: 6px;"><i class="fa-solid fa-gift"></i> Quà Tặng 4: Nhóm Hỗ Trợ VIP Telegram</p>
+              <p style="font-size:11.5px; line-height: 1.5; color: rgba(255,255,255,0.65); margin-bottom: 12px;">Bấm nút dưới đây để tham gia ngay nhóm hỗ trợ Telegram bảo mật kín 1:1 cùng đội ngũ hỗ trợ.</p>
+              <a href="https://web.telegram.org/a/#-5146168698" target="_blank" class="btn btn-primary" style="display:inline-flex; width: 100%; justify-content:center; padding:12px; font-size:13px; font-weight:700; box-sizing: border-box; text-decoration: none;">
+                <i class="fa-brands fa-telegram" style="margin-right: 6px;"></i> THAM GIA NHÓM TELEGRAM
+              </a>
+            </div>
+            
+            <a href="/portal.html" class="btn btn-primary" style="width: 100%; justify-content:center; padding:14px; font-size:14.5px; font-weight:700; background: var(--accent-bright); border-color: var(--accent-bright); text-decoration: none;">
+              <i class="fa-solid fa-book-open"></i> VÀO HỌC NGAY
+            </a>
           </div>
         </div>
         
@@ -2627,11 +2647,13 @@
     const qrImg = document.getElementById('qr-img');
     const qrInfoCode = document.getElementById('qr-info-code');
 
+    let paymentPollInterval = null;
+
     orderForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('order-name').value;
-      const phone = document.getElementById('order-phone').value;
-      const email = document.getElementById('order-email').value;
+      const name = document.getElementById('order-name').value.trim();
+      const phone = document.getElementById('order-phone').value.trim();
+      const email = document.getElementById('order-email').value.trim();
 
       // Format clean data for bank description transfer code
       // Format: MA21 [phone]
@@ -2648,30 +2670,87 @@
 
       qrPlaceholder.style.display = 'none';
       qrBox.style.display = 'flex';
+      document.getElementById('payment-success-box').style.display = 'none';
 
-      // Save mockup register session so they can try to enter portal easily
-      const mockSession = {
+      // Save user session
+      const sessionObj = {
         email: email,
         name: name,
         phone: phone,
-        status: "pending_payment"
+        status: "pending"
       };
+      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(sessionObj));
       
-      // Auto register user account locally for testing
-      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(mockSession));
-      
-      // Pre-add into account lists so they can bypass portal login for trial
+      // Pre-add into account lists
       let accounts = JSON.parse(localStorage.getItem('thuthach21ngay_accounts')) || [];
-      if (!accounts.some(a => a.email === email)) {
-        accounts.push({
-          email: email,
-          password: "123", // default temp pwd
-          name: name,
-          phone: phone,
-          role: "student"
-        });
-        localStorage.setItem('thuthach21ngay_accounts', JSON.stringify(accounts));
+      accounts = accounts.filter(a => a.email !== email);
+      accounts.push({
+        email: email,
+        password: "123", // default temp pwd
+        name: name,
+        phone: phone,
+        role: "student"
+      });
+      localStorage.setItem('thuthach21ngay_accounts', JSON.stringify(accounts));
+
+      // Also register inside thuthach21ngay_registered_users (primary database)
+      let registeredUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+      registeredUsers = registeredUsers.filter(u => u.email !== email);
+      registeredUsers.push({
+        name: name,
+        email: email,
+        phone: phone,
+        password: "123",
+        status: "pending",
+        key_used: "-",
+        registeredAt: new Date().toISOString(),
+        source: "index_checkout"
+      });
+      localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(registeredUsers));
+
+      // Clear previous interval if any
+      if (paymentPollInterval) {
+        clearInterval(paymentPollInterval);
       }
+
+      // Check payment loop
+      const checkPaymentStatus = async () => {
+        try {
+          const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(email)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success) {
+              clearInterval(paymentPollInterval);
+              
+              // Update status to active in local storage databases
+              let users = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+              const userIdx = users.findIndex(u => u.email === email);
+              if (userIdx !== -1) {
+                users[userIdx].status = 'active';
+                users[userIdx].key_used = 'SEPAY';
+                localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(users));
+              }
+
+              // Update user session to active
+              const currentSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session')) || {};
+              currentSession.status = 'active';
+              localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(currentSession));
+
+              // Show success UI, hide QR code
+              qrBox.style.display = 'none';
+              document.getElementById('payment-success-box').style.display = 'flex';
+            }
+          }
+        } catch (err) {
+          console.error("Error polling payment status:", err);
+        }
+      };
+
+      // Poll every 5 seconds
+      paymentPollInterval = setInterval(checkPaymentStatus, 5000);
+      
+      // Check immediately
+      checkPaymentStatus();
 
       // Scroll smoothly to QR code on mobile
       if (window.innerWidth < 992) {

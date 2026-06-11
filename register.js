@@ -346,7 +346,8 @@ async function handleSubmit(e) {
   // Set user session for auto-login
   localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({
     email: account.email,
-    name: account.name
+    name: account.name,
+    phone: account.phone || ''
   }));
 
   // Optional: POST to CRM webhook

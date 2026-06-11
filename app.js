@@ -214,7 +214,11 @@ async function setupAuth() {
 
       if (matchedUser) {
         // Success login (allows both pending and active users to enter portal)
-        userSession = { email: matchedUser.email, name: matchedUser.name };
+        userSession = { 
+          email: matchedUser.email, 
+          name: matchedUser.name,
+          phone: matchedUser.phone || ''
+        };
         localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
         showAuthSuccess(`Đăng nhập thành công! Đang mở khóa học...`);
         setTimeout(() => {
@@ -264,7 +268,12 @@ async function setupAuth() {
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
 
       // Always set session and log in immediately
-      userSession = { email, name };
+      const isPhoneInput = /^\+?[0-9]{9,15}$/.test(email.replace(/[\s\-\(\)]/g, ''));
+      userSession = { 
+        email: email, 
+        name: name,
+        phone: isPhoneInput ? email : ''
+      };
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
 
       if (isValidKey) {
@@ -298,6 +307,140 @@ async function setupAuth() {
   }
 }
 
+let portalPollInterval = null;
+
+function updatePaymentActivationUI() {
+  const userStatus = getUserStatus();
+  const paymentPanel = document.getElementById('payment-activation-panel');
+  const successBanner = document.getElementById('payment-success-banner');
+  const qrImg = document.getElementById('portal-qr-img');
+  const descCode = document.getElementById('portal-payment-desc');
+  const btnCheck = document.getElementById('btn-check-payment');
+  const statusText = document.getElementById('payment-status-text');
+  const btnReload = document.getElementById('btn-payment-reload');
+
+  if (!userSession) return;
+
+  if (userStatus === 'pending') {
+    if (paymentPanel) paymentPanel.style.display = 'block';
+    if (successBanner) successBanner.style.display = 'none';
+
+    // Generate description: MA21 [cleanPhone]
+    const cleanPhone = (userSession.phone || '').replace(/[^0-9]/g, '');
+    const cleanEmail = (userSession.email || '').split('@')[0].replace(/[^a-zA-Z0-9]/g, '');
+    const identifier = cleanPhone || cleanEmail || 'USER';
+    const description = `MA21 ${identifier}`.toUpperCase();
+
+    if (descCode) descCode.textContent = description;
+
+    // VietQR code image source link
+    const encodedDesc = encodeURIComponent(description);
+    const vietQrUrl = `https://img.vietqr.io/image/mb-0377014982-compact2.png?amount=686868&addInfo=${encodedDesc}&accountName=HOANG%20TIEN%20DUNG`;
+    if (qrImg) qrImg.src = vietQrUrl;
+
+    // Start background polling if not already running
+    if (!portalPollInterval) {
+      const runPortalCheck = async () => {
+        try {
+          const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(userSession.email)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success) {
+              clearInterval(portalPollInterval);
+              portalPollInterval = null;
+
+              // Activate account in thuthach21ngay_registered_users
+              const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+              const uIdx = localUsers.findIndex(u => u.email === userSession.email);
+              if (uIdx !== -1) {
+                localUsers[uIdx].status = 'active';
+                localUsers[uIdx].key_used = 'SEPAY';
+                localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
+              }
+
+              // Show success, hide pending payment panel
+              if (paymentPanel) paymentPanel.style.display = 'none';
+              if (successBanner) successBanner.style.display = 'block';
+              
+              showToast("Thanh toán thành công! Tài khoản của anh đã được nâng cấp lên VIP.", "success");
+            }
+          }
+        } catch (err) {
+          console.error("Error polling payment status in portal:", err);
+        }
+      };
+
+      portalPollInterval = setInterval(runPortalCheck, 8000);
+      runPortalCheck(); // check once immediately
+    }
+
+    // Manual click handler for check payment button
+    if (btnCheck) {
+      // Clear previous click listener if any (by replacing with clone)
+      const newBtnCheck = btnCheck.cloneNode(true);
+      btnCheck.parentNode.replaceChild(newBtnCheck, btnCheck);
+
+      newBtnCheck.addEventListener('click', async () => {
+        const icon = newBtnCheck.querySelector('.spinner-icon');
+        if (icon) icon.classList.add('fa-spin');
+        if (statusText) statusText.textContent = "Đang kiểm tra tài khoản...";
+
+        try {
+          const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(userSession.email)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success) {
+              if (portalPollInterval) {
+                clearInterval(portalPollInterval);
+                portalPollInterval = null;
+              }
+
+              const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+              const uIdx = localUsers.findIndex(u => u.email === userSession.email);
+              if (uIdx !== -1) {
+                localUsers[uIdx].status = 'active';
+                localUsers[uIdx].key_used = 'SEPAY';
+                localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
+              }
+
+              if (paymentPanel) paymentPanel.style.display = 'none';
+              if (successBanner) successBanner.style.display = 'block';
+              
+              showToast("Thanh toán thành công! Tài khoản của anh đã được nâng cấp lên VIP.", "success");
+            } else {
+              showToast("Hệ thống chưa nhận được khoản chuyển khoản của anh. Vui lòng đợi thêm hoặc liên hệ hỗ trợ Telegram.", "warning");
+              if (statusText) statusText.textContent = "Chưa tìm thấy giao dịch. Vui lòng quét mã QR chuyển khoản chính xác.";
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          showToast("Lỗi kiểm tra thanh toán. Vui lòng thử lại.", "error");
+        } finally {
+          if (icon) icon.classList.remove('fa-spin');
+        }
+      });
+    }
+  } else {
+    // Active user
+    if (paymentPanel) paymentPanel.style.display = 'none';
+    if (successBanner) successBanner.style.display = 'none';
+    if (portalPollInterval) {
+      clearInterval(portalPollInterval);
+      portalPollInterval = null;
+    }
+  }
+
+  // Reload action on success banner button click
+  if (btnReload) {
+    // Clear previous click listener if any
+    const newBtnReload = btnReload.cloneNode(true);
+    btnReload.parentNode.replaceChild(newBtnReload, btnReload);
+    newBtnReload.addEventListener('click', () => {
+      window.location.reload();
+    });
+  }
+}
+
 function checkSession() {
   const appContainer = document.querySelector('.app-container');
   if (userSession) {
@@ -305,6 +448,7 @@ function checkSession() {
     if (appContainer) appContainer.style.display = 'flex';
     if (headerUserInfo) headerUserInfo.style.display = 'flex';
     if (userDisplayName) userDisplayName.textContent = userSession.name;
+    updatePaymentActivationUI();
   } else {
     if (authOverlay) authOverlay.style.display = 'flex';
     if (appContainer) appContainer.style.display = 'none';
