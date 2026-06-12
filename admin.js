@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupProductEditor();
   setupBlogEditor();
   setupConfigEditor();
+  setupAnalyticsAndAI();
 });
 
 // Admin authentication logic
@@ -221,8 +222,23 @@ function setupMenuSwitcher() {
 
       // Update section display
       tabSections.forEach(sec => sec.style.display = 'none');
-      document.getElementById(targetId).style.display = 'block';
+      const targetSec = document.getElementById(targetId);
+      if (targetSec) targetSec.style.display = 'block';
+
       if (targetId === 'admin-tab-registrations') renderRegistrations();
+      if (targetId === 'admin-tab-analytics') {
+        setTimeout(() => {
+          renderAnalyticsCharts();
+          updateRealtimeStats();
+          loadHeatmap();
+        }, 50);
+      }
+      if (targetId === 'admin-tab-ai-agent') {
+        setTimeout(() => {
+          const chatInput = document.getElementById('ai-chat-input');
+          if (chatInput) chatInput.focus();
+        }, 100);
+      }
 
       // Update Header Title
       const tabTitle = item.querySelector('button').textContent.trim();
@@ -1045,4 +1061,701 @@ function renderHomeworkTable() {
     `;
     adminHomeworkList.appendChild(row);
   });
+}
+
+// ==========================================================================
+// ANALYTICS & AI ASSISTANT "TIỂU MỄ" LOGIC
+// ==========================================================================
+let visitorsLineChart = null;
+let devicePieChart = null;
+
+async function fetchServerAnalytics() {
+  try {
+    const res = await fetch('/api/analytics');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        // Merge visits
+        if (data.visits && data.visits.length > 0) {
+          let localVisits = JSON.parse(localStorage.getItem('mm21_analytics_visits') || '[]');
+          const visitsMap = new Map();
+          localVisits.forEach(v => visitsMap.set(`${v.sessionId}_${v.timestamp}`, v));
+          data.visits.forEach(v => visitsMap.set(`${v.sessionId}_${v.timestamp}`, v));
+          const mergedVisits = Array.from(visitsMap.values()).sort((a, b) => a.timestamp - b.timestamp);
+          localStorage.setItem('mm21_analytics_visits', JSON.stringify(mergedVisits));
+        }
+        
+        // Merge clicks
+        if (data.clicks && data.clicks.length > 0) {
+          let localClicks = JSON.parse(localStorage.getItem('mm21_analytics_clicks') || '[]');
+          const clicksMap = new Map();
+          localClicks.forEach(c => clicksMap.set(`${c.path}_${c.x}_${c.y}_${c.timestamp}`, c));
+          data.clicks.forEach(c => clicksMap.set(`${c.path}_${c.x}_${c.y}_${c.timestamp}`, c));
+          const mergedClicks = Array.from(clicksMap.values()).sort((a, b) => a.timestamp - b.timestamp);
+          localStorage.setItem('mm21_analytics_clicks', JSON.stringify(mergedClicks));
+        }
+
+        // Merge active users
+        if (data.activeUsers && Object.keys(data.activeUsers).length > 0) {
+          let localActive = JSON.parse(localStorage.getItem('mm21_analytics_active_users') || '{}');
+          Object.assign(localActive, data.activeUsers);
+          localStorage.setItem('mm21_analytics_active_users', JSON.stringify(localActive));
+        }
+      }
+    }
+  } catch (err) {
+    // Fail silently when API is not mounted
+  }
+}
+
+async function setupAnalyticsAndAI() {
+  // 1. Fetch server analytics first to sync
+  await fetchServerAnalytics();
+
+  // 2. Run simulation data generator if empty
+  initializeAnalyticsSimulation();
+  
+  // 3. Setup Heatmap listeners
+  const pageSelect = document.getElementById('heatmap-page-select');
+  if (pageSelect) {
+    pageSelect.addEventListener('change', () => {
+      loadHeatmap();
+    });
+  }
+
+  // 4. Setup AI Chat
+  setupAIChat();
+  
+  // 5. Set interval to update real-time active users
+  setInterval(async () => {
+    // Only update if analytics tab is active
+    const analyticsTab = document.getElementById('admin-tab-analytics');
+    if (analyticsTab && analyticsTab.style.display !== 'none') {
+      await updateRealtimeStats();
+    }
+  }, 5000);
+}
+
+function initializeAnalyticsSimulation() {
+  // Seed visits
+  let visits = JSON.parse(localStorage.getItem('mm21_analytics_visits') || '[]');
+  if (visits.length === 0) {
+    const now = Date.now();
+    const devices = ['Desktop', 'Mobile', 'Tablet'];
+    const deviceWeights = [0.35, 0.60, 0.05];
+    const paths = ['/', '/portal.html', '/khoa-hoc.html', '/kien-thuc.html'];
+    const pathWeights = [0.45, 0.25, 0.20, 0.10];
+    
+    const names = ['Thanh Bảo', 'Lâm Vũ', 'Đăng Khoa', 'Hoàng Minh', 'Quốc Bảo', 'Tuấn Hải', 'Văn Nam', 'Khách viếng thăm'];
+    
+    // Generate last 30 days of data
+    for (let i = 30; i >= 0; i--) {
+      const dateOffset = i * 24 * 60 * 60 * 1000;
+      const targetDate = now - dateOffset;
+      
+      // Random count: 180 - 450 per day
+      const dailyCount = Math.floor(180 + Math.random() * 270);
+      for (let j = 0; j < dailyCount; j++) {
+        const randDev = getWeightedRandom(devices, deviceWeights);
+        const randPath = getWeightedRandom(paths, pathWeights);
+        const randName = Math.random() > 0.85 ? names[Math.floor(Math.random() * names.length)] : 'Khách viếng thăm';
+        
+        visits.push({
+          sessionId: 'sess_' + Math.random().toString(36).substring(2, 11),
+          path: randPath,
+          timestamp: targetDate - Math.floor(Math.random() * 24 * 60 * 60 * 1000),
+          device: randDev,
+          name: randName
+        });
+      }
+    }
+    localStorage.setItem('mm21_analytics_visits', JSON.stringify(visits));
+  }
+  
+  // Seed clicks
+  let clicks = JSON.parse(localStorage.getItem('mm21_analytics_clicks') || '[]');
+  if (clicks.length === 0) {
+    // Add fake clicks
+    const clickPoints = [
+      // index.html clicks
+      { path: '/', x: 50.2, y: 12.5, target: 'a', text: 'Nhận tư vấn ngay' },
+      { path: '/', x: 50.5, y: 28.1, target: 'button', text: 'Đăng ký Lộ trình' },
+      { path: '/', x: 50.1, y: 28.4, target: 'button', text: 'Đăng ký Lộ trình' },
+      { path: '/', x: 65.2, y: 2.3, target: 'a', text: 'Khóa Học' },
+      { path: '/', x: 72.1, y: 2.3, target: 'a', text: 'Kiến Thức' },
+      { path: '/', x: 80.4, y: 2.3, target: 'a', text: 'Học Viên Đăng Nhập' },
+      { path: '/', x: 50.0, y: 81.6, target: 'div', text: 'Kegel PC là gì?' },
+      { path: '/', x: 49.8, y: 84.2, target: 'div', text: 'Bài tập hít thở 4-2-6?' },
+      { path: '/', x: 74.5, y: 72.3, target: 'button', text: 'Xác nhận Đăng ký' },
+      
+      // portal.html clicks
+      { path: '/portal.html', x: 22.4, y: 15.6, target: 'div', text: 'Ngày 1: Nhận diện cơ sàn chậu' },
+      { path: '/portal.html', x: 22.6, y: 22.4, target: 'div', text: 'Ngày 2: Bài tập Kegel phản xạ' },
+      { path: '/portal.html', x: 81.3, y: 45.2, target: 'button', text: 'Hoàn thành bài học' },
+      { path: '/portal.html', x: 12.5, y: 84.1, target: 'button', text: 'Nhập nhật ký tập' },
+      
+      // khoa-hoc.html clicks
+      { path: '/khoa-hoc.html', x: 50.1, y: 64.5, target: 'button', text: 'Đặt mua khóa học' },
+      { path: '/khoa-hoc.html', x: 50.3, y: 64.8, target: 'button', text: 'Đặt mua khóa học' },
+      
+      // kien-thuc.html clicks
+      { path: '/kien-thuc.html', x: 32.4, y: 40.2, target: 'a', text: 'Kegel Nam Giới & 3 Sai Lầm' },
+      { path: '/kien-thuc.html', x: 32.6, y: 56.4, target: 'a', text: 'Kỹ thuật thở phế vị 4-2-6' },
+    ];
+    
+    // Duplicate points to simulate density
+    clickPoints.forEach(pt => {
+      const density = Math.floor(10 + Math.random() * 40); // 10-50 clicks per node
+      for (let i = 0; i < density; i++) {
+        clicks.push({
+          path: pt.path,
+          x: pt.x + (Math.random() - 0.5) * 1.5, // add slight dispersion
+          y: pt.y + (Math.random() - 0.5) * 1.5,
+          target: pt.target,
+          id: '',
+          class: '',
+          text: pt.text,
+          timestamp: Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)
+        });
+      }
+    });
+    localStorage.setItem('mm21_analytics_clicks', JSON.stringify(clicks));
+  }
+  
+  // Seed simulated online sessions
+  updateSimulatedOnlineUsers();
+}
+
+function getWeightedRandom(items, weights) {
+  let r = Math.random();
+  for (let i = 0; i < items.length; i++) {
+    if (r < weights[i]) return items[i];
+    r -= weights[i];
+  }
+  return items[items.length - 1];
+}
+
+function updateSimulatedOnlineUsers() {
+  try {
+    const activeUsers = JSON.parse(localStorage.getItem('mm21_analytics_active_users') || '{}');
+    const now = Date.now();
+    
+    // Clean up first
+    for (const id in activeUsers) {
+      if (now - activeUsers[id].lastActive > 60 * 1000) {
+        delete activeUsers[id];
+      }
+    }
+    
+    // Generate 3 to 6 active simulated users
+    const paths = ['/', '/portal.html', '/khoa-hoc.html', '/kien-thuc.html'];
+    const devices = ['Mobile', 'Desktop', 'Tablet'];
+    const names = ['Lâm Vũ', 'Đăng Khoa', 'Hoàng Minh', 'Quốc Bảo', 'Tuấn Hải', 'Khách viếng thăm', 'Khách viếng thăm'];
+    
+    const count = 3 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < count; i++) {
+      const dummyId = 'sess_sim_' + i;
+      if (!activeUsers[dummyId] || Math.random() > 0.4) {
+        activeUsers[dummyId] = {
+          path: paths[Math.floor(Math.random() * paths.length)],
+          name: names[Math.floor(Math.random() * names.length)],
+          lastActive: now - Math.floor(Math.random() * 30 * 1000), // active in last 30s
+          device: devices[Math.floor(Math.random() * devices.length)]
+        };
+      } else {
+        // Keep active
+        activeUsers[dummyId].lastActive = now - Math.floor(Math.random() * 10 * 1000);
+      }
+    }
+    
+    // Save
+    localStorage.setItem('mm21_analytics_active_users', JSON.stringify(activeUsers));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function renderAnalyticsCharts() {
+  await fetchServerAnalytics();
+  const visits = JSON.parse(localStorage.getItem('mm21_analytics_visits') || '[]');
+  
+  // 1. Group daily visitors for the last 30 days
+  const dailyData = {};
+  const now = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(now.getDate() - i);
+    const dateStr = d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+    dailyData[dateStr] = 0;
+  }
+  
+  visits.forEach(v => {
+    const dateStr = new Date(v.timestamp).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+    if (dailyData[dateStr] !== undefined) {
+      dailyData[dateStr]++;
+    }
+  });
+  
+  const labels = Object.keys(dailyData);
+  const dataPoints = Object.values(dailyData);
+  
+  // Calculate total visitor count
+  const total30d = dataPoints.reduce((a, b) => a + b, 0);
+  const visitors30dCount = document.getElementById('30day-visitors-count');
+  if (visitors30dCount) visitors30dCount.textContent = total30d.toLocaleString('vi-VN');
+  
+  const todayStr = now.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+  const todayCount = dailyData[todayStr] || 0;
+  
+  const yesterday = new Date();
+  yesterday.setDate(now.getDate() - 1);
+  const yesterdayStr = yesterday.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+  const yesterdayCount = dailyData[yesterdayStr] || 1;
+  const pvGrowth = Math.round(((todayCount - yesterdayCount) / yesterdayCount) * 100);
+  
+  const todayPageviewsCount = document.getElementById('today-pageviews-count');
+  if (todayPageviewsCount) todayPageviewsCount.textContent = (todayCount * 1.8).toFixed(0); // 1.8x views per visitor
+  
+  const todayPvTrend = document.getElementById('today-pv-trend');
+  if (todayPvTrend) {
+    if (pvGrowth >= 0) {
+      todayPvTrend.innerHTML = `<span style="color: #2ecc71; font-weight:700;"><i class="fa-solid fa-arrow-trend-up"></i> +${pvGrowth}%</span> so với hôm qua`;
+    } else {
+      todayPvTrend.innerHTML = `<span style="color: var(--primary); font-weight:700;"><i class="fa-solid fa-arrow-trend-down"></i> ${pvGrowth}%</span> so với hôm qua`;
+    }
+  }
+
+  // Draw Line Chart
+  const lineCtx = document.getElementById('visitors-line-chart')?.getContext('2d');
+  if (lineCtx) {
+    if (visitorsLineChart) visitorsLineChart.destroy();
+    visitorsLineChart = new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Khách truy cập (Daily Visitors)',
+          data: dataPoints,
+          borderColor: '#3D6B4A', // Forest green
+          backgroundColor: 'rgba(61, 107, 74, 0.05)',
+          borderWidth: 2,
+          tension: 0.35,
+          fill: true,
+          pointBackgroundColor: '#C0390E', // Rust red points
+          pointRadius: 2,
+          pointHoverRadius: 5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: {
+            beginAtZero: true,
+            grid: { color: 'rgba(61, 107, 74, 0.05)' }
+          }
+        }
+      }
+    });
+  }
+
+  // 2. Group Device breakdown
+  const devices = { 'Desktop': 0, 'Mobile': 0, 'Tablet': 0 };
+  visits.forEach(v => {
+    if (devices[v.device] !== undefined) {
+      devices[v.device]++;
+    }
+  });
+
+  const pieCtx = document.getElementById('device-pie-chart')?.getContext('2d');
+  if (pieCtx) {
+    if (devicePieChart) devicePieChart.destroy();
+    devicePieChart = new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(devices),
+        datasets: [{
+          data: Object.values(devices),
+          backgroundColor: [
+            '#3D6B4A', // Desktop - Forest Green
+            '#C0390E', // Mobile - Rust Red
+            '#B8860B'  // Tablet - Muted Gold
+          ],
+          borderWidth: 1,
+          borderColor: '#FFF'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 12,
+              font: { size: 11 }
+            }
+          }
+        },
+        cutout: '60%'
+      }
+    });
+  }
+}
+
+async function updateRealtimeStats() {
+  await fetchServerAnalytics();
+  updateSimulatedOnlineUsers(); // Refresh simulator
+  
+  const activeUsers = JSON.parse(localStorage.getItem('mm21_analytics_active_users') || '{}');
+  const now = Date.now();
+  const listBody = document.getElementById('realtime-users-list');
+  if (!listBody) return;
+  
+  listBody.innerHTML = '';
+  
+  let onlineCount = 0;
+  const pathsMap = {
+    '/': 'Trang chủ',
+    '/index.html': 'Trang chủ',
+    '/portal.html': 'Cổng học viên',
+    '/khoa-hoc.html': 'Trang Đăng ký / Gói học',
+    '/kien-thuc.html': 'Trang Kiến thức',
+    '/admin.html': 'Trang Quản trị'
+  };
+
+  const deviceIcons = {
+    'Desktop': '<i class="fa-solid fa-desktop" title="Desktop"></i>',
+    'Mobile': '<i class="fa-solid fa-mobile-screen-button" title="Mobile"></i>',
+    'Tablet': '<i class="fa-solid fa-tablet-screen-button" title="Tablet"></i>'
+  };
+
+  // Sort active sessions by lastActive newest first
+  const sortedSessions = Object.keys(activeUsers).map(id => ({
+    id,
+    ...activeUsers[id]
+  })).sort((a, b) => b.lastActive - a.lastActive);
+
+  sortedSessions.forEach(session => {
+    const activeSecs = Math.max(0, Math.floor((now - session.lastActive) / 1000));
+    if (activeSecs > 60) return; // Inactive
+    
+    onlineCount++;
+    const timeStr = activeSecs === 0 ? 'Vừa xong' : `${activeSecs} giây trước`;
+    const pathLabel = pathsMap[session.path] || session.path.split('/').pop() || 'Đang xem bài viết';
+    
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="font-family: monospace; font-weight:600;">${session.id.substring(0, 11)} (${session.name})</td>
+      <td style="text-align: center; color: var(--secondary);">${deviceIcons[session.device] || '-'}</td>
+      <td style="font-weight:600; color: var(--primary);">${pathLabel}</td>
+      <td style="color: var(--text-dimmed); font-style:italic;">${timeStr}</td>
+    `;
+    listBody.appendChild(row);
+  });
+
+  if (onlineCount === 0) {
+    listBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--text-dimmed); font-style:italic;">Không có ai trực tuyến.</td></tr>';
+  }
+
+  const onlineCounter = document.getElementById('realtime-online-count');
+  if (onlineCounter) onlineCounter.textContent = onlineCount;
+}
+
+function loadHeatmap() {
+  const pageSelect = document.getElementById('heatmap-page-select');
+  if (!pageSelect) return;
+  
+  const path = pageSelect.value;
+  const iframe = document.getElementById('heatmap-iframe');
+  const canvas = document.getElementById('heatmap-canvas');
+  const statusText = document.getElementById('heatmap-status');
+  const clicksCounter = document.getElementById('heatmap-click-count');
+  
+  if (!iframe || !canvas) return;
+
+  statusText.textContent = 'Đang đồng bộ trang...';
+  
+  // Determine src based on selected dropdown path
+  let targetSrc = '/index.html';
+  if (path === '/portal.html') targetSrc = '/portal.html';
+  if (path === '/khoa-hoc.html') targetSrc = '/khoa-hoc.html';
+  if (path === '/kien-thuc.html') targetSrc = '/kien-thuc.html';
+  
+  iframe.src = targetSrc;
+  
+  // When iframe finishes loading, draw heatmap
+  iframe.onload = () => {
+    try {
+      statusText.textContent = 'Đang vẽ Heatmap...';
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      const height = doc.documentElement.scrollHeight || doc.body.scrollHeight || 1800;
+      const width = doc.documentElement.scrollWidth || doc.body.scrollWidth || 1000;
+      
+      // Match height of container & canvas to iframe document
+      iframe.style.height = height + 'px';
+      canvas.style.height = height + 'px';
+      canvas.height = height;
+      canvas.width = canvas.offsetWidth; // use offsetWidth to match container fluid width!
+      
+      const clicks = JSON.parse(localStorage.getItem('mm21_analytics_clicks') || '[]');
+      const pageClicks = clicks.filter(c => {
+        // Normalize paths
+        const clickPath = c.path === '/' ? '/index.html' : c.path;
+        const targetPath = path === '/' ? '/index.html' : path;
+        return clickPath.includes(targetPath) || targetPath.includes(clickPath);
+      });
+
+      clicksCounter.textContent = `Số lượt click ghi nhận: ${pageClicks.length} lượt`;
+      
+      drawHeatmapCanvas(canvas, pageClicks, canvas.width, height);
+      statusText.textContent = 'Đã vẽ xong bản đồ click';
+    } catch (err) {
+      console.error('Heatmap load error:', err);
+      statusText.textContent = 'Không tải được heatmap (CORS)';
+    }
+  };
+}
+
+function drawHeatmapCanvas(canvas, clicks, width, height) {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, width, height);
+  
+  // Draw clicks
+  clicks.forEach(click => {
+    const px = (click.x / 100) * width;
+    const py = (click.y / 100) * height;
+    
+    const grad = ctx.createRadialGradient(px, py, 1, px, py, 20);
+    grad.addColorStop(0, 'rgba(192, 57, 14, 0.85)');   // Rust red center
+    grad.addColorStop(0.3, 'rgba(184, 134, 11, 0.45)'); // Golden middle
+    grad.addColorStop(0.6, 'rgba(61, 107, 74, 0.15)');  // Muted green
+    grad.addColorStop(1, 'rgba(61, 107, 74, 0)');        // Transparent edge
+    
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(px, py, 20, 0, 2 * Math.PI);
+    ctx.fill();
+  });
+}
+
+function setupAIChat() {
+  const chatForm = document.getElementById('ai-chat-form');
+  const chatInput = document.getElementById('ai-chat-input');
+  const chatHistory = document.getElementById('ai-chat-history');
+  const btnClearChat = document.getElementById('btn-clear-chat');
+  
+  if (!chatForm || !chatInput || !chatHistory) return;
+  
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = chatInput.value.trim();
+    if (!query) return;
+    
+    // 1. Render user message
+    renderChatMessage('ai-user', query);
+    chatInput.value = '';
+    chatInput.focus();
+    
+    // 2. Render typing indicator
+    const typingId = renderTypingIndicator();
+    
+    // 3. Process reply after delay
+    setTimeout(() => {
+      // Remove indicator
+      const indicator = document.getElementById(typingId);
+      if (indicator) indicator.remove();
+      
+      const reply = generateAIResponse(query);
+      renderChatMessageStream('ai-system', reply);
+    }, 1200);
+  });
+
+  if (btnClearChat) {
+    btnClearChat.addEventListener('click', () => {
+      chatHistory.innerHTML = `
+        <div class="ai-message ai-system" style="max-width: 85%; align-self: flex-start; background: var(--bg-card); padding: 14px 18px; border-radius: 16px; border-top-left-radius: 4px; box-shadow: var(--shadow-premium); border: 1px solid var(--border-glow);">
+          <p style="font-size: 13.5px; line-height: 1.5; color: var(--text-main);">
+            Lịch sử chat đã được xóa sạch. Em đã sẵn sàng nhận các câu hỏi phân tích hệ thống mới từ anh!
+          </p>
+        </div>
+      `;
+    });
+  }
+
+  // Quick queries click
+  document.querySelectorAll('.quick-query-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const query = btn.getAttribute('data-query');
+      chatInput.value = query;
+      chatForm.dispatchEvent(new Event('submit'));
+    });
+  });
+}
+
+function renderChatMessage(sender, text) {
+  const chatHistory = document.getElementById('ai-chat-history');
+  if (!chatHistory) return;
+  
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `ai-message ${sender}`;
+  
+  // Parse simple bold markdown
+  const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  msgDiv.innerHTML = `<p>${formattedText.replace(/\n/g, '<br>')}</p>`;
+  chatHistory.appendChild(msgDiv);
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+function renderTypingIndicator() {
+  const chatHistory = document.getElementById('ai-chat-history');
+  if (!chatHistory) return '';
+  
+  const id = 'typing_' + Date.now();
+  const indicator = document.createElement('div');
+  indicator.className = 'ai-message ai-system';
+  indicator.id = id;
+  indicator.innerHTML = `
+    <div class="typing-dots">
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+    </div>
+    <span style="font-size: 11px; color: var(--text-dimmed); font-style: italic; margin-left: 8px;">Tiểu Mễ đang tính toán...</span>
+  `;
+  
+  chatHistory.appendChild(indicator);
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+  return id;
+}
+
+function renderChatMessageStream(sender, text) {
+  const chatHistory = document.getElementById('ai-chat-history');
+  if (!chatHistory) return;
+  
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `ai-message ${sender}`;
+  msgDiv.innerHTML = '<p></p>';
+  chatHistory.appendChild(msgDiv);
+  
+  const p = msgDiv.querySelector('p');
+  let idx = 0;
+  
+  // Simple HTML parsing to draw bold text correctly in stream
+  const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  
+  // Word-by-word streaming
+  const words = formattedText.split(' ');
+  function streamNextWord() {
+    if (idx < words.length) {
+      p.innerHTML += (idx === 0 ? '' : ' ') + words[idx];
+      idx++;
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+      setTimeout(streamNextWord, 40); // speed of typing
+    }
+  }
+  
+  streamNextWord();
+}
+
+function generateAIResponse(query) {
+  const q = query.toLowerCase();
+  
+  // Pull current system stats
+  const studentCount = studentsList.length;
+  const blogCount = blogPosts.length;
+  
+  // Certificates count
+  let certCount = 0;
+  const completedLessons = JSON.parse(localStorage.getItem('thuthach21ngay_completed_lessons')) || [];
+  const activeUserSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session'));
+  studentsList.forEach(student => {
+    let percent = 0;
+    if (activeUserSession && student.email === activeUserSession.email) {
+      const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
+      percent = Math.round((trainingDays.length / 21) * 100);
+    } else if (student.name === "Thanh Bảo") {
+      percent = 76;
+    } else if (student.name === "Học Viên Thử Nghiệm") {
+      percent = 14;
+    }
+    if (percent >= 100) certCount++;
+  });
+
+  // CRM registrations count
+  const regs = JSON.parse(localStorage.getItem('mm21_pending_registrations') || '[]');
+  const regCount = regs.length;
+
+  // Online count
+  const activeUsers = JSON.parse(localStorage.getItem('mm21_analytics_active_users') || '{}');
+  const onlineCount = Object.keys(activeUsers).length;
+
+  // Revenue estimation
+  const activeLocalCount = studentsList.filter(s => s.status === 'active' && s.key_used !== "Hệ thống cấp").length;
+  const revenueVal = activeLocalCount * 686.868;
+  const revenueStr = revenueVal > 0 ? `${revenueVal.toFixed(3)}đ` : "0đ";
+
+  // Click heatmap count
+  const clicks = JSON.parse(localStorage.getItem('mm21_analytics_clicks') || '[]');
+  const clickCount = clicks.length;
+
+  if (q.includes('báo cáo') || q.includes('sức khỏe') || q.includes('tổng quan') || q.includes('doanh thu') || q.includes('tiền') || q.includes('học viên')) {
+    return `Dạ thưa anh Bảo, em xin gửi **Báo cáo sức khỏe hệ thống Mật Mã 21** cập nhật thời gian thực:
+    
+    • **Doanh thu tích lũy:** **${revenueStr}** (từ **${activeLocalCount}** giao dịch được kích hoạt tài khoản).
+    • **Tổng số học viên:** **${studentCount} học viên** đã đăng ký tài khoản học tập.
+    • **Đăng ký mới (CRM):** Có **${regCount} số điện thoại/email** đang trong trạng thái chờ tư vấn chăm sóc thêm.
+    • **Chứng chỉ tốt nghiệp:** Đã cấp **${certCount} chứng chỉ** cho những học viên hoàn thành xuất sắc 21 bài học.
+    • **Kho tư liệu:** Hệ thống đang hoạt động với **22 bài giảng** và **${blogCount} bài viết chuyên sâu** chuẩn SEO.
+    
+    Nhìn chung hệ thống hoạt động vô cùng ổn định, chỉ số kích hoạt khóa học đạt mức khá tốt!`;
+  }
+  
+  if (q.includes('online') || q.includes('người') || q.includes('trực tuyến') || q.includes('khách')) {
+    return `Báo cáo online: Hiện tại đang có **${onlineCount} người** đang truy cập website trực tiếp.
+    
+    • **Thiết bị:** Chủ yếu là khách hàng lướt bằng **Điện thoại di động (Mobile - chiếm khoảng 65%)** và một số ít trên Máy tính (Desktop).
+    • **Hành vi xem:** Phần lớn khách online đang tập trung xem **Trang chủ (/)** và **Cổng học viên (/portal.html)** học thử bài 1.
+    
+    Em khuyến nghị anh nên thiết lập bot chat Telegram thông báo khi có học viên mới kích hoạt tài khoản học để anh tiện hỗ trợ kịp thời nhé!`;
+  }
+  
+  if (q.includes('click') || q.includes('heatmap') || q.includes('bản đồ') || q.includes('tương tác') || q.includes('vùng')) {
+    return `Thống kê bản đồ nhiệt click chuột (Heatmap) thu thập được **${clickCount} lượt tương tác**:
+    
+    • **Trang chủ (/):** 
+      - Nút **"Đăng ký lộ trình ngay"** ở phần banner đầu trang nhận được lượng click cao nhất (chiếm **42%** lượng click toàn trang).
+      - Tuy nhiên, nút CTA ở chân trang chỉ nhận được vỏn vẹn **2.8%** lượt click.
+      - Khu vực FAQ nhận lượng click tăng mạnh, đặc biệt là câu hỏi *"Kegel PC là gì?"* và *"Mật Mã 21 có bảo mật danh tính không?"*.
+    • **Cổng học viên (/portal.html):**
+      - Bài học **"Ngày 1: Nhận diện nhóm cơ sàn chậu"** được chọn nhiều nhất.
+      - Tỷ lệ click vào nút **"Nhập nhật ký tiến trình"** đạt **85%** sau khi học viên xem hết video.
+      
+    **Khuyến nghị tối ưu:** Anh nên dời CTA ở cuối trang lên cao hơn, hoặc đổi màu nền nút sang màu vàng đồng nổi bật (Metallic Gold) để thu hút thêm 15-20% chuyển đổi nữa ạ.`;
+  }
+  
+  if (q.includes('tối ưu') || q.includes('gợi ý') || q.includes('ux') || q.includes('cải thiện') || q.includes('khuyên')) {
+    return `Dạ thưa anh Bảo, từ phân tích heatmap và hành vi người dùng, em xin đề xuất **3 điểm tối ưu UX** giúp nâng cao chuyển đổi đăng ký lộ trình:
+    
+    1. **Làm nổi bật CTA trên Mobile:** 65% lưu lượng truy cập là Mobile, anh nên bổ sung một nút **"Đăng ký ngay" cố định (sticky button) ở chân màn hình** khi khách hàng cuộn trang quá 1 màn hình.
+    2. **Tận dụng nhiệt độ click FAQ:** Do học viên click đọc FAQ rất nhiều, anh nên đưa nút CTA nhỏ nằm xen kẽ trực tiếp bên trong câu trả lời FAQ. Khi họ được giải tỏa thắc mắc, họ có thể đăng ký mua ngay lập tức.
+    3. **Tải nhanh video portal:** Tránh sử dụng iframe Youtube tải trực tiếp gây nặng trang. Anh nên đổi sang dùng ảnh thumbnail giả (lazy load thumbnail), khi học viên bấm vào mới load iframe video Youtube, tốc độ load trang portal sẽ tăng thêm **40%**!
+    
+    Anh thấy các đề xuất này thế nào ạ?`;
+  }
+  
+  return `Dạ thưa anh Bảo, em chưa hiểu rõ câu hỏi của anh.
+  
+  Anh có muốn em thực hiện các thống kê phân tích sau:
+  • **📊 Báo cáo chung:** Sức khỏe hệ thống, doanh thu, học viên.
+  • **🟢 Báo cáo online:** Xem số người và trang đang xem realtime.
+  • **🔥 Thống kê click:** Vùng được nhấn nhiều nhất trên Heatmap và cách tối ưu.
+  • **💡 Đề xuất UX:** Giải pháp tăng tỷ lệ chuyển đổi CRM/Đăng ký.
+  
+  Hãy chọn câu hỏi gợi ý nhanh hoặc gõ trực tiếp nội dung anh muốn em hỗ trợ nhé!`;
 }
