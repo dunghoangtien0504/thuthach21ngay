@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kegel Khởi Đầu — 7 Ngày Luyện Nền Tảng Tự Chủ | FORMEN</title>
+  <meta name="description" content="Chỉ 10 phút/ngày — luyện đúng kỹ thuật Kegel, bắt đầu cảm nhận tự chủ hơn từ ngày thứ 3. Không thuốc. Không dụng cụ. Hoàn toàn riêng tư.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --font-heading: 'Lora', Georgia, serif;
+      --font-body: 'Raleway', system-ui, sans-serif;
+      --primary: #0D2B1A;
+      --primary-light: #163f27;
+      --accent: #B8860B;
+      --accent-bright: #D4AF37;
+      --green: #2E7D32;
+      --danger: #C0390E;
+      --bg-main: #FBF9F4;
+      --bg-section: #F4F1EA;
+      --text-main: #0E2519;
+      --text-muted: #485A4F;
+      --text-light: #8FA497;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 50px;
+      --shadow-sm: 0 4px 6px -1px rgba(13,43,26,0.06);
+      --shadow-md: 0 10px 15px -3px rgba(13,43,26,0.09);
+      --shadow-lg: 0 20px 25px -5px rgba(13,43,26,0.13);
+      --shadow-gold: 0 10px 20px -5px rgba(184,134,11,0.28);
+      --transition: all 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background-color: var(--bg-main); color: var(--text-main); line-height: 1.7; font-size: 16px; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ===== HEADER ===== */
+    header {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(13,43,26,0.06);
+      position: sticky; top: 0;
+      background: rgba(251,249,244,0.96);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+    }
+    .header-layout { display: flex; justify-content: space-between; align-items: center; }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-heading); font-size: 20px; font-weight: 700;
+      color: var(--primary); text-decoration: none;
+    }
+    .logo i { color: var(--accent); }
+    .header-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary); font-weight: 800; font-size: 13.5px;
+      text-decoration: none; box-shadow: var(--shadow-gold); transition: var(--transition);
+    }
+    .header-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 24px -4px rgba(184,134,11,0.4); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background-color: var(--primary);
+      padding: 64px 0 56px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(184,134,11,0.08) 0%, transparent 65%);
+    }
+    .hero-inner { position: relative; z-index: 1; text-align: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(184,134,11,0.15); border: 1px solid rgba(184,134,11,0.3);
+      color: var(--accent-bright); padding: 5px 14px; border-radius: var(--radius-pill);
+      font-size: 12px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 700; color: #fff;
+      line-height: 1.25; margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--accent-bright); }
+    .hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.7);
+      max-width: 580px; margin: 0 auto 32px;
+      line-height: 1.65;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 36px; border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary); font-weight: 800; font-size: 16px;
+      text-decoration: none; box-shadow: var(--shadow-gold); transition: var(--transition);
+    }
+    .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 18px 32px -6px rgba(184,134,11,0.5); }
+    .hero-meta {
+      display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+      margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.5);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+    .hero-meta i { color: var(--accent); }
+
+    /* ===== SECTION WRAPPER ===== */
+    .section { padding: 56px 0; }
+    .section-alt { background-color: var(--bg-section); }
+    .section-dark { background-color: var(--primary); color: #fff; }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 700; color: var(--primary);
+      margin-bottom: 8px; line-height: 1.3;
+    }
+    .section-dark .section-title { color: #fff; }
+    .section-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; }
+    .section-dark .section-sub { color: rgba(255,255,255,0.65); }
+
+    /* ===== BULLETS / FASCINATIONS ===== */
+    .bullets { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .bullets li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 15px; color: var(--text-main); line-height: 1.6;
+    }
+    .bullets li i { color: var(--accent); margin-top: 3px; flex-shrink: 0; }
+
+    /* ===== PAIN / AGITATE ===== */
+    .pain-box {
+      background: #fff; border: 1px solid rgba(13,43,26,0.07);
+      border-left: 4px solid var(--danger);
+      border-radius: var(--radius-md);
+      padding: 28px 32px; margin-bottom: 20px;
+    }
+    .pain-box p { font-size: 15px; color: var(--text-main); line-height: 1.75; }
+    .pain-box p + p { margin-top: 12px; }
+
+    /* ===== LESSONS ===== */
+    .lessons { display: flex; flex-direction: column; gap: 16px; }
+    .lesson-card {
+      background: #fff; border: 1px solid rgba(13,43,26,0.07);
+      border-radius: var(--radius-md); padding: 22px 26px;
+      display: flex; gap: 18px; align-items: flex-start;
+      box-shadow: var(--shadow-sm); transition: var(--transition);
+    }
+    .lesson-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .lesson-num {
+      flex-shrink: 0; width: 38px; height: 38px;
+      background: var(--primary); color: var(--accent-bright);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading); font-weight: 700; font-size: 15px;
+    }
+    .lesson-body h4 {
+      font-family: var(--font-heading); font-size: 16px;
+      font-weight: 600; color: var(--primary); margin-bottom: 6px;
+    }
+    .lesson-body p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== VALUE STACK ===== */
+    .value-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+    .value-table th, .value-table td {
+      padding: 13px 16px; text-align: left; font-size: 14.5px;
+      border-bottom: 1px solid rgba(13,43,26,0.06);
+    }
+    .value-table th { font-weight: 800; color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+    .value-table td:last-child { text-align: right; font-weight: 700; color: var(--green); }
+    .value-total td { font-weight: 800; color: var(--primary) !important; border-top: 2px solid rgba(13,43,26,0.1); }
+    .value-total td:last-child { color: var(--accent) !important; font-size: 17px; }
+
+    /* ===== PRICE BOX ===== */
+    .price-box {
+      background: var(--primary); border-radius: var(--radius-lg);
+      padding: 40px 36px; text-align: center; position: relative; overflow: hidden;
+    }
+    .price-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 30%, rgba(184,134,11,0.1) 0%, transparent 60%);
+    }
+    .price-box-inner { position: relative; z-index: 1; }
+    .price-label { font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+    .price-was-big { font-size: 18px; color: rgba(255,255,255,0.35); text-decoration: line-through; margin-bottom: 4px; }
+    .price-now-big {
+      font-family: var(--font-heading); font-size: 52px; font-weight: 700;
+      color: var(--accent-bright); line-height: 1; margin-bottom: 12px;
+    }
+    .price-save { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 28px; }
+    .price-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 18px 40px; border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary); font-weight: 800; font-size: 17px;
+      text-decoration: none; box-shadow: var(--shadow-gold);
+      transition: var(--transition); width: 100%; justify-content: center;
+    }
+    .price-cta:hover { transform: translateY(-3px); box-shadow: 0 18px 32px -6px rgba(184,134,11,0.5); }
+    .price-note { font-size: 12.5px; color: rgba(255,255,255,0.4); margin-top: 14px; }
+
+    /* ===== GUARANTEE ===== */
+    .guarantee-box {
+      background: #fff; border: 2px solid rgba(46,125,50,0.2);
+      border-radius: var(--radius-lg); padding: 32px 36px;
+      display: flex; gap: 24px; align-items: flex-start;
+    }
+    .guarantee-icon { font-size: 42px; color: var(--green); flex-shrink: 0; }
+    .guarantee-body h3 {
+      font-family: var(--font-heading); font-size: 19px; font-weight: 700;
+      color: var(--primary); margin-bottom: 8px;
+    }
+    .guarantee-body p { font-size: 14.5px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ===== FAQ ===== */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: #fff; border: 1px solid rgba(13,43,26,0.07);
+      border-radius: var(--radius-md); overflow: hidden;
+    }
+    .faq-q {
+      padding: 18px 22px; cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; font-weight: 700; font-size: 14.5px; color: var(--primary);
+      user-select: none; gap: 12px;
+    }
+    .faq-q i { color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+    .faq-item.open .faq-q i { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+      padding: 0 22px; font-size: 14px; color: var(--text-muted); line-height: 1.7;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 22px 18px; }
+
+    /* ===== BONUS CARD ===== */
+    .bonus-card {
+      background: linear-gradient(135deg, #fff8e7 0%, #fffdf5 100%);
+      border: 2px solid rgba(184,134,11,0.2); border-radius: var(--radius-lg);
+      padding: 28px 32px; display: flex; gap: 20px; align-items: flex-start;
+    }
+    .bonus-icon { font-size: 36px; color: var(--accent); flex-shrink: 0; }
+    .bonus-body h4 {
+      font-family: var(--font-heading); font-size: 17px; font-weight: 700;
+      color: var(--primary); margin-bottom: 6px;
+    }
+    .bonus-body p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .bonus-price {
+      display: inline-block; margin-top: 10px;
+      background: var(--primary); color: var(--accent-bright);
+      padding: 4px 12px; border-radius: var(--radius-pill);
+      font-size: 12px; font-weight: 800;
+    }
+
+    /* ===== UPSELL HINT ===== */
+    .upsell-hint {
+      background: rgba(13,43,26,0.04); border: 1px solid rgba(13,43,26,0.08);
+      border-radius: var(--radius-md); padding: 20px 24px;
+      font-size: 14px; color: var(--text-muted); line-height: 1.7;
+      margin-top: 16px;
+    }
+    .upsell-hint strong { color: var(--primary); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: var(--primary); color: rgba(255,255,255,0.55);
+      padding: 40px 0; text-align: center;
+    }
+    footer p { font-size: 13px; margin-bottom: 16px; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; font-size: 13px; flex-wrap: wrap; }
+    .footer-links a { color: #fff; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent-bright); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .guarantee-box { flex-direction: column; }
+      .bonus-card { flex-direction: column; }
+      .hero-meta { gap: 16px; }
+      .price-now-big { font-size: 40px; }
+    }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- ======== HEADER ======== -->
+  <header>
+    <div class="container-wide header-layout">
+      <a href="/" class="logo">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>FORMEN</span>
+      </a>
+      <a href="#order" class="header-cta">
+        <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — 199.000đ
+      </a>
+    </div>
+  </header>
+
+  <!-- ======== HERO ======== -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-badge">
+        <i class="fa-solid fa-flask"></i> Phương pháp Dr. Arnold Kegel — 1948
+      </div>
+      <h1>
+        Cơ Thể Anh Đã Có Sẵn<br>
+        <span>Hệ Thống Kiểm Soát Từ Khi Sinh Ra</span><br>
+        — Chỉ Là Anh Chưa Biết Cách Kích Hoạt Nó
+      </h1>
+      <p class="hero-sub">
+        Nghiên cứu từ 1948 của Bác Sĩ Arnold Kegel chứng minh: Đàn ông có thể cải thiện khả năng tự chủ chỉ với 10 phút luyện tập mỗi ngày. Không thuốc. Không dụng cụ. Không ai biết ngoài anh.
+      </p>
+      <a href="#order" class="hero-cta">
+        <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — 199.000đ
+      </a>
+      <div class="hero-meta">
+        <span><i class="fa-solid fa-clock"></i> 10 phút/ngày</span>
+        <span><i class="fa-solid fa-calendar-week"></i> 7 ngày</span>
+        <span><i class="fa-solid fa-house-lock"></i> Tự làm tại nhà</span>
+        <span><i class="fa-solid fa-shield-halved"></i> Hoàn tiền 7 ngày</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FASCINATION BULLETS ======== -->
+  <section class="section">
+    <div class="container">
+      <p style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;font-weight:800;margin-bottom:16px;">Khi đọc hết trang này, anh sẽ biết:</p>
+      <ul class="bullets">
+        <li><i class="fa-solid fa-circle-check"></i> Sai lầm phổ biến nhất khi luyện Kegel — 9/10 đàn ông mắc phải, làm mãi không thấy kết quả dù rất chăm chỉ</li>
+        <li><i class="fa-solid fa-circle-check"></i> Cơ nào trong cơ thể thật sự kiểm soát thời gian của anh — và tại sao không ai dạy anh cách luyện nó đúng</li>
+        <li><i class="fa-solid fa-circle-check"></i> Bài kiểm tra 2 phút để biết ngay mình đang làm đúng hay sai kỹ thuật</li>
+        <li><i class="fa-solid fa-circle-check"></i> Kỹ thuật 1 động tác dùng đúng lúc — khi anh cần kiểm soát nhất</li>
+        <li><i class="fa-solid fa-circle-check"></i> Tại sao 7 ngày đầu quyết định phần lớn kết quả của cả hành trình</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======== PAIN ======== -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Anh không phải người duy nhất gặp chuyện này.</h2>
+      <p class="section-sub">Có hàng triệu đàn ông ở Việt Nam đang cùng tình trạng với anh. Không ai nói ra. Nhưng tất cả đều thầm mong muốn điều tương tự.</p>
+
+      <div class="pain-box">
+        <p>Vấn đề không phải vì anh yếu hơn người khác. Không phải "chuyện bình thường của đàn ông". Không phải di truyền hay số phận.</p>
+        <p>Vấn đề là không ai từng dạy anh đúng kỹ thuật.</p>
+        <p>Anh đã thử những gì? Các loại thuốc được quảng cáo "tăng cường bản lĩnh"? Cố kìm nén — nghĩ chuyện khác để phân tâm? Sản phẩm xịt, gel từ các trang web? Hay đơn giản là... chấp nhận và im lặng?</p>
+        <p><strong>Không cái nào giải quyết được gốc rễ.</strong> Vì vấn đề nằm ở một nhóm cơ mà anh chưa bao giờ được dạy cách luyện.</p>
+      </div>
+
+      <p style="font-size:15px;color:var(--text-muted);margin-top:20px;line-height:1.75;">
+        Điều nguy hiểm nhất không phải là bản thân vấn đề. Điều nguy hiểm là để lâu. Khi anh không tự chủ được — anh bắt đầu tránh né. Rồi mất tự tin. Rồi ảnh hưởng đến mối quan hệ. Cảm giác tự ti đó lan sang cả công việc, sang cách anh nhìn nhận chính mình.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======== SOLUTION ======== -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Tin tốt: Cơ thể anh đã có sẵn hệ thống kiểm soát từ khi sinh ra.</h2>
+      <p class="section-sub">Chỉ là anh chưa được dạy cách dùng nó.</p>
+
+      <p style="font-size:15px;color:var(--text-muted);line-height:1.8;margin-bottom:16px;">
+        <strong style="color:var(--primary);">Bác Sĩ Arnold Kegel</strong> — bác sĩ người Mỹ — phát hiện ra điều này từ năm 1948. Ông tìm ra một nhóm cơ (cơ PC — pubococcygeus) có thể luyện tập như bất kỳ cơ nào khác trong cơ thể. Hơn 75 năm nghiên cứu y khoa đã xác nhận: Luyện đúng nhóm cơ này cải thiện khả năng tự chủ.
+      </p>
+      <p style="font-size:15px;color:var(--text-muted);line-height:1.8;">
+        Vấn đề là hầu hết hướng dẫn online — <strong style="color:var(--danger);">sai kỹ thuật.</strong> Sai cơ. Sai nhịp. Không có cách đo tiến độ. Kết quả: Nhiều anh tập cả tháng không thấy khác biệt. Thật ra không phải Kegel không hiệu quả. Là đang tập sai.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======== COURSE CONTENT ======== -->
+  <section class="section section-alt">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:8px;">
+        <span style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;font-weight:800;">Nội dung khóa học</span>
+      </div>
+      <h2 class="section-title" style="text-align:center;">Kegel Khởi Đầu</h2>
+      <p style="text-align:center;font-size:16px;color:var(--accent);font-weight:700;margin-bottom:8px;">7 Ngày Luyện Nền Tảng — Chỉ 10 Phút Mỗi Ngày</p>
+      <p style="text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:36px;">Tự làm tại nhà · Không ai biết ngoài anh · Bắt đầu cảm nhận từ ngày 3-4</p>
+
+      <div class="lessons">
+        <div class="lesson-card">
+          <div class="lesson-num">1</div>
+          <div class="lesson-body">
+            <h4>Tại Sao Cơ PC Là "Cần Số" Kiểm Soát Của Anh</h4>
+            <p>Anh sẽ hiểu chính xác nhóm cơ nào đang kiểm soát thời gian của anh — và tại sao luyện sai cơ thì dù cố đến đâu cũng không ra kết quả. Có kèm Bài Kiểm Tra Gương để anh xác nhận đúng vị trí trong 2 phút.</p>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-num">2</div>
+          <div class="lesson-body">
+            <h4>Cô Lập Đúng Cơ Kegel: 3 Dấu Hiệu Biết Mình Đang Làm Đúng</h4>
+            <p>Bài quan trọng nhất trong cả chương trình. Sai lầm phổ biến nhất: co cơ bụng hoặc cơ mông thay vì cơ PC. Anh sẽ biết chính xác mình đang làm đúng hay sai — không cần đoán, không cần ai kiểm tra giúp.</p>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-num">3</div>
+          <div class="lesson-body">
+            <h4>Bài Tập Cơ Bản Nhịp 3-3-3 (Ngày 1-2)</h4>
+            <p>Co 3 giây. Giữ 3 giây. Thả 3 giây. 3 hiệp × 10 lần. Tổng cộng 10 phút. Anh có thể làm ngay tại bàn làm việc — không ai biết anh đang làm gì.</p>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-num">4</div>
+          <div class="lesson-body">
+            <h4>Nâng Cường Độ: Nhịp 5-5-5 & Bài Tập Nhanh Kết Hợp (Ngày 3-4-5)</h4>
+            <p>Từ ngày 3, anh bắt đầu cảm nhận sự khác biệt đầu tiên. Bài này thêm biến thể nhanh để kích hoạt thêm nhóm sợi cơ — tăng kết quả mà không tốn thêm thời gian.</p>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-num">5</div>
+          <div class="lesson-body">
+            <h4>Kỹ Thuật "Bóp Khẩn Cấp": Dùng Đúng Lúc Anh Cần Nhất</h4>
+            <p>1 kỹ thuật ứng dụng thực tế. Không phải lý thuyết. Là kỹ năng thực chiến — dùng đúng khoảnh khắc anh cần kiểm soát nhất.</p>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-num">6</div>
+          <div class="lesson-body">
+            <h4>Lịch Duy Trì 7 Ngày Đầy Đủ & Cách Theo Dõi Tiến Độ</h4>
+            <p>Anh không cần nhớ gì cả. Chỉ cần mở bảng check-in và làm theo. Biết dấu hiệu nào cho thấy anh đang tiến bộ — và cách điều chỉnh nếu cơ mỏi.</p>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-num">7</div>
+          <div class="lesson-body">
+            <h4>Đánh Giá Sau 7 Ngày & Con Đường Tiếp Theo</h4>
+            <p>Anh sẽ biết mình đang ở đâu sau 7 ngày — và những gì cần làm tiếp theo để tiếp tục cải thiện bền vững.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="upsell-hint">
+        💡 <strong>Lưu ý:</strong> Kegel Khởi Đầu dạy anh <strong>Hệ Thống 1 trong 5 hệ thống kiểm soát</strong>. Kết quả kỳ vọng: tự chủ hơn 3-5 phút. Để đạt 15-30 phút bền vững — anh cần cả 5 hệ thống. Đó là những gì <strong>Mật Mã 21</strong> dạy sau khi anh có nền tảng.
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== BONUS ======== -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title" style="margin-bottom:24px;">Quà Tặng Kèm Theo</h2>
+      <div class="bonus-card">
+        <div class="bonus-icon"><i class="fa-solid fa-file-pdf"></i></div>
+        <div class="bonus-body">
+          <h4>"Lịch Luyện Kegel 7 Ngày Cho Nam Giới — Chỉ 10 Phút Mỗi Sáng"</h4>
+          <p>PDF Checklist — In ra hoặc lưu điện thoại. Không cần nhớ hôm nay là bài gì, cần làm bao nhiêu hiệp. Chỉ cần mở ra và làm theo.</p>
+          <span class="bonus-price">Trị giá 599.000đ — Anh nhận miễn phí</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== VALUE STACK + ORDER ======== -->
+  <section class="section section-dark" id="order">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;margin-bottom:28px;">Bắt Đầu 7 Ngày Của Anh Ngay Hôm Nay</h2>
+
+      <table class="value-table" style="background:rgba(255,255,255,0.05);border-radius:var(--radius-md);overflow:hidden;margin-bottom:28px;">
+        <thead>
+          <tr style="background:rgba(255,255,255,0.07);">
+            <th style="color:rgba(255,255,255,0.4);">Nội dung</th>
+            <th style="color:rgba(255,255,255,0.4);text-align:right;">Trị giá</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:rgba(255,255,255,0.8);">7 bài học Kegel cơ bản (truy cập mãi mãi)</td>
+            <td style="color:var(--accent-bright);">300.000đ</td>
+          </tr>
+          <tr>
+            <td style="color:rgba(255,255,255,0.8);">PDF Lịch Luyện Kegel 7 Ngày</td>
+            <td style="color:var(--accent-bright);">599.000đ</td>
+          </tr>
+          <tr class="value-total">
+            <td style="color:#fff;border-top:1px solid rgba(255,255,255,0.1);">Tổng giá trị</td>
+            <td style="color:var(--accent-bright);border-top:1px solid rgba(255,255,255,0.1);">899.000đ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="price-box">
+        <div class="price-box-inner">
+          <p class="price-label">Hôm nay anh chỉ trả</p>
+          <p class="price-was-big">899.000đ</p>
+          <p class="price-now-big">199.000đ</p>
+          <p class="price-save">Tiết kiệm 700.000đ — Truy cập ngay sau thanh toán</p>
+          <a href="/#offer-section" class="price-cta">
+            <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — 199.000đ
+          </a>
+          <p class="price-note">
+            <i class="fa-solid fa-lock"></i> Thanh toán bảo mật · Nhận ngay sau khi thanh toán<br>
+            <i class="fa-solid fa-rotate-left"></i> Hoàn tiền 100% trong 7 ngày nếu không thấy khác biệt
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== GUARANTEE ======== -->
+  <section class="section">
+    <div class="container">
+      <div class="guarantee-box">
+        <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="guarantee-body">
+          <h3>Cam Kết Thử 7 Ngày — Không Thấy Khác Biệt, Hoàn Toàn Bộ Tiền</h3>
+          <p>Anh có 7 ngày để luyện tập theo đúng hướng dẫn. Nếu sau 7 ngày anh tập đúng theo chỉ dẫn mà không cảm nhận bất kỳ khác biệt nào — nhắn tin cho FORMEN. Hoàn <strong>100%</strong> không hỏi thêm câu nào.</p>
+          <p style="margin-top:8px;">Chúng tôi làm điều này vì chúng tôi tin vào phương pháp. Và vì 199.000đ là số tiền đủ để anh thử mà không cần đặt quá nhiều rủi ro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title" style="margin-bottom:24px;">Câu Hỏi Thường Gặp</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">
+            Tôi chưa biết gì về Kegel — có học được không?
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="faq-a">Hoàn toàn được. Kegel Khởi Đầu được thiết kế cho người bắt đầu từ số 0. Bài 1 và Bài 2 dạy anh từ đầu — không giả định anh đã biết gì.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Mất bao lâu để thấy kết quả?
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="faq-a">Hầu hết học viên bắt đầu cảm nhận khác biệt đầu tiên vào ngày 3-4. Kết quả rõ hơn sau 7 ngày luyện đúng. "Cảm nhận khác biệt" ở đây là cảm giác kiểm soát được cơ — kết quả tổng thể cần thêm thời gian duy trì.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Tôi có thể tập ở văn phòng không?
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="faq-a">Hoàn toàn được. Bài tập Kegel không cần tư thế đặc biệt và không ai biết anh đang làm gì. Nhiều học viên tập ngay tại bàn làm việc hoặc trên xe.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Nếu không thấy kết quả thì sao?
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="faq-a">Anh có 7 ngày để thử. Nếu tập đúng theo hướng dẫn mà không thấy khác biệt — FORMEN hoàn 100% không hỏi gì thêm.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Khóa này có đủ để giải quyết hoàn toàn vấn đề của tôi không?
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="faq-a">Kegel Khởi Đầu được thiết kế để anh có kết quả đầu tiên và xây nền tảng đúng — kéo dài thêm 3-5 phút và bắt đầu cảm nhận kiểm soát. Đây là bước đầu tiên. Để đạt kết quả đầy đủ và bền vững hơn, FORMEN có chương trình 21 ngày toàn diện (Mật Mã 21) cho anh khi sẵn sàng bước tiếp.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FINAL CTA ======== -->
+  <section class="section">
+    <div class="container" style="text-align:center;">
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px;">Nếu anh đã đọc đến đây, anh biết mình muốn thay đổi điều gì.</p>
+      <p style="font-size:16px;color:var(--text-main);font-weight:600;margin-bottom:28px;">Câu hỏi chỉ là: bắt đầu hôm nay, hay tiếp tục chờ?</p>
+      <a href="/#offer-section" class="price-cta" style="max-width:360px;margin:0 auto;">
+        <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — 199.000đ
+      </a>
+      <p style="font-size:12.5px;color:var(--text-light);margin-top:16px;">199.000đ · 10 phút mỗi ngày · 7 ngày để thấy khác biệt đầu tiên · Hoàn tiền 100%</p>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer>
+    <div class="container-wide">
+      <p>© 2026 FORMEN. Bảo lưu mọi quyền.</p>
+      <div class="footer-links">
+        <a href="/"><i class="fa-solid fa-house"></i> Trang Chủ</a>
+        <a href="/khoa-hoc.html"><i class="fa-solid fa-book-open"></i> Khóa Học</a>
+        <a href="mailto:support@themencode.vn"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
+        <a href="https://t.me/matma21_support" target="_blank"><i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
