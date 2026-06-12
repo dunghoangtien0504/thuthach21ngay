@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#D4AF37"/></marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4A9EBF"/></marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#C0390E"/></marker>
+  </defs>
+  <rect width="680" height="400" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="340" y="28" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">SEROTONIN &amp; DOPAMINE — CÂN BẰNG THẦN KINH XUẤT TINH</text>
+
+  <!-- Serotonin side -->
+  <rect x="20" y="42" width="300" height="325" rx="12" fill="#0D2B1A" stroke="#4A9EBF" stroke-width="1.5"/>
+  <text x="170" y="66" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#4A9EBF" text-anchor="middle">SEROTONIN (5-HT)</text>
+  <text x="170" y="82" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">Chất ức chế — phanh thần kinh</text>
+
+  <!-- Brain icon area -->
+  <circle cx="170" cy="130" r="42" fill="#1B3320" stroke="#4A9EBF" stroke-width="2"/>
+  <text x="170" y="120" font-family="system-ui,sans-serif" font-size="22" text-anchor="middle">🧠</text>
+  <text x="170" y="145" font-family="system-ui,sans-serif" font-size="9" fill="#4A9EBF" text-anchor="middle">Nhân Raphe</text>
+  <text x="170" y="158" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">(Raphe Nuclei)</text>
+
+  <line x1="170" y1="172" x2="170" y2="195" stroke="#4A9EBF" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <text x="188" y="187" font-family="system-ui,sans-serif" font-size="9" fill="#4A9EBF">Ức chế</text>
+
+  <rect x="35" y="198" width="270" height="44" rx="8" fill="#1B3320"/>
+  <text x="170" y="215" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#4A9EBF" text-anchor="middle">→ Tủy sống L3-L4 (SEG)</text>
+  <text x="170" y="230" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">Nâng ngưỡng kích hoạt phản xạ</text>
+  <text x="170" y="244" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">→ Kéo dài thời gian trước xuất tinh</text>
+
+  <!-- Normal vs Low -->
+  <rect x="35" y="258" width="125" height="90" rx="8" fill="#1B3320" stroke="#4A9EBF" stroke-width="1"/>
+  <text x="97" y="274" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#4A9EBF" text-anchor="middle">Bình thường</text>
+  <text x="97" y="290" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">IELT ≥ 2 phút</text>
+  <text x="97" y="304" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Kiểm soát tốt</text>
+  <text x="97" y="318" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Cảm giác hài lòng</text>
+  <text x="97" y="340" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle">✅</text>
+
+  <rect x="170" y="258" width="135" height="90" rx="8" fill="#2D1A0D" stroke="#C0390E" stroke-width="1"/>
+  <text x="237" y="274" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#C0390E" text-anchor="middle">Thấp hơn BT</text>
+  <text x="237" y="290" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">IELT &lt; 60 giây</text>
+  <text x="237" y="304" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Mất kiểm soát</text>
+  <text x="237" y="318" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">XTS nguyên phát</text>
+  <text x="237" y="340" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle">⚠️</text>
+
+  <!-- Dopamine side -->
+  <rect x="360" y="42" width="300" height="325" rx="12" fill="#0D2B1A" stroke="#D4AF37" stroke-width="1.5"/>
+  <text x="510" y="66" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#D4AF37" text-anchor="middle">DOPAMINE (DA)</text>
+  <text x="510" y="82" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">Chất kích thích — ga tăng tốc</text>
+
+  <circle cx="510" cy="130" r="42" fill="#1B3320" stroke="#D4AF37" stroke-width="2"/>
+  <text x="510" y="120" font-family="system-ui,sans-serif" font-size="22" text-anchor="middle">⚡</text>
+  <text x="510" y="145" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle">Vùng VTA</text>
+  <text x="510" y="158" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">(Khoái cảm &amp; Thèm muốn)</text>
+
+  <line x1="510" y1="172" x2="510" y2="195" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="528" y="187" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37">Kích hoạt</text>
+
+  <rect x="375" y="198" width="270" height="44" rx="8" fill="#1B3320"/>
+  <text x="510" y="215" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">→ Hệ giao cảm (Sympathetic)</text>
+  <text x="510" y="230" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">Hạ ngưỡng kích hoạt phản xạ</text>
+  <text x="510" y="244" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">→ Đẩy nhanh phản xạ xuất tinh</text>
+
+  <!-- D1 vs D2 receptors -->
+  <rect x="375" y="258" width="270" height="90" rx="8" fill="#1B3320" stroke="#D4AF37" stroke-width="1"/>
+  <text x="510" y="276" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">Cân bằng quan trọng:</text>
+  <text x="510" y="292" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">DA kích thích → 5-HT ức chế</text>
+  <text x="510" y="308" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">Tỉ lệ 5-HT/DA quyết định IELT</text>
+  <text x="510" y="322" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Kỹ thuật hành vi → tăng 5-HT</text>
+  <text x="510" y="336" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Mindfulness → giảm DA kích thích sớm</text>
+
+  <!-- Bottom balance scale -->
+  <text x="340" y="380" font-family="system-ui,sans-serif" font-size="10" fill="#D4AF37" text-anchor="middle">SEROTONIN ↑ &amp; DOPAMINE cân bằng = KIỂM SOÁT ĐƯỢC XUẤT TINH</text>
+
+  <text x="340" y="395" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Waldinger 2010 · Giuliano 2011 · Mật Mã 21 R&amp;D</text>
+</svg>

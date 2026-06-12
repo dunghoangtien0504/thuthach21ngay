@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
+    <linearGradient id="bar1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#C0390E"/><stop offset="100%" stop-color="#8B1E05"/></linearGradient>
+    <linearGradient id="bar2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#AA7C11"/></linearGradient>
+    <linearGradient id="bar3" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#4A9EBF"/><stop offset="100%" stop-color="#2D7A9A"/></linearGradient>
+    <linearGradient id="bar4" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7CB87C"/><stop offset="100%" stop-color="#4A8A4A"/></linearGradient>
+    <linearGradient id="bar5" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9E7CBF"/><stop offset="100%" stop-color="#6A4A8A"/></linearGradient>
+  </defs>
+  <rect width="680" height="380" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="676" height="376" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="340" y="30" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">MẬT ĐỘ ĐẦU MÚT THẦN KINH CẢM GIÁC</text>
+  <text x="340" y="50" font-family="system-ui,sans-serif" font-size="11" fill="#A8D5A2" text-anchor="middle">So sánh giữa các vùng cơ thể · (đơn vị tương đối)</text>
+
+  <!-- Y axis -->
+  <line x1="100" y1="70" x2="100" y2="300" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+  <line x1="100" y1="300" x2="620" y2="300" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Y axis labels -->
+  <text x="92" y="304" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="end">0</text>
+  <text x="92" y="244" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="end">25%</text>
+  <text x="92" y="184" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="end">50%</text>
+  <text x="92" y="124" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="end">75%</text>
+  <text x="92" y="74" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="end">100%</text>
+  <!-- Grid lines -->
+  <line x1="100" y1="244" x2="620" y2="244" stroke="#D4AF37" stroke-width="0.5" opacity="0.2" stroke-dasharray="4,4"/>
+  <line x1="100" y1="184" x2="620" y2="184" stroke="#D4AF37" stroke-width="0.5" opacity="0.2" stroke-dasharray="4,4"/>
+  <line x1="100" y1="124" x2="620" y2="124" stroke="#D4AF37" stroke-width="0.5" opacity="0.2" stroke-dasharray="4,4"/>
+  <line x1="100" y1="74" x2="620" y2="74" stroke="#D4AF37" stroke-width="0.5" opacity="0.2" stroke-dasharray="4,4"/>
+
+  <!-- Bar 1: Glans — 100% -->
+  <rect x="120" y="74" width="70" height="226" rx="4" fill="url(#bar1)"/>
+  <text x="155" y="66" font-family="system-ui,sans-serif" font-size="11" font-weight="800" fill="#C0390E" text-anchor="middle">100%</text>
+  <text x="155" y="316" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#FDFBF7" text-anchor="middle">Quy đầu</text>
+  <text x="155" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Glans</text>
+  <text x="155" y="344" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">~4.000 sợi</text>
+
+  <!-- Bar 2: Fingertip — 63% -->
+  <rect x="220" y="216" width="70" height="84" rx="4" fill="url(#bar2)"/>
+  <text x="255" y="208" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#D4AF37" text-anchor="middle">63%</text>
+  <text x="255" y="316" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#FDFBF7" text-anchor="middle">Đầu ngón tay</text>
+  <text x="255" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Fingertip</text>
+  <text x="255" y="344" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">~2.500 sợi</text>
+
+  <!-- Bar 3: Lips — 38% -->
+  <rect x="320" y="214" width="70" height="86" rx="4" fill="url(#bar3)"/>
+  <text x="355" y="206" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#4A9EBF" text-anchor="middle">38%</text>
+  <text x="355" y="316" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#FDFBF7" text-anchor="middle">Môi</text>
+  <text x="355" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Lips</text>
+  <text x="355" y="344" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">~1.500 sợi</text>
+
+  <!-- Bar 4: Palm — 28% -->
+  <rect x="420" y="224" width="70" height="76" rx="4" fill="url(#bar4)"/>
+  <text x="455" y="216" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#7CB87C" text-anchor="middle">28%</text>
+  <text x="455" y="316" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#FDFBF7" text-anchor="middle">Lòng bàn tay</text>
+  <text x="455" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Palm</text>
+  <text x="455" y="344" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">~1.100 sợi</text>
+
+  <!-- Bar 5: Sole — 10% -->
+  <rect x="520" y="272" width="70" height="28" rx="4" fill="url(#bar5)"/>
+  <text x="555" y="264" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#9E7CBF" text-anchor="middle">10%</text>
+  <text x="555" y="316" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#FDFBF7" text-anchor="middle">Lòng bàn chân</text>
+  <text x="555" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Sole</text>
+  <text x="555" y="344" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">~400 sợi</text>
+
+  <!-- Annotation -->
+  <rect x="110" y="74" width="140" height="50" rx="6" fill="#2D1A0D" stroke="#C0390E" stroke-width="1" opacity="0.9"/>
+  <text x="180" y="94" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#F4A87A" text-anchor="middle">Nhạy cảm nhất</text>
+  <text x="180" y="108" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">cơ thể người</text>
+  <text x="180" y="120" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">→ Hiểu tại sao XTS xảy ra</text>
+
+  <text x="340" y="368" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Paick 2003 · Waldinger 2010 · Mật Mã 21 R&amp;D</text>
+</svg>

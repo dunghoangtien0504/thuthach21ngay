@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
+    <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#D4AF37"/></marker>
+  </defs>
+  <rect width="680" height="400" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="340" y="28" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">CÁC HUYỆT ĐẠO CHÂM CỨU ĐIỀU TRỊ XUẤT TINH SỚM</text>
+
+  <!-- Human figure outline simplified -->
+  <!-- Head -->
+  <ellipse cx="180" cy="65" rx="28" ry="32" fill="#1B3320" stroke="#A8D5A2" stroke-width="1.5"/>
+  <text x="180" y="70" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle">👤</text>
+  <!-- Neck -->
+  <rect x="172" y="96" width="16" height="14" fill="#1B3320" stroke="#A8D5A2" stroke-width="1"/>
+  <!-- Torso -->
+  <rect x="140" y="110" width="80" height="110" rx="8" fill="#1B3320" stroke="#A8D5A2" stroke-width="1.5"/>
+  <!-- Arms -->
+  <rect x="100" y="112" width="38" height="90" rx="8" fill="#1B3320" stroke="#A8D5A2" stroke-width="1"/>
+  <rect x="222" y="112" width="38" height="90" rx="8" fill="#1B3320" stroke="#A8D5A2" stroke-width="1"/>
+  <!-- Legs -->
+  <rect x="145" y="220" width="32" height="130" rx="8" fill="#1B3320" stroke="#A8D5A2" stroke-width="1"/>
+  <rect x="183" y="220" width="32" height="130" rx="8" fill="#1B3320" stroke="#A8D5A2" stroke-width="1"/>
+
+  <!-- Acupuncture points as glowing circles -->
+  <!-- Baihui GV20 - top of head -->
+  <circle cx="180" cy="48" r="7" fill="#D4AF37" opacity="0.9"/>
+  <circle cx="180" cy="48" r="11" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+  <text x="220" y="52" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37">GV20 · Bách Hội</text>
+
+  <!-- Guanyuan CV4 - lower abdomen -->
+  <circle cx="180" cy="175" r="7" fill="#C0390E" opacity="0.9"/>
+  <circle cx="180" cy="175" r="11" fill="none" stroke="#C0390E" stroke-width="1" opacity="0.4"/>
+  <text x="222" y="178" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E">CV4 · Quan Nguyên</text>
+
+  <!-- Huiyin CV1 - perineum area -->
+  <circle cx="180" cy="215" r="7" fill="#C0390E" opacity="0.9"/>
+  <circle cx="180" cy="215" r="11" fill="none" stroke="#C0390E" stroke-width="1" opacity="0.4"/>
+  <text x="222" y="218" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E">CV1 · Hội Âm</text>
+
+  <!-- Sanyinjiao SP6 - lower leg -->
+  <circle cx="158" cy="295" r="7" fill="#D4AF37" opacity="0.9"/>
+  <circle cx="158" cy="295" r="11" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.4"/>
+  <text x="100" y="296" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="end">SP6 · Tam Âm Giao</text>
+
+  <!-- Zusanli ST36 - below knee -->
+  <circle cx="197" cy="270" r="7" fill="#7CB87C" opacity="0.9"/>
+  <circle cx="197" cy="270" r="11" fill="none" stroke="#7CB87C" stroke-width="1" opacity="0.4"/>
+  <text x="242" y="273" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C">ST36 · Túc Tam Lý</text>
+
+  <!-- Shenshu BL23 - back lower lumbar (show from side) -->
+  <circle cx="222" cy="155" r="7" fill="#7CB87C" opacity="0.9"/>
+  <circle cx="222" cy="155" r="11" fill="none" stroke="#7CB87C" stroke-width="1" opacity="0.4"/>
+  <text x="245" y="158" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C">BL23 · Thận Du</text>
+
+  <!-- Neiguan PC6 - forearm -->
+  <circle cx="107" cy="165" r="6" fill="#4A9EBF" opacity="0.9"/>
+  <circle cx="107" cy="165" r="10" fill="none" stroke="#4A9EBF" stroke-width="1" opacity="0.4"/>
+  <text x="98" y="175" font-family="system-ui,sans-serif" font-size="9" fill="#4A9EBF" text-anchor="end">PC6 · Nội Quan</text>
+
+  <!-- Right panel: Huyệt table -->
+  <rect x="360" y="44" width="308" height="340" rx="12" fill="#0D2B1A" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="514" y="66" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#D4AF37" text-anchor="middle">BẢNG TỔNG HỢP HUYỆT ĐẠO</text>
+
+  <!-- Table rows -->
+  <rect x="368" y="74" width="292" height="38" rx="6" fill="#1B3320" stroke="#D4AF37" stroke-width="0.5"/>
+  <circle cx="384" cy="93" r="6" fill="#D4AF37"/>
+  <text x="396" y="88" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">GV20 — Bách Hội (đỉnh đầu)</text>
+  <text x="396" y="103" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2">Trấn tĩnh thần kinh, giảm lo âu hiệu suất</text>
+
+  <rect x="368" y="118" width="292" height="38" rx="6" fill="#1B3320" stroke="#C0390E" stroke-width="0.5"/>
+  <circle cx="384" cy="137" r="6" fill="#C0390E"/>
+  <text x="396" y="132" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#C0390E">CV4 — Quan Nguyên (3 thốn dưới rốn)</text>
+  <text x="396" y="147" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2">Bổ thận dương, tăng cường nguyên khí, chủ trị XTS</text>
+
+  <rect x="368" y="162" width="292" height="38" rx="6" fill="#1B3320" stroke="#C0390E" stroke-width="0.5"/>
+  <circle cx="384" cy="181" r="6" fill="#C0390E"/>
+  <text x="396" y="176" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#C0390E">CV1 — Hội Âm (đáy chậu)</text>
+  <text x="396" y="191" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2">Điều hoà dương sự, trực tiếp tác động SEG</text>
+
+  <rect x="368" y="206" width="292" height="38" rx="6" fill="#1B3320" stroke="#D4AF37" stroke-width="0.5"/>
+  <circle cx="384" cy="225" r="6" fill="#D4AF37"/>
+  <text x="396" y="220" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">SP6 — Tam Âm Giao (cẳng chân trong)</text>
+  <text x="396" y="235" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2">Giao điểm 3 kinh Âm — điều hoà sinh dục nam</text>
+
+  <rect x="368" y="250" width="292" height="38" rx="6" fill="#1B3320" stroke="#7CB87C" stroke-width="0.5"/>
+  <circle cx="384" cy="269" r="6" fill="#7CB87C"/>
+  <text x="396" y="264" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#7CB87C">BL23 — Thận Du (lưng L2, cạnh cột sống)</text>
+  <text x="396" y="279" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2">Bổ thận âm dương, tủy sống, sức mạnh sinh lực</text>
+
+  <rect x="368" y="294" width="292" height="38" rx="6" fill="#1B3320" stroke="#4A9EBF" stroke-width="0.5"/>
+  <circle cx="384" cy="313" r="6" fill="#4A9EBF"/>
+  <text x="396" y="308" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#4A9EBF">PC6 — Nội Quan (cổ tay, 2 thốn trên nếp gấp)</text>
+  <text x="396" y="323" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2">An thần, giảm cortisol, cân bằng hệ thần kinh tự chủ</text>
+
+  <!-- RCT data note -->
+  <rect x="368" y="338" width="292" height="36" rx="6" fill="#2D1A0D" stroke="#D4AF37" stroke-width="1"/>
+  <text x="514" y="352" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle">Nghiên cứu: IELT tăng 2.4x sau 4 tuần</text>
+  <text x="514" y="366" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Kim 2014 (n=90) · Kết hợp châm + bài tập cho kết quả tốt nhất</text>
+
+  <text x="340" y="392" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Kim 2014 · WHO Acupuncture Points 2008 · Mật Mã 21 R&amp;D</text>
+</svg>

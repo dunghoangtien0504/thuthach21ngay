@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#D4AF37"/></marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#C0390E"/></marker>
+  </defs>
+  <rect width="680" height="400" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="340" y="28" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">ZINC &amp; MAGNESIUM — VAI TRÒ TRONG HỆ THẦN KINH &amp; SINH DỤC</text>
+
+  <!-- ZINC section -->
+  <rect x="18" y="42" width="310" height="330" rx="12" fill="#0D2B1A" stroke="#D4AF37" stroke-width="1.5"/>
+  <text x="173" y="64" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#D4AF37" text-anchor="middle">⚡ ZINC (Kẽm)</text>
+
+  <!-- Zinc atom icon -->
+  <circle cx="173" cy="105" r="28" fill="#D4AF37" opacity="0.2" stroke="#D4AF37" stroke-width="2"/>
+  <text x="173" y="102" font-family="system-ui,sans-serif" font-size="16" font-weight="900" fill="#D4AF37" text-anchor="middle">Zn</text>
+  <text x="173" y="118" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Nguyên tố thiết yếu</text>
+
+  <!-- Pathway boxes -->
+  <rect x="30" y="140" width="270" height="36" rx="8" fill="#1B3320"/>
+  <text x="165" y="155" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">Kẽm → Ức chế men Aromatase</text>
+  <text x="165" y="169" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Ngăn Testosterone → Estrogen chuyển hóa</text>
+
+  <line x1="173" y1="176" x2="173" y2="192" stroke="#D4AF37" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="30" y="194" width="270" height="36" rx="8" fill="#1B3320"/>
+  <text x="165" y="209" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">→ Testosterone tự do tăng</text>
+  <text x="165" y="223" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Cả testosterone tổng lẫn tự do đều cải thiện</text>
+
+  <line x1="173" y1="230" x2="173" y2="246" stroke="#D4AF37" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="30" y="248" width="270" height="36" rx="8" fill="#1B3320" stroke="#7CB87C" stroke-width="1"/>
+  <text x="165" y="263" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#7CB87C" text-anchor="middle">→ Libido tốt hơn · Tinh dịch chất lượng hơn</text>
+  <text x="165" y="277" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Vai trò trực tiếp trong sản sinh tinh trùng</text>
+
+  <!-- Data box -->
+  <rect x="30" y="296" width="270" height="64" rx="8" fill="#2D1A0D" stroke="#D4AF37" stroke-width="1"/>
+  <text x="165" y="314" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">Nghiên cứu Zinc (Prasad 1996)</text>
+  <text x="165" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Nam giới thiếu Zn nhẹ → bổ sung 6 tháng</text>
+  <text x="165" y="344" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">→ Testosterone tăng 60% (từ 8.3 → 16.0 nmol/L)</text>
+  <text x="165" y="358" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Liều: 25-45 mg/ngày · Thực phẩm: Hàu, thịt bò, bí ngô</text>
+
+  <!-- MAGNESIUM section -->
+  <rect x="352" y="42" width="310" height="330" rx="12" fill="#0D2B1A" stroke="#4A9EBF" stroke-width="1.5"/>
+  <text x="507" y="64" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#4A9EBF" text-anchor="middle">🌊 MAGNESIUM (Magiê)</text>
+
+  <!-- Mg atom icon -->
+  <circle cx="507" cy="105" r="28" fill="#4A9EBF" opacity="0.2" stroke="#4A9EBF" stroke-width="2"/>
+  <text x="507" y="102" font-family="system-ui,sans-serif" font-size="16" font-weight="900" fill="#4A9EBF" text-anchor="middle">Mg</text>
+  <text x="507" y="118" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Cofactor 300+ enzyme</text>
+
+  <!-- Pathway boxes -->
+  <rect x="364" y="140" width="286" height="36" rx="8" fill="#1B3320"/>
+  <text x="507" y="155" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#4A9EBF" text-anchor="middle">Mg → Điều hoà kênh Ca²⁺ thần kinh cơ</text>
+  <text x="507" y="169" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Cân bằng tỉ lệ Ca:Mg → ngưỡng co cơ ổn định</text>
+
+  <line x1="507" y1="176" x2="507" y2="192" stroke="#4A9EBF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="364" y="194" width="286" height="36" rx="8" fill="#1B3320"/>
+  <text x="507" y="209" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#4A9EBF" text-anchor="middle">→ Giảm co thắt cơ sàn chậu đột ngột</text>
+  <text x="507" y="223" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Cơ bulbospongiosus không co sớm</text>
+
+  <line x1="507" y1="230" x2="507" y2="246" stroke="#4A9EBF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="364" y="248" width="286" height="36" rx="8" fill="#1B3320" stroke="#7CB87C" stroke-width="1"/>
+  <text x="507" y="263" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#7CB87C" text-anchor="middle">→ Phản xạ xuất tinh khó kích hoạt hơn</text>
+  <text x="507" y="277" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">+ Cải thiện giấc ngủ → cortisol thấp hơn</text>
+
+  <!-- Mg data -->
+  <rect x="364" y="296" width="286" height="64" rx="8" fill="#2D1A0D" stroke="#4A9EBF" stroke-width="1"/>
+  <text x="507" y="314" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#4A9EBF" text-anchor="middle">Bổ sung tối ưu</text>
+  <text x="507" y="330" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Liều: 200-400 mg Mg glycinate/ngày</text>
+  <text x="507" y="344" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Tốt nhất: uống tối trước ngủ</text>
+  <text x="507" y="358" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Thực phẩm: Hạt bí, rau lá xanh đậm, cá hồi</text>
+
+  <text x="340" y="390" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Prasad 1996 · Maggio 2014 · Mật Mã 21 R&amp;D</text>
+</svg>

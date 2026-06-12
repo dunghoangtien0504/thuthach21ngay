@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#D4AF37"/></marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4A9EBF"/></marker>
+  </defs>
+  <rect width="680" height="400" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="340" y="28" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#D4AF37" text-anchor="middle">NEUROPLASTICITY — NÃO BỘ THAY ĐỔI KHI LUYỆN TẬP</text>
+
+  <!-- Left: Synapse before -->
+  <rect x="18" y="42" width="285" height="250" rx="12" fill="#0D2B1A" stroke="#C0390E" stroke-width="1.5"/>
+  <text x="160" y="64" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#C0390E" text-anchor="middle">TRƯỚC LUYỆN TẬP</text>
+  <text x="160" y="78" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Synapse yếu — dẫn truyền nhanh, ít kiểm soát</text>
+
+  <!-- Neuron 1 pre -->
+  <ellipse cx="90" cy="140" rx="50" ry="35" fill="#1B3320" stroke="#C0390E" stroke-width="1.5"/>
+  <text x="90" y="135" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E" text-anchor="middle">Neuron tiền</text>
+  <text x="90" y="148" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E" text-anchor="middle">synapse</text>
+
+  <!-- Thin synapse gap -->
+  <rect x="143" y="126" width="18" height="28" rx="2" fill="#0D2B1A" stroke="#C0390E" stroke-width="1"/>
+  <text x="152" y="144" font-family="system-ui,sans-serif" font-size="7" fill="#C0390E" text-anchor="middle">Khe hở nhỏ</text>
+
+  <!-- Few neurotransmitters -->
+  <circle cx="153" cy="133" r="3" fill="#C0390E" opacity="0.5"/>
+  <circle cx="153" cy="140" r="3" fill="#C0390E" opacity="0.5"/>
+  <circle cx="153" cy="147" r="3" fill="#C0390E" opacity="0.5"/>
+
+  <!-- Neuron 2 pre -->
+  <ellipse cx="230" cy="140" rx="50" ry="35" fill="#1B3320" stroke="#C0390E" stroke-width="1.5"/>
+  <text x="230" y="135" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E" text-anchor="middle">Neuron hậu</text>
+  <text x="230" y="148" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E" text-anchor="middle">synapse</text>
+
+  <!-- Stats -->
+  <rect x="30" y="192" width="258" height="84" rx="8" fill="#2D1A0D"/>
+  <text x="159" y="210" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#F4A87A" text-anchor="middle">Đặc điểm não chưa được rèn luyện:</text>
+  <text x="34" y="226" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">• Ít thụ thể serotonin 5-HT1A tại SEG</text>
+  <text x="34" y="240" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">• Phản xạ tủy sống kích hoạt sớm</text>
+  <text x="34" y="254" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">• Mạng lưới ức chế yếu</text>
+  <text x="34" y="268" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A">→ Ít kiểm soát thời điểm xuất tinh</text>
+
+  <!-- Right: After training -->
+  <rect x="377" y="42" width="285" height="250" rx="12" fill="#0D2B1A" stroke="#7CB87C" stroke-width="1.5"/>
+  <text x="519" y="64" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#7CB87C" text-anchor="middle">SAU LUYỆN TẬP (8-12 tuần)</text>
+  <text x="519" y="78" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Synapse mạnh — dẫn truyền kiểm soát được</text>
+
+  <!-- Neuron 1 post (larger) -->
+  <ellipse cx="450" cy="140" rx="55" ry="38" fill="#1B3320" stroke="#7CB87C" stroke-width="2.5"/>
+  <text x="450" y="135" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Neuron tiền</text>
+  <text x="450" y="148" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">synapse (lớn hơn)</text>
+
+  <!-- Thicker synapse -->
+  <rect x="506" y="120" width="24" height="40" rx="3" fill="#0D2B1A" stroke="#7CB87C" stroke-width="2"/>
+  <text x="518" y="140" font-family="system-ui,sans-serif" font-size="7" fill="#7CB87C" text-anchor="middle">Dày hơn</text>
+
+  <!-- Many neurotransmitters -->
+  <circle cx="518" cy="128" r="4" fill="#7CB87C" opacity="0.8"/>
+  <circle cx="518" cy="138" r="4" fill="#7CB87C" opacity="0.8"/>
+  <circle cx="518" cy="148" r="4" fill="#7CB87C" opacity="0.8"/>
+  <circle cx="514" cy="133" r="3" fill="#D4AF37" opacity="0.7"/>
+  <circle cx="522" cy="143" r="3" fill="#D4AF37" opacity="0.7"/>
+
+  <!-- Neuron 2 post (more receptors) -->
+  <ellipse cx="590" cy="140" rx="55" ry="38" fill="#1B3320" stroke="#7CB87C" stroke-width="2.5"/>
+  <text x="590" y="130" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Neuron hậu synapse</text>
+  <text x="590" y="143" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">(nhiều thụ thể hơn)</text>
+
+  <!-- Stats post -->
+  <rect x="387" y="192" width="268" height="84" rx="8" fill="#1B3320" stroke="#7CB87C" stroke-width="1"/>
+  <text x="521" y="210" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#7CB87C" text-anchor="middle">Sau 8-12 tuần luyện tập:</text>
+  <text x="391" y="226" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">• Thụ thể 5-HT1A tăng (Brotto 2012)</text>
+  <text x="391" y="240" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">• Myelin hóa dày hơn → dẫn truyền chậm hơn</text>
+  <text x="391" y="254" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">• Mạng ức chế vỏ não → SEG mạnh lên</text>
+  <text x="391" y="268" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C">→ IELT cải thiện bền vững</text>
+
+  <!-- Hebb's rule -->
+  <rect x="18" y="302" width="642" height="76" rx="12" fill="#0D2B1A" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="340" y="322" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#D4AF37" text-anchor="middle">NGUYÊN LÝ HEBB (1949) — NỀN TẢNG KHOA HỌC</text>
+  <text x="340" y="340" font-family="system-ui,sans-serif" font-size="11" fill="#FDFBF7" text-anchor="middle" font-style="italic">"Neurons that fire together, wire together"</text>
+  <text x="340" y="356" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">Luyện tập kỹ thuật Stop-Start / Mindfulness đều đặn → Tạo mạng nơ-ron mới</text>
+  <text x="340" y="370" font-family="system-ui,sans-serif" font-size="10" fill="#D4AF37" text-anchor="middle">→ Não học cách nhận biết và điều khiển phản xạ xuất tinh</text>
+
+  <text x="340" y="392" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Hebb 1949 · Brotto 2012 · Waldinger 2010 · Mật Mã 21 R&amp;D</text>
+</svg>
