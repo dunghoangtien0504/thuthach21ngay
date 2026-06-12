@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScreeningChecklist();
   setupTracker();
   setupLogModal();
+  loadFreeCourseData();
 });
 
 // Configure Site Content from .env variables
@@ -1917,4 +1918,147 @@ function initStartStopCoach(lesson) {
       setSqueezeUI();
     }
   };
+}
+
+// ==========================================================================
+// FREE COURSE — KIẾN THỨC MIỄN PHÍ
+// Accessible to ALL logged-in users (including pending/unpaid accounts)
+// ==========================================================================
+
+let freeCourseData = [];
+let currentFreeLessonId = null;
+
+const freeCurriculumList = document.getElementById('free-curriculum-list');
+const freeLessonContentBox = document.getElementById('free-lesson-content-box');
+const freeLessonEmptyState = document.getElementById('free-lesson-empty-state');
+const freeLessonModuleTag = document.getElementById('free-lesson-module-tag');
+const freeLessonMainTitle = document.getElementById('free-lesson-main-title');
+const freeLessonTime = document.getElementById('free-lesson-time');
+const freeLessonBody = document.getElementById('free-lesson-body');
+const freeBtnPrev = document.getElementById('free-btn-prev-lesson');
+const freeBtnNext = document.getElementById('free-btn-next-lesson');
+
+async function loadFreeCourseData() {
+  try {
+    const response = await fetch('/free_course_database.json');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    freeCourseData = await response.json();
+    renderFreeSidebar();
+  } catch (error) {
+    console.error("Error loading free course database:", error);
+    if (freeCurriculumList) {
+      freeCurriculumList.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-muted);">Lỗi tải nội dung: ${error.message}</div>`;
+    }
+  }
+}
+
+function renderFreeSidebar() {
+  if (!freeCurriculumList) return;
+  freeCurriculumList.innerHTML = '';
+
+  freeCourseData.forEach(mod => {
+    const modEl = document.createElement('div');
+    modEl.className = 'sidebar-module';
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'module-title';
+    titleEl.textContent = mod.module_title;
+    modEl.appendChild(titleEl);
+
+    const listEl = document.createElement('ul');
+    listEl.className = 'module-lessons-list';
+
+    mod.lessons.forEach(lesson => {
+      const itemEl = document.createElement('li');
+      itemEl.innerHTML = `
+        <button class="sidebar-lesson-btn ${currentFreeLessonId === lesson.lesson_id ? 'active' : ''}" data-free-id="${lesson.lesson_id}">
+          <div class="lesson-btn-content">
+            <i class="fa-solid fa-file-lines text-muted"></i>
+            <span class="lesson-btn-title">${lesson.title}</span>
+          </div>
+          <span class="lesson-status-icon uncompleted">
+            <i class="fa-solid fa-circle"></i>
+          </span>
+        </button>
+      `;
+
+      const btn = itemEl.querySelector('button');
+      btn.addEventListener('click', () => selectFreeLesson(lesson.lesson_id));
+      listEl.appendChild(itemEl);
+    });
+
+    modEl.appendChild(listEl);
+    freeCurriculumList.appendChild(modEl);
+  });
+}
+
+function selectFreeLesson(id) {
+  currentFreeLessonId = id;
+
+  let selectedLesson = null;
+  let selectedModuleTitle = '';
+
+  for (const mod of freeCourseData) {
+    const found = mod.lessons.find(l => l.lesson_id === id);
+    if (found) {
+      selectedLesson = found;
+      selectedModuleTitle = mod.module_title.split(':')[0];
+      break;
+    }
+  }
+
+  if (!selectedLesson) return;
+
+  document.querySelectorAll('[data-free-id]').forEach(btn => {
+    btn.classList.remove('active');
+    if (parseInt(btn.getAttribute('data-free-id')) === id) {
+      btn.classList.add('active');
+    }
+  });
+
+  if (freeLessonEmptyState) freeLessonEmptyState.style.display = 'none';
+  if (freeLessonContentBox) freeLessonContentBox.style.display = 'block';
+
+  if (freeLessonModuleTag) freeLessonModuleTag.textContent = selectedModuleTitle;
+  if (freeLessonTime) freeLessonTime.textContent = selectedLesson.duration_min;
+  if (freeLessonMainTitle) freeLessonMainTitle.textContent = selectedLesson.title;
+
+  if (freeLessonBody) {
+    if (window.marked) {
+      marked.setOptions({ gfm: true, breaks: true });
+      freeLessonBody.innerHTML = marked.parse(selectedLesson.text_content);
+    } else {
+      freeLessonBody.innerHTML = `<pre>${selectedLesson.text_content}</pre>`;
+    }
+  }
+
+  // Update prev/next buttons
+  const allLessons = freeCourseData.flatMap(m => m.lessons);
+  const idx = allLessons.findIndex(l => l.lesson_id === id);
+
+  if (freeBtnPrev) freeBtnPrev.disabled = idx <= 0;
+  if (freeBtnNext) freeBtnNext.disabled = idx >= allLessons.length - 1;
+
+  const freeViewport = document.getElementById('free-lesson-viewport');
+  if (freeViewport) freeViewport.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (window.innerWidth < 992 && freeLessonContentBox) {
+    freeLessonContentBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+if (freeBtnPrev) {
+  freeBtnPrev.addEventListener('click', () => {
+    const allLessons = freeCourseData.flatMap(m => m.lessons);
+    const idx = allLessons.findIndex(l => l.lesson_id === currentFreeLessonId);
+    if (idx > 0) selectFreeLesson(allLessons[idx - 1].lesson_id);
+  });
+}
+
+if (freeBtnNext) {
+  freeBtnNext.addEventListener('click', () => {
+    const allLessons = freeCourseData.flatMap(m => m.lessons);
+    const idx = allLessons.findIndex(l => l.lesson_id === currentFreeLessonId);
+    if (idx < allLessons.length - 1) selectFreeLesson(allLessons[idx + 1].lesson_id);
+  });
 }
