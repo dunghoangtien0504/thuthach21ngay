@@ -914,6 +914,67 @@ button, a, input, select, textarea {
   border-bottom: none;
 }
 
+/* Free course upsell CTA */
+.free-course-upsell-cta {
+  margin: 28px 0 4px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(13,43,26,0.6) 0%, rgba(26,64,40,0.6) 100%);
+  border: 1px solid rgba(212,175,55,0.35);
+  overflow: hidden;
+}
+.upsell-cta-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+}
+.upsell-cta-icon {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: #D4AF37;
+}
+.upsell-cta-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.upsell-cta-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #D4AF37;
+}
+.upsell-cta-text span {
+  font-size: 13px;
+  color: rgba(245,240,230,0.7);
+  line-height: 1.4;
+}
+.upsell-cta-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #B8860B, #D4AF37);
+  color: #0D2B1A;
+  font-size: 13px; font-weight: 800;
+  border-radius: 50px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(184,134,11,0.3);
+}
+.upsell-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(184,134,11,0.45);
+}
+@media (max-width: 600px) {
+  .upsell-cta-inner { flex-direction: column; text-align: center; }
+  .upsell-cta-btn { width: 100%; justify-content: center; }
+}
+
 /* Footer controls */
 .lesson-footer-controls {
   display: flex;
