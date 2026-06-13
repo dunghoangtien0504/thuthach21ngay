@@ -338,20 +338,52 @@ async function loadDatabase() {
     }
   }
 
-  // 3. Fetch local storage accounts
+  // 3. Fetch Supabase users via admin API + local storage fallback
   const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+  let supabaseUsers = [];
+  try {
+    const apiRes = await fetch('/api/admin-users', {
+      headers: { 'Authorization': `Bearer ${ADMIN_PASS}` }
+    });
+    if (apiRes.ok) {
+      const apiData = await apiRes.json();
+      supabaseUsers = apiData.users || [];
+    }
+  } catch (err) {
+    console.warn('[admin] Could not fetch Supabase users:', err);
+  }
 
-  // 4. Merge accounts
+  // 4. Merge accounts (priority: system > supabase > local)
   studentsList = [];
 
   allowedAccounts.forEach(acc => {
     studentsList.push({
       name: acc.name,
       email: acc.email,
-      date: "01/06/2026",
-      key_used: "Hệ thống cấp",
-      status: "active"
+      date: '01/06/2026',
+      key_used: 'Hệ thống cấp',
+      status: 'active',
+      source: 'system',
     });
+  });
+
+  supabaseUsers.forEach(u => {
+    if (!studentsList.some(s => s.email === u.email)) {
+      const enrollNames = (u.enrollments || []).map(e => e.course_name).filter(Boolean);
+      studentsList.push({
+        name: u.name || u.email,
+        email: u.email,
+        phone: u.phone || '',
+        date: u.registeredAt ? new Date(u.registeredAt).toLocaleDateString('vi-VN') : '-',
+        key_used: enrollNames.length ? enrollNames.join(', ') : '-',
+        status: u.status,
+        email_confirmed: u.email_confirmed,
+        email_consent: u.email_consent,
+        source: u.source || 'supabase',
+        enrollments: u.enrollments || [],
+        supabase_id: u.id,
+      });
+    }
   });
 
   localUsers.forEach(acc => {
@@ -360,8 +392,9 @@ async function loadDatabase() {
         name: acc.name,
         email: acc.email,
         date: acc.date || new Date().toLocaleDateString('vi-VN'),
-        key_used: acc.key_used || "-",
-        status: acc.status
+        key_used: acc.key_used || '-',
+        status: acc.status,
+        source: 'local',
       });
     }
   });
@@ -404,11 +437,14 @@ function updateStatsUI() {
 
   if (dashTotalCerts) dashTotalCerts.textContent = certCount;
   
-  // Calculate mock revenue based on active local students
-  const activeLocalCount = studentsList.filter(s => s.status === 'active' && s.key_used !== "Hệ thống cấp").length;
-  // Let's say each paid VITE_PRICE
-  const revenueVal = activeLocalCount * 686.868;
-  if (dashTotalRevenue) dashTotalRevenue.textContent = revenueVal > 0 ? `${revenueVal.toFixed(3)}đ` : "0.0đ";
+  // Count active paid accounts (Supabase confirmed + local active, exclude system accounts)
+  const activePaidCount = studentsList.filter(
+    s => s.status === 'active' && s.source !== 'system'
+  ).length;
+  const revenueVal = activePaidCount * 686868;
+  if (dashTotalRevenue) dashTotalRevenue.textContent = revenueVal > 0
+    ? `${revenueVal.toLocaleString('vi-VN')}đ`
+    : '0đ';
 }
 
 // ==========================================================================
@@ -753,12 +789,25 @@ function renderStudentsTable() {
   studentsList.forEach(student => {
     const isLocal = !allowedAccounts.some(u => u.email === student.email);
 
+    const isSupabase = student.source === 'supabase';
+    const emailConfirmedBadge = isSupabase
+      ? (student.email_confirmed
+          ? `<span style="font-size:10px;color:#16a34a;margin-left:4px" title="Email đã xác nhận">✓</span>`
+          : `<span style="font-size:10px;color:#d97706;margin-left:4px" title="Chưa xác nhận email">⏳</span>`)
+      : '';
+    const consentBadge = isSupabase && student.email_consent
+      ? `<span style="font-size:10px;background:#f0fdf4;color:#166534;padding:1px 5px;border-radius:4px;margin-left:4px">📧 consent</span>`
+      : '';
+
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td><strong>${student.name}</strong></td>
-      <td>${student.email}</td>
+      <td>
+        <strong>${student.name}</strong>
+        ${student.phone ? `<br><small style="color:var(--text-dimmed)">${student.phone}</small>` : ''}
+      </td>
+      <td>${student.email}${emailConfirmedBadge}${consentBadge}</td>
       <td>${student.date}</td>
-      <td>${student.key_used}</td>
+      <td style="max-width:160px;white-space:normal;font-size:12px">${student.key_used}</td>
       <td>
         <span class="badge-status ${student.status === 'active' ? 'active' : 'pending'}">
           ${student.status === 'active' ? 'Đã kích hoạt' : 'Chờ duyệt'}
@@ -766,16 +815,16 @@ function renderStudentsTable() {
       </td>
       <td>
         <div class="admin-table-actions">
-          ${student.status === 'pending' ? `
+          ${student.status === 'pending' && !isSupabase ? `
             <button class="btn btn-success btn-sm btn-activate" data-email="${student.email}">
               Kích hoạt
             </button>
           ` : ''}
-          ${isLocal ? `
+          ${isLocal && !isSupabase ? `
             <button class="btn btn-danger btn-sm btn-delete-student" data-email="${student.email}">
               Xóa
             </button>
-          ` : `<span style="font-size: 11px; color: var(--text-dimmed); font-style: italic;">Hệ thống</span>`}
+          ` : `<span style="font-size:11px;color:var(--text-dimmed);font-style:italic">${isSupabase ? 'Supabase' : 'Hệ thống'}</span>`}
         </div>
       </td>
     `;

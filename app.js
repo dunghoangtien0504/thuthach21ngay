@@ -1,4 +1,5 @@
 // app.js - Course Learning Portal Client Logic
+import { supabase, isSupabaseEnabled } from './supabase.js';
 
 // Load Config (prioritize localStorage custom config, fallback to env)
 const customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {};
@@ -163,20 +164,53 @@ function applyEnvConfigurations() {
 // STUDENT AUTHENTICATION SYSTEM
 // ==========================================================================
 async function setupAuth() {
-  // 1. Fetch server-side accounts.json
+  // 1. Fetch server-side accounts.json (legacy fallback)
   try {
     const res = await fetch('/accounts.json');
-    if (res.ok) {
-      allowedAccounts = await res.json();
+    if (res.ok) allowedAccounts = await res.json();
+  } catch (_) {}
+
+  // 2. Supabase: listen for auth state changes (handles email confirmation redirect)
+  if (isSupabaseEnabled) {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        const meta = session.user.user_metadata || {};
+        userSession = {
+          email: session.user.email,
+          name: meta.name || session.user.email,
+          phone: meta.phone || '',
+          supabase_id: session.user.id,
+        };
+        localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+        // If user just confirmed email, show a welcome toast then load portal
+        if (event === 'SIGNED_IN') {
+          checkSession();
+        }
+      } else if (event === 'SIGNED_OUT') {
+        userSession = null;
+        localStorage.removeItem('thuthach21ngay_user_session');
+        checkSession();
+      }
+    });
+
+    // Get existing Supabase session (if any)
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const meta = session.user.user_metadata || {};
+      userSession = {
+        email: session.user.email,
+        name: meta.name || session.user.email,
+        phone: meta.phone || '',
+        supabase_id: session.user.id,
+      };
+      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
     }
-  } catch (err) {
-    console.error("Failed to load allowed accounts:", err);
   }
 
-  // 2. Check current session
+  // 3. Check current session (localStorage or Supabase)
   checkSession();
 
-  // 3. Tab switching between Login and Register
+  // 4. Tab switching between Login and Register
   if (tabLoginBtn && tabRegisterBtn) {
     tabLoginBtn.addEventListener('click', () => {
       tabLoginBtn.classList.add('active');
@@ -195,111 +229,127 @@ async function setupAuth() {
     });
   }
 
-  // 4. Handle Login Form Submit
+  // 5. Handle Login Form Submit
   if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearAlerts();
 
-      const email = document.getElementById('login-email').value.trim();
-      const pass = document.getElementById('login-password').value.trim();
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const pass  = document.getElementById('login-password').value;
 
-      // Check server-side accounts
+      const submitBtn = loginForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Đang đăng nhập...'; }
+
+      // ── Supabase login ────────────────────────────────────────────────
+      if (isSupabaseEnabled) {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Đăng Nhập'; }
+
+        if (error) {
+          if (error.message.includes('Email not confirmed')) {
+            showAuthError('Email chưa được xác nhận. Vui lòng kiểm tra hộp thư và bấm link xác nhận.');
+          } else if (error.message.includes('Invalid login credentials')) {
+            showAuthError('Email hoặc mật khẩu không chính xác!');
+          } else {
+            showAuthError(error.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+          }
+          return;
+        }
+        // onAuthStateChange handles session + checkSession()
+        showAuthSuccess('Đăng nhập thành công! Đang mở khóa học...');
+        return;
+      }
+
+      // ── localStorage fallback ─────────────────────────────────────────
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Đăng Nhập'; }
       let matchedUser = allowedAccounts.find(u => u.email === email && u.password === pass);
-
-      // Check local storage accounts
       if (!matchedUser) {
         const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
         matchedUser = localUsers.find(u => u.email === email && u.password === pass);
       }
-
       if (matchedUser) {
-        // Success login (allows both pending and active users to enter portal)
-        userSession = { 
-          email: matchedUser.email, 
-          name: matchedUser.name,
-          phone: matchedUser.phone || ''
-        };
+        userSession = { email: matchedUser.email, name: matchedUser.name, phone: matchedUser.phone || '' };
         localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
-        showAuthSuccess(`Đăng nhập thành công! Đang mở khóa học...`);
-        setTimeout(() => {
-          checkSession();
-        }, 1000);
+        showAuthSuccess('Đăng nhập thành công! Đang mở khóa học...');
+        setTimeout(() => checkSession(), 1000);
       } else {
-        showAuthError(`Tài khoản hoặc mật khẩu không chính xác!`);
+        showAuthError('Tài khoản hoặc mật khẩu không chính xác!');
       }
     });
   }
 
-  // 5. Handle Register Form Submit
+  // 6. Handle Register Form Submit (in-portal register tab — redirects to signup popup)
   if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearAlerts();
 
-      const name = document.getElementById('register-name').value.trim();
-      const email = document.getElementById('register-email').value.trim();
-      const pass = document.getElementById('register-password').value.trim();
-      const key = document.getElementById('register-key').value.trim();
+      const name  = document.getElementById('register-name').value.trim();
+      const email = document.getElementById('register-email').value.trim().toLowerCase();
+      const pass  = document.getElementById('register-password').value;
+      const key   = document.getElementById('register-key')?.value.trim() || '';
 
       if (!name || !email || !pass) {
-        showAuthError(`Vui lòng điền đầy đủ các trường thông tin bắt buộc!`);
+        showAuthError('Vui lòng điền đầy đủ các trường thông tin bắt buộc!');
         return;
       }
 
-      // Check duplicates
+      // ── Supabase register ──────────────────────────────────────────────
+      if (isSupabaseEnabled) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password: pass,
+          options: {
+            emailRedirectTo: `${window.location.origin}/portal.html`,
+            data: { name, source: window.location.pathname },
+          },
+        });
+        if (error) {
+          if (error.message.includes('already registered')) {
+            showAuthError('Email này đã được đăng ký. Hãy đăng nhập.');
+          } else {
+            showAuthError(error.message || 'Có lỗi xảy ra. Thử lại sau.');
+          }
+          return;
+        }
+        showAuthSuccess('Đã gửi email xác nhận! Kiểm tra hộp thư và bấm link để kích hoạt tài khoản.');
+        return;
+      }
+
+      // ── localStorage fallback ──────────────────────────────────────────
       const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
-      const dupServer = allowedAccounts.some(u => u.email === email);
-      const dupLocal = localUsers.some(u => u.email === email);
-
-      if (dupServer || dupLocal) {
-        showAuthError(`Email hoặc Số điện thoại này đã được đăng ký trên hệ thống!`);
+      if (allowedAccounts.some(u => u.email === email) || localUsers.some(u => u.email === email)) {
+        showAuthError('Email này đã được đăng ký trên hệ thống!');
         return;
       }
-
-      // Check Key Validation
       const generatedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_generated_keys')) || [];
       const isValidKey = (key === 'MATMA21-VIP' || generatedKeys.includes(key));
-
-      // Active immediately if key matches, otherwise wait for manual approval
       const status = isValidKey ? 'active' : 'pending';
-
-      const newUser = { name, email, password: pass, status, key_used: key || null, date: new Date().toLocaleDateString('vi-VN') };
-      localUsers.push(newUser);
+      localUsers.push({ name, email, password: pass, status, key_used: key || null, date: new Date().toLocaleDateString('vi-VN') });
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
-
-      // Always set session and log in immediately
-      const isPhoneInput = /^\+?[0-9]{9,15}$/.test(email.replace(/[\s\-\(\)]/g, ''));
-      userSession = { 
-        email: email, 
-        name: name,
-        phone: isPhoneInput ? email : ''
-      };
+      userSession = { email, name, phone: '' };
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
-
-      if (isValidKey) {
-        // Mark key as consumed if it is in generated keys list
-        if (generatedKeys.includes(key)) {
-          const keyIdx = generatedKeys.indexOf(key);
-          generatedKeys.splice(keyIdx, 1);
-          localStorage.setItem('thuthach21ngay_generated_keys', JSON.stringify(generatedKeys));
-        }
-
-        showAuthSuccess(`Đăng ký thành công & tài khoản đã được kích hoạt VIP! Đang chuyển hướng...`);
-      } else {
-        showAuthSuccess(`Đăng ký thành công! Tài khoản của anh đang chờ kích hoạt VIP. Hãy liên hệ hỗ trợ hoặc thanh toán để mở khóa lộ trình.`);
+      if (isValidKey && generatedKeys.includes(key)) {
+        generatedKeys.splice(generatedKeys.indexOf(key), 1);
+        localStorage.setItem('thuthach21ngay_generated_keys', JSON.stringify(generatedKeys));
       }
-
-      setTimeout(() => {
-        checkSession();
-      }, 1500);
+      showAuthSuccess(isValidKey
+        ? 'Đăng ký thành công & tài khoản đã được kích hoạt VIP!'
+        : 'Đăng ký thành công! Tài khoản đang chờ kích hoạt VIP.');
+      setTimeout(() => checkSession(), 1500);
     });
   }
 
-  // 6. Handle Logout Action
+  // 7. Handle Logout Action
   if (btnLogoutAction) {
-    btnLogoutAction.addEventListener('click', () => {
-      if (confirm(`Bạn có muốn đăng xuất khỏi cổng học tập không?`)) {
+    btnLogoutAction.addEventListener('click', async () => {
+      if (!confirm('Bạn có muốn đăng xuất khỏi cổng học tập không?')) return;
+      if (isSupabaseEnabled) {
+        await supabase.auth.signOut();
+        // onAuthStateChange handles cleanup
+      } else {
         localStorage.removeItem('thuthach21ngay_user_session');
         userSession = null;
         checkSession();

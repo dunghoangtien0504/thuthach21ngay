@@ -1,13 +1,14 @@
 /**
  * register.js — Registration modal for Mật Mã 21
- * Injects modal HTML, handles form submit, stores to localStorage,
- * and optionally POSTs to a CRM webhook (VITE_WEBHOOK_URL env var).
+ * Uses Supabase Auth for real account creation + email verification.
+ * Falls back to localStorage if Supabase is not configured.
  */
+
+import { supabase, isSupabaseEnabled } from './supabase.js';
 
 const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || '';
 const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '';
 const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID || '';
-const LS_PENDING  = 'mm21_pending_registrations';
 const LS_ACCOUNTS = 'thuthach21ngay_registered_users';
 
 // ── Inject modal HTML ──────────────────────────────────────────────────────
@@ -61,13 +62,17 @@ function injectModal() {
         display: block; font-size: 13px; font-weight: 700;
         color: #0D2B1A; margin-bottom: 7px; letter-spacing: 0.2px;
       }
-      .reg-form-group input {
+      .reg-form-group input[type="text"],
+      .reg-form-group input[type="email"],
+      .reg-form-group input[type="tel"],
+      .reg-form-group input[type="password"] {
         width: 100%; padding: 13px 16px;
         border: 1.5px solid rgba(13,43,26,0.12);
         border-radius: 10px; font-family: inherit;
         font-size: 14.5px; color: #0D2B1A;
         background: #FBF9F4; outline: none;
         transition: border-color 0.2s, box-shadow 0.2s;
+        box-sizing: border-box;
       }
       .reg-form-group input:focus {
         border-color: #B8860B;
@@ -79,6 +84,19 @@ function injectModal() {
         font-size: 12px; color: #C0390E;
         margin-top: 5px; display: none;
       }
+      /* Email consent checkbox */
+      .reg-consent {
+        display: flex; align-items: flex-start; gap: 10px;
+        margin-bottom: 18px; cursor: pointer;
+      }
+      .reg-consent input[type="checkbox"] {
+        width: 18px; height: 18px; margin-top: 2px;
+        accent-color: #B8860B; cursor: pointer; flex-shrink: 0;
+      }
+      .reg-consent-label {
+        font-size: 13px; color: #485A4F; line-height: 1.5; cursor: pointer;
+      }
+      .reg-consent-label strong { color: #0D2B1A; }
       .reg-submit-btn {
         width: 100%; padding: 15px;
         background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
@@ -114,26 +132,30 @@ function injectModal() {
         color: #8FA497; font-size: 15px; transition: color 0.2s;
       }
       .reg-pw-toggle:hover { color: #0D2B1A; }
-      /* Success state */
-      .reg-success {
+      /* Email confirm state */
+      .reg-email-sent {
         display: none; text-align: center; padding: 10px 0;
       }
-      .reg-success i { font-size: 52px; color: #2E7D32; margin-bottom: 16px; display: block; }
-      .reg-success h3 {
+      .reg-email-sent .email-icon { font-size: 52px; margin-bottom: 16px; display: block; }
+      .reg-email-sent h3 {
         font-family: 'Lora', Georgia, serif;
         font-size: 20px; color: #0D2B1A; margin-bottom: 10px;
       }
-      .reg-success p { font-size: 14px; color: #485A4F; line-height: 1.6; }
-      .reg-success .go-portal {
-        display: inline-flex; align-items: center; gap: 8px;
-        margin-top: 20px; padding: 12px 28px;
-        background: #0D2B1A; color: #fff;
-        border-radius: 50px; text-decoration: none;
-        font-weight: 700; font-size: 14px;
-        transition: background 0.2s;
+      .reg-email-sent p { font-size: 14px; color: #485A4F; line-height: 1.6; }
+      .reg-email-sent .email-hint {
+        margin-top: 16px; padding: 12px 16px;
+        background: #F0FDF4; border-radius: 10px;
+        font-size: 13px; color: #166534; line-height: 1.5;
       }
-      .reg-success .go-portal:hover { background: #163f27; }
-
+      .reg-email-sent .resend-link {
+        margin-top: 14px; font-size: 13px; color: #8FA497;
+      }
+      .reg-email-sent .resend-link button {
+        background: none; border: none; color: #B8860B;
+        font-weight: 700; cursor: pointer; font-size: 13px;
+        font-family: inherit;
+      }
+      .reg-email-sent .resend-link button:hover { text-decoration: underline; }
       /* Toast */
       #mm21-toast-container {
         position: fixed; bottom: 24px; left: 50%;
@@ -172,7 +194,7 @@ function injectModal() {
         <div id="reg-form-wrap">
           <div class="reg-logo"><i class="fa-solid fa-shield-halved"></i> Mật Mã 21</div>
           <h2 class="reg-title" id="reg-modal-title">Tạo Tài Khoản</h2>
-          <p class="reg-subtitle">Nhận thông tin khóa học, ưu đãi độc quyền và hỗ trợ cá nhân hoá qua email.</p>
+          <p class="reg-subtitle">Đăng ký tài khoản để truy cập khóa học và nhận hỗ trợ cá nhân hoá.</p>
 
           <form id="reg-form" novalidate>
             <div class="reg-form-group">
@@ -207,6 +229,14 @@ function injectModal() {
               <p class="reg-field-error" id="err-password"></p>
             </div>
 
+            <!-- Email consent checkbox -->
+            <label class="reg-consent">
+              <input type="checkbox" id="reg-email-consent" checked>
+              <span class="reg-consent-label">
+                Tôi đồng ý nhận <strong>hướng dẫn, tips và ưu đãi độc quyền</strong> từ Mật Mã 21 qua email. Có thể hủy bất kỳ lúc nào.
+              </span>
+            </label>
+
             <button type="submit" class="reg-submit-btn" id="reg-submit-btn">
               <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản
             </button>
@@ -222,13 +252,19 @@ function injectModal() {
           </p>
         </div>
 
-        <div class="reg-success" id="reg-success">
-          <i class="fa-solid fa-circle-check"></i>
-          <h3>Đăng Ký Thành Công!</h3>
-          <p>Tài khoản của anh đã được tạo thành công trên hệ thống. Vui lòng kích hoạt khóa học để bắt đầu lộ trình.</p>
-          <a href="/portal.html" class="go-portal">
-            <i class="fa-solid fa-book-open"></i> Vào Trang Học Tập
-          </a>
+        <!-- Email verification sent state -->
+        <div class="reg-email-sent" id="reg-email-sent">
+          <span class="email-icon">📧</span>
+          <h3>Kiểm Tra Email Của Anh!</h3>
+          <p>Chúng tôi đã gửi email xác nhận đến <strong id="reg-sent-email"></strong></p>
+          <div class="email-hint">
+            <i class="fa-solid fa-circle-info"></i>
+            Bấm vào link trong email để <strong>kích hoạt tài khoản</strong> và đăng nhập vào hệ thống. Sau khi xác nhận, anh sẽ được chuyển đến trang đăng nhập tự động.
+          </div>
+          <p class="resend-link">
+            Không thấy email? Kiểm tra Spam hoặc
+            <button id="reg-resend-btn" type="button">Gửi lại</button>
+          </p>
         </div>
       </div>
     </div>
@@ -240,13 +276,23 @@ function injectModal() {
 function toast(message, type = 'info', duration = 4500) {
   const icons = { info: 'fa-circle-info', success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation' };
   let container = document.getElementById('mm21-toast-container');
-  if (!container) { container = document.createElement('div'); container.id = 'mm21-toast-container'; container.setAttribute('aria-live', 'polite'); document.body.appendChild(container); }
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'mm21-toast-container';
+    container.setAttribute('aria-live', 'polite');
+    document.body.appendChild(container);
+  }
   const el = document.createElement('div');
   el.className = `mm21-toast ${type}`;
   el.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span></span>`;
   el.querySelector('span').textContent = message;
   container.appendChild(el);
-  setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateY(12px)'; el.style.transition = 'all 0.3s'; setTimeout(() => el.remove(), 320); }, duration);
+  setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(12px)';
+    el.style.transition = 'all 0.3s';
+    setTimeout(() => el.remove(), 320);
+  }, duration);
 }
 
 // ── Modal open/close ───────────────────────────────────────────────────────
@@ -255,6 +301,9 @@ function openModal() {
   if (!modal) return;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  // Reset to form state each time
+  document.getElementById('reg-form-wrap').style.display = '';
+  document.getElementById('reg-email-sent').style.display = 'none';
   document.getElementById('reg-email')?.focus();
 }
 
@@ -280,18 +329,17 @@ function clearErrors() {
 function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 function validatePhone(v) { return /^(\+?84|0)\d{9,10}$/.test(v.replace(/\s/g, '')); }
 
-// ── Account helpers ─────────────────────────────────────────────────────────
-function getLocalAccounts() {
-  try { return JSON.parse(localStorage.getItem(LS_ACCOUNTS) || '[]'); } catch { return []; }
-}
-function saveLocalAccounts(arr) {
-  localStorage.setItem(LS_ACCOUNTS, JSON.stringify(arr));
-}
-function getPending() {
-  try { return JSON.parse(localStorage.getItem(LS_PENDING) || '[]'); } catch { return []; }
-}
-function savePending(arr) {
-  localStorage.setItem(LS_PENDING, JSON.stringify(arr));
+// ── Telegram notification ──────────────────────────────────────────────────
+async function notifyTelegram(account) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  const msg = `🔔 *Đăng Ký Mới - Mật Mã 21*\n\n• Họ tên: *${account.name}*\n• Email: \`${account.email}\`\n• SĐT: \`${account.phone}\`\n• Đồng ý nhận email: ${account.email_consent ? '✅ Có' : '❌ Không'}\n• Thời gian: _${new Date(account.registeredAt).toLocaleString('vi-VN')}_\n• Nguồn: ${account.source}`;
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
+    });
+  } catch (_) { /* silent */ }
 }
 
 // ── Form submit ────────────────────────────────────────────────────────────
@@ -299,27 +347,21 @@ async function handleSubmit(e) {
   e.preventDefault();
   clearErrors();
 
-  const name     = document.getElementById('reg-name').value.trim();
-  const email    = document.getElementById('reg-email').value.trim().toLowerCase();
-  const phone    = document.getElementById('reg-phone').value.trim();
-  const password = document.getElementById('reg-password').value;
+  const name         = document.getElementById('reg-name').value.trim();
+  const email        = document.getElementById('reg-email').value.trim().toLowerCase();
+  const phone        = document.getElementById('reg-phone').value.trim();
+  const password     = document.getElementById('reg-password').value;
+  const emailConsent = document.getElementById('reg-email-consent').checked;
 
   let valid = true;
-  if (!name)              { showError('err-name', 'Vui lòng nhập họ tên.'); valid = false; }
-  if (!email)              { showError('err-email', 'Vui lòng nhập email.'); valid = false; }
+  if (!name)                    { showError('err-name', 'Vui lòng nhập họ tên.'); valid = false; }
+  if (!email)                   { showError('err-email', 'Vui lòng nhập email.'); valid = false; }
   else if (!validateEmail(email)) { showError('err-email', 'Email không hợp lệ.'); valid = false; }
-  if (!phone)              { showError('err-phone', 'Vui lòng nhập số điện thoại.'); valid = false; }
+  if (!phone)                   { showError('err-phone', 'Vui lòng nhập số điện thoại.'); valid = false; }
   else if (!validatePhone(phone)) { showError('err-phone', 'Số điện thoại không hợp lệ (VD: 0912 345 678).'); valid = false; }
-  if (!password)           { showError('err-password', 'Vui lòng nhập mật khẩu.'); valid = false; }
+  if (!password)                { showError('err-password', 'Vui lòng nhập mật khẩu.'); valid = false; }
   else if (password.length < 6) { showError('err-password', 'Mật khẩu phải có ít nhất 6 ký tự.'); valid = false; }
   if (!valid) return;
-
-  // Duplicate check
-  const existing = getLocalAccounts();
-  if (existing.find(a => a.email === email)) {
-    showError('err-email', 'Email này đã có tài khoản. Hãy đăng nhập.');
-    return;
-  }
 
   const submitBtn = document.getElementById('reg-submit-btn');
   submitBtn.disabled = true;
@@ -327,116 +369,126 @@ async function handleSubmit(e) {
 
   const account = {
     email,
-    password,
     phone: phone.replace(/\s/g, ''),
     name,
-    status: 'pending',
+    email_consent: emailConsent,
     registeredAt: new Date().toISOString(),
     source: window.location.pathname,
   };
 
-  // Save locally
-  existing.push(account);
-  saveLocalAccounts(existing);
-
-  const pending = getPending();
-  pending.push(account);
-  savePending(pending);
-
-  // Set user session for auto-login
-  localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({
-    email: account.email,
-    name: account.name,
-    phone: account.phone || ''
-  }));
-
-  // Optional: POST to CRM webhook
-  if (WEBHOOK_URL) {
-    try {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: account.email,
+  // ── Supabase path ──────────────────────────────────────────────────────
+  if (isSupabaseEnabled) {
+    const redirectTo = `${window.location.origin}/portal.html`;
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: redirectTo,
+        data: {
+          name,
           phone: account.phone,
-          name: account.name,
-          registeredAt: account.registeredAt,
+          email_consent: emailConsent,
           source: account.source,
-        }),
-      });
-    } catch (_) { /* silent — webhook optional */ }
+        },
+      },
+    });
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
+
+    if (error) {
+      if (error.message.includes('already registered') || error.message.includes('User already registered')) {
+        showError('err-email', 'Email này đã có tài khoản. Hãy đăng nhập.');
+      } else {
+        toast(error.message || 'Có lỗi xảy ra. Vui lòng thử lại.', 'error');
+      }
+      return;
+    }
+
+    // Show email-sent state
+    document.getElementById('reg-sent-email').textContent = email;
+    document.getElementById('reg-form-wrap').style.display = 'none';
+    document.getElementById('reg-email-sent').style.display = 'block';
+
+    // Notifications
+    await notifyTelegram(account);
+    if (WEBHOOK_URL) {
+      try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(account) }); } catch (_) {}
+    }
+    return;
   }
 
-  // Direct Telegram Bot notification if configured
-  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-    const messageText = `🔔 *Đăng Ký Mới - Mật Mã 21*\n\n• Họ tên: *${account.name}*\n• Email: \`${account.email}\`\n• SĐT: \`${account.phone}\`\n• Thời gian: _${new Date(account.registeredAt).toLocaleString('vi-VN')}_\n• Nguồn: ${account.source}`;
-    try {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: messageText,
-          parse_mode: 'Markdown'
-        })
-      });
-    } catch (err) {
-      console.error("Telegram notification failed:", err);
-    }
+  // ── localStorage fallback (no Supabase) ────────────────────────────────
+  const existing = JSON.parse(localStorage.getItem(LS_ACCOUNTS) || '[]');
+  if (existing.find(a => a.email === email)) {
+    showError('err-email', 'Email này đã có tài khoản. Hãy đăng nhập.');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
+    return;
   }
+
+  const localAccount = { ...account, password, status: 'pending' };
+  existing.push(localAccount);
+  localStorage.setItem(LS_ACCOUNTS, JSON.stringify(existing));
+  localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({ email, name, phone: account.phone }));
 
   submitBtn.disabled = false;
+  submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
 
-  // Show success state
-  document.getElementById('reg-form-wrap').style.display = 'none';
-  document.getElementById('reg-success').style.display = 'block';
-  toast('Đăng ký tài khoản thành công!', 'success');
+  await notifyTelegram(account);
+  if (WEBHOOK_URL) {
+    try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(account) }); } catch (_) {}
+  }
+
+  toast('Đăng ký thành công! Đang chuyển đến trang học tập...', 'success');
+  setTimeout(() => { window.location.href = '/portal.html'; }, 1500);
+}
+
+// ── Resend email ───────────────────────────────────────────────────────────
+async function handleResend() {
+  const email = document.getElementById('reg-sent-email')?.textContent;
+  if (!email || !isSupabaseEnabled) return;
+  const btn = document.getElementById('reg-resend-btn');
+  btn.disabled = true;
+  btn.textContent = 'Đang gửi...';
+  const { error } = await supabase.auth.resend({ type: 'signup', email });
+  btn.disabled = false;
+  btn.textContent = 'Gửi lại';
+  if (error) { toast('Không thể gửi lại. Vui lòng thử sau.', 'error'); }
+  else { toast('Đã gửi lại email xác nhận!', 'success'); }
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────
 function init() {
   injectModal();
 
-  // Close handlers
   document.getElementById('reg-close-btn')?.addEventListener('click', closeModal);
   document.getElementById('reg-modal')?.addEventListener('click', e => {
     if (e.target === document.getElementById('reg-modal')) closeModal();
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // Form submit
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   document.getElementById('reg-form')?.addEventListener('submit', handleSubmit);
+  document.getElementById('reg-resend-btn')?.addEventListener('click', handleResend);
 
   // Password toggle
   document.getElementById('pw-toggle')?.addEventListener('click', () => {
     const input = document.getElementById('reg-password');
     const icon  = document.getElementById('pw-toggle-icon');
     if (input.type === 'password') {
-      input.type = 'text';
-      icon.className = 'fa-solid fa-eye-slash';
+      input.type = 'text'; icon.className = 'fa-solid fa-eye-slash';
     } else {
-      input.type = 'password';
-      icon.className = 'fa-solid fa-eye';
+      input.type = 'password'; icon.className = 'fa-solid fa-eye';
     }
   });
 
-  // Wire ALL elements with data-open-register or #register-btn-desktop / #register-btn-mobile
-  function wireBtn(el) {
-    if (!el) return;
-    el.addEventListener('click', e => {
-      e.preventDefault();
-      openModal();
-    });
-  }
-  document.querySelectorAll('[data-open-register], #register-btn-desktop, #register-btn-mobile').forEach(wireBtn);
+  // Wire all elements with data-open-register
+  document.querySelectorAll('[data-open-register], #register-btn-desktop, #register-btn-mobile').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); openModal(); });
+  });
 
-  // Expose globally for inline onclick usage
   window.openRegisterModal = openModal;
 }
 
-// Run after DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
