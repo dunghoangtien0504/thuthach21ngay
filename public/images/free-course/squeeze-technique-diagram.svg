@@ -1,47 +1,130 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 350" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 435" width="100%" height="100%">
   <defs>
-    <linearGradient id="forest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0D2B1A" />
-      <stop offset="100%" stop-color="#1B442D" />
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D2B1A"/>
+      <stop offset="100%" stop-color="#1B442D"/>
     </linearGradient>
-    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#D4AF37" />
-      <stop offset="100%" stop-color="#AA7C11" />
+    <linearGradient id="shaft-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8B3A22"/>
+      <stop offset="100%" stop-color="#5A2010"/>
     </linearGradient>
-    <linearGradient id="danger-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C0390E" />
-      <stop offset="100%" stop-color="#8B1E05" />
+    <linearGradient id="glans-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8A3825"/>
+      <stop offset="100%" stop-color="#C05838"/>
     </linearGradient>
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08" />
-    </filter>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#C0390E"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#7CB87C"/>
+    </marker>
+    <marker id="arr-gold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#D4AF37"/>
+    </marker>
   </defs>
-  
-  <!-- Outer Card Container -->
-  <rect x="2" y="2" width="596" height="346" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#shadow)" />
-  
-  
-  <text x="300" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0D2B1A" text-anchor="middle">KỸ THUẬT ÉP QUY ĐẦU (CORONAL SQUEEZE)</text>
-  <text x="300" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#5A6E61" text-anchor="middle">Kỹ thuật bóp rãnh quy đầu của Masters &amp; Johnson để ngắt dòng hưng phấn</text>
-  
-  <!-- Penis head anatomy mockup -->
-  <path d="M 180 200 L 330 200 C 340 200 350 170 380 170 C 430 170 430 230 380 230 C 350 230 340 200 180 200" fill="#E6DFD3" opacity="0.6" stroke="#0D2B1A" stroke-width="2" />
-  
-  <!-- Coronal groove line -->
-  <path d="M 350 174 Q 345 200 350 226" fill="none" stroke="#D4AF37" stroke-width="4" />
-  
-  <!-- Pinch point (Coronal groove) -->
-  <circle cx="347" cy="200" r="20" fill="none" stroke="#C0390E" stroke-width="4" stroke-dasharray="6" />
-  
-  <!-- Arrows indicating pinch force -->
-  <path d="M 347 165 L 347 190" fill="none" stroke="#C0390E" stroke-width="3" />
-  <polygon points="347,190 343,182 351,182" fill="#C0390E" />
-  
-  <path d="M 347 235 L 347 210" fill="none" stroke="#C0390E" stroke-width="3" />
-  <polygon points="347,210 343,218 351,218" fill="#C0390E" />
-  
-  <text x="280" y="145" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#C0390E">Rãnh quy đầu (Coronal Groove)</text>
-  <text x="300" y="275" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#0D2B1A" text-anchor="middle">Đối tác đặt ngón cái dưới dây hãm, ngón trỏ/giữa ở mặt trên rãnh quy đầu</text>
-  <text x="300" y="295" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#5A6E61" text-anchor="middle">Ép với lực vừa phải trong 10 - 20 giây để phản xạ phóng tinh dịch biến mất tức thì</text>
 
+  <!-- Background -->
+  <rect width="680" height="435" rx="16" fill="url(#bg)"/>
+  <rect x="2" y="2" width="676" height="431" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+
+  <!-- Title -->
+  <text x="340" y="32" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">KỸ THUẬT SQUEEZE — ÉP QUY ĐẦU (MASTERS &amp; JOHNSON)</text>
+  <text x="340" y="50" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">Kiểm soát tức thời · Không thuốc · Hiệu quả lâm sàng 68–95%</text>
+
+  <!-- ── LEFT PANEL: Anatomy ── -->
+  <rect x="10" y="60" width="304" height="365" rx="12" fill="#0A2016" stroke="#1B3320" stroke-width="1"/>
+  <text x="162" y="82" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#A8D5A2" text-anchor="middle">GIẢI PHẪU &amp; VỊ TRÍ ÉP</text>
+
+  <!-- Shaft body -->
+  <rect x="22" y="183" width="148" height="88" rx="8" fill="url(#shaft-g)" stroke="#9A4228" stroke-width="1.5"/>
+  <text x="96" y="230" font-family="system-ui,sans-serif" font-size="9" fill="#D4956A" text-anchor="middle">Trục dương vật</text>
+
+  <!-- Coronal widening -->
+  <path d="M 170,172 L 198,162 L 198,292 L 170,282 Z" fill="#7A3218" stroke="#9A4228" stroke-width="1.5"/>
+
+  <!-- Glans dome (bezier) -->
+  <path d="M 198,162 C 234,158 268,178 282,227 C 268,276 234,296 198,292" fill="url(#glans-g)" stroke="#C06040" stroke-width="2"/>
+
+  <!-- Glans tip slit -->
+  <ellipse cx="281" cy="227" rx="5" ry="11" fill="#0D2B1A" opacity="0.55"/>
+
+  <!-- Coronal groove dashed line -->
+  <line x1="198" y1="162" x2="198" y2="292" stroke="#D4AF37" stroke-width="2.5" stroke-dasharray="5,3"/>
+
+  <!-- Frenulum star dot (ventral, bottom of coronal groove) -->
+  <ellipse cx="198" cy="300" rx="16" ry="10" fill="#C0390E" opacity="0.9"/>
+  <text x="198" y="304" font-family="system-ui,sans-serif" font-size="9" font-weight="800" fill="#FDFBF7" text-anchor="middle">★</text>
+
+  <!-- Squeeze zone circle -->
+  <circle cx="198" cy="227" r="60" fill="none" stroke="#C0390E" stroke-width="1.8" stroke-dasharray="7,4" opacity="0.5"/>
+
+  <!-- Thumb (dorsal) arrow pressing DOWN -->
+  <line x1="198" y1="122" x2="198" y2="158" stroke="#C0390E" stroke-width="3.5" marker-end="url(#arr-red)"/>
+  <!-- Finger (ventral) arrow pressing UP -->
+  <line x1="198" y1="342" x2="198" y2="305" stroke="#C0390E" stroke-width="3.5" marker-end="url(#arr-red)"/>
+
+  <!-- Top label box (thumb) -->
+  <rect x="143" y="97" width="110" height="23" rx="5" fill="#2D1A0D" stroke="#C0390E" stroke-width="1"/>
+  <text x="198" y="112" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#F4A87A" text-anchor="middle">Ngón cái (Dorsal)</text>
+
+  <!-- Bottom label box (fingers) -->
+  <rect x="118" y="344" width="160" height="23" rx="5" fill="#2D1A0D" stroke="#C0390E" stroke-width="1"/>
+  <text x="198" y="359" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#F4A87A" text-anchor="middle">Ngón trỏ / giữa (Ventral)</text>
+
+  <!-- Glans label (above) -->
+  <line x1="240" y1="190" x2="240" y2="112" stroke="#D4AF37" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="244" y="104" font-family="system-ui,sans-serif" font-size="8" fill="#D4AF37">Quy đầu (Glans)</text>
+  <text x="244" y="114" font-family="system-ui,sans-serif" font-size="7" fill="#A8D5A2">~4.000 đầu mút TK</text>
+
+  <!-- Coronal groove label (mid-right) -->
+  <line x1="199" y1="227" x2="226" y2="227" stroke="#D4AF37" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="229" y="224" font-family="system-ui,sans-serif" font-size="7.5" fill="#D4AF37">Rãnh quy đầu</text>
+  <text x="229" y="234" font-family="system-ui,sans-serif" font-size="7" fill="#A8D5A2">(Coronal groove)</text>
+
+  <!-- Frenulum label (lower-left) -->
+  <line x1="184" y1="303" x2="140" y2="332" stroke="#C0390E" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="95" y="333" font-family="system-ui,sans-serif" font-size="8" font-weight="700" fill="#C0390E" text-anchor="middle">Dây hãm (Frenulum)</text>
+  <text x="95" y="344" font-family="system-ui,sans-serif" font-size="7" fill="#F4A87A" text-anchor="middle">⭐ Điểm nhạy cảm nhất</text>
+
+  <!-- ── RIGHT PANEL: Steps ── -->
+  <rect x="322" y="60" width="350" height="365" rx="12" fill="#0A2016" stroke="#1B3320" stroke-width="1"/>
+  <text x="497" y="82" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">QUY TRÌNH THỰC HIỆN</text>
+
+  <!-- Step 1 -->
+  <rect x="332" y="90" width="330" height="88" rx="8" fill="#1B3320"/>
+  <circle cx="356" cy="118" r="16" fill="#C0390E"/>
+  <text x="356" y="123" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#FDFBF7" text-anchor="middle">1</text>
+  <text x="380" y="107" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#F4A87A">Nhận biết "Điểm không thể dừng"</text>
+  <text x="380" y="121" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Cảm giác căng tràn — sắp đạt đỉnh</text>
+  <text x="380" y="134" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Báo hiệu đối tác dừng kích thích ngay</text>
+  <text x="380" y="147" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Tín hiệu phải SỚM hơn — đừng chờ</text>
+  <text x="380" y="161" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Semans 1956: Stop-Start cải thiện 95% ca</text>
+
+  <!-- Step 2 -->
+  <rect x="332" y="184" width="330" height="88" rx="8" fill="#1B3320"/>
+  <circle cx="356" cy="212" r="16" fill="#D4AF37"/>
+  <text x="356" y="217" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#0D2B1A" text-anchor="middle">2</text>
+  <text x="380" y="201" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">Bóp Đúng Điểm — 10 đến 20 Giây</text>
+  <text x="380" y="215" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Ngón cái: mặt trên rãnh quy đầu (dorsal)</text>
+  <text x="380" y="228" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Ngón trỏ / giữa: mặt dưới — dây hãm</text>
+  <text x="380" y="241" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Lực vừa phải — đủ để hạ hưng phấn</text>
+  <text x="380" y="255" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Phản xạ xuất tinh ngắt → IELT tăng dần</text>
+
+  <!-- Step 3 -->
+  <rect x="332" y="278" width="330" height="88" rx="8" fill="#1B3320"/>
+  <circle cx="356" cy="306" r="16" fill="#7CB87C"/>
+  <text x="356" y="311" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#0D2B1A" text-anchor="middle">3</text>
+  <text x="380" y="295" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#7CB87C">Thư Giãn → Tiếp Tục</text>
+  <text x="380" y="309" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Cương cứng có thể giảm tạm thời — bình thường</text>
+  <text x="380" y="322" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Chờ 20–30 giây rồi tiếp tục bình thường</text>
+  <text x="380" y="335" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Lặp 3–5 lần / buổi · 3–5 lần / tuần</text>
+  <text x="380" y="349" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Kết quả rõ rệt sau 4–8 tuần luyện tập đều</text>
+
+  <!-- Data / Result box -->
+  <rect x="332" y="372" width="330" height="44" rx="8" fill="#2D1A0D" stroke="#D4AF37" stroke-width="1"/>
+  <text x="497" y="390" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#D4AF37" text-anchor="middle">Kết quả lâm sàng (Masters &amp; Johnson 1970)</text>
+  <text x="497" y="406" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">68–95% cặp đôi cải thiện IELT sau 4–8 tuần · Không tác dụng phụ</text>
+
+  <!-- Citations -->
+  <text x="340" y="424" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Masters &amp; Johnson 1970 · Semans 1956 · De Carufel 2006 · EAU Guidelines 2024 · Mật Mã 21 R&amp;D</text>
 </svg>
