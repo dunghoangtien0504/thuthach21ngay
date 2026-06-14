@@ -7,8 +7,6 @@
 import { supabase, isSupabaseEnabled } from './supabase.js';
 
 const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || '';
-const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '';
-const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID || '';
 const LS_ACCOUNTS = 'thuthach21ngay_registered_users';
 
 // ── Inject modal HTML ──────────────────────────────────────────────────────
@@ -329,15 +327,21 @@ function clearErrors() {
 function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 function validatePhone(v) { return /^(\+?84|0)\d{9,10}$/.test(v.replace(/\s/g, '')); }
 
-// ── Telegram notification ──────────────────────────────────────────────────
+// ── Server-side Telegram notification ──────────────────────────────────────
 async function notifyTelegram(account) {
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
-  const msg = `🔔 *Đăng Ký Mới - Mật Mã 21*\n\n• Họ tên: *${account.name}*\n• Email: \`${account.email}\`\n• SĐT: \`${account.phone}\`\n• Đồng ý nhận email: ${account.email_consent ? '✅ Có' : '❌ Không'}\n• Thời gian: _${new Date(account.registeredAt).toLocaleString('vi-VN')}_\n• Nguồn: ${account.source}`;
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    await fetch('/api/notify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
+      body: JSON.stringify({
+        type: 'registration',
+        data: {
+          name: account.name,
+          email: account.email,
+          phone: account.phone,
+          source: account.source
+        }
+      })
     });
   } catch (_) { /* silent */ }
 }

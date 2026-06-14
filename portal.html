@@ -279,16 +279,30 @@
                 <!-- Rendered Markdown goes here -->
               </div>
 
+              <!-- Supplement CTA -->
+              <div class="supplement-cta-bar">
+                <div class="supplement-cta-inner">
+                  <span class="supplement-cta-icon"><i class="fa-solid fa-capsules"></i></span>
+                  <div class="supplement-cta-text">
+                    <strong>Hỗ trợ quá trình luyện tập</strong>
+                    <span>Kẽm & Magie — vi chất nền tảng cho cơ bắp và hệ thần kinh khỏe mạnh.</span>
+                  </div>
+                  <button class="supplement-cta-btn" onclick="openSupplementModal()">
+                    Đặt mua <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+
               <!-- Lesson Controls -->
               <div class="lesson-footer-controls">
                 <button class="btn btn-secondary" id="btn-prev-lesson">
                   <i class="fa-solid fa-chevron-left"></i> Bài trước
                 </button>
-                
+
                 <button class="btn btn-success" id="btn-complete-lesson">
                   <i class="fa-solid fa-check"></i> Đánh dấu hoàn thành
                 </button>
-                
+
                 <button class="btn btn-secondary" id="btn-next-lesson">
                   Bài tiếp theo <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -533,6 +547,20 @@
                 </div>
               </div>
 
+              <!-- Supplement CTA (free course) -->
+              <div class="supplement-cta-bar">
+                <div class="supplement-cta-inner">
+                  <span class="supplement-cta-icon"><i class="fa-solid fa-capsules"></i></span>
+                  <div class="supplement-cta-text">
+                    <strong>Hỗ trợ quá trình luyện tập</strong>
+                    <span>Kẽm & Magie — vi chất nền tảng cho cơ bắp và hệ thần kinh khỏe mạnh.</span>
+                  </div>
+                  <button class="supplement-cta-btn" onclick="openSupplementModal()">
+                    Đặt mua <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+
               <div class="lesson-footer-controls">
                 <button class="btn btn-secondary" id="free-btn-prev-lesson">
                   <i class="fa-solid fa-chevron-left"></i> Bài trước
@@ -712,5 +740,275 @@
     });
   </script>
   <script type="module" src="/analytics-tracker.js"></script>
+
+  <!-- ===== SUPPLEMENT PURCHASE MODAL ===== -->
+  <div id="supplement-modal-overlay" class="supp-modal-overlay" style="display:none;" onclick="if(event.target===this)closeSupplementModal()">
+    <div class="supp-modal-box">
+      <button class="supp-modal-close" onclick="closeSupplementModal()" aria-label="Đóng">&times;</button>
+
+      <!-- Step 1: Form -->
+      <div id="supp-step-form">
+        <div class="supp-modal-header">
+          <span class="supp-modal-icon"><i class="fa-solid fa-capsules"></i></span>
+          <h3>Đặt Mua Thực Phẩm Bổ Sung</h3>
+          <p>Kẽm &amp; Magie — hỗ trợ hệ cơ và thần kinh trong suốt quá trình luyện tập.</p>
+        </div>
+
+        <form id="supplement-order-form" class="supp-form" onsubmit="submitSupplementOrder(event)">
+          <div class="supp-form-group">
+            <label>Họ và tên</label>
+            <input type="text" id="supp-name" placeholder="Nguyễn Văn A" required />
+          </div>
+          <div class="supp-form-group">
+            <label>Số điện thoại</label>
+            <input type="tel" id="supp-phone" placeholder="09xxxxxxxx" required />
+          </div>
+          <div class="supp-form-group">
+            <label>Địa chỉ nhận hàng</label>
+            <textarea id="supp-address" rows="2" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố" required></textarea>
+          </div>
+
+          <div class="supp-form-group">
+            <label>Chọn sản phẩm</label>
+            <div class="supp-product-options">
+              <label class="supp-product-card">
+                <input type="radio" name="supp-product" value="zinc" required />
+                <div class="supp-product-body">
+                  <div class="supp-product-name"><i class="fa-solid fa-z"></i> Kẽm (Zinc)</div>
+                  <div class="supp-product-price">299.000đ</div>
+                  <div class="supp-product-desc">Hỗ trợ sản xuất testosterone, tăng cường sức khỏe sinh lý nam</div>
+                </div>
+              </label>
+              <label class="supp-product-card">
+                <input type="radio" name="supp-product" value="magnesium" required />
+                <div class="supp-product-body">
+                  <div class="supp-product-name"><i class="fa-solid fa-m"></i> Magie</div>
+                  <div class="supp-product-price">350.000đ</div>
+                  <div class="supp-product-desc">Thư giãn cơ bắp, cân bằng hệ thần kinh, cải thiện giấc ngủ sâu</div>
+                </div>
+              </label>
+              <label class="supp-product-card supp-product-card--recommended">
+                <input type="radio" name="supp-product" value="combo" required />
+                <div class="supp-product-body">
+                  <span class="supp-badge">Tiết kiệm nhất</span>
+                  <div class="supp-product-name"><i class="fa-solid fa-star"></i> Combo Kẽm + Magie</div>
+                  <div class="supp-product-price">549.000đ <span class="supp-product-old-price">649.000đ</span></div>
+                  <div class="supp-product-desc">Kết hợp tối ưu — hiệu quả hỗ trợ toàn diện hơn khi dùng cùng nhau</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div id="supp-form-error" class="supp-error" style="display:none;"></div>
+          <button type="submit" class="supp-submit-btn" id="supp-submit-btn">
+            <span id="supp-btn-text">Gửi Đơn Đặt Hàng <i class="fa-solid fa-paper-plane"></i></span>
+            <span id="supp-btn-loading" style="display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...</span>
+          </button>
+          <p class="supp-note">Sau khi nhận đơn, đội ngũ FORMEN sẽ liên hệ xác nhận và hướng dẫn thanh toán trong 24h.</p>
+        </form>
+      </div>
+
+      <!-- Step 2: Success -->
+      <div id="supp-step-success" style="display:none;" class="supp-success">
+        <div class="supp-success-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h3>Đặt hàng thành công!</h3>
+        <p>Cảm ơn anh đã tin tưởng FORMEN.<br>Chúng tôi sẽ liên hệ xác nhận trong vòng <strong>24 giờ</strong>.</p>
+        <div class="supp-success-details" id="supp-success-details"></div>
+        <button class="supp-submit-btn" onclick="closeSupplementModal()" style="margin-top:20px;">
+          Tiếp tục học <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* ===== Supplement CTA Bar ===== */
+    .supplement-cta-bar {
+      margin: 24px 0 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(184,134,11,0.08), rgba(212,175,55,0.12));
+      border: 1.5px solid rgba(184,134,11,0.25);
+      padding: 16px 20px;
+    }
+    .supplement-cta-inner {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    }
+    .supplement-cta-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent, #B8860B), #D4AF37);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 17px;
+    }
+    .supplement-cta-text { flex: 1; min-width: 160px; }
+    .supplement-cta-text strong { display: block; font-size: 14px; color: var(--primary, #0D2B1A); margin-bottom: 2px; }
+    .supplement-cta-text span { font-size: 13px; color: #5A6E63; }
+    .supplement-cta-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: 50px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--accent, #B8860B), #D4AF37);
+      color: #0D2B1A; font-weight: 700; font-size: 13px; white-space: nowrap;
+      transition: all .2s ease;
+    }
+    .supplement-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(184,134,11,.3); }
+
+    /* ===== Supplement Modal ===== */
+    .supp-modal-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px; overflow-y: auto;
+    }
+    .supp-modal-box {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 520px;
+      padding: 32px 28px; position: relative; box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+      max-height: 92vh; overflow-y: auto;
+    }
+    .supp-modal-close {
+      position: absolute; top: 14px; right: 18px;
+      background: none; border: none; font-size: 24px; color: #9aab9f;
+      cursor: pointer; line-height: 1; padding: 4px;
+    }
+    .supp-modal-close:hover { color: #0D2B1A; }
+    .supp-modal-header { text-align: center; margin-bottom: 24px; }
+    .supp-modal-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 56px; height: 56px; border-radius: 14px; font-size: 24px;
+      background: linear-gradient(135deg, rgba(184,134,11,0.15), rgba(212,175,55,0.2));
+      color: #B8860B; margin-bottom: 12px;
+    }
+    .supp-modal-header h3 { font-size: 20px; color: #0D2B1A; margin-bottom: 6px; }
+    .supp-modal-header p { font-size: 14px; color: #5A6E63; margin: 0; }
+
+    .supp-form { display: flex; flex-direction: column; gap: 16px; }
+    .supp-form-group { display: flex; flex-direction: column; gap: 6px; }
+    .supp-form-group label { font-size: 13px; font-weight: 600; color: #2E4A3A; }
+    .supp-form-group input,
+    .supp-form-group textarea {
+      padding: 10px 14px; border: 1.5px solid #D1DED7; border-radius: 10px;
+      font-size: 14px; font-family: inherit; color: #0D2B1A; outline: none;
+      transition: border-color .2s;
+    }
+    .supp-form-group input:focus,
+    .supp-form-group textarea:focus { border-color: #B8860B; }
+    .supp-form-group textarea { resize: vertical; }
+
+    .supp-product-options { display: flex; flex-direction: column; gap: 10px; }
+    .supp-product-card {
+      display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+      padding: 14px 16px; border: 2px solid #D1DED7; border-radius: 12px;
+      transition: all .2s ease; position: relative;
+    }
+    .supp-product-card input[type="radio"] { margin-top: 3px; accent-color: #B8860B; flex-shrink: 0; }
+    .supp-product-card:hover { border-color: rgba(184,134,11,0.4); background: rgba(184,134,11,0.03); }
+    .supp-product-card:has(input:checked) { border-color: #B8860B; background: rgba(184,134,11,0.06); }
+    .supp-product-card--recommended { border-color: rgba(184,134,11,0.4); }
+    .supp-badge {
+      position: absolute; top: -10px; right: 12px;
+      background: linear-gradient(135deg, #B8860B, #D4AF37);
+      color: #fff; font-size: 11px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px; white-space: nowrap;
+    }
+    .supp-product-name { font-weight: 700; font-size: 14px; color: #0D2B1A; margin-bottom: 2px; }
+    .supp-product-price { font-size: 15px; font-weight: 800; color: #B8860B; margin-bottom: 4px; }
+    .supp-product-old-price { font-size: 12px; font-weight: 400; color: #9aab9f; text-decoration: line-through; }
+    .supp-product-desc { font-size: 12px; color: #5A6E63; line-height: 1.5; }
+
+    .supp-error { background: #fff0f0; border: 1px solid #ffcdd2; color: #c62828; padding: 10px 14px; border-radius: 8px; font-size: 13px; }
+    .supp-submit-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px; border: none; border-radius: 50px; cursor: pointer;
+      background: linear-gradient(135deg, #0D2B1A, #163f27);
+      color: #fff; font-weight: 700; font-size: 15px; font-family: inherit;
+      transition: all .2s ease; width: 100%;
+    }
+    .supp-submit-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(13,43,26,0.25); }
+    .supp-note { font-size: 12px; color: #8FA497; text-align: center; margin: 0; }
+
+    .supp-success { text-align: center; padding: 12px 0; }
+    .supp-success-icon { font-size: 56px; color: #2E7D32; margin-bottom: 16px; }
+    .supp-success h3 { font-size: 22px; color: #0D2B1A; margin-bottom: 8px; }
+    .supp-success p { font-size: 15px; color: #485A4F; line-height: 1.6; margin-bottom: 16px; }
+    .supp-success-details {
+      background: #f6faf5; border: 1px solid #c8e6c9; border-radius: 10px;
+      padding: 14px 18px; text-align: left; font-size: 13px; color: #2E4A3A; line-height: 1.8;
+    }
+  </style>
+
+  <script>
+    function openSupplementModal() {
+      document.getElementById('supplement-modal-overlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      // Pre-select combo
+      const comboRadio = document.querySelector('input[name="supp-product"][value="combo"]');
+      if (comboRadio) comboRadio.checked = true;
+    }
+    function closeSupplementModal() {
+      document.getElementById('supplement-modal-overlay').style.display = 'none';
+      document.body.style.overflow = '';
+      document.getElementById('supp-step-form').style.display = 'block';
+      document.getElementById('supp-step-success').style.display = 'none';
+      document.getElementById('supplement-order-form').reset();
+      document.getElementById('supp-form-error').style.display = 'none';
+    }
+
+    async function submitSupplementOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById('supp-name').value.trim();
+      const phone = document.getElementById('supp-phone').value.trim();
+      const address = document.getElementById('supp-address').value.trim();
+      const productRadio = document.querySelector('input[name="supp-product"]:checked');
+      const errEl = document.getElementById('supp-form-error');
+      errEl.style.display = 'none';
+
+      if (!name || !phone || !address || !productRadio) {
+        errEl.textContent = 'Vui lòng điền đầy đủ thông tin và chọn sản phẩm.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const productMap = { zinc: 'Kẽm (Zinc) — 299.000đ', magnesium: 'Magie — 350.000đ', combo: 'Combo Kẽm + Magie — 549.000đ' };
+      const order = {
+        id: 'SUP_' + Date.now(),
+        name, phone, address,
+        product: productRadio.value,
+        productLabel: productMap[productRadio.value] || productRadio.value,
+        createdAt: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      // Save to localStorage
+      const key = 'formen_supplement_orders';
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.unshift(order);
+      localStorage.setItem(key, JSON.stringify(existing));
+
+      // Show loading
+      document.getElementById('supp-btn-text').style.display = 'none';
+      document.getElementById('supp-btn-loading').style.display = 'inline-flex';
+      document.getElementById('supp-submit-btn').disabled = true;
+
+      // POST to API (non-blocking — show success regardless)
+      try {
+        await fetch('/api/supplement-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(order)
+        });
+      } catch (_) {}
+
+      // Show success
+      document.getElementById('supp-btn-text').style.display = 'inline-flex';
+      document.getElementById('supp-btn-loading').style.display = 'none';
+      document.getElementById('supp-submit-btn').disabled = false;
+      document.getElementById('supp-step-form').style.display = 'none';
+      document.getElementById('supp-success-details').innerHTML =
+        `<b>Sản phẩm:</b> ${order.productLabel}<br>` +
+        `<b>Họ tên:</b> ${order.name}<br>` +
+        `<b>SĐT:</b> ${order.phone}<br>` +
+        `<b>Địa chỉ:</b> ${order.address}`;
+      document.getElementById('supp-step-success').style.display = 'block';
+    }
+  </script>
+  <script src="/chat-widget.js"></script>
 </body>
 </html>

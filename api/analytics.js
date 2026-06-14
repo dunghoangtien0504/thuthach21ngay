@@ -5,6 +5,9 @@
 let globalVisits = [];
 let globalClicks = [];
 let globalActiveUsers = {};
+const rateLimitMap = {};
+const RATE_LIMIT_WINDOW = 10000;
+const RATE_LIMIT_MAX = 30;
 
 export default async function handler(req, res) {
   // CORS Headers
@@ -17,6 +20,15 @@ export default async function handler(req, res) {
   }
 
   const now = Date.now();
+
+  // Basic rate limiting per IP
+  const clientIp = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown';
+  if (!rateLimitMap[clientIp]) rateLimitMap[clientIp] = [];
+  rateLimitMap[clientIp] = rateLimitMap[clientIp].filter(t => now - t < RATE_LIMIT_WINDOW);
+  if (rateLimitMap[clientIp].length >= RATE_LIMIT_MAX) {
+    return res.status(429).json({ error: 'Too many requests' });
+  }
+  rateLimitMap[clientIp].push(now);
 
   // Clean up inactive active users (older than 60 seconds)
   for (const id in globalActiveUsers) {
@@ -43,24 +55,33 @@ export default async function handler(req, res) {
     }
 
     try {
-      if (type === 'pageview') {
-        // payload = { sessionId, path, timestamp, device, name }
-        globalVisits.push(payload);
-        if (globalVisits.length > 2000) globalVisits.shift(); // Limit size
-      } 
-      else if (type === 'heartbeat') {
-        // payload = { sessionId, path, name, device }
-        globalActiveUsers[payload.sessionId] = {
-          path: payload.path,
-          name: payload.name,
-          device: payload.device,
+      if (type === 'pageview' && payload.sessionId && payload.path) {
+        globalVisits.push({
+          sessionId: String(payload.sessionId).substring(0, 64),
+          path: String(payload.path).substring(0, 200),
+          timestamp: Number(payload.timestamp) || now,
+          device: String(payload.device || '').substring(0, 20),
+          name: String(payload.name || '').substring(0, 50),
+        });
+        if (globalVisits.length > 2000) globalVisits.shift();
+      }
+      else if (type === 'heartbeat' && payload.sessionId) {
+        globalActiveUsers[String(payload.sessionId).substring(0, 64)] = {
+          path: String(payload.path || '').substring(0, 200),
+          name: String(payload.name || '').substring(0, 50),
+          device: String(payload.device || '').substring(0, 20),
           lastActive: now
         };
-      } 
-      else if (type === 'click') {
-        // payload = { path, x, y, target, id, class, text, timestamp }
-        globalClicks.push(payload);
-        if (globalClicks.length > 5000) globalClicks.shift(); // Limit size
+      }
+      else if (type === 'click' && payload.path) {
+        globalClicks.push({
+          path: String(payload.path).substring(0, 200),
+          x: Number(payload.x) || 0,
+          y: Number(payload.y) || 0,
+          target: String(payload.target || '').substring(0, 100),
+          timestamp: Number(payload.timestamp) || now,
+        });
+        if (globalClicks.length > 5000) globalClicks.shift();
       }
 
       return res.status(200).json({ success: true });

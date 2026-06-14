@@ -3,6 +3,13 @@
 const ADMIN_USER = "admin";
 const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASS || "123456";
 
+function escHtml(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = String(str);
+  return d.innerHTML;
+}
+
 // Non-blocking toast notification (replaces alert())
 function showToast(message, type = 'info', duration = 4500) {
   let container = document.getElementById('toast-container');
@@ -30,6 +37,9 @@ function showToast(message, type = 'info', duration = 4500) {
     setTimeout(() => toast.remove(), 400);
   }, duration);
 }
+
+// Expose admin key for inline scripts in admin.html
+window._adminApiKey = import.meta.env.VITE_ADMIN_PASS || '123456';
 
 // State
 let studentsList = [];
@@ -161,6 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Admin authentication logic
+let _loginAttempts = 0;
+let _loginLockUntil = 0;
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_MS = 60000;
+
 function setupAdminAuth() {
   const isLogged = sessionStorage.getItem('thuthach21ngay_admin_logged') === 'true';
   if (isLogged) {
@@ -174,13 +189,36 @@ function setupAdminAuth() {
       e.preventDefault();
       if (adminAuthError) adminAuthError.style.display = 'none';
 
+      if (Date.now() < _loginLockUntil) {
+        const secs = Math.ceil((_loginLockUntil - Date.now()) / 1000);
+        if (adminAuthError) {
+          adminAuthError.textContent = `Quá nhiều lần thử. Vui lòng đợi ${secs} giây.`;
+          adminAuthError.style.display = 'block';
+        }
+        return;
+      }
+
       const pass = adminPassInput.value.trim();
 
       if (pass === ADMIN_PASS) {
+        _loginAttempts = 0;
         sessionStorage.setItem('thuthach21ngay_admin_logged', 'true');
         showAdminLayout();
       } else {
-        if (adminAuthError) adminAuthError.style.display = 'block';
+        _loginAttempts++;
+        if (_loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+          _loginLockUntil = Date.now() + LOCKOUT_MS;
+          _loginAttempts = 0;
+          if (adminAuthError) {
+            adminAuthError.textContent = 'Quá nhiều lần thử sai. Tài khoản bị khóa 60 giây.';
+            adminAuthError.style.display = 'block';
+          }
+        } else {
+          if (adminAuthError) {
+            adminAuthError.textContent = `Mật khẩu không chính xác! (${MAX_LOGIN_ATTEMPTS - _loginAttempts} lần thử còn lại)`;
+            adminAuthError.style.display = 'block';
+          }
+        }
         adminPassInput.value = '';
         adminPassInput.focus();
       }
@@ -230,6 +268,7 @@ function setupMenuSwitcher() {
       const targetSec = document.getElementById(targetId);
       if (targetSec) targetSec.style.display = 'block';
 
+      if (targetId === 'admin-tab-dashboard') { if (typeof refreshBizAnalytics === 'function') refreshBizAnalytics(); }
       if (targetId === 'admin-tab-registrations') renderRegistrations();
       if (targetId === 'admin-tab-payments') renderPaymentsTab();
       if (targetId === 'admin-tab-email-list') renderEmailMarketingTab();
@@ -273,11 +312,11 @@ function renderRegistrations() {
   const rows = regs.map((r, i) => `
     <tr>
       <td>${i + 1}</td>
-      <td><strong>${r.email || '—'}</strong></td>
-      <td>${r.phone || '—'}</td>
-      <td><span class="status-badge ${r.status === 'active' ? 'active' : 'pending'}">${r.status || 'pending'}</span></td>
+      <td><strong>${escHtml(r.email) || '—'}</strong></td>
+      <td>${escHtml(r.phone) || '—'}</td>
+      <td><span class="status-badge ${r.status === 'active' ? 'active' : 'pending'}">${escHtml(r.status) || 'pending'}</span></td>
       <td>${r.registeredAt ? new Date(r.registeredAt).toLocaleString('vi-VN') : '—'}</td>
-      <td>${r.source || '/'}</td>
+      <td>${escHtml(r.source) || '/'}</td>
     </tr>
   `).join('');
   container.innerHTML = `
@@ -298,9 +337,10 @@ function renderRegistrations() {
 document.getElementById('btn-export-registrations')?.addEventListener('click', () => {
   const regs = getPendingRegistrations();
   if (!regs.length) { showToast('Chưa có dữ liệu để xuất.', 'warning'); return; }
+  const csvSafe = v => `"${String(v||'').replace(/"/g,'""').replace(/^[=+\-@\t\r]/,'\'$&')}"`;
   const header = 'Email,SoDienThoai,TrangThai,ThoiGian,Nguon';
   const csv = [header, ...regs.map(r =>
-    `${r.email},${r.phone || ''},${r.status || 'pending'},${r.registeredAt || ''},${r.source || '/'}`
+    `${csvSafe(r.email)},${csvSafe(r.phone)},${csvSafe(r.status||'pending')},${csvSafe(r.registeredAt)},${csvSafe(r.source||'/')}`
   )].join('\n');
   const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -545,7 +585,7 @@ function renderLessonsTable() {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td><strong>#${lesson.lesson_id}</strong></td>
-        <td style="font-size: 13px; font-weight: 600;">${lesson.title}</td>
+        <td style="font-size: 13px; font-weight: 600;">${escHtml(lesson.title)}</td>
         <td>
           <span class="badge-status ${lesson.type === 'video' ? 'active' : 'pending'}" style="text-transform: capitalize;">
             ${lesson.type}
@@ -673,10 +713,10 @@ function renderBlogTable() {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${idx + 1}</td>
-      <td><strong>${post.title}</strong></td>
-      <td>${post.author}</td>
-      <td>${post.date}</td>
-      <td style="max-width: 250px; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${post.summary}</td>
+      <td><strong>${escHtml(post.title)}</strong></td>
+      <td>${escHtml(post.author)}</td>
+      <td>${escHtml(post.date)}</td>
+      <td style="max-width: 250px; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escHtml(post.summary)}</td>
       <td>
         <button class="btn btn-danger btn-sm btn-delete-blog" data-index="${idx}">Xóa</button>
       </td>
@@ -808,9 +848,10 @@ function setupStudentManager() {
       const newUser = {
         name,
         email,
-        password,
+        passwordHash: btoa(password),
         status: "active",
         key_used: "Admin cấp trực tiếp",
+        registeredAt: new Date().toISOString(),
         date: new Date().toLocaleDateString('vi-VN')
       };
 
@@ -857,12 +898,12 @@ function renderStudentsTable() {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>
-        <strong>${student.name}</strong>
-        ${student.phone ? `<br><small style="color:var(--text-dimmed)">${student.phone}</small>` : ''}
+        <strong>${escHtml(student.name)}</strong>
+        ${student.phone ? `<br><small style="color:var(--text-dimmed)">${escHtml(student.phone)}</small>` : ''}
       </td>
-      <td>${student.email}${emailConfirmedBadge}${consentBadge}</td>
-      <td>${student.date}</td>
-      <td style="max-width:160px;white-space:normal;font-size:12px">${student.key_used}</td>
+      <td>${escHtml(student.email)}${emailConfirmedBadge}${consentBadge}</td>
+      <td>${escHtml(student.date)}</td>
+      <td style="max-width:160px;white-space:normal;font-size:12px">${escHtml(student.key_used)}</td>
       <td>
         <span class="badge-status ${student.status === 'active' ? 'active' : 'pending'}">
           ${student.status === 'active' ? 'Đã kích hoạt' : 'Chờ duyệt'}
@@ -871,12 +912,12 @@ function renderStudentsTable() {
       <td>
         <div class="admin-table-actions">
           ${student.status === 'pending' && !isSupabase ? `
-            <button class="btn btn-success btn-sm btn-activate" data-email="${student.email}">
+            <button class="btn btn-success btn-sm btn-activate" data-email="${escHtml(student.email)}">
               Kích hoạt
             </button>
           ` : ''}
           ${isLocal && !isSupabase ? `
-            <button class="btn btn-danger btn-sm btn-delete-student" data-email="${student.email}">
+            <button class="btn btn-danger btn-sm btn-delete-student" data-email="${escHtml(student.email)}">
               Xóa
             </button>
           ` : `<span style="font-size:11px;color:var(--text-dimmed);font-style:italic">${isSupabase ? 'Supabase' : 'Hệ thống'}</span>`}
@@ -960,8 +1001,8 @@ function renderActivityFeed() {
       <div class="activity-item">
         <div class="activity-icon ${ev.cls}"><i class="fa-solid ${ev.icon}"></i></div>
         <div class="activity-body">
-          <div class="activity-title">${ev.title}</div>
-          <div class="activity-sub">${ev.sub}</div>
+          <div class="activity-title">${escHtml(ev.title)}</div>
+          <div class="activity-sub">${escHtml(ev.sub)}</div>
         </div>
         <span class="activity-time">${timeAgo}</span>
       </div>`;
@@ -1053,9 +1094,9 @@ async function renderPaymentsTab() {
                                `<span style="font-size:11px;color:var(--text-dimmed)">Khác</span>`;
     return `<tr>
       <td>${i + 1}</td>
-      <td style="max-width:260px;font-size:12.5px">${t.content || '—'}</td>
+      <td style="max-width:260px;font-size:12.5px">${escHtml(t.content) || '—'}</td>
       <td class="payment-amount">${(t.amount || 0).toLocaleString('vi-VN')}đ</td>
-      <td style="font-size:12px">${t.bankCode || '—'}</td>
+      <td style="font-size:12px">${escHtml(t.bankCode) || '—'}</td>
       <td style="font-size:12px">${dateStr}</td>
       <td>${badge}</td>
     </tr>`;
@@ -1110,13 +1151,13 @@ function renderEmailMarketingTab() {
       : `<span style="color:#9ca3af">N/A</span>`;
     const srcBadge = s.source === 'supabase' ? 'Supabase' : s.source === 'system' ? 'Hệ thống' : 'Local';
     return `<tr>
-      <td><strong>${s.name || '—'}</strong></td>
-      <td>${s.email}</td>
-      <td>${s.phone || '—'}</td>
+      <td><strong>${escHtml(s.name) || '—'}</strong></td>
+      <td>${escHtml(s.email)}</td>
+      <td>${escHtml(s.phone) || '—'}</td>
       <td>${consent}</td>
       <td>${verified}</td>
       <td><span style="font-size:11px;color:var(--text-dimmed)">${srcBadge}</span></td>
-      <td style="font-size:12px">${s.date}</td>
+      <td style="font-size:12px">${escHtml(s.date)}</td>
     </tr>`;
   }).join('');
 
@@ -1186,11 +1227,11 @@ function renderEnrollmentsTab() {
   tbody.innerHTML = [...enrollmentsList].reverse().map(e => {
     const dateStr = e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString('vi-VN') : '—';
     return `<tr>
-      <td><strong>${e.name || '—'}</strong></td>
-      <td>${e.email || '—'}</td>
-      <td><span class="badge-status active" style="font-size:11px">${e.course_name || e.course_id}</span></td>
-      <td style="font-size:12px">${goalLabels[e.goal] || e.goal || '—'}</td>
-      <td style="font-size:12px;max-width:200px;color:var(--text-muted)">${e.note || '—'}</td>
+      <td><strong>${escHtml(e.name) || '—'}</strong></td>
+      <td>${escHtml(e.email) || '—'}</td>
+      <td><span class="badge-status active" style="font-size:11px">${escHtml(e.course_name || e.course_id)}</span></td>
+      <td style="font-size:12px">${escHtml(goalLabels[e.goal] || e.goal) || '—'}</td>
+      <td style="font-size:12px;max-width:200px;color:var(--text-muted)">${escHtml(e.note) || '—'}</td>
       <td style="font-size:12px">${dateStr}</td>
     </tr>`;
   }).join('');

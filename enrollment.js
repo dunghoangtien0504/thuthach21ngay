@@ -6,8 +6,6 @@
 
 import { supabase, isSupabaseEnabled } from './supabase.js';
 
-const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '';
-const TELEGRAM_CHAT_ID   = import.meta.env.VITE_TELEGRAM_CHAT_ID || '';
 const LS_ENROLLMENTS     = 'mm21_course_enrollments';
 
 // ── Inject modal HTML ──────────────────────────────────────────────────────
@@ -310,24 +308,17 @@ async function handleEnrollSubmit(e) {
     localStorage.setItem(LS_ENROLLMENTS, JSON.stringify(local));
   }
 
-  // ── Telegram notification ────────────────────────────────────────────────
-  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-    const goalLabels = {
-      kiem_soat: 'Kiểm soát thời gian xuất tinh',
-      tu_tin: 'Tăng sự tự tin',
-      quan_he: 'Cải thiện quan hệ',
-      hieu_biet: 'Hiểu rõ cơ thể',
-      khac: 'Khác'
-    };
-    const msg = `📚 *Đăng Ký Khóa Học Mới*\n\n• Khóa học: *${courseName}*\n• Họ tên: *${name}*\n• Email: \`${email}\`\n• SĐT: \`${phone || 'N/A'}\`\n• Mục tiêu: ${goalLabels[goal] || 'N/A'}\n• Ghi chú: ${note || 'Không có'}\n• Thời gian: _${new Date(enrollment.enrolled_at).toLocaleString('vi-VN')}_`;
-    try {
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
-      });
-    } catch (_) {}
-  }
+  // ── Server-side Telegram notification ─────────────────────────────────────
+  try {
+    await fetch('/api/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'enrollment',
+        data: { name, email, phone, courseName, goal, note }
+      })
+    });
+  } catch (_) {}
 
   btn.disabled = false;
 

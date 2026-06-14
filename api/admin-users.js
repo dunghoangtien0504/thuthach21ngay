@@ -5,8 +5,10 @@
  */
 
 export default async function handler(req, res) {
-  // CORS for same-origin admin panel
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS — restrict to same origin
+  const origin = req.headers.origin || req.headers.referer || '';
+  const allowed = process.env.VITE_SITE_URL || '';
+  res.setHeader('Access-Control-Allow-Origin', (allowed && origin.startsWith(allowed)) ? origin : '');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();

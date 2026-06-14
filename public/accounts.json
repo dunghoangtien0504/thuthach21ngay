@@ -1,13 +1,11 @@
 [
   {
     "email": "hocvien@thuthach21ngay.us",
-    "password": "123",
     "name": "Học Viên Thử Nghiệm",
     "status": "active"
   },
   {
     "email": "thanhbao@themencode.vn",
-    "password": "123",
     "name": "Thanh Bảo",
     "status": "active"
   }
