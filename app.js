@@ -748,7 +748,8 @@ function selectLesson(id) {
   
   if (window.marked) {
     marked.setOptions({ gfm: true, breaks: true });
-    lessonBody.innerHTML = marked.parse(selectedLesson.text_content);
+    const rawHtml = marked.parse(selectedLesson.text_content);
+    lessonBody.innerHTML = window.DOMPurify ? DOMPurify.sanitize(rawHtml) : rawHtml;
   } else {
     lessonBody.innerHTML = `<pre>${selectedLesson.text_content}</pre>`;
   }
@@ -2076,7 +2077,8 @@ function selectFreeLesson(id) {
   if (freeLessonBody) {
     if (window.marked) {
       marked.setOptions({ gfm: true, breaks: true });
-      freeLessonBody.innerHTML = marked.parse(selectedLesson.text_content);
+      const rawHtml = marked.parse(selectedLesson.text_content);
+      freeLessonBody.innerHTML = window.DOMPurify ? DOMPurify.sanitize(rawHtml) : rawHtml;
     } else {
       freeLessonBody.innerHTML = `<pre>${selectedLesson.text_content}</pre>`;
     }
