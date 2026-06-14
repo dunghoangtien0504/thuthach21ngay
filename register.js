@@ -491,8 +491,8 @@ async function handleSubmit(e) {
     try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(account) }); } catch (_) {}
   }
 
-  toast('Đăng ký thành công! Đang chuyển đến khóa học...', 'success');
-  setTimeout(() => { window.location.href = '/my-courses.html'; }, 1500);
+  toast('Đăng ký thành công! Chào mừng đến với Mật Mã 21.', 'success');
+  closeModal();
 }
 
 // ── Resend email ───────────────────────────────────────────────────────────

@@ -359,7 +359,7 @@ const COURSES = [
     desc: 'Tổng hợp các bài viết khoa học về sức khỏe sinh lý nam giới. Hoàn toàn miễn phí, không cần mua.',
     icon: 'fa-book-open',
     color: 'blue',
-    portal: '/kegel-khoi-dau.html',
+    portal: '/kien-thuc.html',
     free: true,
     checkAccess: () => true,
     buyUrl: null,
@@ -371,20 +371,30 @@ function renderCourses(email) {
   const grid = document.getElementById('mc-course-grid');
   grid.innerHTML = '';
 
-  COURSES.forEach(course => {
-    const hasAccess = course.checkAccess(email);
+  const visible = COURSES.filter(c => c.free || c.checkAccess(email));
 
-    let badgeHtml, btnHtml, lockedNote = '';
+  if (visible.length === 0) {
+    grid.insertAdjacentHTML('beforeend', `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)">
+        <i class="fa-solid fa-book-open" style="font-size:48px;opacity:0.25;margin-bottom:16px;display:block"></i>
+        <p style="font-size:16px;font-weight:600;margin-bottom:8px">Chưa có khóa học nào</p>
+        <p style="font-size:13.5px;margin-bottom:24px">Khám phá các khóa học và bắt đầu hành trình của anh.</p>
+        <a href="/khoa-hoc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(135deg,#B8860B,#D4AF37);color:#0D2B1A;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none">
+          <i class="fa-solid fa-graduation-cap"></i> Xem khóa học
+        </a>
+      </div>
+    `);
+    return;
+  }
+
+  visible.forEach(course => {
+    let badgeHtml, btnHtml;
     if (course.free) {
       badgeHtml = `<span class="mc-status-badge free"><i class="fa-solid fa-lock-open"></i> Miễn phí</span>`;
       btnHtml   = `<a href="${course.portal}" class="mc-enter-btn free-go"><i class="fa-solid fa-play"></i> Vào học ngay</a>`;
-    } else if (hasAccess) {
-      badgeHtml = `<span class="mc-status-badge enrolled"><i class="fa-solid fa-circle-check"></i> Đã đăng ký</span>`;
-      btnHtml   = `<a href="${course.portal}" class="mc-enter-btn go"><i class="fa-solid fa-play"></i> Vào học</a>`;
     } else {
-      badgeHtml = `<span class="mc-status-badge locked"><i class="fa-solid fa-lock"></i> Chưa mua</span>`;
-      btnHtml   = `<a href="${course.buyUrl}" class="mc-enter-btn buy"><i class="fa-solid fa-cart-shopping"></i> Mua khóa học</a>`;
-      lockedNote = `<p class="mc-locked-note"><i class="fa-solid fa-circle-info"></i> Mua khóa để mở khóa toàn bộ nội dung</p>`;
+      badgeHtml = `<span class="mc-status-badge enrolled"><i class="fa-solid fa-circle-check"></i> Đã đăng ký</span>`;
+      btnHtml   = `<a href="${course.portal}" class="mc-enter-btn go"><i class="fa-solid fa-play"></i> Tiếp tục học</a>`;
     }
 
     grid.insertAdjacentHTML('beforeend', `
@@ -398,7 +408,6 @@ function renderCourses(email) {
         </div>
         <div class="mc-card-footer">
           ${btnHtml}
-          ${lockedNote}
         </div>
       </div>
     `);
