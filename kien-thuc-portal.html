@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiến Thức Miễn Phí — Tổng Quan Điều Trị XTS | Mật Mã 21</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <link rel="stylesheet" href="/style.css">
+
+  <style>
+    /* ── header overrides for free portal ── */
+    .kp-header {
+      background: var(--bg-dark, #0D2B1A);
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 22px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .kp-logo {
+      display: flex; align-items: center; gap: 9px;
+      color: #D4AF37; font-weight: 800; font-size: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none;
+    }
+    .kp-logo i { font-size: 18px; }
+    .kp-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.35);
+      color: #34d399; padding: 5px 13px; border-radius: 50px;
+      font-size: 12px; font-weight: 700;
+    }
+    .kp-home-link {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(212,175,55,0.7); font-size: 13px; text-decoration: none;
+      transition: color 0.18s;
+    }
+    .kp-home-link:hover { color: #D4AF37; }
+
+    /* ── upsell CTA ── */
+    .free-course-upsell-cta {
+      margin-top: 32px; background: linear-gradient(135deg,rgba(13,43,26,0.06),rgba(184,134,11,0.06));
+      border: 1px solid rgba(184,134,11,0.2); border-radius: 14px; padding: 20px 24px;
+    }
+    .upsell-cta-inner {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    }
+    .upsell-cta-icon { font-size: 28px; color: #B8860B; flex-shrink: 0; }
+    .upsell-cta-text { flex: 1; min-width: 180px; }
+    .upsell-cta-text strong { display: block; font-weight: 700; color: #0D2B1A; margin-bottom: 3px; font-size: 14.5px; }
+    .upsell-cta-text span { font-size: 13px; color: #485A4F; line-height: 1.5; }
+    .upsell-cta-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg,#B8860B,#D4AF37); color: #0D2B1A;
+      padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 13.5px;
+      text-decoration: none; white-space: nowrap; transition: all 0.2s;
+      box-shadow: 0 6px 16px -3px rgba(184,134,11,0.3);
+    }
+    .upsell-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -4px rgba(184,134,11,0.45); }
+
+    /* ── empty state ── */
+    .kp-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; padding: 60px 24px; text-align: center; color: var(--text-muted, #485A4F);
+    }
+    .kp-empty i { font-size: 52px; opacity: 0.2; margin-bottom: 20px; }
+    .kp-empty h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text-main, #0E2519); }
+    .kp-empty p { font-size: 14px; line-height: 1.6; max-width: 360px; }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- Header -->
+  <header class="kp-header">
+    <a href="/" class="kp-logo">
+      <i class="fa-solid fa-shield-halved"></i> Mật Mã 21
+    </a>
+    <span class="kp-badge"><i class="fa-solid fa-lock-open"></i> Miễn phí · Không cần đăng ký</span>
+    <a href="/khoa-hoc.html" class="kp-home-link">
+      <i class="fa-solid fa-arrow-left"></i> Khóa học
+    </a>
+  </header>
+
+  <!-- Main: sidebar + viewport -->
+  <main class="app-main">
+    <section class="tab-content active" id="tab-free-course">
+      <div class="lessons-layout">
+
+        <!-- Sidebar -->
+        <aside class="lessons-sidebar">
+          <div class="sidebar-header">
+            <h3>Kiến Thức Miễn Phí</h3>
+            <p>Tổng quan các phương pháp điều trị XTS</p>
+          </div>
+          <div class="sidebar-curriculum" id="free-curriculum-list">
+            <div class="loading-spinner">Đang tải nội dung...</div>
+          </div>
+        </aside>
+
+        <!-- Lesson viewport -->
+        <article class="lesson-viewport" id="free-lesson-viewport">
+
+          <!-- Empty state (default) -->
+          <div id="free-lesson-empty-state" class="kp-empty">
+            <i class="fa-solid fa-book-medical"></i>
+            <h3>Chọn một bài từ danh sách bên trái</h3>
+            <p>Khóa học miễn phí này tổng hợp các phương pháp điều trị XTS phổ biến dựa trên bằng chứng khoa học. Bắt đầu bằng bài Giới thiệu để đọc khuyến cáo quan trọng.</p>
+          </div>
+
+          <!-- Lesson content -->
+          <div id="free-lesson-content-box" style="display:none;">
+            <div class="lesson-meta-header">
+              <span class="lesson-tag" id="free-lesson-module-tag">Module 1</span>
+              <span class="lesson-duration"><i class="fa-regular fa-clock"></i> <span id="free-lesson-time">10</span> phút</span>
+              <span class="lesson-tag" style="background:rgba(52,211,153,0.15);color:#34d399;border-color:#34d399;margin-left:8px;">
+                <i class="fa-solid fa-lock-open" style="margin-right:4px;"></i>Miễn phí
+              </span>
+            </div>
+            <h2 class="lesson-title" id="free-lesson-main-title">Bài học</h2>
+            <div class="lesson-body-content markdown-body" id="free-lesson-body"></div>
+
+            <!-- Upsell -->
+            <div class="free-course-upsell-cta">
+              <div class="upsell-cta-inner">
+                <div class="upsell-cta-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="upsell-cta-text">
+                  <strong>Sẵn sàng bước tiếp với hệ thống thực chiến?</strong>
+                  <span>Mật Mã 21 — lộ trình 21 ngày kết hợp Kegel, hô hấp & thần kinh học để làm chủ hoàn toàn.</span>
+                </div>
+                <a href="/#offer-section" class="upsell-cta-btn">
+                  Xem Chương Trình <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Prev/Next -->
+            <div class="lesson-footer-controls">
+              <button class="btn btn-secondary" id="free-btn-prev">
+                <i class="fa-solid fa-chevron-left"></i> Bài trước
+              </button>
+              <button class="btn btn-secondary" id="free-btn-next">
+                Bài tiếp theo <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>© 2026 Mật Mã 21. Bảo lưu mọi quyền.</p>
+    <div class="footer-support-links">
+      <a href="mailto:support@themencode.vn"><i class="fa-solid fa-envelope"></i> support@themencode.vn</a>
+      <a href="https://t.me/matma21_support" target="_blank"><i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram</a>
+    </div>
+  </footer>
+</div>
+
+<script src="/chat-widget.js"></script>
+
+<script>
+  let courseData = [];
+  let allLessons  = [];
+  let currentId   = null;
+
+  const curriculumEl  = document.getElementById('free-curriculum-list');
+  const contentBox    = document.getElementById('free-lesson-content-box');
+  const emptyState    = document.getElementById('free-lesson-empty-state');
+  const moduleTagEl   = document.getElementById('free-lesson-module-tag');
+  const titleEl       = document.getElementById('free-lesson-main-title');
+  const timeEl        = document.getElementById('free-lesson-time');
+  const bodyEl        = document.getElementById('free-lesson-body');
+  const btnPrev       = document.getElementById('free-btn-prev');
+  const btnNext       = document.getElementById('free-btn-next');
+
+  async function init() {
+    try {
+      const res = await fetch('/free_course_database.json');
+      courseData = await res.json();
+      allLessons = courseData.flatMap(m => m.lessons.map(l => ({ ...l, module_title: m.module_title })));
+      renderCurriculum();
+      // Auto-open first lesson
+      if (allLessons.length > 0) loadLesson(allLessons[0].lesson_id);
+    } catch (e) {
+      curriculumEl.innerHTML = `<div style="padding:20px;text-align:center;color:#888">Lỗi tải nội dung: ${e.message}</div>`;
+    }
+  }
+
+  function renderCurriculum() {
+    curriculumEl.innerHTML = '';
+    courseData.forEach(mod => {
+      const modEl = document.createElement('div');
+      modEl.className = 'curriculum-module';
+      modEl.innerHTML = `<div class="module-header"><span>${mod.module_title}</span></div>`;
+      const list = document.createElement('div');
+      mod.lessons.forEach(lesson => {
+        const btn = document.createElement('button');
+        btn.className = 'sidebar-lesson-btn' + (currentId === lesson.lesson_id ? ' active' : '');
+        btn.dataset.id = lesson.lesson_id;
+        btn.innerHTML = `
+          <div class="lesson-btn-content">
+            <span class="lesson-btn-title">${lesson.title}</span>
+            <span class="lesson-btn-duration"><i class="fa-regular fa-clock"></i> ${lesson.duration_min} phút</span>
+          </div>`;
+        btn.addEventListener('click', () => loadLesson(lesson.lesson_id));
+        list.appendChild(btn);
+      });
+      modEl.appendChild(list);
+      curriculumEl.appendChild(modEl);
+    });
+  }
+
+  function loadLesson(id) {
+    const lesson = allLessons.find(l => l.lesson_id === id);
+    if (!lesson) return;
+    currentId = id;
+
+    // Highlight active
+    document.querySelectorAll('.sidebar-lesson-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.id) === id);
+    });
+
+    moduleTagEl.textContent = lesson.module_title;
+    titleEl.textContent     = lesson.title;
+    timeEl.textContent      = lesson.duration_min;
+
+    const rawHtml = marked.parse(lesson.text_content || '');
+    bodyEl.innerHTML = DOMPurify.sanitize(rawHtml);
+
+    emptyState.style.display  = 'none';
+    contentBox.style.display  = 'block';
+
+    // Scroll viewport to top
+    document.getElementById('free-lesson-viewport').scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Prev/Next
+    const idx = allLessons.findIndex(l => l.lesson_id === id);
+    btnPrev.disabled = idx <= 0;
+    btnNext.disabled = idx >= allLessons.length - 1;
+  }
+
+  btnPrev.addEventListener('click', () => {
+    const idx = allLessons.findIndex(l => l.lesson_id === currentId);
+    if (idx > 0) loadLesson(allLessons[idx - 1].lesson_id);
+  });
+  btnNext.addEventListener('click', () => {
+    const idx = allLessons.findIndex(l => l.lesson_id === currentId);
+    if (idx < allLessons.length - 1) loadLesson(allLessons[idx + 1].lesson_id);
+  });
+
+  init();
+</script>
+</body>
+</html>
