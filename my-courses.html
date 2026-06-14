@@ -328,6 +328,23 @@ function isEnrolledIn(courseId, email) {
   const list = JSON.parse(localStorage.getItem(LS_ENROLL) || '[]');
   return list.some(e => e.course_id === courseId && e.email === email);
 }
+async function syncSupabaseEnrollments(userId, email) {
+  if (!isSupabaseEnabled) return;
+  try {
+    const { data } = await supabase
+      .from('course_enrollments')
+      .select('course_id, course_name, enrolled_at')
+      .eq('user_id', userId);
+    if (!data?.length) return;
+    const existing = JSON.parse(localStorage.getItem(LS_ENROLL) || '[]');
+    data.forEach(e => {
+      if (!existing.some(x => x.course_id === e.course_id && x.email === email)) {
+        existing.push({ course_id: e.course_id, course_name: e.course_name, email, enrolled_at: e.enrolled_at });
+      }
+    });
+    localStorage.setItem(LS_ENROLL, JSON.stringify(existing));
+  } catch (_) {}
+}
 
 // ── Course definitions ────────────────────────────────────────────────────────
 const COURSES = [
@@ -489,6 +506,7 @@ document.getElementById('gate-login-form').addEventListener('submit', async (e) 
     const meta = data.session.user.user_metadata || {};
     const session = { email: data.session.user.email, name: meta.name || email };
     localStorage.setItem(LS_SESSION, JSON.stringify(session));
+    await syncSupabaseEnrollments(data.session.user.id, data.session.user.email);
     showDashboard(session);
     return;
   }
@@ -564,6 +582,7 @@ async function init() {
       const meta = session.user.user_metadata || {};
       const s = { email: session.user.email, name: meta.name || session.user.email };
       localStorage.setItem(LS_SESSION, JSON.stringify(s));
+      await syncSupabaseEnrollments(session.user.id, session.user.email);
       showDashboard(s);
       return;
     }

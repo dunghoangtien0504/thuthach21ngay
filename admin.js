@@ -830,37 +830,61 @@ function setupStudentManager() {
   }
 
   if (adminStudentForm) {
-    adminStudentForm.addEventListener('submit', (e) => {
+    adminStudentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById('manual-student-name').value.trim();
-      const email = document.getElementById('manual-student-email').value.trim();
+      const name     = document.getElementById('manual-student-name').value.trim();
+      const email    = document.getElementById('manual-student-email').value.trim().toLowerCase();
       const password = document.getElementById('manual-student-password').value.trim();
 
-      const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
-
-      const exists = localUsers.some(u => u.email === email) || allowedAccounts.some(u => u.email === email);
-      if (exists) {
-        showToast("Email hoặc số điện thoại này đã tồn tại!", 'error');
+      if (!name || !email || !password) {
+        showToast('Vui lòng điền đầy đủ họ tên, email và mật khẩu!', 'error');
         return;
       }
 
-      const newUser = {
-        name,
-        email,
-        passwordHash: btoa(password),
-        status: "active",
-        key_used: "Admin cấp trực tiếp",
-        registeredAt: new Date().toISOString(),
-        date: new Date().toLocaleDateString('vi-VN')
-      };
+      const submitBtn = adminStudentForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Đang kích hoạt...'; }
 
-      localUsers.push(newUser);
-      localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
+      try {
+        // Gọi API tạo tài khoản Supabase thật + enroll toàn bộ khóa học
+        const res = await fetch('/api/admin-activate-user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${ADMIN_PASS}`,
+          },
+          body: JSON.stringify({ email, password, name }),
+        });
+        const data = await res.json();
 
-      adminStudentForm.reset();
-      if (manualStudentPanel) manualStudentPanel.style.display = 'none';
-      loadDatabase();
+        if (!res.ok) {
+          showToast(`Lỗi: ${data.error || 'Không thể kích hoạt tài khoản'}`, 'error');
+          return;
+        }
+
+        // Cập nhật localStorage để hiển thị trong bảng admin
+        const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users') || '[]');
+        if (!localUsers.some(u => u.email === email)) {
+          localUsers.push({
+            name, email,
+            status: 'active',
+            key_used: 'Admin cấp trực tiếp',
+            registeredAt: new Date().toISOString(),
+            date: new Date().toLocaleDateString('vi-VN'),
+          });
+          localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
+        }
+
+        showToast(`✅ Đã kích hoạt ${email} — ${data.courses?.length || 2} khóa học!`, 'success');
+        adminStudentForm.reset();
+        if (manualStudentPanel) manualStudentPanel.style.display = 'none';
+        loadDatabase();
+
+      } catch (err) {
+        showToast(`Lỗi kết nối: ${err.message}`, 'error');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Thêm Học Viên'; }
+      }
     });
   }
 }
