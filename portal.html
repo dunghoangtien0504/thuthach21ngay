@@ -85,65 +85,6 @@
           </div>
         </div>
 
-        <!-- Payment & Activation Panel for Unactivated Users -->
-        <div class="dashboard-card payment-panel" id="payment-activation-panel" style="display: none; margin-bottom: 25px; border: 1px solid var(--accent-light); background: rgba(168, 213, 181, 0.05); padding: 25px;">
-          <div class="payment-flex-container" style="display: flex; gap: 30px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-            <!-- Left Side: Instructions -->
-            <div style="flex: 2; min-width: 280px;">
-              <h3 style="color: var(--accent-bright); font-family: var(--font-heading); font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-credit-card"></i> Kích Hoạt Tài Khoản VIP Mật Mã 21
-              </h3>
-              <p style="font-size: 14.5px; line-height: 1.6; margin-bottom: 15px; color: var(--text-muted);">
-                Chào mừng anh đến với chương trình **Mật Mã 21**. Hiện tại tài khoản của anh chưa được kích hoạt thanh toán. Hãy quét mã QR chuyển khoản ở bên phải để kích hoạt tự động sau 30 giây và mở khóa toàn bộ giáo trình.
-              </p>
-              <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; font-size: 13.5px; line-height: 1.5; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05);">
-                <p style="margin-bottom: 6px;"><strong>Thông tin chuyển khoản ngân hàng:</strong></p>
-                <p>Ngân hàng: <strong>MBBank (Ngân hàng Quân Đội)</strong></p>
-                <p>Số tài khoản: <strong>335577357</strong></p>
-                <p>Chủ tài khoản: <strong>HOANG TIEN DUNG</strong></p>
-                <p>Số tiền: <strong style="color: var(--accent-bright); font-size: 15px;">686.868đ</strong></p>
-                <p style="margin-top: 4px;">Nội dung (ghi chính xác): <strong id="portal-payment-desc" style="color: var(--accent-bright); font-size: 15px; letter-spacing: 0.5px;">MA21 ...</strong></p>
-              </div>
-              <div class="payment-actions" style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                <button class="btn btn-primary" id="btn-check-payment" style="padding: 10px 18px; font-size: 13px; font-weight: 600;">
-                  <i class="fa-solid fa-rotate-right spinner-icon" id="payment-checker-icon"></i> Kiểm tra thanh toán
-                </button>
-                <span id="payment-status-text" style="font-size: 13px; color: var(--text-muted);">
-                  Hệ thống đang tự động kiểm tra mỗi 10 giây...
-                </span>
-              </div>
-            </div>
-            <!-- Right Side: QR Code -->
-            <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.05);">
-              <div class="qr-container" style="background: white; padding: 8px; border-radius: 8px; display: inline-block;">
-                <img src="" alt="QR Thanh Toán" id="portal-qr-img" style="width: 150px; height: 150px; display: block; border-radius: 4px;">
-              </div>
-              <p style="font-size: 11px; color: var(--text-muted); margin-top: 10px; max-width: 180px; line-height: 1.4;">
-                Quét mã QR bằng App Ngân Hàng để tự động điền thông tin & nội dung chuyển khoản.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Payment Success Banner -->
-        <div class="dashboard-card payment-panel" id="payment-success-banner" style="display: none; margin-bottom: 25px; border: 1px solid var(--accent-light); background: rgba(168, 213, 181, 0.08); padding: 25px; text-align: center;">
-          <i class="fa-solid fa-circle-check" style="font-size: 54px; color: var(--accent-bright); margin-bottom: 15px;"></i>
-          <h3 style="color: var(--accent-bright); font-family: var(--font-heading); font-size: 22px; font-weight: 800; margin-bottom: 8px;">KÍCH HOẠT VIP THÀNH CÔNG!</h3>
-          <p style="font-size: 15px; margin-bottom: 20px; color: rgba(255,255,255,0.85); max-width: 500px; margin-left: auto; margin-right: auto;">
-            Chào mừng anh đến với chương trình **Mật Mã 21**. Tài khoản của anh đã được nâng cấp lên VIP. Toàn bộ lộ trình học tập và tài liệu đi kèm đã được mở khóa hoàn toàn.
-          </p>
-          <div style="background: rgba(168, 213, 181, 0.05); border: 1px dashed var(--accent-light); padding: 18px; border-radius: 8px; margin-bottom: 20px; max-width: 460px; margin-left: auto; margin-right: auto;">
-            <p style="font-size: 14px; font-weight: 600; color: var(--accent-bright); margin-bottom: 6px;"><i class="fa-solid fa-gift"></i> Quà Tặng 4: Nhóm Hỗ Trợ VIP Telegram</p>
-            <p style="font-size: 12px; line-height: 1.5; color: var(--text-muted); margin-bottom: 12px;">Bấm nút dưới đây để tham gia ngay nhóm hỗ trợ Telegram bảo mật kín 1:1 cùng đội ngũ chuyên gia.</p>
-            <a href="https://web.telegram.org/a/#-5146168698" target="_blank" class="btn btn-primary" style="display:inline-flex; justify-content:center; padding:12px 24px; font-size:13px; font-weight:700; text-decoration: none;">
-              <i class="fa-brands fa-telegram" style="margin-right: 6px;"></i> THAM GIA NHÓM TELEGRAM
-            </a>
-          </div>
-          <button class="btn btn-primary" id="btn-payment-reload" style="padding: 12px 30px; font-size: 14.5px; font-weight: 700; background: var(--accent-bright); border-color: var(--accent-bright); margin-left: auto; margin-right: auto; display: block;">
-            <i class="fa-solid fa-unlock" style="margin-right: 6px;"></i> BẮT ĐẦU HỌC NGAY
-          </button>
-        </div>
-
         <div class="dashboard-grid">
           <!-- Metric Cards -->
           <div class="dashboard-card card-stat">

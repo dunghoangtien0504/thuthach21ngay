@@ -878,7 +878,7 @@
                   <div class="price-wrap">
                     <span class="price-free" style="color:#2E7D32;font-weight:700;">Miễn Phí</span>
                   </div>
-                  <a href="/portal.html" class="cta-btn" style="background:var(--primary);color:#fff;">
+                  <a href="/kien-thuc.html" class="cta-btn" style="background:var(--primary);color:#fff;">
                     <i class="fa-solid fa-book-open"></i> Học Ngay
                   </a>
                 </div>
@@ -1069,14 +1069,14 @@
     }
 
     // ===== Login/Register button visibility =====
-    const loggedIn = localStorage.getItem('mm21_logged_in_user');
+    const loggedIn = localStorage.getItem('thuthach21ngay_user_session');
     if (loggedIn) {
       const loginBtn = document.getElementById('login-btn-desktop');
       const regBtn = document.getElementById('register-btn-desktop');
-      if (loginBtn) loginBtn.textContent = 'Học Ngay';
-      if (loginBtn) loginBtn.href = '/portal.html';
+      if (loginBtn) loginBtn.textContent = 'Khóa Học Của Tôi';
+      if (loginBtn) loginBtn.href = '/my-courses.html';
       if (regBtn) regBtn.style.display = 'none';
-      document.querySelectorAll('.btn-login').forEach(b => { b.style.removeProperty('display'); b.textContent = 'Học Ngay'; b.href = '/portal.html'; });
+      document.querySelectorAll('.btn-login').forEach(b => { b.style.removeProperty('display'); b.textContent = 'Khóa Học Của Tôi'; b.href = '/my-courses.html'; });
     }
   </script>
   <script type="module" src="/analytics-tracker.js"></script>

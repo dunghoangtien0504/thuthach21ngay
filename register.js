@@ -594,7 +594,7 @@ function init() {
         return;
       }
       toast('Đăng nhập thành công!', 'success');
-      setTimeout(() => { window.location.href = '/my-courses.html'; }, 900);
+      closeModal();
       return;
     }
 
@@ -608,7 +608,7 @@ function init() {
         email: found.email, name: found.name, phone: found.phone || ''
       }));
       toast('Đăng nhập thành công!', 'success');
-      setTimeout(() => { window.location.href = '/my-courses.html'; }, 900);
+      closeModal();
     } else {
       showLoginError('Email hoặc mật khẩu không chính xác.');
     }
