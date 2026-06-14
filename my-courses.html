@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học Của Tôi | Mật Mã 21</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0D2B1A;
+      --primary-light: #163f27;
+      --accent: #B8860B;
+      --accent-bright: #D4AF37;
+      --danger: #C0390E;
+      --bg: #FBF9F4;
+      --card: #FFFFFF;
+      --text: #0E2519;
+      --muted: #485A4F;
+      --light: #8FA497;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; font-size: 15px; line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    .mc-header {
+      background: var(--primary);
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .mc-logo {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--accent-bright); font-family: 'Lora', serif;
+      font-size: 18px; font-weight: 700; text-decoration: none;
+    }
+    .mc-logo i { color: var(--accent-bright); }
+    .mc-header-right { display: flex; align-items: center; gap: 14px; }
+    .mc-user-name { color: rgba(212,175,55,0.85); font-size: 13.5px; font-weight: 600; }
+    .mc-logout-btn {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.3);
+      color: var(--accent-bright); padding: 7px 14px; border-radius: 8px;
+      font-size: 12.5px; font-family: inherit; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.18s;
+    }
+    .mc-logout-btn:hover { background: rgba(255,255,255,0.15); }
+    .mc-home-btn {
+      color: rgba(212,175,55,0.7); text-decoration: none; font-size: 13px;
+      display: flex; align-items: center; gap: 5px;
+      transition: color 0.18s;
+    }
+    .mc-home-btn:hover { color: var(--accent-bright); }
+
+    /* ── Main ── */
+    .mc-main {
+      max-width: 960px; margin: 0 auto; padding: 48px 24px 80px;
+    }
+    .mc-greeting {
+      margin-bottom: 36px;
+    }
+    .mc-greeting h1 {
+      font-family: 'Lora', serif; font-size: 28px; font-weight: 700;
+      color: var(--primary); margin-bottom: 6px;
+    }
+    .mc-greeting p { color: var(--muted); font-size: 15px; }
+
+    /* ── Course grid ── */
+    .mc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .mc-card {
+      background: var(--card); border-radius: 18px;
+      border: 1.5px solid rgba(13,43,26,0.07);
+      box-shadow: 0 4px 16px -4px rgba(13,43,26,0.08);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .mc-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -6px rgba(13,43,26,0.14);
+    }
+
+    .mc-card-banner {
+      height: 8px;
+    }
+    .mc-card-banner.gold { background: linear-gradient(90deg,#B8860B,#D4AF37); }
+    .mc-card-banner.green { background: linear-gradient(90deg,#16a34a,#4ade80); }
+    .mc-card-banner.blue { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+
+    .mc-card-body { padding: 22px 22px 18px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+    .mc-card-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 4px;
+    }
+    .mc-card-icon.gold { background: rgba(184,134,11,0.1); color: #B8860B; }
+    .mc-card-icon.green { background: rgba(22,163,74,0.1); color: #16a34a; }
+    .mc-card-icon.blue { background: rgba(37,99,235,0.1); color: #2563eb; }
+
+    .mc-card-title {
+      font-family: 'Lora', serif; font-size: 17px; font-weight: 700;
+      color: var(--primary);
+    }
+    .mc-card-desc { font-size: 13.5px; color: var(--muted); line-height: 1.55; flex: 1; }
+
+    .mc-status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 11px; border-radius: 50px; font-size: 11.5px; font-weight: 700;
+    }
+    .mc-status-badge.enrolled { background: #f0fdf4; color: #166534; }
+    .mc-status-badge.locked   { background: #fef9ee; color: #92400e; }
+    .mc-status-badge.free     { background: #eff6ff; color: #1d4ed8; }
+
+    .mc-card-footer { padding: 0 22px 20px; }
+
+    .mc-enter-btn {
+      width: 100%; padding: 12px; border-radius: 12px; border: none;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.2s; text-decoration: none;
+    }
+    .mc-enter-btn.go {
+      background: linear-gradient(135deg,#0D2B1A,#1B442D);
+      color: #D4AF37;
+    }
+    .mc-enter-btn.go:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -4px rgba(13,43,26,0.35); }
+    .mc-enter-btn.buy {
+      background: linear-gradient(135deg,#B8860B,#D4AF37);
+      color: #0D2B1A;
+    }
+    .mc-enter-btn.buy:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -4px rgba(184,134,11,0.35); }
+    .mc-enter-btn.free-go {
+      background: #eff6ff; color: #1d4ed8; border: 1.5px solid #bfdbfe;
+    }
+    .mc-enter-btn.free-go:hover { background: #dbeafe; }
+
+    /* ── Lock overlay on locked cards ── */
+    .mc-locked-note {
+      font-size: 12px; color: var(--light); text-align: center;
+      margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+
+    /* ── Login gate ── */
+    #mc-login-gate {
+      max-width: 420px; margin: 60px auto; padding: 40px 36px;
+      background: var(--card); border-radius: 24px;
+      box-shadow: 0 20px 50px -10px rgba(13,43,26,0.14);
+    }
+    .mc-gate-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Lora', serif; font-size: 18px; font-weight: 700;
+      color: var(--primary); margin-bottom: 22px;
+    }
+    .mc-gate-logo i { color: var(--accent); }
+    .mc-gate-title { font-family: 'Lora', serif; font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .mc-gate-sub { font-size: 13.5px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+    .mc-gate-tabs { display: flex; gap: 0; border-bottom: 2px solid rgba(13,43,26,0.08); margin-bottom: 22px; }
+    .mc-gate-tab {
+      flex: 1; background: none; border: none; padding: 9px 0;
+      font-size: 14px; font-weight: 700; color: var(--light);
+      cursor: pointer; font-family: inherit;
+      border-bottom: 2.5px solid transparent; margin-bottom: -2px;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .mc-gate-tab.active { color: var(--primary); border-bottom-color: var(--accent); }
+    .mc-field { margin-bottom: 16px; }
+    .mc-field label { display: block; font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .mc-field input {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid rgba(13,43,26,0.12); border-radius: 10px;
+      font-family: inherit; font-size: 14px; color: var(--text);
+      background: var(--bg); outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .mc-field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
+      background: #fff;
+    }
+    .mc-gate-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 50px;
+      font-family: inherit; font-size: 15px; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.22s; margin-top: 4px;
+    }
+    .mc-gate-btn.login-style { background: linear-gradient(135deg,#0D2B1A,#1B442D); color: #D4AF37; }
+    .mc-gate-btn.signup-style { background: linear-gradient(135deg,#B8860B,#D4AF37); color: #0D2B1A; }
+    .mc-gate-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -4px rgba(13,43,26,0.3); }
+    .mc-gate-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+    .mc-gate-error {
+      background: #fff5f5; border: 1px solid #fecaca; color: #991b1b;
+      border-radius: 8px; padding: 10px 13px; font-size: 13px;
+      margin-bottom: 14px; display: none;
+    }
+    .mc-gate-privacy {
+      margin-top: 16px; font-size: 11.5px; color: var(--light);
+      display: flex; align-items: flex-start; gap: 6px; line-height: 1.5;
+    }
+    .mc-gate-privacy i { margin-top: 2px; color: #16a34a; flex-shrink: 0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .mc-main { padding: 30px 16px 60px; }
+      .mc-greeting h1 { font-size: 22px; }
+      .mc-grid { grid-template-columns: 1fr; }
+      #mc-login-gate { margin: 30px 16px; padding: 30px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="mc-header">
+  <a href="/" class="mc-logo">
+    <i class="fa-solid fa-shield-halved"></i> Mật Mã 21
+  </a>
+  <div class="mc-header-right">
+    <a href="/" class="mc-home-btn"><i class="fa-solid fa-house"></i> Trang chủ</a>
+    <span class="mc-user-name" id="mc-username" style="display:none"></span>
+    <button class="mc-logout-btn" id="mc-logout-btn" style="display:none">
+      <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- Login gate (shown when not logged in) -->
+<div id="mc-login-gate" style="display:none">
+  <div class="mc-gate-logo"><i class="fa-solid fa-shield-halved"></i> Mật Mã 21</div>
+  <h2 class="mc-gate-title">Khóa Học Của Tôi</h2>
+  <p class="mc-gate-sub">Đăng nhập để xem và truy cập các khóa học đã đăng ký.</p>
+
+  <div class="mc-gate-tabs">
+    <button class="mc-gate-tab active" id="gate-tab-login">Đăng Nhập</button>
+    <button class="mc-gate-tab" id="gate-tab-signup">Đăng Ký</button>
+  </div>
+
+  <div class="mc-gate-error" id="gate-error"></div>
+
+  <!-- Login form -->
+  <div id="gate-login-panel">
+    <form id="gate-login-form" novalidate>
+      <div class="mc-field">
+        <label for="gate-email">Email</label>
+        <input type="email" id="gate-email" placeholder="email@example.com" autocomplete="email" required>
+      </div>
+      <div class="mc-field">
+        <label for="gate-password">Mật khẩu</label>
+        <input type="password" id="gate-password" placeholder="Mật khẩu của anh" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="mc-gate-btn login-style" id="gate-login-btn">
+        <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
+      </button>
+    </form>
+  </div>
+
+  <!-- Signup form -->
+  <div id="gate-signup-panel" style="display:none">
+    <form id="gate-signup-form" novalidate>
+      <div class="mc-field">
+        <label for="gate-reg-name">Họ và Tên</label>
+        <input type="text" id="gate-reg-name" placeholder="Họ tên của anh..." required>
+      </div>
+      <div class="mc-field">
+        <label for="gate-reg-email">Email</label>
+        <input type="email" id="gate-reg-email" placeholder="email@example.com" autocomplete="email" required>
+      </div>
+      <div class="mc-field">
+        <label for="gate-reg-phone">Số điện thoại</label>
+        <input type="tel" id="gate-reg-phone" placeholder="0912 345 678" autocomplete="tel" required>
+      </div>
+      <div class="mc-field">
+        <label for="gate-reg-password">Mật khẩu</label>
+        <input type="password" id="gate-reg-password" placeholder="Ít nhất 6 ký tự" autocomplete="new-password" required minlength="6">
+      </div>
+      <button type="submit" class="mc-gate-btn signup-style" id="gate-signup-btn">
+        <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản
+      </button>
+    </form>
+  </div>
+
+  <p class="mc-gate-privacy">
+    <i class="fa-solid fa-lock"></i>
+    Thông tin của anh được bảo mật. Chúng tôi không chia sẻ dữ liệu cho bên thứ ba.
+  </p>
+</div>
+
+<!-- Course dashboard (shown when logged in) -->
+<main class="mc-main" id="mc-dashboard" style="display:none">
+  <div class="mc-greeting">
+    <h1 id="mc-greet-name">Xin chào!</h1>
+    <p>Chọn khóa học bên dưới để bắt đầu hoặc tiếp tục lộ trình của anh.</p>
+  </div>
+
+  <div class="mc-grid" id="mc-course-grid">
+    <!-- Cards inserted by JS -->
+  </div>
+</main>
+
+<script type="module">
+import { supabase, isSupabaseEnabled } from '/supabase.js';
+
+const LS_SESSION = 'thuthach21ngay_user_session';
+const LS_USERS   = 'thuthach21ngay_registered_users';
+const LS_ENROLL  = 'mm21_course_enrollments';
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function getSession() {
+  return JSON.parse(localStorage.getItem(LS_SESSION) || 'null');
+}
+function getUserStatus(email) {
+  const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  const u = users.find(x => x.email === email);
+  return u ? (u.status || 'pending') : 'pending';
+}
+function isEnrolledIn(courseId, email) {
+  const list = JSON.parse(localStorage.getItem(LS_ENROLL) || '[]');
+  return list.some(e => e.course_id === courseId && e.email === email);
+}
+
+// ── Course definitions ────────────────────────────────────────────────────────
+const COURSES = [
+  {
+    id: 'mat-ma-21',
+    title: 'Mật Mã 21',
+    desc: 'Lộ trình 21 ngày rèn luyện Kegel, hô hấp & tâm lý. Làm chủ thời gian và bản lĩnh phái mạnh bền vững.',
+    icon: 'fa-shield-halved',
+    color: 'gold',
+    portal: '/portal.html',
+    free: false,
+    checkAccess: (email) => getUserStatus(email) === 'active' || isEnrolledIn('mat-ma-21', email),
+    buyUrl: '/#offer-section',
+  },
+  {
+    id: 'kegel',
+    title: 'Kegel Chuyên Sâu',
+    desc: 'Lộ trình Kegel chuyên biệt cho nam giới — bài tập cơ sàn chậu đúng kỹ thuật, có hướng dẫn.',
+    icon: 'fa-dumbbell',
+    color: 'green',
+    portal: '/kegel-portal.html',
+    free: false,
+    checkAccess: (email) => isEnrolledIn('kegel', email),
+    buyUrl: '/#offer-section',
+  },
+  {
+    id: 'kien-thuc-mien-phi',
+    title: 'Kiến Thức Miễn Phí',
+    desc: 'Tổng hợp các bài viết khoa học về sức khỏe sinh lý nam giới. Hoàn toàn miễn phí, không cần mua.',
+    icon: 'fa-book-open',
+    color: 'blue',
+    portal: '/kegel-khoi-dau.html',
+    free: true,
+    checkAccess: () => true,
+    buyUrl: null,
+  },
+];
+
+// ── Render course grid ────────────────────────────────────────────────────────
+function renderCourses(email) {
+  const grid = document.getElementById('mc-course-grid');
+  grid.innerHTML = '';
+
+  COURSES.forEach(course => {
+    const hasAccess = course.checkAccess(email);
+
+    let badgeHtml, btnHtml, lockedNote = '';
+    if (course.free) {
+      badgeHtml = `<span class="mc-status-badge free"><i class="fa-solid fa-lock-open"></i> Miễn phí</span>`;
+      btnHtml   = `<a href="${course.portal}" class="mc-enter-btn free-go"><i class="fa-solid fa-play"></i> Vào học ngay</a>`;
+    } else if (hasAccess) {
+      badgeHtml = `<span class="mc-status-badge enrolled"><i class="fa-solid fa-circle-check"></i> Đã đăng ký</span>`;
+      btnHtml   = `<a href="${course.portal}" class="mc-enter-btn go"><i class="fa-solid fa-play"></i> Vào học</a>`;
+    } else {
+      badgeHtml = `<span class="mc-status-badge locked"><i class="fa-solid fa-lock"></i> Chưa mua</span>`;
+      btnHtml   = `<a href="${course.buyUrl}" class="mc-enter-btn buy"><i class="fa-solid fa-cart-shopping"></i> Mua khóa học</a>`;
+      lockedNote = `<p class="mc-locked-note"><i class="fa-solid fa-circle-info"></i> Mua khóa để mở khóa toàn bộ nội dung</p>`;
+    }
+
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="mc-card">
+        <div class="mc-card-banner ${course.color}"></div>
+        <div class="mc-card-body">
+          <div class="mc-card-icon ${course.color}"><i class="fa-solid ${course.icon}"></i></div>
+          <div class="mc-card-title">${course.title}</div>
+          ${badgeHtml}
+          <div class="mc-card-desc">${course.desc}</div>
+        </div>
+        <div class="mc-card-footer">
+          ${btnHtml}
+          ${lockedNote}
+        </div>
+      </div>
+    `);
+  });
+}
+
+// ── Show dashboard ────────────────────────────────────────────────────────────
+function showDashboard(session) {
+  document.getElementById('mc-login-gate').style.display  = 'none';
+  document.getElementById('mc-dashboard').style.display   = '';
+  document.getElementById('mc-username').style.display    = '';
+  document.getElementById('mc-logout-btn').style.display  = '';
+  document.getElementById('mc-username').textContent      = session.name || session.email;
+  const firstName = (session.name || '').split(' ').pop() || 'anh';
+  document.getElementById('mc-greet-name').textContent    = `Xin chào, ${firstName}!`;
+  renderCourses(session.email);
+}
+
+// ── Show gate ─────────────────────────────────────────────────────────────────
+function showGate() {
+  document.getElementById('mc-login-gate').style.display = '';
+  document.getElementById('mc-dashboard').style.display  = 'none';
+}
+
+// ── Gate error helper ─────────────────────────────────────────────────────────
+function gateError(msg) {
+  const el = document.getElementById('gate-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+function clearGateError() {
+  const el = document.getElementById('gate-error');
+  el.style.display = 'none'; el.textContent = '';
+}
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+document.getElementById('mc-logout-btn').addEventListener('click', async () => {
+  if (!confirm('Đăng xuất khỏi Mật Mã 21?')) return;
+  localStorage.removeItem(LS_SESSION);
+  if (isSupabaseEnabled) await supabase.auth.signOut();
+  showGate();
+  document.getElementById('mc-username').style.display   = 'none';
+  document.getElementById('mc-logout-btn').style.display = 'none';
+});
+
+// ── Gate tabs ─────────────────────────────────────────────────────────────────
+document.getElementById('gate-tab-login').addEventListener('click', () => {
+  document.getElementById('gate-tab-login').classList.add('active');
+  document.getElementById('gate-tab-signup').classList.remove('active');
+  document.getElementById('gate-login-panel').style.display  = '';
+  document.getElementById('gate-signup-panel').style.display = 'none';
+  clearGateError();
+});
+document.getElementById('gate-tab-signup').addEventListener('click', () => {
+  document.getElementById('gate-tab-signup').classList.add('active');
+  document.getElementById('gate-tab-login').classList.remove('active');
+  document.getElementById('gate-signup-panel').style.display = '';
+  document.getElementById('gate-login-panel').style.display  = 'none';
+  clearGateError();
+});
+
+// ── Gate login submit ─────────────────────────────────────────────────────────
+document.getElementById('gate-login-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); clearGateError();
+  const email = document.getElementById('gate-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('gate-password').value;
+  if (!email || !pass) { gateError('Vui lòng nhập email và mật khẩu.'); return; }
+
+  const btn = document.getElementById('gate-login-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang đăng nhập...';
+
+  if (isSupabaseEnabled) {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập';
+    if (error) {
+      if (error.message.includes('Email not confirmed')) gateError('Email chưa xác nhận. Kiểm tra hộp thư.');
+      else gateError('Email hoặc mật khẩu không chính xác.');
+      return;
+    }
+    const meta = data.session.user.user_metadata || {};
+    const session = { email: data.session.user.email, name: meta.name || email };
+    localStorage.setItem(LS_SESSION, JSON.stringify(session));
+    showDashboard(session);
+    return;
+  }
+
+  // localStorage fallback
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập';
+  const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  const found = users.find(u => u.email === email && u.password === pass);
+  if (found) {
+    const session = { email: found.email, name: found.name, phone: found.phone || '' };
+    localStorage.setItem(LS_SESSION, JSON.stringify(session));
+    showDashboard(session);
+  } else {
+    gateError('Email hoặc mật khẩu không chính xác.');
+  }
+});
+
+// ── Gate signup submit ────────────────────────────────────────────────────────
+document.getElementById('gate-signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); clearGateError();
+  const name  = document.getElementById('gate-reg-name').value.trim();
+  const email = document.getElementById('gate-reg-email').value.trim().toLowerCase();
+  const phone = document.getElementById('gate-reg-phone').value.trim();
+  const pass  = document.getElementById('gate-reg-password').value;
+  if (!name || !email || !phone || !pass) { gateError('Vui lòng điền đầy đủ thông tin.'); return; }
+  if (pass.length < 6) { gateError('Mật khẩu phải ít nhất 6 ký tự.'); return; }
+
+  const btn = document.getElementById('gate-signup-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tạo...';
+
+  if (isSupabaseEnabled) {
+    const { error } = await supabase.auth.signUp({
+      email, password: pass,
+      options: { emailRedirectTo: `${location.origin}/my-courses.html`, data: { name } }
+    });
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
+    if (error) { gateError(error.message || 'Có lỗi xảy ra. Thử lại sau.'); return; }
+    gateError(''); // clear
+    document.getElementById('gate-error').style.display = 'block';
+    document.getElementById('gate-error').style.background = '#f0fdf4';
+    document.getElementById('gate-error').style.borderColor = '#bbf7d0';
+    document.getElementById('gate-error').style.color = '#166534';
+    document.getElementById('gate-error').textContent = '✅ Đã gửi email xác nhận! Kiểm tra hộp thư và bấm link để kích hoạt.';
+    return;
+  }
+
+  // localStorage fallback
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
+  const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  if (users.some(u => u.email === email)) { gateError('Email này đã có tài khoản. Hãy đăng nhập.'); return; }
+  const newUser = { name, email, phone, password: pass, status: 'pending', registeredAt: new Date().toISOString() };
+  users.push(newUser);
+  localStorage.setItem(LS_USERS, JSON.stringify(users));
+  const session = { email, name, phone };
+  localStorage.setItem(LS_SESSION, JSON.stringify(session));
+  showDashboard(session);
+
+  // Notify server
+  try {
+    await fetch('/api/notify', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'registration', data: { name, email, phone, source: '/my-courses.html' } })
+    });
+  } catch (_) {}
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+async function init() {
+  // Supabase: check for existing session
+  if (isSupabaseEnabled) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const meta = session.user.user_metadata || {};
+      const s = { email: session.user.email, name: meta.name || session.user.email };
+      localStorage.setItem(LS_SESSION, JSON.stringify(s));
+      showDashboard(s);
+      return;
+    }
+  }
+
+  // localStorage session
+  const session = getSession();
+  if (session) {
+    showDashboard(session);
+  } else {
+    showGate();
+  }
+}
+
+init();
+</script>
+
+<script src="/chat-widget.js"></script>
+</body>
+</html>

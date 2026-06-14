@@ -154,6 +154,25 @@ function injectModal() {
         font-family: inherit;
       }
       .reg-email-sent .resend-link button:hover { text-decoration: underline; }
+      /* Tabs */
+      .reg-tabs {
+        display: flex; gap: 0; margin-bottom: 22px;
+        border-bottom: 2px solid rgba(13,43,26,0.08);
+      }
+      .reg-tab-btn {
+        flex: 1; background: none; border: none;
+        padding: 10px 0; font-size: 14.5px; font-weight: 700;
+        color: #8FA497; cursor: pointer; font-family: inherit;
+        border-bottom: 2.5px solid transparent; margin-bottom: -2px;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .reg-tab-btn.active { color: #0D2B1A; border-bottom-color: #B8860B; }
+      /* Login error */
+      .reg-login-error {
+        background: #fff5f5; border: 1px solid #fecaca;
+        color: #991b1b; border-radius: 8px; padding: 10px 14px;
+        font-size: 13px; margin-bottom: 14px; display: none;
+      }
       /* Toast */
       #mm21-toast-container {
         position: fixed; bottom: 24px; left: 50%;
@@ -191,63 +210,91 @@ function injectModal() {
 
         <div id="reg-form-wrap">
           <div class="reg-logo"><i class="fa-solid fa-shield-halved"></i> Mật Mã 21</div>
-          <h2 class="reg-title" id="reg-modal-title">Tạo Tài Khoản</h2>
-          <p class="reg-subtitle">Đăng ký tài khoản để truy cập khóa học và nhận hỗ trợ cá nhân hoá.</p>
 
-          <form id="reg-form" novalidate>
-            <div class="reg-form-group">
-              <label for="reg-name">Họ và Tên <span style="color:#C0390E">*</span></label>
-              <input type="text" id="reg-name" placeholder="Nhập họ tên của anh..." required>
-              <p class="reg-field-error" id="err-name"></p>
-            </div>
+          <!-- Tabs: Login / Register -->
+          <div class="reg-tabs">
+            <button class="reg-tab-btn" id="reg-tab-login-btn" type="button">Đăng Nhập</button>
+            <button class="reg-tab-btn active" id="reg-tab-signup-btn" type="button">Đăng Ký</button>
+          </div>
 
-            <div class="reg-form-group">
-              <label for="reg-email">Email <span style="color:#C0390E">*</span></label>
-              <input type="email" id="reg-email" placeholder="email@example.com"
-                     autocomplete="email" inputmode="email" required>
-              <p class="reg-field-error" id="err-email"></p>
-            </div>
-
-            <div class="reg-form-group">
-              <label for="reg-phone">Số điện thoại <span style="color:#C0390E">*</span></label>
-              <input type="tel" id="reg-phone" placeholder="0912 345 678"
-                     autocomplete="tel" inputmode="tel" required>
-              <p class="reg-field-error" id="err-phone"></p>
-            </div>
-
-            <div class="reg-form-group">
-              <label for="reg-password">Mật khẩu <span style="color:#C0390E">*</span></label>
-              <div class="reg-pw-wrap">
-                <input type="password" id="reg-password" placeholder="Ít nhất 6 ký tự"
-                       autocomplete="new-password" required minlength="6">
-                <button type="button" class="reg-pw-toggle" id="pw-toggle" aria-label="Hiện/Ẩn mật khẩu">
-                  <i class="fa-solid fa-eye" id="pw-toggle-icon"></i>
-                </button>
+          <!-- ── LOGIN PANEL ── -->
+          <div id="reg-login-panel" style="display:none">
+            <p class="reg-subtitle" style="margin-top:-8px;margin-bottom:18px;">Đăng nhập để vào khóa học của anh.</p>
+            <div class="reg-login-error" id="reg-login-error"></div>
+            <form id="reg-login-form" novalidate>
+              <div class="reg-form-group">
+                <label for="login-email-modal">Email</label>
+                <input type="email" id="login-email-modal" placeholder="email@example.com"
+                       autocomplete="email" inputmode="email" required>
               </div>
-              <p class="reg-field-error" id="err-password"></p>
-            </div>
+              <div class="reg-form-group">
+                <label for="login-password-modal">Mật khẩu</label>
+                <div class="reg-pw-wrap">
+                  <input type="password" id="login-password-modal" placeholder="Mật khẩu của anh"
+                         autocomplete="current-password" required>
+                  <button type="button" class="reg-pw-toggle" id="login-pw-toggle" aria-label="Hiện/Ẩn mật khẩu">
+                    <i class="fa-solid fa-eye" id="login-pw-icon"></i>
+                  </button>
+                </div>
+              </div>
+              <button type="submit" class="reg-submit-btn" id="login-submit-btn" style="background:linear-gradient(135deg,#0D2B1A,#1B442D);color:#D4AF37;">
+                <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
+              </button>
+            </form>
+            <p class="reg-privacy" style="margin-top:16px;">
+              <i class="fa-solid fa-lock"></i>
+              Thông tin đăng nhập được mã hoá bảo mật.
+            </p>
+          </div>
 
-            <!-- Email consent checkbox -->
-            <label class="reg-consent">
-              <input type="checkbox" id="reg-email-consent" checked>
-              <span class="reg-consent-label">
-                Tôi đồng ý nhận <strong>hướng dẫn, tips và ưu đãi độc quyền</strong> từ Mật Mã 21 qua email. Có thể hủy bất kỳ lúc nào.
-              </span>
-            </label>
-
-            <button type="submit" class="reg-submit-btn" id="reg-submit-btn">
-              <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản
-            </button>
-          </form>
-
-          <hr class="reg-divider">
-          <p class="reg-privacy">
-            <i class="fa-solid fa-lock"></i>
-            Thông tin của anh được bảo mật tuyệt đối. Chúng tôi không chia sẻ dữ liệu cho bên thứ ba.
-          </p>
-          <p class="reg-footer">
-            Đã có tài khoản? <a href="/portal.html">Đăng nhập tại đây</a>
-          </p>
+          <!-- ── REGISTER PANEL ── -->
+          <div id="reg-signup-panel">
+            <p class="reg-subtitle" style="margin-top:-8px;margin-bottom:18px;">Tạo tài khoản để truy cập khóa học và nhận hỗ trợ.</p>
+            <form id="reg-form" novalidate>
+              <div class="reg-form-group">
+                <label for="reg-name">Họ và Tên <span style="color:#C0390E">*</span></label>
+                <input type="text" id="reg-name" placeholder="Nhập họ tên của anh..." required>
+                <p class="reg-field-error" id="err-name"></p>
+              </div>
+              <div class="reg-form-group">
+                <label for="reg-email">Email <span style="color:#C0390E">*</span></label>
+                <input type="email" id="reg-email" placeholder="email@example.com"
+                       autocomplete="email" inputmode="email" required>
+                <p class="reg-field-error" id="err-email"></p>
+              </div>
+              <div class="reg-form-group">
+                <label for="reg-phone">Số điện thoại <span style="color:#C0390E">*</span></label>
+                <input type="tel" id="reg-phone" placeholder="0912 345 678"
+                       autocomplete="tel" inputmode="tel" required>
+                <p class="reg-field-error" id="err-phone"></p>
+              </div>
+              <div class="reg-form-group">
+                <label for="reg-password">Mật khẩu <span style="color:#C0390E">*</span></label>
+                <div class="reg-pw-wrap">
+                  <input type="password" id="reg-password" placeholder="Ít nhất 6 ký tự"
+                         autocomplete="new-password" required minlength="6">
+                  <button type="button" class="reg-pw-toggle" id="pw-toggle" aria-label="Hiện/Ẩn mật khẩu">
+                    <i class="fa-solid fa-eye" id="pw-toggle-icon"></i>
+                  </button>
+                </div>
+                <p class="reg-field-error" id="err-password"></p>
+              </div>
+              <label class="reg-consent">
+                <input type="checkbox" id="reg-email-consent" checked>
+                <span class="reg-consent-label">
+                  Tôi đồng ý nhận <strong>tips và ưu đãi độc quyền</strong> từ Mật Mã 21 qua email.
+                </span>
+              </label>
+              <button type="submit" class="reg-submit-btn" id="reg-submit-btn">
+                <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản
+              </button>
+            </form>
+            <hr class="reg-divider">
+            <p class="reg-privacy">
+              <i class="fa-solid fa-lock"></i>
+              Thông tin của anh được bảo mật tuyệt đối. Chúng tôi không chia sẻ dữ liệu cho bên thứ ba.
+            </p>
+          </div>
         </div>
 
         <!-- Email verification sent state -->
@@ -257,7 +304,7 @@ function injectModal() {
           <p>Chúng tôi đã gửi email xác nhận đến <strong id="reg-sent-email"></strong></p>
           <div class="email-hint">
             <i class="fa-solid fa-circle-info"></i>
-            Bấm vào link trong email để <strong>kích hoạt tài khoản</strong> và đăng nhập vào hệ thống. Sau khi xác nhận, anh sẽ được chuyển đến trang đăng nhập tự động.
+            Bấm vào link trong email để <strong>kích hoạt tài khoản</strong>. Sau khi xác nhận, anh đăng nhập và vào học ngay.
           </div>
           <p class="resend-link">
             Không thấy email? Kiểm tra Spam hoặc
@@ -444,8 +491,8 @@ async function handleSubmit(e) {
     try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(account) }); } catch (_) {}
   }
 
-  toast('Đăng ký thành công! Đang chuyển đến trang học tập...', 'success');
-  setTimeout(() => { window.location.href = '/portal.html'; }, 1500);
+  toast('Đăng ký thành công! Đang chuyển đến khóa học...', 'success');
+  setTimeout(() => { window.location.href = '/my-courses.html'; }, 1500);
 }
 
 // ── Resend email ───────────────────────────────────────────────────────────
@@ -485,12 +532,106 @@ function init() {
     }
   });
 
-  // Wire all elements with data-open-register
+  // ── Tab switching ─────────────────────────────────────────────────────────
+  const tabLoginBtn  = document.getElementById('reg-tab-login-btn');
+  const tabSignupBtn = document.getElementById('reg-tab-signup-btn');
+  const loginPanel   = document.getElementById('reg-login-panel');
+  const signupPanel  = document.getElementById('reg-signup-panel');
+
+  function showLoginTab() {
+    tabLoginBtn.classList.add('active');
+    tabSignupBtn.classList.remove('active');
+    loginPanel.style.display  = '';
+    signupPanel.style.display = 'none';
+    document.getElementById('login-email-modal')?.focus();
+  }
+  function showSignupTab() {
+    tabSignupBtn.classList.add('active');
+    tabLoginBtn.classList.remove('active');
+    signupPanel.style.display = '';
+    loginPanel.style.display  = 'none';
+    document.getElementById('reg-name')?.focus();
+  }
+
+  tabLoginBtn?.addEventListener('click', showLoginTab);
+  tabSignupBtn?.addEventListener('click', showSignupTab);
+
+  // ── Login form submit ─────────────────────────────────────────────────────
+  const loginForm = document.getElementById('reg-login-form');
+  const loginErrorEl = document.getElementById('reg-login-error');
+
+  function showLoginError(msg) {
+    if (loginErrorEl) { loginErrorEl.textContent = msg; loginErrorEl.style.display = 'block'; }
+  }
+  function clearLoginError() {
+    if (loginErrorEl) { loginErrorEl.style.display = 'none'; loginErrorEl.textContent = ''; }
+  }
+
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearLoginError();
+
+    const email = document.getElementById('login-email-modal').value.trim().toLowerCase();
+    const pass  = document.getElementById('login-password-modal').value;
+
+    if (!email || !pass) { showLoginError('Vui lòng nhập email và mật khẩu.'); return; }
+
+    const btn = document.getElementById('login-submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang đăng nhập...';
+
+    // Supabase path
+    if (isSupabaseEnabled) {
+      const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập';
+      if (error) {
+        if (error.message.includes('Email not confirmed')) {
+          showLoginError('Email chưa xác nhận. Kiểm tra hộp thư và bấm link xác nhận.');
+        } else {
+          showLoginError('Email hoặc mật khẩu không chính xác.');
+        }
+        return;
+      }
+      toast('Đăng nhập thành công!', 'success');
+      setTimeout(() => { window.location.href = '/my-courses.html'; }, 900);
+      return;
+    }
+
+    // localStorage fallback
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập';
+    const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users') || '[]');
+    const found = localUsers.find(u => u.email === email && u.password === pass);
+    if (found) {
+      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({
+        email: found.email, name: found.name, phone: found.phone || ''
+      }));
+      toast('Đăng nhập thành công!', 'success');
+      setTimeout(() => { window.location.href = '/my-courses.html'; }, 900);
+    } else {
+      showLoginError('Email hoặc mật khẩu không chính xác.');
+    }
+  });
+
+  // Login password toggle
+  document.getElementById('login-pw-toggle')?.addEventListener('click', () => {
+    const inp = document.getElementById('login-password-modal');
+    const ico = document.getElementById('login-pw-icon');
+    if (inp.type === 'password') { inp.type = 'text'; ico.className = 'fa-solid fa-eye-slash'; }
+    else { inp.type = 'password'; ico.className = 'fa-solid fa-eye'; }
+  });
+
+  // ── Wire register / login trigger elements ─────────────────────────────────
   document.querySelectorAll('[data-open-register], #register-btn-desktop, #register-btn-mobile').forEach(el => {
-    el.addEventListener('click', e => { e.preventDefault(); openModal(); });
+    el.addEventListener('click', e => { e.preventDefault(); openModal(); showSignupTab(); });
+  });
+  document.querySelectorAll('[data-open-login], #login-btn-desktop, #login-btn-mobile').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); openModal(); showLoginTab(); });
   });
 
   window.openRegisterModal = openModal;
+  window.openLoginModal = () => { openModal(); showLoginTab(); };
 }
 
 if (document.readyState === 'loading') {

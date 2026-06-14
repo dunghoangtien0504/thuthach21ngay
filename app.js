@@ -302,7 +302,7 @@ async function setupAuth() {
           email,
           password: pass,
           options: {
-            emailRedirectTo: `${window.location.origin}/portal.html`,
+            emailRedirectTo: `${window.location.origin}/my-courses.html`,
             data: { name, source: window.location.pathname },
           },
         });
