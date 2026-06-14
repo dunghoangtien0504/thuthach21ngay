@@ -16,6 +16,54 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <link rel="stylesheet" href="/style.css">
+  <style>
+    .menu-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #dc2626; color: #fff; border-radius: 50px;
+      font-size: 10px; font-weight: 800; min-width: 18px; height: 18px;
+      padding: 0 5px; margin-left: 6px; line-height: 1;
+    }
+    .activity-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 20px; border-bottom: 1px solid var(--border-glow);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0; margin-top: 2px;
+    }
+    .activity-icon.reg  { background: rgba(99,102,241,0.12); color: #6366f1; }
+    .activity-icon.pay  { background: rgba(16,185,129,0.12); color: #10b981; }
+    .activity-icon.enroll { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .activity-icon.system { background: rgba(107,114,128,0.12); color: #6b7280; }
+    .activity-body { flex: 1; }
+    .activity-title { font-size: 13.5px; font-weight: 600; color: var(--text-main); }
+    .activity-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .activity-time { font-size: 11px; color: var(--text-dimmed); margin-left: auto; flex-shrink: 0; padding-top: 3px; }
+    .student-toolbar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .student-search {
+      flex: 1; min-width: 200px; padding: 9px 14px;
+      border: 1.5px solid var(--border-glow); border-radius: var(--radius-pill);
+      background: var(--bg-app); font-size: 13px; color: var(--text-main);
+      outline: none;
+    }
+    .student-search:focus { border-color: var(--primary); }
+    .filter-select {
+      padding: 9px 12px; border: 1.5px solid var(--border-glow);
+      border-radius: var(--radius-md); background: var(--bg-app);
+      font-size: 13px; color: var(--text-main); outline: none;
+    }
+    .payment-amount { font-weight: 700; color: #10b981; }
+    .payment-amount.refund { color: #ef4444; }
+    .email-consent-on  { color: #16a34a; font-weight: 600; }
+    .email-consent-off { color: #9ca3af; }
+    .stat-trend-up   { color: #10b981; font-size: 12px; }
+    .stat-trend-down { color: #ef4444; font-size: 12px; }
+  </style>
 </head>
 <body>
 
@@ -87,7 +135,16 @@
           <button><i class="fa-solid fa-blog"></i> Blog</button>
         </li>
         <li class="admin-menu-item" data-target="admin-tab-registrations">
-          <button><i class="fa-solid fa-user-plus"></i> Đăng Ký Mới</button>
+          <button><i class="fa-solid fa-user-plus"></i> Đăng Ký Mới <span class="menu-badge" id="badge-registrations" style="display:none">0</span></button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-payments">
+          <button><i class="fa-solid fa-credit-card"></i> Thanh toán <span class="menu-badge" id="badge-payments" style="display:none">0</span></button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-email-list">
+          <button><i class="fa-solid fa-envelope-circle-check"></i> Email Marketing</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-enrollments">
+          <button><i class="fa-solid fa-graduation-cap"></i> Đăng ký khóa học</button>
         </li>
         <li class="admin-menu-item" data-target="admin-tab-students">
           <button><i class="fa-solid fa-user-graduate"></i> Học viên</button>
@@ -253,6 +310,17 @@
             </div>
           </div>
           
+          <!-- Recent Activity Feed -->
+          <div class="admin-section-header" style="margin-top:28px">
+            <h3>Hoạt động gần đây</h3>
+            <button class="btn btn-secondary btn-sm" onclick="loadDatabase()"><i class="fa-solid fa-rotate"></i> Làm mới</button>
+          </div>
+          <div class="dashboard-card" style="padding:0;overflow:hidden;margin-bottom:28px">
+            <div id="activity-feed-list">
+              <div class="activity-item"><span style="color:var(--text-muted);font-size:13px;padding:4px 0">Đang tải...</span></div>
+            </div>
+          </div>
+
           <!-- Homepage stats banner -->
           <div class="admin-section-header">
             <h3>Số liệu trang chủ</h3>
@@ -367,11 +435,43 @@
           <div class="admin-section-header">
             <h3>Quản lý sản phẩm khóa học & Gói thanh toán</h3>
           </div>
-          
+
+          <!-- Supplement Orders Table -->
+          <div class="dashboard-card" style="margin-bottom: 28px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+              <h4><i class="fa-solid fa-capsules text-primary"></i> Đơn Thực Phẩm Bổ Sung</h4>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span id="supp-orders-count" class="badge badge-primary">0 đơn</span>
+                <button class="btn btn-sm btn-secondary" onclick="exportSupplementOrders()"><i class="fa-solid fa-download"></i> Xuất CSV</button>
+                <button class="btn btn-sm btn-secondary" onclick="loadSupplementOrders()"><i class="fa-solid fa-rotate-right"></i> Làm mới</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="admin-table" id="supp-orders-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Thời gian</th>
+                    <th>Họ tên</th>
+                    <th>SĐT</th>
+                    <th>Sản phẩm</th>
+                    <th>Địa chỉ</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="supp-orders-tbody">
+                  <tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">Chưa có đơn nào.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Product Config -->
           <div class="tracker-form-card" style="width: 100%; max-width: 600px;">
-            <h3><i class="fa-solid fa-box-open"></i> Thông tin sản phẩm</h3>
+            <h3><i class="fa-solid fa-box-open"></i> Thông tin sản phẩm khóa học</h3>
             <p class="form-desc">Cấu hình giá trị khóa học hiển thị ở trang chủ học viên.</p>
-            
+
             <form id="admin-product-form" class="log-form">
               <div class="form-group">
                 <label for="product-name">Tên sản phẩm / Khóa học</label>
@@ -453,7 +553,24 @@
           
           <div class="admin-section-header">
             <h3>Danh sách học viên học thử & đăng ký</h3>
-            <button class="btn btn-primary btn-sm" id="btn-add-student-manual"><i class="fa-solid fa-user-plus"></i> Thêm thủ công</button>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-secondary btn-sm" id="btn-export-students-csv"><i class="fa-solid fa-download"></i> Xuất CSV</button>
+              <button class="btn btn-primary btn-sm" id="btn-add-student-manual"><i class="fa-solid fa-user-plus"></i> Thêm thủ công</button>
+            </div>
+          </div>
+          <div class="student-toolbar">
+            <input type="search" class="student-search" id="student-search" placeholder="🔍 Tìm tên, email, số điện thoại...">
+            <select class="filter-select" id="student-filter-status">
+              <option value="">Tất cả trạng thái</option>
+              <option value="active">Đã kích hoạt</option>
+              <option value="pending">Chờ xác nhận</option>
+            </select>
+            <select class="filter-select" id="student-filter-source">
+              <option value="">Tất cả nguồn</option>
+              <option value="supabase">Supabase</option>
+              <option value="local">Local</option>
+              <option value="system">Hệ thống</option>
+            </select>
           </div>
           
           <!-- Manual Student Form (Hidden by default) -->
@@ -903,11 +1020,215 @@
           </div>
         </section>
         
+        <!-- ================= TAB: PAYMENTS ================= -->
+        <section class="admin-tab-section" id="admin-tab-payments" style="display:none">
+          <div class="admin-section-header">
+            <h3>Lịch sử Thanh toán (SePay)</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-export-payments-csv"><i class="fa-solid fa-download"></i> Xuất CSV</button>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px">
+            Dữ liệu giao dịch thực tế từ tài khoản SePay. Tự động cập nhật mỗi lần mở tab.
+          </p>
+          <div class="admin-stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+            <div class="admin-stat-card">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng giao dịch</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-receipt"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="pay-total-count">—</p><span class="admin-stat-desc">Lịch sử gần nhất</span></div>
+            </div>
+            <div class="admin-stat-card orange">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng tiền vào</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-arrow-trend-up"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="pay-total-amount">—</p><span class="admin-stat-desc">Chuyển khoản nhận</span></div>
+            </div>
+            <div class="admin-stat-card purple">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Giao dịch hôm nay</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-calendar-day"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="pay-today-count">—</p><span class="admin-stat-desc">Trong 24h qua</span></div>
+            </div>
+          </div>
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead><tr>
+                  <th>STT</th><th>Nội dung CK</th><th>Số tiền</th>
+                  <th>Ngân hàng</th><th>Ngày giao dịch</th><th>Trạng thái</th>
+                </tr></thead>
+                <tbody id="payments-table-body">
+                  <tr class="empty-row"><td colspan="6">Đang tải dữ liệu thanh toán...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: EMAIL MARKETING ================= -->
+        <section class="admin-tab-section" id="admin-tab-email-list" style="display:none">
+          <div class="admin-section-header">
+            <h3>Email Marketing & Danh sách liên hệ</h3>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-secondary btn-sm" id="btn-export-email-csv"><i class="fa-solid fa-download"></i> Xuất CSV email</button>
+              <button class="btn btn-secondary btn-sm" id="btn-export-email-consent-csv"><i class="fa-solid fa-filter"></i> Chỉ xuất đã đồng ý</button>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px">
+            Toàn bộ email từ học viên đăng ký Supabase và đăng ký thủ công. Cột <strong>Đồng ý nhận email</strong> xác định ai đã chấp thuận nhận marketing.
+          </p>
+          <div class="admin-stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+            <div class="admin-stat-card">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng email</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-envelope"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="email-total-count">0</p><span class="admin-stat-desc">Tất cả tài khoản</span></div>
+            </div>
+            <div class="admin-stat-card orange">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Đã đồng ý nhận</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-circle-check"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="email-consent-count">0</p><span class="admin-stat-desc">Có thể gửi marketing</span></div>
+            </div>
+            <div class="admin-stat-card purple">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Đã xác nhận email</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-shield-check"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="email-verified-count">0</p><span class="admin-stat-desc">Email hợp lệ</span></div>
+            </div>
+          </div>
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead><tr>
+                  <th>Họ tên</th><th>Email</th><th>Số điện thoại</th>
+                  <th>Đồng ý nhận email</th><th>Email đã xác nhận</th>
+                  <th>Nguồn</th><th>Ngày đăng ký</th>
+                </tr></thead>
+                <tbody id="email-list-table-body">
+                  <tr class="empty-row"><td colspan="7">Đang tải...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: ENROLLMENTS ================= -->
+        <section class="admin-tab-section" id="admin-tab-enrollments" style="display:none">
+          <div class="admin-section-header">
+            <h3>Đăng ký tham gia Khóa học</h3>
+            <button class="btn btn-secondary btn-sm" id="btn-export-enrollments-csv"><i class="fa-solid fa-download"></i> Xuất CSV</button>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px">
+            Danh sách học viên đã bấm đăng ký tham gia từng khóa học. Mỗi đăng ký có kèm mục tiêu và ghi chú.
+          </p>
+          <div class="admin-stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px">
+            <div class="admin-stat-card">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng đăng ký</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-graduation-cap"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="enroll-total-count">0</p><span class="admin-stat-desc">Tất cả khóa học</span></div>
+            </div>
+            <div class="admin-stat-card orange">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Khóa học phổ biến nhất</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-fire"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" style="font-size:16px" id="enroll-top-course">—</p><span class="admin-stat-desc">Được chọn nhiều nhất</span></div>
+            </div>
+            <div class="admin-stat-card purple">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Đăng ký hôm nay</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-calendar-check"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="enroll-today-count">0</p><span class="admin-stat-desc">Trong 24h qua</span></div>
+            </div>
+          </div>
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table">
+                <thead><tr>
+                  <th>Họ tên</th><th>Email</th><th>Khóa học</th>
+                  <th>Mục tiêu</th><th>Ghi chú</th><th>Ngày đăng ký</th>
+                </tr></thead>
+                <tbody id="enrollments-table-body">
+                  <tr class="empty-row"><td colspan="6">Chưa có đăng ký khóa học nào.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
-    
+
   </div>
 
   <script type="module" src="/admin.js"></script>
+
+  <script>
+    // ===== Supplement Orders Admin =====
+    const SUPP_KEY = 'formen_supplement_orders';
+    const STATUS_LABELS = { pending: 'Chờ xác nhận', confirmed: 'Đã xác nhận', shipped: 'Đã giao', cancelled: 'Huỷ' };
+    const STATUS_COLORS = { pending: '#EF9F27', confirmed: '#2E7D32', shipped: '#1565C0', cancelled: '#c62828' };
+
+    function loadSupplementOrders() {
+      const orders = JSON.parse(localStorage.getItem(SUPP_KEY) || '[]');
+      const tbody = document.getElementById('supp-orders-tbody');
+      const countEl = document.getElementById('supp-orders-count');
+      if (!tbody) return;
+
+      countEl.textContent = orders.length + ' đơn';
+
+      if (orders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">Chưa có đơn nào.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = orders.map((o, i) => {
+        const status = o.status || 'pending';
+        const date = o.createdAt ? new Date(o.createdAt).toLocaleString('vi-VN') : '—';
+        return `<tr>
+          <td>${orders.length - i}</td>
+          <td style="white-space:nowrap;font-size:12px;">${date}</td>
+          <td><b>${escHtml(o.name)}</b></td>
+          <td><a href="tel:${escHtml(o.phone)}">${escHtml(o.phone)}</a></td>
+          <td>${escHtml(o.productLabel || o.product)}</td>
+          <td style="font-size:12px;max-width:180px;">${escHtml(o.address)}</td>
+          <td>
+            <select onchange="updateSuppStatus('${o.id}', this.value)" style="font-size:12px;padding:3px 6px;border-radius:6px;border:1.5px solid ${STATUS_COLORS[status]};color:${STATUS_COLORS[status]};background:#fff;">
+              ${Object.keys(STATUS_LABELS).map(s => `<option value="${s}"${s===status?' selected':''}>${STATUS_LABELS[s]}</option>`).join('')}
+            </select>
+          </td>
+          <td>
+            <button onclick="deleteSuppOrder('${o.id}')" style="background:none;border:none;color:#c62828;cursor:pointer;font-size:14px;" title="Xoá đơn"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function escHtml(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function updateSuppStatus(id, status) {
+      const orders = JSON.parse(localStorage.getItem(SUPP_KEY) || '[]');
+      const idx = orders.findIndex(o => o.id === id);
+      if (idx >= 0) { orders[idx].status = status; localStorage.setItem(SUPP_KEY, JSON.stringify(orders)); }
+    }
+
+    function deleteSuppOrder(id) {
+      if (!confirm('Xoá đơn hàng này?')) return;
+      const orders = JSON.parse(localStorage.getItem(SUPP_KEY) || '[]').filter(o => o.id !== id);
+      localStorage.setItem(SUPP_KEY, JSON.stringify(orders));
+      loadSupplementOrders();
+    }
+
+    function exportSupplementOrders() {
+      const orders = JSON.parse(localStorage.getItem(SUPP_KEY) || '[]');
+      if (!orders.length) { alert('Chưa có đơn nào để xuất.'); return; }
+      const header = ['STT','Thời gian','Họ tên','SĐT','Sản phẩm','Địa chỉ','Trạng thái'];
+      const rows = orders.map((o, i) => [
+        orders.length - i,
+        o.createdAt ? new Date(o.createdAt).toLocaleString('vi-VN') : '',
+        o.name, o.phone,
+        o.productLabel || o.product,
+        o.address,
+        STATUS_LABELS[o.status] || o.status
+      ].map(v => '"' + String(v).replace(/"/g,'""') + '"').join(','));
+      const csv = '﻿' + [header.join(','), ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'don-thuc-pham-bo-sung.csv'; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Load when products tab is clicked
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.admin-menu-item[data-target="admin-tab-products"]').forEach(el => {
+        el.addEventListener('click', loadSupplementOrders);
+      });
+    });
+  </script>
 </body>
 </html>

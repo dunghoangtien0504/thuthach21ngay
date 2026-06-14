@@ -37,6 +37,11 @@ let allowedAccounts = [];
 let generatedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_generated_keys')) || [];
 let courseData = [];
 let blogPosts = JSON.parse(localStorage.getItem('thuthach21ngay_blog_posts')) || [];
+let enrollmentsList = [];
+let paymentsList = [];
+let _studentFilterQuery = '';
+let _studentFilterStatus = '';
+let _studentFilterSource = '';
 
 // Custom Config State
 let customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {
@@ -226,6 +231,9 @@ function setupMenuSwitcher() {
       if (targetSec) targetSec.style.display = 'block';
 
       if (targetId === 'admin-tab-registrations') renderRegistrations();
+      if (targetId === 'admin-tab-payments') renderPaymentsTab();
+      if (targetId === 'admin-tab-email-list') renderEmailMarketingTab();
+      if (targetId === 'admin-tab-enrollments') renderEnrollmentsTab();
       if (targetId === 'admin-tab-analytics') {
         setTimeout(() => {
           renderAnalyticsCharts();
@@ -399,8 +407,13 @@ async function loadDatabase() {
     }
   });
 
+  // 5. Load local enrollments
+  enrollmentsList = JSON.parse(localStorage.getItem('mm21_course_enrollments') || '[]');
+
   // Update UI components
   updateStatsUI();
+  renderActivityFeed();
+  updateSidebarBadges();
   renderStudentsTable();
   renderKeysTable();
   renderProgressTable();
@@ -408,6 +421,8 @@ async function loadDatabase() {
   renderBlogTable();
   renderCertsTable();
   renderHomeworkTable();
+  renderEmailMarketingTab();
+  renderEnrollmentsTab();
 }
 
 function updateStatsUI() {
@@ -734,6 +749,33 @@ VITE_SUPPORT_EMAIL="${customConfig.supportEmail}"
 // STUDENTS MANAGEMENT
 // ==========================================================================
 function setupStudentManager() {
+  // Search & filter
+  const searchEl  = document.getElementById('student-search');
+  const statusEl  = document.getElementById('student-filter-status');
+  const sourceEl  = document.getElementById('student-filter-source');
+  const exportBtn = document.getElementById('btn-export-students-csv');
+
+  if (searchEl)  searchEl.addEventListener('input',  e => { _studentFilterQuery  = e.target.value.toLowerCase(); renderStudentsTable(); });
+  if (statusEl)  statusEl.addEventListener('change', e => { _studentFilterStatus = e.target.value; renderStudentsTable(); });
+  if (sourceEl)  sourceEl.addEventListener('change', e => { _studentFilterSource = e.target.value; renderStudentsTable(); });
+
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      if (!studentsList.length) { showToast('Chưa có học viên nào.', 'warning'); return; }
+      const header = 'Tên,Email,SĐT,Ngày đăng ký,Trạng thái,Nguồn,Email xác nhận,Đồng ý nhận mail';
+      const rows = studentsList.map(s =>
+        `"${s.name}","${s.email}","${s.phone || ''}","${s.date}","${s.status}","${s.source || ''}","${s.email_confirmed ? 'Có' : 'Không'}","${s.email_consent ? 'Có' : 'Không'}"`
+      );
+      const csv = [header, ...rows].join('\n');
+      const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url;
+      a.download = `hoc-vien-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click(); URL.revokeObjectURL(url);
+      showToast(`Đã xuất ${studentsList.length} học viên ra CSV!`, 'success');
+    });
+  }
+
   if (btnAddStudentManual && manualStudentPanel) {
     btnAddStudentManual.addEventListener('click', () => {
       manualStudentPanel.style.display = 'block';
@@ -786,7 +828,20 @@ function renderStudentsTable() {
   if (!adminStudentsList) return;
   adminStudentsList.innerHTML = '';
 
-  studentsList.forEach(student => {
+  const filtered = studentsList.filter(s => {
+    const q = _studentFilterQuery;
+    if (q && !`${s.name} ${s.email} ${s.phone || ''}`.toLowerCase().includes(q)) return false;
+    if (_studentFilterStatus && s.status !== _studentFilterStatus) return false;
+    if (_studentFilterSource && (s.source || '') !== _studentFilterSource) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    adminStudentsList.innerHTML = `<tr class="empty-row"><td colspan="6">Không tìm thấy học viên phù hợp.</td></tr>`;
+    return;
+  }
+
+  filtered.forEach(student => {
     const isLocal = !allowedAccounts.some(u => u.email === student.email);
 
     const isSupabase = student.source === 'supabase';
@@ -845,6 +900,316 @@ function renderStudentsTable() {
 
     adminStudentsList.appendChild(row);
   });
+}
+
+// ==========================================================================
+// ACTIVITY FEED
+// ==========================================================================
+function renderActivityFeed() {
+  const feed = document.getElementById('activity-feed-list');
+  if (!feed) return;
+
+  const events = [];
+  const now = Date.now();
+
+  // From Supabase users (sign-ups)
+  studentsList.filter(s => s.source === 'supabase').forEach(s => {
+    events.push({
+      type: 'reg', icon: 'fa-user-plus', cls: 'reg',
+      title: `${s.name || s.email} vừa đăng ký tài khoản`,
+      sub: s.email + (s.email_confirmed ? ' · ✓ Đã xác nhận' : ' · ⏳ Chưa xác nhận'),
+      ts: s.date ? new Date(s.date.split('/').reverse().join('-')).getTime() : now,
+      tsRaw: s.date,
+    });
+  });
+
+  // From local registrations
+  getPendingRegistrations().forEach(r => {
+    events.push({
+      type: 'reg', icon: 'fa-user-plus', cls: 'reg',
+      title: `${r.email} điền form đăng ký`,
+      sub: `SĐT: ${r.phone || 'N/A'} · Nguồn: ${r.source || '/'}`,
+      ts: r.registeredAt ? new Date(r.registeredAt).getTime() : now - 3600000,
+      tsRaw: r.registeredAt ? new Date(r.registeredAt).toLocaleDateString('vi-VN') : '',
+    });
+  });
+
+  // From enrollments
+  enrollmentsList.forEach(e => {
+    events.push({
+      type: 'enroll', icon: 'fa-graduation-cap', cls: 'enroll',
+      title: `${e.name || e.email} đăng ký khóa học`,
+      sub: `${e.course_name || e.course_id}`,
+      ts: e.enrolled_at ? new Date(e.enrolled_at).getTime() : now - 7200000,
+      tsRaw: e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString('vi-VN') : '',
+    });
+  });
+
+  // Sort newest first, take top 12
+  events.sort((a, b) => b.ts - a.ts);
+  const recent = events.slice(0, 12);
+
+  if (!recent.length) {
+    feed.innerHTML = `<div class="activity-item"><span style="color:var(--text-muted);font-size:13px">Chưa có hoạt động nào. Khi có học viên đăng ký, hoạt động sẽ hiện ở đây.</span></div>`;
+    return;
+  }
+
+  feed.innerHTML = recent.map(ev => {
+    const timeAgo = formatTimeAgo(ev.ts);
+    return `
+      <div class="activity-item">
+        <div class="activity-icon ${ev.cls}"><i class="fa-solid ${ev.icon}"></i></div>
+        <div class="activity-body">
+          <div class="activity-title">${ev.title}</div>
+          <div class="activity-sub">${ev.sub}</div>
+        </div>
+        <span class="activity-time">${timeAgo}</span>
+      </div>`;
+  }).join('');
+}
+
+function formatTimeAgo(ts) {
+  const diff = Date.now() - ts;
+  if (diff < 60000)  return 'Vừa xong';
+  if (diff < 3600000) return `${Math.floor(diff / 60000)} phút trước`;
+  if (diff < 86400000) return `${Math.floor(diff / 3600000)} giờ trước`;
+  if (diff < 2592000000) return `${Math.floor(diff / 86400000)} ngày trước`;
+  return new Date(ts).toLocaleDateString('vi-VN');
+}
+
+// ==========================================================================
+// SIDEBAR BADGES
+// ==========================================================================
+function updateSidebarBadges() {
+  const regCount = getPendingRegistrations().length;
+  const regBadge = document.getElementById('badge-registrations');
+  if (regBadge) {
+    regBadge.textContent = regCount;
+    regBadge.style.display = regCount > 0 ? 'inline-flex' : 'none';
+  }
+
+  const payBadge = document.getElementById('badge-payments');
+  if (payBadge) {
+    const today = paymentsList.filter(p => {
+      if (!p.date) return false;
+      const d = new Date(p.date);
+      return d.toDateString() === new Date().toDateString();
+    }).length;
+    payBadge.textContent = today;
+    payBadge.style.display = today > 0 ? 'inline-flex' : 'none';
+  }
+}
+
+// ==========================================================================
+// PAYMENTS TAB
+// ==========================================================================
+async function renderPaymentsTab() {
+  const tbody = document.getElementById('payments-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = `<tr class="empty-row"><td colspan="6"><i class="fa-solid fa-spinner fa-spin"></i> Đang tải dữ liệu SePay...</td></tr>`;
+
+  try {
+    const res = await fetch('/api/admin-transactions', {
+      headers: { 'Authorization': `Bearer ${ADMIN_PASS}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      paymentsList = data.transactions || [];
+    }
+  } catch (_) {}
+
+  // Update stat cards
+  const incoming = paymentsList.filter(t => t.type === 'in');
+  const totalAmount = incoming.reduce((s, t) => s + (t.amount || 0), 0);
+  const today = incoming.filter(t => {
+    if (!t.date) return false;
+    return new Date(t.date).toDateString() === new Date().toDateString();
+  }).length;
+
+  const countEl  = document.getElementById('pay-total-count');
+  const amountEl = document.getElementById('pay-total-amount');
+  const todayEl  = document.getElementById('pay-today-count');
+  if (countEl)  countEl.textContent  = incoming.length;
+  if (amountEl) amountEl.textContent = totalAmount > 0 ? totalAmount.toLocaleString('vi-VN') + 'đ' : '0đ';
+  if (todayEl)  todayEl.textContent  = today;
+
+  updateSidebarBadges();
+
+  if (!incoming.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="6">
+      ${paymentsList.length === 0
+        ? 'Chưa có giao dịch nào hoặc SEPAY_API_KEY chưa được cấu hình trên Vercel.'
+        : 'Chưa có giao dịch tiền vào.'}
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = incoming.map((t, i) => {
+    const dateStr = t.date ? new Date(t.date).toLocaleString('vi-VN') : '—';
+    const isPay   = t.amount >= 680000;
+    const isKegel = t.amount >= 195000 && t.amount < 680000;
+    const badge   = isPay  ? `<span class="badge-status active">Mật Mã 21</span>` :
+                    isKegel ? `<span class="badge-status pending">Kegel</span>` :
+                               `<span style="font-size:11px;color:var(--text-dimmed)">Khác</span>`;
+    return `<tr>
+      <td>${i + 1}</td>
+      <td style="max-width:260px;font-size:12.5px">${t.content || '—'}</td>
+      <td class="payment-amount">${(t.amount || 0).toLocaleString('vi-VN')}đ</td>
+      <td style="font-size:12px">${t.bankCode || '—'}</td>
+      <td style="font-size:12px">${dateStr}</td>
+      <td>${badge}</td>
+    </tr>`;
+  }).join('');
+
+  // CSV export
+  const exportBtn = document.getElementById('btn-export-payments-csv');
+  if (exportBtn && !exportBtn._wired) {
+    exportBtn._wired = true;
+    exportBtn.addEventListener('click', () => {
+      const csv = ['STT,Nội dung,Số tiền,Ngân hàng,Ngày', ...incoming.map((t, i) =>
+        `${i+1},"${t.content}",${t.amount},"${t.bankCode}","${t.date}"`
+      )].join('\n');
+      const a = document.createElement('a');
+      a.href = 'data:text/csv;charset=utf-8,﻿' + encodeURIComponent(csv);
+      a.download = `thanh-toan-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+      showToast('Đã xuất CSV thanh toán!', 'success');
+    });
+  }
+}
+
+// ==========================================================================
+// EMAIL MARKETING TAB
+// ==========================================================================
+function renderEmailMarketingTab() {
+  const tbody = document.getElementById('email-list-table-body');
+  if (!tbody) return;
+
+  const all      = studentsList.filter(s => s.email && s.email.includes('@'));
+  const consented = all.filter(s => s.email_consent);
+  const verified  = all.filter(s => s.email_confirmed);
+
+  const countEl    = document.getElementById('email-total-count');
+  const consentEl  = document.getElementById('email-consent-count');
+  const verifiedEl = document.getElementById('email-verified-count');
+  if (countEl)    countEl.textContent    = all.length;
+  if (consentEl)  consentEl.textContent  = consented.length;
+  if (verifiedEl) verifiedEl.textContent = verified.length;
+
+  if (!all.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="7">Chưa có học viên nào. Danh sách sẽ hiện khi Supabase được kết nối.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = all.map(s => {
+    const consent = s.email_consent
+      ? `<span class="email-consent-on"><i class="fa-solid fa-circle-check"></i> Có</span>`
+      : `<span class="email-consent-off"><i class="fa-solid fa-circle-xmark"></i> Không</span>`;
+    const verified = s.source === 'supabase'
+      ? (s.email_confirmed ? `<span style="color:#16a34a">✓ Đã xác nhận</span>` : `<span style="color:#d97706">⏳ Chưa xác nhận</span>`)
+      : `<span style="color:#9ca3af">N/A</span>`;
+    const srcBadge = s.source === 'supabase' ? 'Supabase' : s.source === 'system' ? 'Hệ thống' : 'Local';
+    return `<tr>
+      <td><strong>${s.name || '—'}</strong></td>
+      <td>${s.email}</td>
+      <td>${s.phone || '—'}</td>
+      <td>${consent}</td>
+      <td>${verified}</td>
+      <td><span style="font-size:11px;color:var(--text-dimmed)">${srcBadge}</span></td>
+      <td style="font-size:12px">${s.date}</td>
+    </tr>`;
+  }).join('');
+
+  // Wire export buttons
+  const exportAll = document.getElementById('btn-export-email-csv');
+  if (exportAll && !exportAll._wired) {
+    exportAll._wired = true;
+    exportAll.addEventListener('click', () => exportEmailCSV(all, 'email-tat-ca'));
+  }
+  const exportConsent = document.getElementById('btn-export-email-consent-csv');
+  if (exportConsent && !exportConsent._wired) {
+    exportConsent._wired = true;
+    exportConsent.addEventListener('click', () => exportEmailCSV(consented, 'email-dong-y'));
+  }
+}
+
+function exportEmailCSV(list, name) {
+  if (!list.length) { showToast('Không có dữ liệu để xuất.', 'warning'); return; }
+  const csv = ['Tên,Email,SĐT,Đồng ý nhận email,Ngày đăng ký',
+    ...list.map(s => `"${s.name || ''}","${s.email}","${s.phone || ''}","${s.email_consent ? 'Có' : 'Không'}","${s.date}"`)
+  ].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,﻿' + encodeURIComponent(csv);
+  a.download = `${name}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast(`Đã xuất ${list.length} email!`, 'success');
+}
+
+// ==========================================================================
+// ENROLLMENTS TAB
+// ==========================================================================
+function renderEnrollmentsTab() {
+  const tbody = document.getElementById('enrollments-table-body');
+  if (!tbody) return;
+
+  const totalEl   = document.getElementById('enroll-total-count');
+  const topEl     = document.getElementById('enroll-top-course');
+  const todayEl   = document.getElementById('enroll-today-count');
+
+  if (totalEl) totalEl.textContent = enrollmentsList.length;
+
+  // Top course
+  const courseCounts = {};
+  enrollmentsList.forEach(e => {
+    const k = e.course_name || e.course_id || 'N/A';
+    courseCounts[k] = (courseCounts[k] || 0) + 1;
+  });
+  const topCourse = Object.entries(courseCounts).sort((a, b) => b[1] - a[1])[0];
+  if (topEl) topEl.textContent = topCourse ? `${topCourse[0]} (${topCourse[1]})` : '—';
+
+  const todayCount = enrollmentsList.filter(e => {
+    if (!e.enrolled_at) return false;
+    return new Date(e.enrolled_at).toDateString() === new Date().toDateString();
+  }).length;
+  if (todayEl) todayEl.textContent = todayCount;
+
+  if (!enrollmentsList.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="6">Chưa có đăng ký khóa học nào. Học viên cần đăng nhập và bấm đăng ký khóa học.</td></tr>`;
+    return;
+  }
+
+  const goalLabels = {
+    kiem_soat: 'Kiểm soát XTS', tu_tin: 'Tăng tự tin',
+    quan_he: 'Cải thiện quan hệ', hieu_biet: 'Hiểu cơ thể', khac: 'Khác'
+  };
+
+  tbody.innerHTML = [...enrollmentsList].reverse().map(e => {
+    const dateStr = e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString('vi-VN') : '—';
+    return `<tr>
+      <td><strong>${e.name || '—'}</strong></td>
+      <td>${e.email || '—'}</td>
+      <td><span class="badge-status active" style="font-size:11px">${e.course_name || e.course_id}</span></td>
+      <td style="font-size:12px">${goalLabels[e.goal] || e.goal || '—'}</td>
+      <td style="font-size:12px;max-width:200px;color:var(--text-muted)">${e.note || '—'}</td>
+      <td style="font-size:12px">${dateStr}</td>
+    </tr>`;
+  }).join('');
+
+  // Export
+  const exportBtn = document.getElementById('btn-export-enrollments-csv');
+  if (exportBtn && !exportBtn._wired) {
+    exportBtn._wired = true;
+    exportBtn.addEventListener('click', () => {
+      const csv = ['Tên,Email,Khóa học,Mục tiêu,Ghi chú,Ngày đăng ký',
+        ...enrollmentsList.map(e => `"${e.name || ''}","${e.email}","${e.course_name || ''}","${e.goal || ''}","${e.note || ''}","${e.enrolled_at || ''}"`)
+      ].join('\n');
+      const a = document.createElement('a');
+      a.href = 'data:text/csv;charset=utf-8,﻿' + encodeURIComponent(csv);
+      a.download = `dang-ky-khoa-hoc-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+      showToast(`Đã xuất ${enrollmentsList.length} đăng ký!`, 'success');
+    });
+  }
 }
 
 function activateStudentAccount(email) {
