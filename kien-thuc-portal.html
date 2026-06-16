@@ -15,61 +15,385 @@
   <link rel="stylesheet" href="/style.css">
 
   <style>
-    /* ── header overrides for free portal ── */
+    /* ── premium clinical portal design overrides ── */
+    
+    /* Layout & Main background */
+    .app-main {
+      background-color: #F8F5EE !important; /* Premium luxury cream background */
+    }
+    
+    .tab-content {
+      padding: 24px 20px 40px !important;
+      max-width: 1400px !important;
+    }
+    
+    .lessons-layout {
+      gap: 28px !important;
+      height: calc(100vh - 140px) !important;
+      height: calc(100dvh - 140px) !important;
+    }
+    
+    /* Header (Glassmorphic dark green) */
     .kp-header {
-      background: var(--bg-dark, #0D2B1A);
-      height: 60px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 22px; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+      background: rgba(13, 43, 26, 0.96) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      height: 65px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.18) !important;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
     }
     .kp-logo {
-      display: flex; align-items: center; gap: 9px;
-      color: #D4AF37; font-weight: 800; font-size: 16px;
+      display: flex; align-items: center; gap: 10px;
+      color: #D4AF37; font-weight: 800; font-size: 17px;
       font-family: 'Plus Jakarta Sans', sans-serif; text-decoration: none;
+      letter-spacing: 0.2px;
     }
-    .kp-logo i { font-size: 18px; }
+    .kp-logo i {
+      font-size: 19px;
+      filter: drop-shadow(0 0 4px rgba(212,175,55,0.3));
+    }
     .kp-badge {
       display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.35);
-      color: #34d399; padding: 5px 13px; border-radius: 50px;
-      font-size: 12px; font-weight: 700;
+      background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25);
+      color: #34d399; padding: 6px 14px; border-radius: 50px;
+      font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.3px;
     }
     .kp-home-link {
-      display: flex; align-items: center; gap: 6px;
-      color: rgba(212,175,55,0.7); font-size: 13px; text-decoration: none;
-      transition: color 0.18s;
+      display: inline-flex; align-items: center; gap: 6px;
+      color: rgba(212, 175, 55, 0.75); font-size: 13.5px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s;
     }
-    .kp-home-link:hover { color: #D4AF37; }
+    .kp-home-link:hover {
+      color: #D4AF37;
+      transform: translateX(-2px);
+    }
 
-    /* ── upsell CTA ── */
+    /* Sidebar Glass Card */
+    .lessons-sidebar {
+      width: 360px !important;
+      background: rgba(255, 255, 255, 0.8) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(13, 43, 26, 0.08) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 30px rgba(13, 43, 26, 0.03) !important;
+    }
+    
+    .sidebar-header {
+      padding: 22px 24px !important;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.06) !important;
+    }
+    .sidebar-header h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px !important;
+      font-weight: 800 !important;
+      color: #0D2B1A !important;
+      letter-spacing: -0.2px;
+    }
+    .sidebar-header p {
+      font-size: 12px !important;
+      color: #485A4F !important;
+      margin-top: 3px;
+    }
+
+    .sidebar-curriculum {
+      padding: 12px 14px !important;
+    }
+
+    /* Module and list layouts */
+    .curriculum-module {
+      margin-bottom: 16px;
+    }
+    
+    .module-header {
+      padding: 8px 10px 4px !important;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      text-transform: uppercase !important;
+      color: #B8860B !important;
+      letter-spacing: 0.8px;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.04);
+      margin-bottom: 8px;
+    }
+
+    /* Sidebar Lesson Buttons */
+    .sidebar-lesson-btn {
+      width: 100%;
+      text-align: left;
+      background: none !important;
+      border: 1px solid transparent !important;
+      color: #485A4F !important;
+      padding: 10px 12px !important;
+      border-radius: 8px !important;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+      transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    .sidebar-lesson-btn:hover {
+      background-color: rgba(61, 107, 74, 0.05) !important;
+      color: #0D2B1A !important;
+      transform: translateX(3px);
+    }
+    .sidebar-lesson-btn.active {
+      background: linear-gradient(90deg, rgba(13, 43, 26, 0.06) 0%, rgba(13, 43, 26, 0.01) 100%) !important;
+      color: #0D2B1A !important;
+      border-left: 3px solid #D4AF37 !important;
+      border-radius: 0 8px 8px 0 !important;
+      padding-left: 9px !important;
+      font-weight: 700 !important;
+      box-shadow: inset 1px 0 0 rgba(212,175,55,0.2);
+    }
+
+    .lesson-btn-content {
+      max-width: 100% !important;
+      gap: 8px !important;
+    }
+    .lesson-btn-title {
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      line-height: 1.4;
+      color: inherit;
+    }
+    .lesson-btn-duration {
+      display: block;
+      font-size: 10.5px !important;
+      color: #739C7D !important;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .sidebar-lesson-btn.active .lesson-btn-duration {
+      color: #3D6B4A !important;
+    }
+
+    /* Lesson Viewport Card */
+    .lesson-viewport {
+      background-color: #FFFFFF !important;
+      border: 1px solid rgba(13, 43, 26, 0.08) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 15px 40px rgba(13, 43, 26, 0.04) !important;
+      padding: 36px 48px !important;
+    }
+
+    .lesson-meta-header {
+      margin-bottom: 16px !important;
+    }
+    .lesson-tag {
+      background-color: rgba(13, 43, 26, 0.05) !important;
+      border: 1px solid rgba(13, 43, 26, 0.1) !important;
+      color: #3D6B4A !important;
+      font-size: 10.5px !important;
+      font-weight: 700 !important;
+      padding: 4px 12px !important;
+    }
+    .lesson-duration {
+      font-size: 12.5px !important;
+      color: #485A4F !important;
+    }
+
+    .lesson-title {
+      font-family: 'Lora', Georgia, serif !important;
+      font-size: 28px !important;
+      font-weight: 700 !important;
+      color: #0D2B1A !important;
+      margin-bottom: 24px !important;
+      line-height: 1.35 !important;
+      letter-spacing: -0.3px;
+    }
+
+    /* Rich Markdown Styles inside Lesson Body */
+    .markdown-body {
+      line-height: 1.78 !important;
+      font-size: 15.5px !important;
+      color: #2D3E35 !important;
+    }
+    .markdown-body h2 {
+      font-family: 'Lora', Georgia, serif !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      color: #0D2B1A !important;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.08) !important;
+      padding-bottom: 8px !important;
+      margin-top: 38px !important;
+      margin-bottom: 16px !important;
+    }
+    .markdown-body h3 {
+      font-family: 'Lora', Georgia, serif !important;
+      font-size: 16.5px !important;
+      font-weight: 600 !important;
+      color: #163f27 !important;
+      margin-top: 28px !important;
+      margin-bottom: 12px !important;
+    }
+    .markdown-body p {
+      margin-bottom: 18px !important;
+    }
+    .markdown-body strong {
+      color: #0D2B1A !important;
+      font-weight: 700 !important;
+    }
+    .markdown-body blockquote {
+      background: linear-gradient(135deg, rgba(13, 43, 26, 0.02) 0%, rgba(184, 134, 11, 0.02) 100%) !important;
+      border-left: 4px solid #D4AF37 !important;
+      padding: 16px 20px !important;
+      border-radius: 0 12px 12px 0 !important;
+      margin: 24px 0 !important;
+      box-shadow: inset 2px 0 8px rgba(184, 134, 11, 0.01) !important;
+    }
+    .markdown-body blockquote p {
+      font-style: italic !important;
+      color: #3D6B4A !important;
+      margin-bottom: 0 !important;
+    }
+    
+    .markdown-body ul, .markdown-body ol {
+      padding-left: 20px !important;
+      margin-bottom: 18px !important;
+    }
+    .markdown-body li {
+      margin-bottom: 6px !important;
+    }
+    
+    .markdown-body table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      margin: 28px 0 !important;
+      border-radius: 12px !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 15px rgba(13, 43, 26, 0.02) !important;
+      border: 1px solid rgba(13, 43, 26, 0.06) !important;
+    }
+    .markdown-body th {
+      background-color: #0D2B1A !important;
+      color: #FFFFFF !important;
+      font-weight: 600 !important;
+      text-align: left !important;
+      padding: 12px 16px !important;
+      font-size: 13.5px !important;
+    }
+    .markdown-body td {
+      padding: 12px 16px !important;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.05) !important;
+      color: #3D6B4A !important;
+      font-size: 13.5px !important;
+    }
+    .markdown-body tr:nth-child(even) {
+      background-color: rgba(61, 107, 74, 0.02) !important;
+    }
+
+    .markdown-body hr {
+      border: none !important;
+      height: 1px !important;
+      background: linear-gradient(90deg, rgba(13,43,26,0) 0%, rgba(13,43,26,0.08) 50%, rgba(13,43,26,0) 100%) !important;
+      margin: 36px 0 !important;
+    }
+
+    .markdown-body img {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 16px !important;
+      box-shadow: 0 15px 35px rgba(13, 43, 26, 0.08) !important;
+      margin: 32px auto !important;
+      display: block !important;
+      border: 1px solid rgba(13, 43, 26, 0.06) !important;
+      transition: transform 0.3s ease !important;
+    }
+    .markdown-body img:hover {
+      transform: scale(1.01) !important;
+    }
+
+    /* Premium Upsell Card */
     .free-course-upsell-cta {
-      margin-top: 32px; background: linear-gradient(135deg,rgba(13,43,26,0.06),rgba(184,134,11,0.06));
-      border: 1px solid rgba(184,134,11,0.2); border-radius: 14px; padding: 20px 24px;
+      margin-top: 44px !important;
+      background: linear-gradient(135deg, #09120D 0%, #0F2016 100%) !important;
+      border: 1px solid rgba(212, 175, 55, 0.35) !important;
+      border-radius: 16px !important;
+      padding: 28px 32px !important;
+      box-shadow: 0 12px 35px rgba(9, 18, 13, 0.3), 0 0 18px rgba(212, 175, 55, 0.08) !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .free-course-upsell-cta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0) 70%);
+      pointer-events: none;
     }
     .upsell-cta-inner {
-      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+      display: flex; gap: 24px !important; align-items: center; flex-wrap: wrap;
     }
-    .upsell-cta-icon { font-size: 28px; color: #B8860B; flex-shrink: 0; }
-    .upsell-cta-text { flex: 1; min-width: 180px; }
-    .upsell-cta-text strong { display: block; font-weight: 700; color: #0D2B1A; margin-bottom: 3px; font-size: 14.5px; }
-    .upsell-cta-text span { font-size: 13px; color: #485A4F; line-height: 1.5; }
+    .upsell-cta-icon {
+      font-size: 32px !important; color: #D4AF37 !important; flex-shrink: 0;
+      filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.4));
+    }
+    .upsell-cta-text { flex: 1; min-width: 200px; }
+    .upsell-cta-text strong {
+      display: block; font-family: 'Lora', serif !important; font-weight: 700 !important;
+      color: #FDFBF7 !important; margin-bottom: 6px !important; font-size: 16px !important;
+    }
+    .upsell-cta-text span { font-size: 13.5px !important; color: #A9C5B2 !important; line-height: 1.55 !important; }
     .upsell-cta-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: linear-gradient(135deg,#B8860B,#D4AF37); color: #0D2B1A;
-      padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 13.5px;
-      text-decoration: none; white-space: nowrap; transition: all 0.2s;
-      box-shadow: 0 6px 16px -3px rgba(184,134,11,0.3);
+      display: inline-flex; align-items: center; gap: 8px !important;
+      background: linear-gradient(135deg, #B8860B, #D4AF37) !important; color: #0D2B1A !important;
+      padding: 12px 24px !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 13.5px !important;
+      text-decoration: none; white-space: nowrap; transition: all 0.25s ease !important;
+      box-shadow: 0 4px 15px rgba(184, 134, 11, 0.35) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .upsell-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -4px rgba(184,134,11,0.45); }
+    .upsell-cta-btn:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 25px rgba(184, 134, 11, 0.5) !important;
+      background: linear-gradient(135deg, #D4AF37, #E8C35A) !important;
+    }
 
-    /* ── empty state ── */
+    /* Empty state */
     .kp-empty {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      height: 100%; padding: 60px 24px; text-align: center; color: var(--text-muted, #485A4F);
+      padding: 80px 24px !important;
     }
-    .kp-empty i { font-size: 52px; opacity: 0.2; margin-bottom: 20px; }
-    .kp-empty h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text-main, #0E2519); }
-    .kp-empty p { font-size: 14px; line-height: 1.6; max-width: 360px; }
+    .kp-empty i {
+      font-size: 60px !important;
+      color: #3D6B4A;
+      opacity: 0.3 !important;
+    }
+    .kp-empty h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 19px !important;
+      font-weight: 800 !important;
+      margin-top: 16px;
+      color: #0D2B1A !important;
+    }
+    
+    /* Footer controls */
+    .lesson-footer-controls {
+      margin-top: 36px !important;
+      padding-top: 24px !important;
+      border-top: 1px solid rgba(13, 43, 26, 0.06) !important;
+    }
+    .btn-secondary {
+      background-color: #F0EDE6 !important;
+      border: 1px solid rgba(13, 43, 26, 0.08) !important;
+      color: #3D6B4A !important;
+      font-weight: 600 !important;
+      transition: all 0.2s !important;
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background-color: #0D2B1A !important;
+      color: #FFFFFF !important;
+      border-color: #0D2B1A !important;
+    }
+    .btn-secondary:disabled {
+      opacity: 0.4 !important;
+      cursor: not-allowed !important;
+    }
   </style>
 </head>
 <body>

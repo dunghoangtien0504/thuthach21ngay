@@ -1,109 +1,152 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="100%" height="100%">
   <defs>
+    <!-- Premium Styles & Filters -->
+    <style>
+      text {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      .title-text {
+        font-weight: 800;
+        letter-spacing: 1.5px;
+      }
+      .glow-path {
+        filter: url(#glow-filter);
+      }
+    </style>
+    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="obsidian-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050B08" />
+      <stop offset="100%" stop-color="#0D1D15" />
+    </linearGradient>
+    <linearGradient id="neon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="neon-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#BE123C" />
+    </linearGradient>
+    <linearGradient id="neon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#0891B2" />
+    </linearGradient>
+    <linearGradient id="neon-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
   </defs>
-  <rect width="680" height="420" rx="16" fill="url(#bg)"/>
-  <rect x="2" y="2" width="676" height="416" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
-  <text x="340" y="28" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#D4AF37" text-anchor="middle">SO SÁNH TOÀN DIỆN CÁC PHƯƠNG PHÁP ĐIỀU TRỊ XTS</text>
-  <text x="340" y="44" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">EAU 2024 Guidelines — 4 Nhóm Can Thiệp Chính</text>
+  <rect width="680" height="420" rx="16" fill="url(#obsidian-bg)"/>
+  <rect x="2" y="2" width="676" height="416" rx="15" fill="none" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.2"/>
+  <text x="340" y="28" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="13" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">SO SÁNH TOÀN DIỆN CÁC PHƯƠNG PHÁP ĐIỀU TRỊ XTS</text>
+  <text x="340" y="44" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">EAU 2024 Guidelines — 4 Nhóm Can Thiệp Chính</text>
 
   <!-- Table header -->
-  <rect x="10" y="52" width="658" height="28" rx="6" fill="#D4AF37" opacity="0.15"/>
-  <text x="100" y="70" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">PHƯƠNG PHÁP</text>
-  <text x="240" y="70" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">HIỆU QUẢ (IELT)</text>
-  <text x="350" y="70" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">TÁC DỤNG PHỤ</text>
-  <text x="460" y="70" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">ĐỘ BỀN VỮNG</text>
-  <text x="580" y="70" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">CHI PHÍ</text>
+  <rect x="10" y="52" width="658" height="28" rx="6" fill="url(#neon-gold)" opacity="0.15"/>
+  <text x="100" y="70" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">PHƯƠNG PHÁP</text>
+  <text x="240" y="70" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">HIỆU QUẢ (IELT)</text>
+  <text x="350" y="70" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">TÁC DỤNG PHỤ</text>
+  <text x="460" y="70" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">ĐỘ BỀN VỮNG</text>
+  <text x="580" y="70" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">CHI PHÍ</text>
 
   <!-- Divider lines -->
-  <line x1="170" y1="52" x2="170" y2="390" stroke="#D4AF37" stroke-width="0.5" opacity="0.3"/>
-  <line x1="300" y1="52" x2="300" y2="390" stroke="#D4AF37" stroke-width="0.5" opacity="0.3"/>
-  <line x1="400" y1="52" x2="400" y2="390" stroke="#D4AF37" stroke-width="0.5" opacity="0.3"/>
-  <line x1="510" y1="52" x2="510" y2="390" stroke="#D4AF37" stroke-width="0.5" opacity="0.3"/>
+  <line x1="170" y1="52" x2="170" y2="390" stroke="url(#neon-gold)" stroke-width="0.5" opacity="0.3"/>
+  <line x1="300" y1="52" x2="300" y2="390" stroke="url(#neon-gold)" stroke-width="0.5" opacity="0.3"/>
+  <line x1="400" y1="52" x2="400" y2="390" stroke="url(#neon-gold)" stroke-width="0.5" opacity="0.3"/>
+  <line x1="510" y1="52" x2="510" y2="390" stroke="url(#neon-gold)" stroke-width="0.5" opacity="0.3"/>
 
   <!-- Row 1: Stop-Start/Squeeze -->
-  <rect x="10" y="82" width="658" height="50" rx="6" fill="#1B3320"/>
-  <text x="15" y="100" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">Kỹ thuật Stop-Start</text>
-  <text x="15" y="114" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">&amp; Squeeze (Vật lý)</text>
-  <text x="15" y="126" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Module 1</text>
+  <rect x="10" y="82" width="658" height="50" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="15" y="100" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">Kỹ thuật Stop-Start</text>
+  <text x="15" y="114" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">&amp; Squeeze (Vật lý)</text>
+  <text x="15" y="126" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Module 1</text>
   <!-- Stars: 4/5 -->
-  <text x="240" y="105" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐</text>
-  <text x="240" y="122" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">+2-4x IELT</text>
-  <text x="350" y="110" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Không có</text>
-  <text x="350" y="124" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">(tự nhiên hoàn toàn)</text>
+  <text x="240" y="105" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐</text>
+  <text x="240" y="122" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">+2-4x IELT</text>
+  <text x="350" y="110" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Không có</text>
+  <text x="350" y="124" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#86EFAC" text-anchor="middle">(tự nhiên hoàn toàn)</text>
   <!-- Durability: 4/5 -->
-  <text x="460" y="105" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐</text>
-  <text x="460" y="122" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Bền nếu luyện đều</text>
-  <text x="580" y="110" font-family="system-ui,sans-serif" font-size="14" fill="#7CB87C" text-anchor="middle">Miễn phí</text>
+  <text x="460" y="105" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐</text>
+  <text x="460" y="122" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Bền nếu luyện đều</text>
+  <text x="580" y="110" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" fill="#10B981" text-anchor="middle">Miễn phí</text>
 
   <!-- Row 2: YCCT/Thảo dược -->
-  <rect x="10" y="134" width="658" height="50" rx="6" fill="#0D2B1A"/>
-  <text x="15" y="152" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">Thảo dược &amp; YCCT</text>
-  <text x="15" y="166" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">(Zinc, Mg, Ashwagandha)</text>
-  <text x="15" y="178" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Module 2</text>
-  <text x="240" y="152" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐</text>
-  <text x="240" y="169" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Hỗ trợ nền tảng</text>
-  <text x="350" y="152" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Rất ít</text>
-  <text x="350" y="166" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">Chú ý tương tác thuốc</text>
-  <text x="460" y="152" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐</text>
-  <text x="460" y="169" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Bền khi dùng đều</text>
-  <text x="580" y="157" font-family="system-ui,sans-serif" font-size="14" fill="#D4AF37" text-anchor="middle">Thấp-TB</text>
-  <text x="580" y="172" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">200-500k/tháng</text>
+  <rect x="10" y="134" width="658" height="50" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-opacity="0.25" ry="8"/>
+  <text x="15" y="152" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">Thảo dược &amp; YCCT</text>
+  <text x="15" y="166" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">(Zinc, Mg, Ashwagandha)</text>
+  <text x="15" y="178" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Module 2</text>
+  <text x="240" y="152" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐</text>
+  <text x="240" y="169" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Hỗ trợ nền tảng</text>
+  <text x="350" y="152" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Rất ít</text>
+  <text x="350" y="166" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#86EFAC" text-anchor="middle">Chú ý tương tác thuốc</text>
+  <text x="460" y="152" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐</text>
+  <text x="460" y="169" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Bền khi dùng đều</text>
+  <text x="580" y="157" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" fill="url(#neon-gold)" text-anchor="middle">Thấp-TB</text>
+  <text x="580" y="172" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">200-500k/tháng</text>
 
   <!-- Row 3: Tâm lý/CBT -->
-  <rect x="10" y="186" width="658" height="50" rx="6" fill="#1B3320"/>
-  <text x="15" y="204" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">Tâm lý trị liệu (CBT)</text>
-  <text x="15" y="218" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">&amp; Mindfulness</text>
-  <text x="15" y="230" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Module 3</text>
-  <text x="240" y="204" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐</text>
-  <text x="240" y="221" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">+68% IELT (Brotto 2012)</text>
-  <text x="350" y="204" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Không có</text>
-  <text x="460" y="204" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐⭐</text>
-  <text x="460" y="221" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Rất bền — thay đổi não</text>
-  <text x="580" y="209" font-family="system-ui,sans-serif" font-size="14" fill="#D4AF37" text-anchor="middle">TB-Cao</text>
-  <text x="580" y="224" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Tự học hoặc trị liệu</text>
+  <rect x="10" y="186" width="658" height="50" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="15" y="204" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">Tâm lý trị liệu (CBT)</text>
+  <text x="15" y="218" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">&amp; Mindfulness</text>
+  <text x="15" y="230" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Module 3</text>
+  <text x="240" y="204" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐</text>
+  <text x="240" y="221" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">+68% IELT (Brotto 2012)</text>
+  <text x="350" y="204" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Không có</text>
+  <text x="460" y="204" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+  <text x="460" y="221" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Rất bền — thay đổi não</text>
+  <text x="580" y="209" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" fill="url(#neon-gold)" text-anchor="middle">TB-Cao</text>
+  <text x="580" y="224" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Tự học hoặc trị liệu</text>
 
   <!-- Row 4: Biofeedback/Cơ sàn chậu -->
-  <rect x="10" y="238" width="658" height="50" rx="6" fill="#0D2B1A"/>
-  <text x="15" y="256" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">Biofeedback Cơ Sàn Chậu</text>
-  <text x="15" y="270" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">(PFMT)</text>
-  <text x="15" y="282" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Module 4</text>
-  <text x="240" y="256" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐⭐</text>
-  <text x="240" y="273" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">82.5% (Pastore 2014)</text>
-  <text x="350" y="256" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Không có</text>
-  <text x="460" y="256" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐⭐</text>
-  <text x="460" y="273" font-family="system-ui,sans-serif" font-size="9" fill="#7CB87C" text-anchor="middle">Bền nhất — thay đổi cơ</text>
-  <text x="580" y="261" font-family="system-ui,sans-serif" font-size="14" fill="#D4AF37" text-anchor="middle">TB</text>
-  <text x="580" y="276" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Thiết bị EMG: 1-5tr</text>
+  <rect x="10" y="238" width="658" height="50" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-opacity="0.25" ry="8"/>
+  <text x="15" y="256" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">Biofeedback Cơ Sàn Chậu</text>
+  <text x="15" y="270" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">(PFMT)</text>
+  <text x="15" y="282" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Module 4</text>
+  <text x="240" y="256" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+  <text x="240" y="273" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">82.5% (Pastore 2014)</text>
+  <text x="350" y="256" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Không có</text>
+  <text x="460" y="256" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐⭐⭐</text>
+  <text x="460" y="273" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Bền nhất — thay đổi cơ</text>
+  <text x="580" y="261" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" fill="url(#neon-gold)" text-anchor="middle">TB</text>
+  <text x="580" y="276" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Thiết bị EMG: 1-5tr</text>
 
   <!-- Row 5: Gel gây tê -->
-  <rect x="10" y="290" width="658" height="50" rx="6" fill="#1B3320"/>
-  <text x="15" y="308" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">Gel gây tê Lidocaine</text>
-  <text x="15" y="322" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">(Phương pháp vật lý)</text>
-  <text x="15" y="334" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Module 1</text>
-  <text x="240" y="308" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐</text>
-  <text x="240" y="325" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">+3-8x tức thời</text>
-  <text x="350" y="308" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Đối tác có thể tê</text>
-  <text x="350" y="322" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">Cần rửa kỹ trước</text>
-  <text x="460" y="308" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">⭐</text>
-  <text x="460" y="325" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Không bền — tình huống</text>
-  <text x="580" y="313" font-family="system-ui,sans-serif" font-size="14" fill="#7CB87C" text-anchor="middle">Thấp</text>
-  <text x="580" y="328" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">50-200k/hộp</text>
+  <rect x="10" y="290" width="658" height="50" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="15" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">Gel gây tê Lidocaine</text>
+  <text x="15" y="322" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">(Phương pháp vật lý)</text>
+  <text x="15" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Module 1</text>
+  <text x="240" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐⭐⭐</text>
+  <text x="240" y="325" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">+3-8x tức thời</text>
+  <text x="350" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Đối tác có thể tê</text>
+  <text x="350" y="322" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#86EFAC" text-anchor="middle">Cần rửa kỹ trước</text>
+  <text x="460" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" text-anchor="middle">⭐</text>
+  <text x="460" y="325" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Không bền — tình huống</text>
+  <text x="580" y="313" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" fill="#10B981" text-anchor="middle">Thấp</text>
+  <text x="580" y="328" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">50-200k/hộp</text>
 
   <!-- EAU 4-step ladder -->
-  <rect x="10" y="348" width="658" height="56" rx="10" fill="#2D1A0D" stroke="#D4AF37" stroke-width="1"/>
-  <text x="340" y="368" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#D4AF37" text-anchor="middle">THANG 4 BƯỚC EAU 2024 (Khuyến nghị theo thứ tự):</text>
-  <text x="50" y="386" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">1. Tâm lý</text>
-  <text x="50" y="398" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">+ Hành vi</text>
-  <line x1="100" y1="390" x2="130" y2="390" stroke="#D4AF37" stroke-width="1.5"/>
-  <text x="200" y="386" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">2. Bài tập</text>
-  <text x="200" y="398" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">cơ sàn chậu</text>
-  <line x1="255" y1="390" x2="285" y2="390" stroke="#D4AF37" stroke-width="1.5"/>
-  <text x="350" y="386" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">3. Thảo dược</text>
-  <text x="350" y="398" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">hỗ trợ</text>
-  <line x1="410" y1="390" x2="440" y2="390" stroke="#D4AF37" stroke-width="1.5"/>
-  <text x="530" y="386" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">4. Y tế chuyên sâu</text>
-  <text x="530" y="398" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">(bác sĩ chỉ định)</text>
+  <rect x="10" y="348" width="658" height="56" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="1" stroke-opacity="0.3" ry="8"/>
+  <text x="340" y="368" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">THANG 4 BƯỚC EAU 2024 (Khuyến nghị theo thứ tự):</text>
+  <text x="50" y="386" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">1. Tâm lý</text>
+  <text x="50" y="398" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">+ Hành vi</text>
+  <line x1="100" y1="390" x2="130" y2="390" stroke="url(#neon-gold)" stroke-width="1.5"/>
+  <text x="200" y="386" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">2. Bài tập</text>
+  <text x="200" y="398" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">cơ sàn chậu</text>
+  <line x1="255" y1="390" x2="285" y2="390" stroke="url(#neon-gold)" stroke-width="1.5"/>
+  <text x="350" y="386" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">3. Thảo dược</text>
+  <text x="350" y="398" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">hỗ trợ</text>
+  <line x1="410" y1="390" x2="440" y2="390" stroke="url(#neon-gold)" stroke-width="1.5"/>
+  <text x="530" y="386" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">4. Y tế chuyên sâu</text>
+  <text x="530" y="398" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">(bác sĩ chỉ định)</text>
 
-  <text x="340" y="413" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: EAU Guidelines 2024 · Pastore 2014 · Brotto 2012 · Mật Mã 21 R&amp;D</text>
+  <text x="340" y="413" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle" opacity="0.7">Nguồn: EAU Guidelines 2024 · Pastore 2014 · Brotto 2012 · Mật Mã 21 R&amp;D</text>
 </svg>

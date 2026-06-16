@@ -1,5 +1,48 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 435" width="100%" height="100%">
   <defs>
+    <!-- Premium Styles & Filters -->
+    <style>
+      text {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      .title-text {
+        font-weight: 800;
+        letter-spacing: 1.5px;
+      }
+      .glow-path {
+        filter: url(#glow-filter);
+      }
+    </style>
+    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="obsidian-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050B08" />
+      <stop offset="100%" stop-color="#0D1D15" />
+    </linearGradient>
+    <linearGradient id="neon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="neon-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#BE123C" />
+    </linearGradient>
+    <linearGradient id="neon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#0891B2" />
+    </linearGradient>
+    <linearGradient id="neon-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0D2B1A"/>
       <stop offset="100%" stop-color="#1B442D"/>
@@ -13,27 +56,27 @@
       <stop offset="100%" stop-color="#8A6A06"/>
     </linearGradient>
     <marker id="arr-gold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#D4AF37"/>
+      <path d="M0,0 L0,6 L8,3 z" fill="url(#neon-gold)"/>
     </marker>
     <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#7CB87C"/>
+      <path d="M0,0 L0,6 L8,3 z" fill="#10B981"/>
     </marker>
     <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#4A9EBF"/>
+      <path d="M0,0 L0,6 L8,3 z" fill="url(#neon-cyan)"/>
     </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="680" height="435" rx="16" fill="url(#bg)"/>
-  <rect x="2" y="2" width="676" height="431" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
+  <rect width="680" height="435" rx="16" fill="url(#obsidian-bg)"/>
+  <rect x="2" y="2" width="676" height="431" rx="15" fill="none" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.2"/>
 
   <!-- Title -->
-  <text x="340" y="32" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">GIẢI PHẪU CƠ SÀN CHẬU NAM GIỚI</text>
-  <text x="340" y="50" font-family="system-ui,sans-serif" font-size="10" fill="#A8D5A2" text-anchor="middle">Cơ Mu Cụt (PC Muscle / Pubococcygeus) — Mục tiêu của bài tập Kegel</text>
+  <text x="340" y="32" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">GIẢI PHẪU CƠ SÀN CHẬU NAM GIỚI</text>
+  <text x="340" y="50" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">Cơ Mu Cụt (PC Muscle / Pubococcygeus) — Mục tiêu của bài tập Kegel</text>
 
   <!-- ── LEFT PANEL: Cross-section diagram ── -->
-  <rect x="10" y="60" width="336" height="365" rx="12" fill="#0A2016" stroke="#1B3320" stroke-width="1"/>
-  <text x="178" y="82" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#A8D5A2" text-anchor="middle">MẶT CẮT DỌC (SAGITTAL VIEW)</text>
+  <rect x="10" y="60" width="336" height="365" rx="8" fill="#06120D" stroke="url(#neon-green)" stroke-width="1" stroke-opacity="0.25" ry="8"/>
+  <text x="178" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#86EFAC" text-anchor="middle">MẶT CẮT DỌC (SAGITTAL VIEW)</text>
 
   <!-- Pelvis walls (left = pubic front, right = sacrum/coccyx back) -->
   <!-- Left wall (pubic symphysis) -->
@@ -42,78 +85,78 @@
   <path d="M 290,100 C 310,132 318,172 316,228 C 314,260 304,274 284,280" fill="none" stroke="#3D6B4A" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
 
   <!-- Bone labels -->
-  <text x="34" y="162" font-family="system-ui,sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">Xương</text>
-  <text x="34" y="172" font-family="system-ui,sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">mu</text>
-  <text x="325" y="162" font-family="system-ui,sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">Xương</text>
-  <text x="325" y="172" font-family="system-ui,sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">cụt</text>
+  <text x="34" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">Xương</text>
+  <text x="34" y="172" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">mu</text>
+  <text x="325" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">Xương</text>
+  <text x="325" y="172" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">cụt</text>
 
   <!-- Bladder -->
   <ellipse cx="180" cy="152" rx="56" ry="44" fill="url(#bladder-g)" opacity="0.85" stroke="#5A8EC0" stroke-width="2"/>
-  <text x="180" y="148" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#9ABFE8" text-anchor="middle">Bàng quang</text>
-  <text x="180" y="162" font-family="system-ui,sans-serif" font-size="8" fill="#7AAAD5" text-anchor="middle">(Bladder)</text>
+  <text x="180" y="148" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#9ABFE8" text-anchor="middle">Bàng quang</text>
+  <text x="180" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#7AAAD5" text-anchor="middle">(Bladder)</text>
 
   <!-- Urethra (dashed line running vertically) -->
   <line x1="180" y1="196" x2="180" y2="284" stroke="#9ABFE8" stroke-width="2.5" stroke-dasharray="5,3"/>
 
   <!-- Prostate gland -->
   <ellipse cx="180" cy="218" rx="28" ry="19" fill="#8A5C2A" opacity="0.9" stroke="#D4956A" stroke-width="2"/>
-  <text x="180" y="221" font-family="system-ui,sans-serif" font-size="8" font-weight="700" fill="#F0C870" text-anchor="middle">Tuyến tiền liệt</text>
+  <text x="180" y="221" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" font-weight="700" fill="#F0C870" text-anchor="middle">Tuyến tiền liệt</text>
 
   <!-- Pelvic floor muscles (hammock) — 2 layered paths for thickness + glow -->
-  <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="#D4AF37" stroke-width="14" stroke-linecap="round" opacity="0.35"/>
+  <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="url(#neon-gold)" stroke-width="14" stroke-linecap="round" opacity="0.35"/>
   <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="url(#muscle-g)" stroke-width="10" stroke-linecap="round"/>
   <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="#FFE060" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
 
   <!-- PC muscle label pointer -->
-  <line x1="180" y1="318" x2="180" y2="340" stroke="#D4AF37" stroke-width="2"/>
-  <rect x="88" y="342" width="184" height="38" rx="8" fill="#2D1A0D" stroke="#D4AF37" stroke-width="1.5"/>
-  <text x="180" y="358" font-family="system-ui,sans-serif" font-size="10" font-weight="800" fill="#D4AF37" text-anchor="middle">Cơ Mu Cụt (PC Muscle)</text>
-  <text x="180" y="371" font-family="system-ui,sans-serif" font-size="8" fill="#A8D5A2" text-anchor="middle">Pubococcygeus · S2–S4 nerve control</text>
+  <line x1="180" y1="318" x2="180" y2="340" stroke="url(#neon-gold)" stroke-width="2"/>
+  <rect x="88" y="342" width="184" height="38" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="1.5" stroke-opacity="0.3" ry="8"/>
+  <text x="180" y="358" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">Cơ Mu Cụt (PC Muscle)</text>
+  <text x="180" y="371" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#86EFAC" text-anchor="middle">Pubococcygeus · S2–S4 nerve control</text>
 
   <!-- Contraction arrows (Kegel direction = upward) -->
   <line x1="88" y1="272" x2="88" y2="248" stroke="#7CB87C" stroke-width="2" marker-end="url(#arr-green)"/>
   <line x1="272" y1="272" x2="272" y2="248" stroke="#7CB87C" stroke-width="2" marker-end="url(#arr-green)"/>
-  <text x="180" y="398" font-family="system-ui,sans-serif" font-size="8" fill="#7CB87C" text-anchor="middle">Kegel: co cơ → kéo lên ↑</text>
+  <text x="180" y="398" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#10B981" text-anchor="middle">Kegel: co cơ → kéo lên ↑</text>
 
   <!-- Urethra label -->
   <line x1="181" y1="240" x2="222" y2="240" stroke="#9ABFE8" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="225" y="237" font-family="system-ui,sans-serif" font-size="7.5" fill="#9ABFE8">Niệu đạo</text>
-  <text x="225" y="247" font-family="system-ui,sans-serif" font-size="7" fill="#7AAAD5">(Urethra)</text>
+  <text x="225" y="237" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7.5" fill="#9ABFE8">Niệu đạo</text>
+  <text x="225" y="247" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#7AAAD5">(Urethra)</text>
 
   <!-- ── RIGHT PANEL: Information ── -->
-  <rect x="354" y="60" width="318" height="365" rx="12" fill="#0A2016" stroke="#1B3320" stroke-width="1"/>
-  <text x="513" y="82" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">CHỨC NĂNG &amp; TẬP LUYỆN</text>
+  <rect x="354" y="60" width="318" height="365" rx="8" fill="#06120D" stroke="url(#neon-green)" stroke-width="1" stroke-opacity="0.25" ry="8"/>
+  <text x="513" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">CHỨC NĂNG &amp; TẬP LUYỆN</text>
 
   <!-- Function 1 -->
-  <rect x="364" y="90" width="298" height="66" rx="8" fill="#1B3320"/>
-  <text x="380" y="107" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">🏗 Nâng đỡ các cơ quan vùng chậu</text>
-  <text x="380" y="121" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Bàng quang · Tuyến tiền liệt · Ruột già</text>
-  <text x="380" y="134" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Khi yếu → tiểu không kiểm soát</text>
-  <text x="380" y="147" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Prevalence: 40% nam giới &gt;45 tuổi</text>
+  <rect x="364" y="90" width="298" height="66" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="380" y="107" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">🏗 Nâng đỡ các cơ quan vùng chậu</text>
+  <text x="380" y="121" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">Bàng quang · Tuyến tiền liệt · Ruột già</text>
+  <text x="380" y="134" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6">Khi yếu → tiểu không kiểm soát</text>
+  <text x="380" y="147" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Prevalence: 40% nam giới &gt;45 tuổi</text>
 
   <!-- Function 2 -->
-  <rect x="364" y="162" width="298" height="66" rx="8" fill="#1B3320"/>
-  <text x="380" y="179" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">⚡ Kiểm soát phản xạ xuất tinh</text>
-  <text x="380" y="193" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Co thắt đóng cơ vòng niệu đạo</text>
-  <text x="380" y="206" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Làm chậm phản xạ của SEG (L3–L4)</text>
-  <text x="380" y="219" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Pastore 2014: 82.5% cải thiện XTS sau Kegel</text>
+  <rect x="364" y="162" width="298" height="66" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="380" y="179" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">⚡ Kiểm soát phản xạ xuất tinh</text>
+  <text x="380" y="193" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">Co thắt đóng cơ vòng niệu đạo</text>
+  <text x="380" y="206" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6">Làm chậm phản xạ của SEG (L3–L4)</text>
+  <text x="380" y="219" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Pastore 2014: 82.5% cải thiện XTS sau Kegel</text>
 
   <!-- Function 3 -->
-  <rect x="364" y="234" width="298" height="66" rx="8" fill="#1B3320"/>
-  <text x="380" y="251" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37">💪 Tăng cường chất lượng cương</text>
-  <text x="380" y="265" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Lưu lượng máu đến Corpora cavernosa</text>
-  <text x="380" y="278" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">Cơ khỏe → cương cứng hơn, bền hơn</text>
-  <text x="380" y="291" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF">Dorey 2005: 40% phục hồi ED hoàn toàn</text>
+  <rect x="364" y="234" width="298" height="66" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="380" y="251" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)">💪 Tăng cường chất lượng cương</text>
+  <text x="380" y="265" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">Lưu lượng máu đến Corpora cavernosa</text>
+  <text x="380" y="278" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6">Cơ khỏe → cương cứng hơn, bền hơn</text>
+  <text x="380" y="291" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)">Dorey 2005: 40% phục hồi ED hoàn toàn</text>
 
   <!-- Kegel training protocol -->
-  <rect x="364" y="306" width="298" height="110" rx="8" fill="#2D1A0D" stroke="#D4AF37" stroke-width="1"/>
-  <text x="513" y="324" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">CÁCH TẬP KEGEL ĐÚNG</text>
-  <text x="370" y="341" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">① Tìm cơ: ngừng tiểu giữa chừng → đó là cơ PC</text>
-  <text x="370" y="356" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">② Co — giữ 3 giây → thư giãn 3 giây</text>
-  <text x="370" y="371" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7">③ Lặp 10–15 lần × 3 hiệp / ngày</text>
-  <text x="370" y="386" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">Không co bụng · không nín thở · không gồng đùi</text>
-  <text x="513" y="403" font-family="system-ui,sans-serif" font-size="8" fill="#7CB87C" text-anchor="middle">Kết quả rõ rệt sau 6–12 tuần tập đều</text>
+  <rect x="364" y="306" width="298" height="110" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="1" stroke-opacity="0.3" ry="8"/>
+  <text x="513" y="324" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">CÁCH TẬP KEGEL ĐÚNG</text>
+  <text x="370" y="341" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6">① Tìm cơ: ngừng tiểu giữa chừng → đó là cơ PC</text>
+  <text x="370" y="356" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6">② Co — giữ 3 giây → thư giãn 3 giây</text>
+  <text x="370" y="371" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6">③ Lặp 10–15 lần × 3 hiệp / ngày</text>
+  <text x="370" y="386" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">Không co bụng · không nín thở · không gồng đùi</text>
+  <text x="513" y="403" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#10B981" text-anchor="middle">Kết quả rõ rệt sau 6–12 tuần tập đều</text>
 
   <!-- Citations -->
-  <text x="340" y="424" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Pastore 2014 · Dorey 2005 · Rosenbaum 2012 · Gray's Anatomy · Mật Mã 21 R&amp;D</text>
+  <text x="340" y="424" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle" opacity="0.7">Nguồn: Pastore 2014 · Dorey 2005 · Rosenbaum 2012 · Gray's Anatomy · Mật Mã 21 R&amp;D</text>
 </svg>

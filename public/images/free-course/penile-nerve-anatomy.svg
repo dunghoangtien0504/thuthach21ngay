@@ -1,86 +1,129 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
   <defs>
+    <!-- Premium Styles & Filters -->
+    <style>
+      text {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      .title-text {
+        font-weight: 800;
+        letter-spacing: 1.5px;
+      }
+      .glow-path {
+        filter: url(#glow-filter);
+      }
+    </style>
+    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="obsidian-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050B08" />
+      <stop offset="100%" stop-color="#0D1D15" />
+    </linearGradient>
+    <linearGradient id="neon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="neon-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#BE123C" />
+    </linearGradient>
+    <linearGradient id="neon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#0891B2" />
+    </linearGradient>
+    <linearGradient id="neon-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
     <linearGradient id="skin" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#D4956A"/><stop offset="100%" stop-color="#B5723E"/></linearGradient>
-    <linearGradient id="nerve" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#AA7C11"/></linearGradient>
-    <linearGradient id="vein" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4A9EBF"/><stop offset="100%" stop-color="#2D7A9A"/></linearGradient>
-    <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#D4AF37"/></marker>
-    <marker id="arr-red" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#C0390E"/></marker>
+    <linearGradient id="nerve" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="url(#neon-gold)"/><stop offset="100%" stop-color="#D97706"/></linearGradient>
+    <linearGradient id="vein" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="url(#neon-cyan)"/><stop offset="100%" stop-color="#0891B2"/></linearGradient>
+    <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="url(#neon-gold)"/></marker>
+    <marker id="arr-red" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="url(#neon-red)"/></marker>
   </defs>
-  <rect width="680" height="400" rx="16" fill="url(#bg)"/>
-  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.4"/>
-  <text x="340" y="28" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#D4AF37" text-anchor="middle">GIẢI PHẪU THẦN KINH DƯƠNG VẬT</text>
+  <rect width="680" height="400" rx="16" fill="url(#obsidian-bg)"/>
+  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.2"/>
+  <text x="340" y="28" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">GIẢI PHẪU THẦN KINH DƯƠNG VẬT</text>
 
   <!-- Cross section view label -->
-  <text x="240" y="56" font-family="system-ui,sans-serif" font-size="11" fill="#A8D5A2" text-anchor="middle">MẶT CẮT NGANG (Cross Section)</text>
+  <text x="240" y="56" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#86EFAC" text-anchor="middle">MẶT CẮT NGANG (Cross Section)</text>
 
   <!-- Cross section circle -->
   <circle cx="240" cy="150" r="85" fill="#2D1A0D" stroke="#D4956A" stroke-width="3"/>
   <!-- Dorsal vein (top center) -->
   <ellipse cx="240" cy="82" rx="10" ry="7" fill="url(#vein)"/>
-  <text x="240" y="64" font-family="system-ui,sans-serif" font-size="8" fill="#4A9EBF" text-anchor="middle">Tĩnh mạch lưng</text>
+  <text x="240" y="64" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-cyan)" text-anchor="middle">Tĩnh mạch lưng</text>
   <!-- Dorsal nerve pair -->
-  <circle cx="218" cy="88" r="6" fill="#D4AF37" opacity="0.9"/>
-  <circle cx="262" cy="88" r="6" fill="#D4AF37" opacity="0.9"/>
+  <circle cx="218" cy="88" r="6" fill="url(#neon-gold)" opacity="0.9"/>
+  <circle cx="262" cy="88" r="6" fill="url(#neon-gold)" opacity="0.9"/>
   <!-- Label dorsal nerve -->
-  <text x="310" y="92" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37">Thần kinh mu cụt</text>
-  <text x="310" y="104" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37">(Dorsal nerve)</text>
-  <line x1="268" y1="88" x2="308" y2="95" stroke="#D4AF37" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="310" y="92" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)">Thần kinh mu cụt</text>
+  <text x="310" y="104" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)">(Dorsal nerve)</text>
+  <line x1="268" y1="88" x2="308" y2="95" stroke="url(#neon-gold)" stroke-width="1" stroke-dasharray="3,2"/>
   <!-- Corpora cavernosa -->
-  <ellipse cx="220" cy="145" rx="42" ry="38" fill="#8B2E2E" opacity="0.7" stroke="#C0390E" stroke-width="1"/>
-  <ellipse cx="262" cy="145" rx="42" ry="38" fill="#8B2E2E" opacity="0.7" stroke="#C0390E" stroke-width="1"/>
-  <text x="218" y="148" font-family="system-ui,sans-serif" font-size="8" fill="#F4A87A" text-anchor="middle">Corpus</text>
-  <text x="262" y="148" font-family="system-ui,sans-serif" font-size="8" fill="#F4A87A" text-anchor="middle">Corpus</text>
-  <text x="240" y="162" font-family="system-ui,sans-serif" font-size="8" fill="#F4A87A" text-anchor="middle">Cavernosa</text>
+  <ellipse cx="220" cy="145" rx="42" ry="38" fill="#8B2E2E" opacity="0.7" stroke="url(#neon-red)" stroke-width="1"/>
+  <ellipse cx="262" cy="145" rx="42" ry="38" fill="#8B2E2E" opacity="0.7" stroke="url(#neon-red)" stroke-width="1"/>
+  <text x="218" y="148" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#F4A87A" text-anchor="middle">Corpus</text>
+  <text x="262" y="148" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#F4A87A" text-anchor="middle">Corpus</text>
+  <text x="240" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#F4A87A" text-anchor="middle">Cavernosa</text>
   <!-- Corpus spongiosum (bottom) -->
   <ellipse cx="240" cy="208" rx="20" ry="14" fill="#A0522D" opacity="0.8" stroke="#D4956A" stroke-width="1"/>
-  <text x="320" y="215" font-family="system-ui,sans-serif" font-size="9" fill="#D4956A">Corpus Spongiosum</text>
-  <text x="320" y="227" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2">(Niệu đạo bên trong)</text>
+  <text x="320" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#D4956A">Corpus Spongiosum</text>
+  <text x="320" y="227" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC">(Niệu đạo bên trong)</text>
   <line x1="260" y1="212" x2="318" y2="218" stroke="#D4956A" stroke-width="1" stroke-dasharray="3,2"/>
   <!-- Urethra -->
-  <circle cx="240" cy="208" r="5" fill="#FDFBF7"/>
+  <circle cx="240" cy="208" r="5" fill="#F3F4F6"/>
 
   <!-- Side view: glans + frenulum -->
-  <text x="500" y="56" font-family="system-ui,sans-serif" font-size="11" fill="#A8D5A2" text-anchor="middle">ĐIỂM NHẠY CẢM NHẤT</text>
+  <text x="500" y="56" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#86EFAC" text-anchor="middle">ĐIỂM NHẠY CẢM NHẤT</text>
   <!-- Glans shape -->
   <ellipse cx="490" cy="140" rx="55" ry="65" fill="#D4956A" opacity="0.5" stroke="#D4956A" stroke-width="2"/>
-  <text x="490" y="125" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#FDFBF7" text-anchor="middle">QUY ĐẦU</text>
-  <text x="490" y="140" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">(Glans Penis)</text>
-  <text x="490" y="155" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">~4.000 đầu mút</text>
-  <text x="490" y="168" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">thần kinh</text>
+  <text x="490" y="125" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F3F4F6" text-anchor="middle">QUY ĐẦU</text>
+  <text x="490" y="140" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">(Glans Penis)</text>
+  <text x="490" y="155" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">~4.000 đầu mút</text>
+  <text x="490" y="168" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">thần kinh</text>
 
   <!-- Coronal ridge -->
-  <path d="M 440 185 Q 490 200 540 185" fill="none" stroke="#C0390E" stroke-width="3"/>
-  <text x="580" y="192" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E">Vành quy đầu</text>
-  <text x="580" y="204" font-family="system-ui,sans-serif" font-size="9" fill="#C0390E">(Coronal ridge)</text>
+  <path d="M 440 185 Q 490 200 540 185" fill="none" stroke="url(#neon-red)" stroke-width="3"/>
+  <text x="580" y="192" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-red)">Vành quy đầu</text>
+  <text x="580" y="204" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-red)">(Coronal ridge)</text>
 
   <!-- Frenulum -->
-  <ellipse cx="490" cy="200" rx="12" ry="8" fill="#C0390E" opacity="0.8"/>
-  <text x="590" y="230" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#C0390E" text-anchor="middle">⭐ FRENULUM</text>
-  <text x="590" y="244" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Điểm nhạy cảm nhất</text>
-  <text x="590" y="256" font-family="system-ui,sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Vị trí Squeeze</text>
-  <line x1="502" y1="200" x2="558" y2="228" stroke="#C0390E" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arr-red)"/>
+  <ellipse cx="490" cy="200" rx="12" ry="8" fill="url(#neon-red)" opacity="0.8"/>
+  <text x="590" y="230" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-red)" text-anchor="middle">⭐ FRENULUM</text>
+  <text x="590" y="244" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Điểm nhạy cảm nhất</text>
+  <text x="590" y="256" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Vị trí Squeeze</text>
+  <line x1="502" y1="200" x2="558" y2="228" stroke="url(#neon-red)" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arr-red)"/>
 
   <!-- Bottom info -->
-  <rect x="20" y="260" width="640" height="110" rx="10" fill="#0D2B1A" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.4"/>
-  <text x="340" y="282" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#D4AF37" text-anchor="middle">CON ĐƯỜNG THẦN KINH: Quy đầu → Tủy sống → Não</text>
-  <rect x="30" y="292" width="180" height="68" rx="8" fill="#1B3320"/>
-  <text x="120" y="308" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">Thần kinh mu cụt</text>
-  <text x="120" y="322" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Dorsal nerve of penis</text>
-  <text x="120" y="336" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">Nhánh của thần kinh</text>
-  <text x="120" y="350" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">thẹn (S2–S4)</text>
-  <line x1="212" y1="326" x2="248" y2="326" stroke="#D4AF37" stroke-width="1.5" marker-end="url(#arr)"/>
-  <rect x="250" y="292" width="180" height="68" rx="8" fill="#1B3320"/>
-  <text x="340" y="308" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">Tủy sống L3–L4</text>
-  <text x="340" y="322" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Spinal Ejac. Generator</text>
-  <text x="340" y="336" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">Tích lũy tín hiệu</text>
-  <text x="340" y="350" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">→ kích hoạt phản xạ</text>
-  <line x1="432" y1="326" x2="468" y2="326" stroke="#D4AF37" stroke-width="1.5" marker-end="url(#arr)"/>
-  <rect x="470" y="292" width="180" height="68" rx="8" fill="#1B3320"/>
-  <text x="560" y="308" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#D4AF37" text-anchor="middle">Não bộ</text>
-  <text x="560" y="322" font-family="system-ui,sans-serif" font-size="9" fill="#A8D5A2" text-anchor="middle">Nhân Raphe → Serotonin</text>
-  <text x="560" y="336" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">Ức chế ngược xuống</text>
-  <text x="560" y="350" font-family="system-ui,sans-serif" font-size="9" fill="#FDFBF7" text-anchor="middle">tủy sống</text>
+  <rect x="20" y="260" width="640" height="110" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1" stroke-opacity="0.25" ry="8"/>
+  <text x="340" y="282" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">CON ĐƯỜNG THẦN KINH: Quy đầu → Tủy sống → Não</text>
+  <rect x="30" y="292" width="180" height="68" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="120" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">Thần kinh mu cụt</text>
+  <text x="120" y="322" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Dorsal nerve of penis</text>
+  <text x="120" y="336" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Nhánh của thần kinh</text>
+  <text x="120" y="350" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">thẹn (S2–S4)</text>
+  <line x1="212" y1="326" x2="248" y2="326" stroke="url(#neon-gold)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="250" y="292" width="180" height="68" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="340" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">Tủy sống L3–L4</text>
+  <text x="340" y="322" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Spinal Ejac. Generator</text>
+  <text x="340" y="336" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Tích lũy tín hiệu</text>
+  <text x="340" y="350" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">→ kích hoạt phản xạ</text>
+  <line x1="432" y1="326" x2="468" y2="326" stroke="url(#neon-gold)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="470" y="292" width="180" height="68" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
+  <text x="560" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">Não bộ</text>
+  <text x="560" y="322" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Nhân Raphe → Serotonin</text>
+  <text x="560" y="336" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Ức chế ngược xuống</text>
+  <text x="560" y="350" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">tủy sống</text>
 
-  <text x="340" y="390" font-family="system-ui,sans-serif" font-size="9" fill="#D4AF37" text-anchor="middle" opacity="0.7">Nguồn: Paick 2003 · Gray's Anatomy · Mật Mã 21 R&amp;D</text>
+  <text x="340" y="390" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle" opacity="0.7">Nguồn: Paick 2003 · Gray's Anatomy · Mật Mã 21 R&amp;D</text>
 </svg>
