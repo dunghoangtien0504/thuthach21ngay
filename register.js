@@ -5,6 +5,7 @@
  */
 
 import { supabase, isSupabaseEnabled } from './supabase.js';
+import { getReferralCode } from './referral.js';
 
 const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL || '';
 const LS_ACCOUNTS = 'thuthach21ngay_registered_users';
@@ -418,6 +419,8 @@ async function handleSubmit(e) {
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tạo...';
 
+  const referredBy = getReferralCode();
+
   const account = {
     email,
     phone: phone.replace(/\s/g, ''),
@@ -425,6 +428,7 @@ async function handleSubmit(e) {
     email_consent: emailConsent,
     registeredAt: new Date().toISOString(),
     source: window.location.pathname,
+    referred_by: referredBy || null,
   };
 
   // ── Supabase path ──────────────────────────────────────────────────────
@@ -440,6 +444,7 @@ async function handleSubmit(e) {
           phone: account.phone,
           email_consent: emailConsent,
           source: account.source,
+          referred_by: referredBy || null,
         },
       },
     });

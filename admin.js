@@ -1,7 +1,10 @@
 // admin.js - Portal Admin Dashboard Logic
 
 const ADMIN_USER = "admin";
-const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASS || "123456";
+// Admin password is NOT embedded in the client bundle. The operator types it at
+// login; it is validated server-side via /api/admin-verify and held only in
+// sessionStorage for the duration of the tab, then sent as a Bearer token.
+let _adminKey = sessionStorage.getItem('mm21_admin_key') || '';
 
 function escHtml(str) {
   if (!str) return '';
@@ -38,8 +41,8 @@ function showToast(message, type = 'info', duration = 4500) {
   }, duration);
 }
 
-// Expose admin key for inline scripts in admin.html
-window._adminApiKey = import.meta.env.VITE_ADMIN_PASS || '123456';
+// Expose admin key for inline scripts in admin.html (populated after login)
+window._adminApiKey = _adminKey;
 
 // State
 let studentsList = [];
@@ -177,15 +180,17 @@ const MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_MS = 60000;
 
 function setupAdminAuth() {
-  const isLogged = sessionStorage.getItem('thuthach21ngay_admin_logged') === 'true';
+  // Restore a previous session only if we still hold the admin key in this tab.
+  const isLogged = sessionStorage.getItem('thuthach21ngay_admin_logged') === 'true' && !!_adminKey;
   if (isLogged) {
     showAdminLayout();
   } else {
+    sessionStorage.removeItem('thuthach21ngay_admin_logged');
     showLoginLayout();
   }
 
   if (adminLoginForm) {
-    adminLoginForm.addEventListener('submit', (e) => {
+    adminLoginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (adminAuthError) adminAuthError.style.display = 'none';
 
@@ -199,9 +204,38 @@ function setupAdminAuth() {
       }
 
       const pass = adminPassInput.value.trim();
+      if (!pass) return;
 
-      if (pass === ADMIN_PASS) {
+      const submitBtn = adminLoginForm.querySelector('button[type="submit"]');
+      const prevLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Đang kiểm tra...'; }
+
+      // Validate against the server — the password is never embedded client-side.
+      let ok = false;
+      try {
+        const res = await fetch('/api/admin-verify', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${pass}` },
+        });
+        ok = res.ok;
+      } catch (_) {
+        ok = false;
+      }
+
+      // Dev-only convenience: Vite's local server does not run /api functions, so
+      // allow login against VITE_ADMIN_PASS when developing. import.meta.env.DEV is
+      // statically false in production builds, so this branch is stripped entirely.
+      if (!ok && import.meta.env.DEV && import.meta.env.VITE_ADMIN_PASS && pass === import.meta.env.VITE_ADMIN_PASS) {
+        ok = true;
+      }
+
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = prevLabel; }
+
+      if (ok) {
         _loginAttempts = 0;
+        _adminKey = pass;
+        window._adminApiKey = pass;
+        sessionStorage.setItem('mm21_admin_key', pass);
         sessionStorage.setItem('thuthach21ngay_admin_logged', 'true');
         showAdminLayout();
       } else {
@@ -229,6 +263,9 @@ function setupAdminAuth() {
     adminLogoutBtn.addEventListener('click', () => {
       if (confirm("Bạn có muốn đăng xuất khỏi trang Quản trị không?")) {
         sessionStorage.removeItem('thuthach21ngay_admin_logged');
+        sessionStorage.removeItem('mm21_admin_key');
+        _adminKey = '';
+        window._adminApiKey = '';
         showLoginLayout();
       }
     });
@@ -391,7 +428,7 @@ async function loadDatabase() {
   let supabaseUsers = [];
   try {
     const apiRes = await fetch('/api/admin-users', {
-      headers: { 'Authorization': `Bearer ${ADMIN_PASS}` }
+      headers: { 'Authorization': `Bearer ${_adminKey}` }
     });
     if (apiRes.ok) {
       const apiData = await apiRes.json();
@@ -851,7 +888,7 @@ function setupStudentManager() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${ADMIN_PASS}`,
+            'Authorization': `Bearer ${_adminKey}`,
           },
           body: JSON.stringify({ email, password, name }),
         });
@@ -1075,7 +1112,7 @@ async function renderPaymentsTab() {
 
   try {
     const res = await fetch('/api/admin-transactions', {
-      headers: { 'Authorization': `Bearer ${ADMIN_PASS}` }
+      headers: { 'Authorization': `Bearer ${_adminKey}` }
     });
     if (res.ok) {
       const data = await res.json();

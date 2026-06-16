@@ -228,6 +228,7 @@
   </a>
   <div class="mc-header-right">
     <a href="/" class="mc-home-btn"><i class="fa-solid fa-house"></i> Trang chủ</a>
+    <a href="/affiliate.html" class="mc-home-btn"><i class="fa-solid fa-sack-dollar"></i> Giới thiệu nhận 20%</a>
     <span class="mc-user-name" id="mc-username" style="display:none"></span>
     <button class="mc-logout-btn" id="mc-logout-btn" style="display:none">
       <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
@@ -310,6 +311,7 @@
 
 <script type="module">
 import { supabase, isSupabaseEnabled } from '/supabase.js';
+import { getReferralCode } from '/referral.js';
 
 const LS_SESSION = 'thuthach21ngay_user_session';
 const LS_USERS   = 'thuthach21ngay_registered_users';
@@ -537,10 +539,12 @@ document.getElementById('gate-signup-form').addEventListener('submit', async (e)
   const btn = document.getElementById('gate-signup-btn');
   btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tạo...';
 
+  const referredBy = getReferralCode();
+
   if (isSupabaseEnabled) {
     const { error } = await supabase.auth.signUp({
       email, password: pass,
-      options: { emailRedirectTo: `${location.origin}/my-courses.html`, data: { name } }
+      options: { emailRedirectTo: `${location.origin}/my-courses.html`, data: { name, referred_by: referredBy || null } }
     });
     btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
     if (error) { gateError(error.message || 'Có lỗi xảy ra. Thử lại sau.'); return; }
@@ -557,7 +561,7 @@ document.getElementById('gate-signup-form').addEventListener('submit', async (e)
   btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
   const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
   if (users.some(u => u.email === email)) { gateError('Email này đã có tài khoản. Hãy đăng nhập.'); return; }
-  const newUser = { name, email, phone, password: pass, status: 'pending', registeredAt: new Date().toISOString() };
+  const newUser = { name, email, phone, password: pass, status: 'pending', registeredAt: new Date().toISOString(), referredBy: referredBy || null };
   users.push(newUser);
   localStorage.setItem(LS_USERS, JSON.stringify(users));
   const session = { email, name, phone };

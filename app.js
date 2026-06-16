@@ -1,5 +1,6 @@
 // app.js - Course Learning Portal Client Logic
 import { supabase, isSupabaseEnabled } from './supabase.js';
+import { getReferralCode } from './referral.js';
 
 // Load Config (prioritize localStorage custom config, fallback to env)
 const customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {};
@@ -172,7 +173,7 @@ async function setupAuth() {
 
   // 2. Supabase: listen for auth state changes (handles email confirmation redirect)
   if (isSupabaseEnabled) {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session) {
         const meta = session.user.user_metadata || {};
         userSession = {
@@ -180,12 +181,12 @@ async function setupAuth() {
           name: meta.name || session.user.email,
           phone: meta.phone || '',
           supabase_id: session.user.id,
+          status: undefined,
         };
         localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
-        // If user just confirmed email, show a welcome toast then load portal
-        if (event === 'SIGNED_IN') {
-          checkSession();
-        }
+        // Resolve paid access before rendering the portal
+        await loadSupabaseAccess();
+        checkSession();
       } else if (event === 'SIGNED_OUT') {
         userSession = null;
         localStorage.removeItem('thuthach21ngay_user_session');
@@ -202,8 +203,10 @@ async function setupAuth() {
         name: meta.name || session.user.email,
         phone: meta.phone || '',
         supabase_id: session.user.id,
+        status: undefined,
       };
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+      await loadSupabaseAccess();
     }
   }
 
@@ -296,6 +299,8 @@ async function setupAuth() {
         return;
       }
 
+      const referredBy = getReferralCode();
+
       // ── Supabase register ──────────────────────────────────────────────
       if (isSupabaseEnabled) {
         const { error } = await supabase.auth.signUp({
@@ -303,7 +308,7 @@ async function setupAuth() {
           password: pass,
           options: {
             emailRedirectTo: `${window.location.origin}/my-courses.html`,
-            data: { name, source: window.location.pathname },
+            data: { name, source: window.location.pathname, referred_by: referredBy || null },
           },
         });
         if (error) {
@@ -327,7 +332,7 @@ async function setupAuth() {
       const generatedKeys = JSON.parse(localStorage.getItem('thuthach21ngay_generated_keys')) || [];
       const isValidKey = (key === 'MATMA21-VIP' || generatedKeys.includes(key));
       const status = isValidKey ? 'active' : 'pending';
-      localUsers.push({ name, email, password: pass, status, key_used: key || null, date: new Date().toLocaleDateString('vi-VN') });
+      localUsers.push({ name, email, password: pass, status, key_used: key || null, date: new Date().toLocaleDateString('vi-VN'), referredBy: referredBy || null });
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
       userSession = { email, name, phone: '' };
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
@@ -413,6 +418,19 @@ function updatePaymentActivationUI() {
               userSession.status = 'active';
               localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
 
+              // Persist paid access to Supabase so it survives across sessions/devices
+              if (isSupabaseEnabled && userSession.supabase_id) {
+                try {
+                  await supabase.from('course_enrollments').upsert({
+                    user_id:     userSession.supabase_id,
+                    course_id:   'mat-ma-21',
+                    course_name: 'Mật Mã 21',
+                    status:      'active',
+                    enrolled_at: new Date().toISOString(),
+                  }, { onConflict: 'user_id,course_id' });
+                } catch (_) {}
+              }
+
               // Show success, hide pending payment panel
               if (paymentPanel) paymentPanel.style.display = 'none';
               if (successBanner) successBanner.style.display = 'block';
@@ -461,6 +479,19 @@ function updatePaymentActivationUI() {
               // Update active session in memory and localStorage
               userSession.status = 'active';
               localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+
+              // Persist paid access to Supabase so it survives across sessions/devices
+              if (isSupabaseEnabled && userSession.supabase_id) {
+                try {
+                  await supabase.from('course_enrollments').upsert({
+                    user_id:     userSession.supabase_id,
+                    course_id:   'mat-ma-21',
+                    course_name: 'Mật Mã 21',
+                    status:      'active',
+                    enrolled_at: new Date().toISOString(),
+                  }, { onConflict: 'user_id,course_id' });
+                } catch (_) {}
+              }
 
               if (paymentPanel) paymentPanel.style.display = 'none';
               if (successBanner) successBanner.style.display = 'block';
@@ -801,15 +832,39 @@ function selectLesson(id) {
 // Helpers for Locked Progression & Diary Verification
 function getUserStatus() {
   if (!userSession) return 'pending';
-  
+
+  // Status resolved from Supabase enrollment (loadSupabaseAccess) or from a
+  // confirmed payment in this session takes priority.
+  if (userSession.status) return userSession.status;
+
   // Check server-side accounts
   const serverAcc = allowedAccounts.find(u => u.email === userSession.email);
   if (serverAcc) return serverAcc.status || 'active';
-  
+
   // Check local storage accounts
   const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
   const localAcc = localUsers.find(u => u.email === userSession.email);
   return localAcc ? (localAcc.status || 'pending') : 'pending';
+}
+
+// Resolve paid access from Supabase: a user is "active" for the Mật Mã 21 portal
+// when they have an active course_enrollments row for 'mat-ma-21'. Without this,
+// real (Supabase) customers would always read as 'pending' and be locked out of
+// every lesson even after paying.
+async function loadSupabaseAccess() {
+  if (!isSupabaseEnabled || !userSession || !userSession.supabase_id) return;
+  try {
+    const { data } = await supabase
+      .from('course_enrollments')
+      .select('course_id, status')
+      .eq('user_id', userSession.supabase_id)
+      .eq('course_id', 'mat-ma-21')
+      .maybeSingle();
+    if (data && (data.status == null || data.status === 'active')) {
+      userSession.status = 'active';
+      localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
+    }
+  } catch (_) { /* network/RLS issues fall back to existing status */ }
 }
 
 function hasLoggedLesson(lessonId) {

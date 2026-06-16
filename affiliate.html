@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giới Thiệu Nhận Hoa Hồng 20% | Mật Mã 21</title>
+  <meta name="description" content="Chương trình giới thiệu Mật Mã 21 — chia sẻ link riêng của anh, nhận 20% hoa hồng mỗi khi có người đăng ký qua link.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0D2B1A;
+      --primary-light: #163f27;
+      --accent: #B8860B;
+      --accent-bright: #D4AF37;
+      --danger: #C0390E;
+      --bg: #FBF9F4;
+      --card: #FFFFFF;
+      --text: #0E2519;
+      --muted: #485A4F;
+      --light: #8FA497;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; font-size: 15px; line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    .af-header {
+      background: var(--primary);
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .af-logo {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--accent-bright); font-family: 'Lora', serif;
+      font-size: 18px; font-weight: 700; text-decoration: none;
+    }
+    .af-logo i { color: var(--accent-bright); }
+    .af-header-right { display: flex; align-items: center; gap: 14px; }
+    .af-user-name { color: rgba(212,175,55,0.85); font-size: 13.5px; font-weight: 600; }
+    .af-logout-btn {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.3);
+      color: var(--accent-bright); padding: 7px 14px; border-radius: 8px;
+      font-size: 12.5px; font-family: inherit; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.18s;
+    }
+    .af-logout-btn:hover { background: rgba(255,255,255,0.15); }
+    .af-home-btn {
+      color: rgba(212,175,55,0.7); text-decoration: none; font-size: 13px;
+      display: flex; align-items: center; gap: 5px;
+      transition: color 0.18s;
+    }
+    .af-home-btn:hover { color: var(--accent-bright); }
+
+    /* ── Main ── */
+    .af-main { max-width: 880px; margin: 0 auto; padding: 44px 24px 80px; }
+    .af-hero { margin-bottom: 32px; }
+    .af-hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(184,134,11,0.1); color: var(--accent);
+      padding: 5px 14px; border-radius: 50px; font-size: 12px; font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .af-hero h1 {
+      font-family: 'Lora', serif; font-size: 27px; font-weight: 700;
+      color: var(--primary); margin-bottom: 8px;
+    }
+    .af-hero p { color: var(--muted); font-size: 14.5px; max-width: 540px; }
+
+    /* ── Link box ── */
+    .af-linkbox {
+      background: linear-gradient(135deg,#0D2B1A,#163f27);
+      border-radius: 18px; padding: 26px 26px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 28px -8px rgba(13,43,26,0.35);
+    }
+    .af-linkbox-label {
+      color: rgba(212,175,55,0.85); font-size: 12.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .af-linkrow { display: flex; gap: 10px; flex-wrap: wrap; }
+    .af-link-input {
+      flex: 1; min-width: 200px;
+      background: rgba(255,255,255,0.08); border: 1.5px solid rgba(212,175,55,0.25);
+      color: #fff; padding: 13px 16px; border-radius: 10px;
+      font-family: 'Raleway', monospace; font-size: 13.5px;
+      outline: none;
+    }
+    .af-copy-btn {
+      background: linear-gradient(135deg,#B8860B,#D4AF37); color: var(--primary);
+      border: none; padding: 13px 22px; border-radius: 10px;
+      font-family: inherit; font-size: 13.5px; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; gap: 7px;
+      transition: transform 0.18s;
+      white-space: nowrap;
+    }
+    .af-copy-btn:hover { transform: translateY(-2px); }
+    .af-share-row { display: flex; gap: 10px; margin-top: 14px; }
+    .af-share-btn {
+      flex: 1; text-align: center; padding: 10px; border-radius: 9px;
+      background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85);
+      text-decoration: none; font-size: 12.5px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background 0.18s;
+    }
+    .af-share-btn:hover { background: rgba(255,255,255,0.13); }
+
+    /* ── Stats ── */
+    .af-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin-bottom: 32px;
+    }
+    .af-stat-card {
+      background: var(--card); border-radius: 14px; padding: 18px 16px;
+      border: 1.5px solid rgba(13,43,26,0.07);
+      text-align: center;
+    }
+    .af-stat-num { font-family: 'Lora', serif; font-size: 24px; font-weight: 700; color: var(--primary); }
+    .af-stat-num.gold { color: var(--accent); }
+    .af-stat-label { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+    .af-stat-note { font-size: 10px; color: var(--light); margin-top: 2px; }
+
+    /* ── Section ── */
+    .af-section { margin-bottom: 30px; }
+    .af-section-title {
+      font-family: 'Lora', serif; font-size: 18px; font-weight: 700;
+      color: var(--primary); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .af-section-title i { color: var(--accent); }
+
+    /* ── Commission table ── */
+    .af-table {
+      background: var(--card); border-radius: 14px; overflow: hidden;
+      border: 1.5px solid rgba(13,43,26,0.07);
+    }
+    .af-table-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid rgba(13,43,26,0.06);
+    }
+    .af-table-row:last-child { border-bottom: none; }
+    .af-prod-name { font-weight: 700; color: var(--primary); font-size: 14.5px; }
+    .af-prod-price { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .af-prod-commission { text-align: right; }
+    .af-prod-commission .amt { font-family: 'Lora', serif; font-size: 17px; font-weight: 700; color: var(--accent); }
+    .af-prod-commission .pct { font-size: 11px; color: var(--light); }
+
+    /* ── Steps ── */
+    .af-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .af-step {
+      background: var(--card); border-radius: 14px; padding: 20px 18px;
+      border: 1.5px solid rgba(13,43,26,0.07);
+    }
+    .af-step-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(184,134,11,0.12); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 13px; margin-bottom: 10px;
+    }
+    .af-step h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+    .af-step p { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+    /* ── Referrals list ── */
+    .af-ref-list { background: var(--card); border-radius: 14px; border: 1.5px solid rgba(13,43,26,0.07); overflow: hidden; }
+    .af-ref-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 20px; border-bottom: 1px solid rgba(13,43,26,0.06); font-size: 13.5px;
+    }
+    .af-ref-row:last-child { border-bottom: none; }
+    .af-ref-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px;
+    }
+    .af-ref-badge.bought { background: #f0fdf4; color: #166534; }
+    .af-ref-badge.waiting { background: #fef9ee; color: #92400e; }
+    .af-ref-empty { padding: 30px 20px; text-align: center; color: var(--light); font-size: 13.5px; }
+
+    /* ── Payout note ── */
+    .af-note {
+      background: #fef9ee; border: 1.5px solid #fbe6bd; border-radius: 14px;
+      padding: 18px 20px; font-size: 13.5px; color: #6b4a0c; line-height: 1.6;
+    }
+    .af-note a { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .af-note strong { color: var(--primary); }
+
+    .af-terms { font-size: 11.5px; color: var(--light); line-height: 1.6; padding: 0 4px; }
+
+    .af-mode-note {
+      font-size: 11.5px; color: var(--light); display: flex; align-items: center; gap: 6px; margin-top: -4px; margin-bottom: 18px;
+    }
+
+    /* ── Login gate (same as my-courses.html) ── */
+    #af-login-gate {
+      max-width: 420px; margin: 60px auto; padding: 40px 36px;
+      background: var(--card); border-radius: 24px;
+      box-shadow: 0 20px 50px -10px rgba(13,43,26,0.14);
+    }
+    .af-gate-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Lora', serif; font-size: 18px; font-weight: 700;
+      color: var(--primary); margin-bottom: 22px;
+    }
+    .af-gate-logo i { color: var(--accent); }
+    .af-gate-title { font-family: 'Lora', serif; font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .af-gate-sub { font-size: 13.5px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+    .af-gate-tabs { display: flex; gap: 0; border-bottom: 2px solid rgba(13,43,26,0.08); margin-bottom: 22px; }
+    .af-gate-tab {
+      flex: 1; background: none; border: none; padding: 9px 0;
+      font-size: 14px; font-weight: 700; color: var(--light);
+      cursor: pointer; font-family: inherit;
+      border-bottom: 2.5px solid transparent; margin-bottom: -2px;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .af-gate-tab.active { color: var(--primary); border-bottom-color: var(--accent); }
+    .af-field { margin-bottom: 16px; }
+    .af-field label { display: block; font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .af-field input {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid rgba(13,43,26,0.12); border-radius: 10px;
+      font-family: inherit; font-size: 14px; color: var(--text);
+      background: var(--bg); outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .af-field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.1);
+      background: #fff;
+    }
+    .af-gate-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 50px;
+      font-family: inherit; font-size: 15px; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.22s; margin-top: 4px;
+    }
+    .af-gate-btn.login-style { background: linear-gradient(135deg,#0D2B1A,#1B442D); color: #D4AF37; }
+    .af-gate-btn.signup-style { background: linear-gradient(135deg,#B8860B,#D4AF37); color: #0D2B1A; }
+    .af-gate-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -4px rgba(13,43,26,0.3); }
+    .af-gate-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+    .af-gate-error {
+      background: #fff5f5; border: 1px solid #fecaca; color: #991b1b;
+      border-radius: 8px; padding: 10px 13px; font-size: 13px;
+      margin-bottom: 14px; display: none;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .af-stats { grid-template-columns: repeat(2, 1fr); }
+      .af-steps { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .af-main { padding: 28px 16px 60px; }
+      .af-hero h1 { font-size: 21px; }
+      #af-login-gate { margin: 30px 16px; padding: 30px 22px; }
+      .af-share-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="af-header">
+  <a href="/" class="af-logo"><i class="fa-solid fa-shield-halved"></i> Mật Mã 21</a>
+  <div class="af-header-right">
+    <a href="/my-courses.html" class="af-home-btn"><i class="fa-solid fa-graduation-cap"></i> Khóa học</a>
+    <span class="af-user-name" id="af-username" style="display:none"></span>
+    <button class="af-logout-btn" id="af-logout-btn" style="display:none">
+      <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- Login gate -->
+<div id="af-login-gate" style="display:none">
+  <div class="af-gate-logo"><i class="fa-solid fa-shield-halved"></i> Mật Mã 21</div>
+  <h2 class="af-gate-title">Chương Trình Giới Thiệu</h2>
+  <p class="af-gate-sub">Đăng nhập bằng tài khoản học viên để lấy link giới thiệu riêng và nhận 20% hoa hồng.</p>
+
+  <div class="af-gate-tabs">
+    <button class="af-gate-tab active" id="af-tab-login">Đăng Nhập</button>
+    <button class="af-gate-tab" id="af-tab-signup">Đăng Ký</button>
+  </div>
+
+  <div class="af-gate-error" id="af-gate-error"></div>
+
+  <div id="af-login-panel">
+    <form id="af-login-form" novalidate>
+      <div class="af-field">
+        <label for="af-email">Email</label>
+        <input type="email" id="af-email" placeholder="email@example.com" autocomplete="email" required>
+      </div>
+      <div class="af-field">
+        <label for="af-password">Mật khẩu</label>
+        <input type="password" id="af-password" placeholder="Mật khẩu của anh" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="af-gate-btn login-style" id="af-login-btn">
+        <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
+      </button>
+    </form>
+  </div>
+
+  <div id="af-signup-panel" style="display:none">
+    <form id="af-signup-form" novalidate>
+      <div class="af-field">
+        <label for="af-reg-name">Họ và Tên</label>
+        <input type="text" id="af-reg-name" placeholder="Họ tên của anh..." required>
+      </div>
+      <div class="af-field">
+        <label for="af-reg-email">Email</label>
+        <input type="email" id="af-reg-email" placeholder="email@example.com" autocomplete="email" required>
+      </div>
+      <div class="af-field">
+        <label for="af-reg-password">Mật khẩu</label>
+        <input type="password" id="af-reg-password" placeholder="Ít nhất 6 ký tự" autocomplete="new-password" required minlength="6">
+      </div>
+      <button type="submit" class="af-gate-btn signup-style" id="af-signup-btn">
+        <i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Affiliate dashboard -->
+<main class="af-main" id="af-dashboard" style="display:none">
+
+  <div class="af-hero">
+    <div class="af-hero-badge"><i class="fa-solid fa-sack-dollar"></i> Hoa hồng 20% mỗi đơn</div>
+    <h1 id="af-greet-name">Chương trình giới thiệu của anh</h1>
+    <p>Chia sẻ link riêng dưới đây. Bất kỳ ai đăng ký qua link và mua khóa học, anh nhận ngay 20% giá trị đơn hàng — không giới hạn số lượng.</p>
+  </div>
+
+  <div class="af-linkbox">
+    <div class="af-linkbox-label"><i class="fa-solid fa-link"></i> Link giới thiệu của anh</div>
+    <div class="af-linkrow">
+      <input type="text" id="af-ref-link" class="af-link-input" readonly>
+      <button class="af-copy-btn" id="af-copy-btn"><i class="fa-solid fa-copy"></i> Sao chép</button>
+    </div>
+    <div class="af-share-row">
+      <a href="#" id="af-share-fb" target="_blank" class="af-share-btn"><i class="fa-brands fa-facebook"></i> Facebook</a>
+      <a href="#" id="af-share-tele" target="_blank" class="af-share-btn"><i class="fa-brands fa-telegram"></i> Telegram</a>
+      <a href="#" id="af-share-zalo" target="_blank" class="af-share-btn"><i class="fa-solid fa-comment-dots"></i> Zalo</a>
+    </div>
+  </div>
+
+  <div class="af-stats" id="af-stats">
+    <div class="af-stat-card">
+      <div class="af-stat-num" id="af-stat-clicks">—</div>
+      <div class="af-stat-label">Lượt click</div>
+    </div>
+    <div class="af-stat-card">
+      <div class="af-stat-num" id="af-stat-signups">0</div>
+      <div class="af-stat-label">Người đăng ký</div>
+    </div>
+    <div class="af-stat-card">
+      <div class="af-stat-num" id="af-stat-buyers">0</div>
+      <div class="af-stat-label">Người đã mua</div>
+    </div>
+    <div class="af-stat-card">
+      <div class="af-stat-num gold" id="af-stat-commission">0đ</div>
+      <div class="af-stat-label">Hoa hồng tích lũy</div>
+    </div>
+  </div>
+  <p class="af-mode-note" id="af-mode-note" style="display:none"><i class="fa-solid fa-circle-info"></i> Đang ở chế độ cục bộ — số liệu chỉ phản ánh hoạt động trên thiết bị này.</p>
+
+  <div class="af-section">
+    <div class="af-section-title"><i class="fa-solid fa-table-list"></i> Hoa hồng theo từng khóa học</div>
+    <div class="af-table">
+      <div class="af-table-row">
+        <div>
+          <div class="af-prod-name">Mật Mã 21 — Lộ Trình 21 Ngày</div>
+          <div class="af-prod-price">Giá 686.868đ</div>
+        </div>
+        <div class="af-prod-commission">
+          <div class="amt">137.374đ</div>
+          <div class="pct">20% / đơn</div>
+        </div>
+      </div>
+      <div class="af-table-row">
+        <div>
+          <div class="af-prod-name">Kegel Khởi Đầu — 7 Ngày</div>
+          <div class="af-prod-price">Giá 199.000đ</div>
+        </div>
+        <div class="af-prod-commission">
+          <div class="amt">39.800đ</div>
+          <div class="pct">20% / đơn</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="af-section">
+    <div class="af-section-title"><i class="fa-solid fa-route"></i> Cách hoạt động</div>
+    <div class="af-steps">
+      <div class="af-step">
+        <div class="af-step-num">1</div>
+        <h4>Chia sẻ link</h4>
+        <p>Gửi link giới thiệu của anh cho bạn bè, người quen, hoặc đăng lên mạng xã hội.</p>
+      </div>
+      <div class="af-step">
+        <div class="af-step-num">2</div>
+        <h4>Họ đăng ký & mua khóa</h4>
+        <p>Hệ thống tự động ghi nhận người đăng ký qua link của anh — không cần làm gì thêm.</p>
+      </div>
+      <div class="af-step">
+        <div class="af-step-num">3</div>
+        <h4>Nhận 20% hoa hồng</h4>
+        <p>Mỗi đơn hàng thành công, anh nhận 20% giá trị — cộng dồn vào số dư hoa hồng.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="af-section">
+    <div class="af-section-title"><i class="fa-solid fa-users"></i> Người anh đã giới thiệu</div>
+    <div class="af-ref-list" id="af-ref-list">
+      <div class="af-ref-empty">Chưa có ai đăng ký qua link của anh. Hãy chia sẻ link ngay!</div>
+    </div>
+  </div>
+
+  <div class="af-section">
+    <div class="af-note">
+      <strong>Cách nhận hoa hồng:</strong> hoa hồng được đối soát và thanh toán thủ công qua chuyển khoản vào cuối mỗi tháng. Khi cần rút hoa hồng, anh liên hệ trực tiếp qua Telegram <a href="https://t.me/matma21_support" target="_blank">@matma21_support</a> kèm theo email tài khoản để được xác nhận.
+    </div>
+  </div>
+
+  <p class="af-terms">
+    Điều khoản: hoa hồng 20% áp dụng cho đơn hàng đầu tiên của người được giới thiệu qua link, không áp dụng khi tự giới thiệu cho chính tài khoản của mình. Mật Mã 21 có quyền điều chỉnh tỷ lệ hoa hồng hoặc chấm dứt chương trình với thông báo trước.
+  </p>
+
+</main>
+
+<script type="module">
+import { supabase, isSupabaseEnabled } from '/supabase.js';
+
+const LS_SESSION = 'thuthach21ngay_user_session';
+const LS_USERS   = 'thuthach21ngay_registered_users';
+const LS_ENROLL  = 'mm21_course_enrollments';
+
+const MM21_COMMISSION  = 137374;
+const KEGEL_COMMISSION = 39800;
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function getSession() { return JSON.parse(localStorage.getItem(LS_SESSION) || 'null'); }
+
+function makeCode(name, email) {
+  const diacritics = new RegExp('[\u0300-\u036f]', 'g');
+  const base = (name || email.split('@')[0]).toLowerCase()
+    .normalize('NFD').replace(diacritics, '')
+    .replace(/[^a-z0-9]+/g, '').slice(0, 10) || 'hocvien';
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) hash = (hash * 31 + email.charCodeAt(i)) >>> 0;
+  return `${base}${hash.toString(36).slice(0, 4)}`;
+}
+
+function fmtVnd(n) { return n.toLocaleString('vi-VN') + 'đ'; }
+
+// ── Stats — local fallback (single device) ─────────────────────────────────
+function getLocalStats(code, myEmail) {
+  const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  const enrolls = JSON.parse(localStorage.getItem(LS_ENROLL) || '[]');
+  const referred = users.filter(u => u.referredBy === code && u.email !== myEmail);
+
+  let mm21Count = 0, kegelCount = 0;
+  const list = referred.map(u => {
+    const hasMM21 = enrolls.some(e => e.email === u.email && e.course_id === 'mat-ma-21') || u.status === 'active';
+    const hasKegel = enrolls.some(e => e.email === u.email && e.course_id === 'kegel');
+    if (hasMM21) mm21Count++;
+    if (hasKegel) kegelCount++;
+    return { name: u.name || u.email, bought: hasMM21 || hasKegel };
+  });
+
+  return { clicks: null, signups: referred.length, mm21Count, kegelCount, list };
+}
+
+// ── Stats — Supabase (cross-device) ─────────────────────────────────────────
+async function getSupabaseStats(code) {
+  let clicks = null;
+  try {
+    const { count } = await supabase.from('referral_clicks').select('*', { count: 'exact', head: true }).eq('ref_code', code);
+    clicks = count ?? null;
+  } catch (_) {}
+
+  let profiles = [];
+  try {
+    const { data } = await supabase.from('user_profiles').select('id,name').eq('referred_by', code);
+    profiles = data || [];
+  } catch (_) {}
+
+  let mm21Count = 0, kegelCount = 0;
+  const list = [];
+  if (profiles.length) {
+    let enrolls = [];
+    try {
+      const ids = profiles.map(p => p.id);
+      const { data } = await supabase.from('course_enrollments').select('user_id,course_id').in('user_id', ids);
+      enrolls = data || [];
+    } catch (_) {}
+    profiles.forEach(p => {
+      const hasMM21 = enrolls.some(e => e.user_id === p.id && e.course_id === 'mat-ma-21');
+      const hasKegel = enrolls.some(e => e.user_id === p.id && e.course_id === 'kegel');
+      if (hasMM21) mm21Count++;
+      if (hasKegel) kegelCount++;
+      list.push({ name: p.name || 'Học viên', bought: hasMM21 || hasKegel });
+    });
+  }
+
+  return { clicks, signups: profiles.length, mm21Count, kegelCount, list };
+}
+
+// ── Render dashboard ─────────────────────────────────────────────────────────
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str == null ? '' : str);
+  return d.innerHTML;
+}
+
+function renderRefList(list) {
+  const el = document.getElementById('af-ref-list');
+  if (!list.length) {
+    el.innerHTML = `<div class="af-ref-empty">Chưa có ai đăng ký qua link của anh. Hãy chia sẻ link ngay!</div>`;
+    return;
+  }
+  el.innerHTML = list.map(p => `
+    <div class="af-ref-row">
+      <span>${escHtml(p.name)}</span>
+      <span class="af-ref-badge ${p.bought ? 'bought' : 'waiting'}">${p.bought ? 'Đã mua khóa' : 'Đang theo dõi'}</span>
+    </div>
+  `).join('');
+}
+
+async function renderStats(code, myEmail) {
+  const stats = isSupabaseEnabled ? await getSupabaseStats(code) : getLocalStats(code, myEmail);
+  document.getElementById('af-stat-clicks').textContent = stats.clicks === null ? '—' : stats.clicks;
+  document.getElementById('af-stat-signups').textContent = stats.signups;
+  document.getElementById('af-stat-buyers').textContent = stats.mm21Count + stats.kegelCount;
+  const commission = stats.mm21Count * MM21_COMMISSION + stats.kegelCount * KEGEL_COMMISSION;
+  document.getElementById('af-stat-commission').textContent = fmtVnd(commission);
+  document.getElementById('af-mode-note').style.display = isSupabaseEnabled ? 'none' : 'flex';
+  renderRefList(stats.list);
+}
+
+async function ensureAffiliateRegistered(code) {
+  if (!isSupabaseEnabled) return;
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await supabase.from('affiliates').upsert({ user_id: user.id, code });
+  } catch (_) {}
+}
+
+// ── Show dashboard ────────────────────────────────────────────────────────────
+async function showDashboard(session) {
+  document.getElementById('af-login-gate').style.display = 'none';
+  document.getElementById('af-dashboard').style.display = '';
+  document.getElementById('af-username').style.display = '';
+  document.getElementById('af-logout-btn').style.display = '';
+  document.getElementById('af-username').textContent = session.name || session.email;
+  const firstName = (session.name || '').split(' ').pop() || 'anh';
+  document.getElementById('af-greet-name').textContent = `Chào ${firstName}, đây là link giới thiệu của anh`;
+
+  const code = makeCode(session.name, session.email);
+  const link = `${window.location.origin}/?ref=${code}`;
+  document.getElementById('af-ref-link').value = link;
+  document.getElementById('af-copy-btn').onclick = () => {
+    navigator.clipboard.writeText(link).then(() => {
+      const btn = document.getElementById('af-copy-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã chép';
+      setTimeout(() => { btn.innerHTML = orig; }, 1800);
+    });
+  };
+
+  const shareText = encodeURIComponent('Mình vừa tìm được lộ trình rèn luyện bản lĩnh phái mạnh rất hay — Mật Mã 21. Xem thử nhé:');
+  document.getElementById('af-share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+  document.getElementById('af-share-tele').href = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${shareText}`;
+  document.getElementById('af-share-zalo').href = `https://zalo.me/share?u=${encodeURIComponent(link)}`;
+
+  await ensureAffiliateRegistered(code);
+  await renderStats(code, session.email);
+}
+
+// ── Show gate ─────────────────────────────────────────────────────────────────
+function showGate() {
+  document.getElementById('af-login-gate').style.display = '';
+  document.getElementById('af-dashboard').style.display = 'none';
+}
+
+function gateError(msg) {
+  const el = document.getElementById('af-gate-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+function clearGateError() {
+  const el = document.getElementById('af-gate-error');
+  el.style.display = 'none'; el.textContent = '';
+}
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+document.getElementById('af-logout-btn').addEventListener('click', async () => {
+  if (!confirm('Đăng xuất khỏi trang giới thiệu?')) return;
+  localStorage.removeItem(LS_SESSION);
+  if (isSupabaseEnabled) await supabase.auth.signOut();
+  showGate();
+  document.getElementById('af-username').style.display = 'none';
+  document.getElementById('af-logout-btn').style.display = 'none';
+});
+
+// ── Gate tabs ─────────────────────────────────────────────────────────────────
+document.getElementById('af-tab-login').addEventListener('click', () => {
+  document.getElementById('af-tab-login').classList.add('active');
+  document.getElementById('af-tab-signup').classList.remove('active');
+  document.getElementById('af-login-panel').style.display = '';
+  document.getElementById('af-signup-panel').style.display = 'none';
+  clearGateError();
+});
+document.getElementById('af-tab-signup').addEventListener('click', () => {
+  document.getElementById('af-tab-signup').classList.add('active');
+  document.getElementById('af-tab-login').classList.remove('active');
+  document.getElementById('af-signup-panel').style.display = '';
+  document.getElementById('af-login-panel').style.display = 'none';
+  clearGateError();
+});
+
+// ── Login submit ─────────────────────────────────────────────────────────────
+document.getElementById('af-login-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); clearGateError();
+  const email = document.getElementById('af-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('af-password').value;
+  if (!email || !pass) { gateError('Vui lòng nhập email và mật khẩu.'); return; }
+
+  const btn = document.getElementById('af-login-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang đăng nhập...';
+
+  if (isSupabaseEnabled) {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập';
+    if (error) {
+      gateError('Email hoặc mật khẩu không chính xác.');
+      return;
+    }
+    const meta = data.session.user.user_metadata || {};
+    const session = { email: data.session.user.email, name: meta.name || email };
+    localStorage.setItem(LS_SESSION, JSON.stringify(session));
+    showDashboard(session);
+    return;
+  }
+
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập';
+  const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  const found = users.find(u => u.email === email && u.password === pass);
+  if (found) {
+    const session = { email: found.email, name: found.name };
+    localStorage.setItem(LS_SESSION, JSON.stringify(session));
+    showDashboard(session);
+  } else {
+    gateError('Email hoặc mật khẩu không chính xác.');
+  }
+});
+
+// ── Signup submit ─────────────────────────────────────────────────────────────
+document.getElementById('af-signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); clearGateError();
+  const name  = document.getElementById('af-reg-name').value.trim();
+  const email = document.getElementById('af-reg-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('af-reg-password').value;
+  if (!name || !email || !pass) { gateError('Vui lòng điền đầy đủ thông tin.'); return; }
+  if (pass.length < 6) { gateError('Mật khẩu phải ít nhất 6 ký tự.'); return; }
+
+  const btn = document.getElementById('af-signup-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tạo...';
+
+  if (isSupabaseEnabled) {
+    const { error } = await supabase.auth.signUp({
+      email, password: pass,
+      options: { emailRedirectTo: `${location.origin}/affiliate.html`, data: { name } }
+    });
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
+    if (error) { gateError(error.message || 'Có lỗi xảy ra. Thử lại sau.'); return; }
+    document.getElementById('af-gate-error').style.display = 'block';
+    document.getElementById('af-gate-error').style.background = '#f0fdf4';
+    document.getElementById('af-gate-error').style.borderColor = '#bbf7d0';
+    document.getElementById('af-gate-error').style.color = '#166534';
+    document.getElementById('af-gate-error').textContent = 'Đã gửi email xác nhận! Kiểm tra hộp thư và bấm link để kích hoạt.';
+    return;
+  }
+
+  btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Tạo Tài Khoản';
+  const users = JSON.parse(localStorage.getItem(LS_USERS) || '[]');
+  if (users.some(u => u.email === email)) { gateError('Email này đã có tài khoản. Hãy đăng nhập.'); return; }
+  const newUser = { name, email, password: pass, status: 'pending', registeredAt: new Date().toISOString() };
+  users.push(newUser);
+  localStorage.setItem(LS_USERS, JSON.stringify(users));
+  const session = { email, name };
+  localStorage.setItem(LS_SESSION, JSON.stringify(session));
+  showDashboard(session);
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+async function init() {
+  if (isSupabaseEnabled) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const meta = session.user.user_metadata || {};
+      const s = { email: session.user.email, name: meta.name || session.user.email };
+      localStorage.setItem(LS_SESSION, JSON.stringify(s));
+      showDashboard(s);
+      return;
+    }
+  }
+  const session = getSession();
+  if (session) showDashboard(session);
+  else showGate();
+}
+
+init();
+</script>
+
+<script src="/chat-widget.js"></script>
+</body>
+</html>

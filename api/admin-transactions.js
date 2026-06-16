@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
   const authHeader = req.headers['authorization'] || '';
-  const adminPass  = process.env.VITE_ADMIN_PASS || '';
+  const adminPass  = process.env.ADMIN_PASS || process.env.VITE_ADMIN_PASS || '';
   if (!adminPass || authHeader !== `Bearer ${adminPass}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }

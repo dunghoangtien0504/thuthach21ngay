@@ -815,7 +815,8 @@
       const idx = users.findIndex(u => u.email === email);
       const userObj = idx >= 0 ? users[idx] : {
         email, name, phone, password: '123',
-        registeredAt: new Date().toISOString(), source: 'kegel_checkout'
+        registeredAt: new Date().toISOString(), source: 'kegel_checkout',
+        referredBy: localStorage.getItem('mm21_ref_code') || null
       };
       userObj.kegel_status = 'pending';
       if (idx >= 0) users[idx] = userObj; else users.push(userObj);
@@ -860,5 +861,6 @@
     });
   </script>
 
+  <script type="module" src="/referral.js"></script>
 </body>
 </html>

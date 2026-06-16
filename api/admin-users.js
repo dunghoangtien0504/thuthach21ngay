@@ -14,9 +14,11 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Auth check: admin must send the admin password as Bearer token
+  // Auth check: admin must send the admin password as Bearer token.
+  // Prefer the server-only ADMIN_PASS (not bundled into the client) over the
+  // legacy VITE_ADMIN_PASS which is exposed in the browser build.
   const authHeader = req.headers['authorization'] || '';
-  const adminPass  = process.env.VITE_ADMIN_PASS || '';
+  const adminPass  = process.env.ADMIN_PASS || process.env.VITE_ADMIN_PASS || '';
   if (!adminPass || authHeader !== `Bearer ${adminPass}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }

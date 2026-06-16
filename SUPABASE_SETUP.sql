@@ -72,6 +72,80 @@ create policy "Users can enroll"
 -- Không cần policy riêng vì service role key bypass RLS tự động.
 
 -- ============================================================
+-- 6. AFFILIATE — Chương trình giới thiệu, hoa hồng 20%
+-- Chạy phần này SAU KHI đã chạy xong phần 1-5 ở trên.
+-- ============================================================
+
+-- Cột lưu mã giới thiệu của người mời (nếu có) trên hồ sơ user
+alter table public.user_profiles add column if not exists referred_by text;
+
+-- Mỗi học viên có 1 mã giới thiệu riêng, gắn với user_id
+create table if not exists public.affiliates (
+  user_id     uuid references auth.users on delete cascade primary key,
+  code        text unique not null,
+  created_at  timestamptz default now()
+);
+
+-- Ghi nhận mỗi lượt click vào link giới thiệu (ẩn danh, trước khi đăng ký)
+create table if not exists public.referral_clicks (
+  id          bigserial primary key,
+  ref_code    text not null,
+  created_at  timestamptz default now()
+);
+
+alter table public.affiliates enable row level security;
+alter table public.referral_clicks enable row level security;
+
+create policy "Users can view own affiliate code"
+  on public.affiliates for select
+  using (auth.uid() = user_id);
+
+create policy "Users can create own affiliate code"
+  on public.affiliates for insert
+  with check (auth.uid() = user_id);
+
+-- Click được ghi từ khách ẩn danh (chưa đăng nhập) khi vừa bấm vào link
+create policy "Anyone can log a referral click"
+  on public.referral_clicks for insert
+  with check (true);
+
+create policy "Anyone can read referral click counts"
+  on public.referral_clicks for select
+  using (true);
+
+-- Người giới thiệu được xem hồ sơ của người mình đã giới thiệu (để tính hoa hồng)
+create policy "Affiliates can view referred profiles"
+  on public.user_profiles for select
+  using (referred_by = (select code from public.affiliates where user_id = auth.uid()));
+
+create policy "Affiliates can view referred enrollments"
+  on public.course_enrollments for select
+  using (
+    user_id in (
+      select id from public.user_profiles
+      where referred_by = (select code from public.affiliates where user_id = auth.uid())
+    )
+  );
+
+-- Cập nhật trigger: lưu thêm referred_by khi user đăng ký qua link giới thiệu
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.user_profiles (id, name, phone, email_consent, source, referred_by)
+  values (
+    new.id,
+    new.raw_user_meta_data->>'name',
+    new.raw_user_meta_data->>'phone',
+    coalesce((new.raw_user_meta_data->>'email_consent')::boolean, false),
+    new.raw_user_meta_data->>'source',
+    new.raw_user_meta_data->>'referred_by'
+  )
+  on conflict (id) do nothing;
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- ============================================================
 -- Sau khi chạy xong SQL, thêm vào .env và Vercel Dashboard:
 --
 -- VITE_SUPABASE_URL=https://xxxx.supabase.co

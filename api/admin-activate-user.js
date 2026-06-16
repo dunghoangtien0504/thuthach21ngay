@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
   // Admin auth
   const authHeader = req.headers['authorization'] || '';
-  const adminPass  = process.env.VITE_ADMIN_PASS || '';
+  const adminPass  = process.env.ADMIN_PASS || process.env.VITE_ADMIN_PASS || '';
   if (!adminPass || authHeader !== `Bearer ${adminPass}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
@@ -74,11 +74,11 @@ export default async function handler(req, res) {
       userId = created.user.id;
     }
 
-    // 2. Upsert profile with status 'active'
+    // 2. Upsert profile (user_profiles has no `status` column — access is granted
+    //    via course_enrollments below, which is the source of truth for paid access)
     await admin.from('user_profiles').upsert({
       id: userId,
       name: name || (existing?.user_metadata?.name) || email.split('@')[0],
-      status: 'active',
     }, { onConflict: 'id' });
 
     // 3. Insert enrollment records for all courses
