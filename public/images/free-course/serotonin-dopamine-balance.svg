@@ -1,119 +1,174 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
   <defs>
-    <!-- Premium Styles & Filters -->
+    <!-- Import Google Fonts for rendering in isolated contexts like <img> tags -->
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,400&display=swap');
+      
       text {
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
       }
       .title-text {
-        font-weight: 800;
-        letter-spacing: 1.5px;
+        font-family: 'Lora', Georgia, serif;
+        font-weight: 700;
+        font-size: 15px;
+        fill: #0D2B1A;
+        letter-spacing: -0.1px;
       }
-      .glow-path {
-        filter: url(#glow-filter);
+      .side-title {
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+      }
+      .card-title {
+        font-weight: 700;
+        font-size: 10.5px;
+      }
+      .card-desc {
+        font-size: 9px;
+        font-weight: 500;
+      }
+      .card-detail {
+        font-size: 9px;
+        font-weight: 600;
       }
     </style>
-    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    
+    <!-- Shadow Filter -->
+    <filter id="card-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0D2B1A" flood-opacity="0.04"/>
     </filter>
-    <linearGradient id="obsidian-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050B08" />
-      <stop offset="100%" stop-color="#0D1D15" />
-    </linearGradient>
-    <linearGradient id="neon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="100%" stop-color="#D97706" />
-    </linearGradient>
-    <linearGradient id="neon-red" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F43F5E" />
-      <stop offset="100%" stop-color="#BE123C" />
-    </linearGradient>
-    <linearGradient id="neon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06B6D4" />
-      <stop offset="100%" stop-color="#0891B2" />
-    </linearGradient>
-    <linearGradient id="neon-green" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10B981" />
-      <stop offset="100%" stop-color="#059669" />
+    
+    <!-- Gradients -->
+    <linearGradient id="cream-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7" />
+      <stop offset="100%" stop-color="#F8F4EA" />
     </linearGradient>
     
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
-    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-gold)"/></marker>
-    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-cyan)"/></marker>
-    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-red)"/></marker>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+    
+    <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3A86C8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <linearGradient id="rust-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#9E2E0A" />
+    </linearGradient>
+
+    <!-- Markers -->
+    <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arr-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#B8860B"/>
+    </marker>
   </defs>
-  <rect width="680" height="400" rx="16" fill="url(#obsidian-bg)"/>
-  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.2"/>
-  <text x="340" y="28" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">SEROTONIN &amp; DOPAMINE — CÂN BẰNG THẦN KINH XUẤT TINH</text>
 
-  <!-- Serotonin side -->
-  <rect x="20" y="42" width="300" height="325" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.25" ry="8"/>
-  <text x="170" y="66" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="13" font-weight="800" fill="url(#neon-cyan)" text-anchor="middle">SEROTONIN (5-HT)</text>
-  <text x="170" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">Chất ức chế — phanh thần kinh</text>
+  <!-- Background Container -->
+  <rect width="680" height="400" rx="16" fill="url(#cream-bg)" stroke="#E6DEC9" stroke-width="1.5"/>
 
-  <!-- Brain icon area -->
-  <circle cx="170" cy="130" r="42" fill="#1B3320" stroke="url(#neon-cyan)" stroke-width="2"/>
-  <text x="170" y="120" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="22" text-anchor="middle">🧠</text>
-  <text x="170" y="145" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-cyan)" text-anchor="middle">Nhân Raphe</text>
-  <text x="170" y="158" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">(Raphe Nuclei)</text>
+  <!-- Title -->
+  <text x="340" y="30" class="title-text" text-anchor="middle">SEROTONIN &amp; DOPAMINE — CÂN BẰNG THẦN KINH XUẤT TINH</text>
+  <line x1="220" y1="38" x2="460" y2="38" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.5"/>
 
-  <line x1="170" y1="172" x2="170" y2="195" stroke="url(#neon-cyan)" stroke-width="2" marker-end="url(#arr-blue)"/>
-  <text x="188" y="187" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-cyan)">Ức chế</text>
+  <!-- ================= LEFT COLUMN: SEROTONIN ================= -->
+  <g filter="url(#card-shadow)">
+    <!-- Column Frame -->
+    <rect x="20" y="50" width="310" height="305" rx="12" fill="#FFFFFF" stroke="#E6DEC9" stroke-width="1"/>
+    <!-- Top Border Line -->
+    <rect x="20" y="50" width="310" height="4" rx="2" fill="url(#blue-grad)"/>
+    
+    <text x="175" y="72" class="side-title" fill="#2563EB" text-anchor="middle">SEROTONIN (5-HT)</text>
+    <text x="175" y="87" font-size="10.5" font-weight="600" fill="#3D6B4A" text-anchor="middle">Chất ức chế — phanh thần kinh</text>
+  </g>
 
-  <rect x="35" y="198" width="270" height="44" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
-  <text x="170" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-cyan)" text-anchor="middle">→ Tủy sống L3-L4 (SEG)</text>
-  <text x="170" y="230" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Nâng ngưỡng kích hoạt phản xạ</text>
-  <text x="170" y="244" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Kéo dài thời gian trước xuất tinh</text>
+  <!-- Brain icon area (Raphe) -->
+  <circle cx="175" cy="132" r="32" fill="#F0F8FF" stroke="#2563EB" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <text x="175" y="125" font-size="18" text-anchor="middle">🧠</text>
+  <text x="175" y="146" font-size="8.5" font-weight="700" fill="#2563EB" text-anchor="middle">Nhân Raphe</text>
+  <text x="175" y="156" font-size="8" font-style="italic" fill="#485A4F" text-anchor="middle">(Raphe Nuclei)</text>
 
-  <!-- Normal vs Low -->
-  <rect x="35" y="258" width="125" height="90" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1" stroke-opacity="0.35" ry="8"/>
-  <text x="97" y="274" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-cyan)" text-anchor="middle">Bình thường</text>
-  <text x="97" y="290" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">IELT ≥ 2 phút</text>
-  <text x="97" y="304" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Kiểm soát tốt</text>
-  <text x="97" y="318" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Cảm giác hài lòng</text>
-  <text x="97" y="340" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="20" text-anchor="middle">✅</text>
+  <!-- Arrow Raphe → Spinal -->
+  <line x1="175" y1="168" x2="175" y2="190" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="182" y="182" font-size="8" font-weight="700" fill="#2563EB">Ức chế</text>
 
-  <rect x="170" y="258" width="135" height="90" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="1" stroke-opacity="0.3" ry="8"/>
-  <text x="237" y="274" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-red)" text-anchor="middle">Thấp hơn BT</text>
-  <text x="237" y="290" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">IELT &lt; 60 giây</text>
-  <text x="237" y="304" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Mất kiểm soát</text>
-  <text x="237" y="318" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">XTS nguyên phát</text>
-  <text x="237" y="340" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="20" text-anchor="middle">⚠️</text>
+  <!-- Spinal Box -->
+  <g filter="url(#card-shadow)">
+    <rect x="35" y="196" width="280" height="44" rx="8" fill="#FDFBF7" stroke="#2563EB" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="175" y="212" class="card-title" fill="#0D2B1A" text-anchor="middle">→ Tủy sống L3-L4 (SEG)</text>
+    <text x="175" y="226" class="card-desc" fill="#3D6B4A" text-anchor="middle">Nâng ngưỡng kích hoạt phản xạ · Kéo dài thời gian</text>
+  </g>
 
-  <!-- Dopamine side -->
-  <rect x="360" y="42" width="300" height="325" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.25" ry="8"/>
-  <text x="510" y="66" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="13" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">DOPAMINE (DA)</text>
-  <text x="510" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="#86EFAC" text-anchor="middle">Chất kích thích — ga tăng tốc</text>
+  <!-- Normal vs Low Sub-cards -->
+  <!-- Normal (Blue/Green) -->
+  <g filter="url(#card-shadow)">
+    <rect x="35" y="252" width="135" height="90" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1" stroke-opacity="0.3"/>
+    <rect x="35" y="252" width="135" height="3" rx="1" fill="#3D6B4A"/>
+    <text x="102" y="268" font-size="10" font-weight="700" fill="#3D6B4A" text-anchor="middle">Bình thường</text>
+    <text x="102" y="284" font-size="8.5" font-weight="600" fill="#0D2B1A" text-anchor="middle">IELT ≥ 2 phút</text>
+    <text x="102" y="296" font-size="8" fill="#485A4F" text-anchor="middle">Kiểm soát tốt phản xạ</text>
+    <text x="102" y="308" font-size="8" fill="#485A4F" text-anchor="middle">Cảm giác hài lòng</text>
+    <text x="102" y="330" font-size="16" text-anchor="middle">✅</text>
+  </g>
 
-  <circle cx="510" cy="130" r="42" fill="#1B3320" stroke="url(#neon-gold)" stroke-width="2"/>
-  <text x="510" y="120" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="22" text-anchor="middle">⚡</text>
-  <text x="510" y="145" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle">Vùng VTA</text>
-  <text x="510" y="158" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">(Khoái cảm &amp; Thèm muốn)</text>
+  <!-- Low (Rust/Red) -->
+  <g filter="url(#card-shadow)">
+    <rect x="180" y="252" width="135" height="90" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1" stroke-opacity="0.3"/>
+    <rect x="180" y="252" width="135" height="3" rx="1" fill="#C0390E"/>
+    <text x="247" y="268" font-size="10" font-weight="700" fill="#C0390E" text-anchor="middle">Thấp hơn BT</text>
+    <text x="247" y="284" font-size="8.5" font-weight="600" fill="#9E2E0A" text-anchor="middle">IELT &lt; 60 giây</text>
+    <text x="247" y="296" font-size="8" fill="#485A4F" text-anchor="middle">Mất kiểm soát tự chủ</text>
+    <text x="247" y="308" font-size="8" fill="#485A4F" text-anchor="middle">XTS nguyên phát</text>
+    <text x="247" y="330" font-size="16" text-anchor="middle">⚠️</text>
+  </g>
 
-  <line x1="510" y1="172" x2="510" y2="195" stroke="url(#neon-gold)" stroke-width="2" marker-end="url(#arr)"/>
-  <text x="528" y="187" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)">Kích hoạt</text>
 
-  <rect x="375" y="198" width="270" height="44" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-opacity="0.35" ry="8"/>
-  <text x="510" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">→ Hệ giao cảm (Sympathetic)</text>
-  <text x="510" y="230" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Hạ ngưỡng kích hoạt phản xạ</text>
-  <text x="510" y="244" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Đẩy nhanh phản xạ xuất tinh</text>
+  <!-- ================= RIGHT COLUMN: DOPAMINE ================= -->
+  <g filter="url(#card-shadow)">
+    <!-- Column Frame -->
+    <rect x="350" y="50" width="310" height="305" rx="12" fill="#FFFFFF" stroke="#E6DEC9" stroke-width="1"/>
+    <!-- Top Border Line -->
+    <rect x="350" y="50" width="310" height="4" rx="2" fill="url(#gold-grad)"/>
+    
+    <text x="505" y="72" class="side-title" fill="#B8860B" text-anchor="middle">DOPAMINE (DA)</text>
+    <text x="505" y="87" font-size="10.5" font-weight="600" fill="#3D6B4A" text-anchor="middle">Chất kích thích — ga tăng tốc</text>
+  </g>
 
-  <!-- D1 vs D2 receptors -->
-  <rect x="375" y="258" width="270" height="90" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1" stroke-opacity="0.35" ry="8"/>
-  <text x="510" y="276" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">Cân bằng quan trọng:</text>
-  <text x="510" y="292" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">DA kích thích → 5-HT ức chế</text>
-  <text x="510" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Tỉ lệ 5-HT/DA quyết định IELT</text>
-  <text x="510" y="322" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Kỹ thuật hành vi → tăng 5-HT</text>
-  <text x="510" y="336" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Mindfulness → giảm DA kích thích sớm</text>
+  <!-- VTA area -->
+  <circle cx="505" cy="132" r="32" fill="#FFFDF8" stroke="#B8860B" stroke-width="1.5" filter="url(#card-shadow)"/>
+  <text x="505" y="125" font-size="18" text-anchor="middle">⚡</text>
+  <text x="505" y="146" font-size="8.5" font-weight="700" fill="#B8860B" text-anchor="middle">Vùng VTA</text>
+  <text x="505" y="156" font-size="8" font-style="italic" fill="#485A4F" text-anchor="middle">(Khoái cảm &amp; Thèm muốn)</text>
 
-  <!-- Bottom balance scale -->
-  <text x="340" y="380" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" fill="url(#neon-gold)" text-anchor="middle">SEROTONIN ↑ &amp; DOPAMINE cân bằng = KIỂM SOÁT ĐƯỢC XUẤT TINH</text>
+  <!-- Arrow VTA → Sympathetic -->
+  <line x1="505" y1="168" x2="505" y2="190" stroke="#B8860B" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+  <text x="512" y="182" font-size="8" font-weight="700" fill="#B8860B">Kích hoạt</text>
 
-  <text x="340" y="395" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle" opacity="0.7">Nguồn: Waldinger 2010 · Giuliano 2011 · Mật Mã 21 R&amp;D</text>
+  <!-- Sympathetic Box -->
+  <g filter="url(#card-shadow)">
+    <rect x="365" y="196" width="280" height="44" rx="8" fill="#FDFBF7" stroke="#B8860B" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="505" y="212" class="card-title" fill="#0D2B1A" text-anchor="middle">→ Hệ giao cảm (Sympathetic)</text>
+    <text x="505" y="226" class="card-desc" fill="#3D6B4A" text-anchor="middle">Hạ ngưỡng kích hoạt phản xạ · Đẩy nhanh xuất tinh</text>
+  </g>
+
+  <!-- Dopamine details card -->
+  <g filter="url(#card-shadow)">
+    <rect x="365" y="252" width="280" height="90" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1" stroke-opacity="0.3"/>
+    <rect x="365" y="252" width="280" height="3" rx="1" fill="#B8860B"/>
+    <text x="505" y="268" font-size="10" font-weight="700" fill="#0D2B1A" text-anchor="middle">Cân bằng sinh học thần kinh:</text>
+    <text x="505" y="284" font-size="8.5" font-weight="600" fill="#C0390E" text-anchor="middle">Tỉ lệ Serotonin / Dopamine quyết định thời gian</text>
+    <text x="505" y="298" font-size="8" fill="#485A4F" text-anchor="middle">· Kỹ thuật hành vi (Start-Stop, thở) → Tăng Serotonin ức chế</text>
+    <text x="505" y="311" font-size="8" fill="#485A4F" text-anchor="middle">· Thiền &amp; Thư giãn → Giảm Dopamine/Adrenaline kích thích sớm</text>
+    <text x="505" y="328" font-size="10" text-anchor="middle">⚖️</text>
+  </g>
+
+  <!-- Bottom Citation -->
+  <text x="340" y="372" font-size="9.5" font-weight="700" fill="#B8860B" text-anchor="middle">SEROTONIN ↑ &amp; DOPAMINE CÂN BẰNG = KHẢ NĂNG TỰ CHỦ PHẢN XẠ</text>
+  <text x="340" y="388" font-size="8.5" font-weight="600" fill="#485A4F" text-anchor="middle" opacity="0.8">Nguồn: Waldinger 2010 · Giuliano 2011 · Mật Mã 21 R&amp;D</text>
 </svg>
