@@ -95,50 +95,44 @@
   <rect x="10" y="60" width="336" height="365" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
   <text x="178" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#3D6B4A" text-anchor="middle">MẶT CẮT DỌC (SAGITTAL VIEW)</text>
 
-  <!-- Pelvis walls (left = pubic front, right = sacrum/coccyx back) -->
-  <!-- Left wall (pubic symphysis) -->
-  <path d="M 72,100 C 52,132 44,172 46,228 C 48,260 58,274 78,280" fill="none" stroke="#3D6B4A" stroke-width="7" stroke-linecap="round" opacity="0.8" />
-  <!-- Right wall (sacrum) -->
-  <path d="M 290,100 C 310,132 318,172 316,228 C 314,260 304,274 284,280" fill="none" stroke="#3D6B4A" stroke-width="7" stroke-linecap="round" opacity="0.8" />
+  <!-- Realistic Anatomy Background Image -->
+  <image href="/images/free-course/pelvic_floor_anatomy_bg.png" x="12" y="90" width="332" height="220" preserveAspectRatio="xMidYMid slice" />
 
-  <!-- Bone labels -->
-  <text x="34" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">Xương</text>
-  <text x="34" y="172" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">mu</text>
-  <text x="325" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">Xương</text>
-  <text x="325" y="172" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#739C7D" text-anchor="middle">cụt</text>
+  <!-- Overlay Labels and Pointer Lines -->
+  <!-- Bladder Label -->
+  <line x1="60" y1="130" x2="160" y2="145" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arr-blue)" />
+  <rect x="20" y="112" width="70" height="18" rx="3" fill="#FFFFFF" fill-opacity="0.85" stroke="#2563EB" stroke-width="1" />
+  <text x="55" y="124" font-size="8" font-weight="700" fill="#2563EB" text-anchor="middle">BÀNG QUANG</text>
 
-  <!-- Bladder -->
-  <ellipse cx="180" cy="152" rx="56" ry="44" fill="url(#bladder-g)" opacity="0.85" stroke="#5A8EC0" stroke-width="2" />
-  <text x="180" y="148" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#9ABFE8" text-anchor="middle">Bàng quang</text>
-  <text x="180" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#7AAAD5" text-anchor="middle">(Bladder)</text>
+  <!-- Prostate Label -->
+  <line x1="60" y1="210" x2="168" y2="205" stroke="#C0390E" stroke-width="1.5" marker-end="url(#arr-red)" />
+  <rect x="15" y="215" width="80" height="18" rx="3" fill="#FFFFFF" fill-opacity="0.85" stroke="#C0390E" stroke-width="1" />
+  <text x="55" y="227" font-size="8" font-weight="700" fill="#C0390E" text-anchor="middle">TIỀN LIỆT TUYẾN</text>
 
-  <!-- Urethra (dashed line running vertically) -->
-  <line x1="180" y1="196" x2="180" y2="284" stroke="#9ABFE8" stroke-width="2.5" stroke-dasharray="5,3" />
+  <!-- Urethra Label -->
+  <line x1="285" y1="235" x2="182" y2="235" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arr-blue)" />
+  <rect x="290" y="225" width="50" height="18" rx="3" fill="#FFFFFF" fill-opacity="0.85" stroke="#2563EB" stroke-width="1" />
+  <text x="315" y="237" font-size="8" font-weight="700" fill="#2563EB" text-anchor="middle">NIỆU ĐẠO</text>
 
-  <!-- Prostate gland -->
-  <ellipse cx="180" cy="218" rx="28" ry="19" fill="#8A5C2A" opacity="0.9" stroke="#C8BFB0" stroke-width="2" />
-  <text x="180" y="221" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" font-weight="700" fill="#F0C870" text-anchor="middle">Tuyến tiền liệt</text>
+  <!-- Bones: Pubic and Coccyx -->
+  <!-- Pubic Bone (front/left) -->
+  <line x1="45" y1="165" x2="80" y2="180" stroke="#739C7D" stroke-width="1" stroke-dasharray="2,2" />
+  <text x="45" y="157" font-size="7.5" fill="#739C7D" text-anchor="middle">Xương mu</text>
 
-  <!-- Pelvic floor muscles (hammock) — 2 layered paths for thickness + glow -->
-  <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="#B8860B" stroke-width="14" stroke-linecap="round" opacity="0.35" />
-  <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="url(#muscle-g)" stroke-width="10" stroke-linecap="round" />
-  <path d="M 68,270 C 100,300 140,312 180,315 C 220,312 260,300 292,270" fill="none" stroke="#FFE060" stroke-width="3" stroke-linecap="round" opacity="0.5" />
+  <!-- Coccyx Bone (back/right) -->
+  <line x1="320" y1="165" x2="280" y2="240" stroke="#739C7D" stroke-width="1" stroke-dasharray="2,2" />
+  <text x="320" y="157" font-size="7.5" fill="#739C7D" text-anchor="middle">Xương cụt</text>
 
-  <!-- PC muscle label pointer -->
-  <line x1="180" y1="318" x2="180" y2="340" stroke="#B8860B" stroke-width="2" />
-  <rect x="88" y="342" width="184" height="38" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1.5" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
-  <text x="180" y="358" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="800" fill="#B8860B" text-anchor="middle">Cơ Mu Cụt (PC Muscle)</text>
-  <text x="180" y="371" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">Pubococcygeus · S2–S4 nerve control</text>
+  <!-- PC Muscle core label -->
+  <line x1="180" y1="312" x2="180" y2="338" stroke="#B8860B" stroke-width="2" />
+  <rect x="88" y="342" width="180" height="38" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1.5" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
+  <text x="178" y="358" font-size="10" font-weight="800" fill="#B8860B" text-anchor="middle">Cơ Mu Cụt (PC Muscle)</text>
+  <text x="178" y="371" font-size="8" fill="#3D6B4A" text-anchor="middle">Pubococcygeus · Điều khiển bởi dây S2–S4</text>
 
   <!-- Contraction arrows (Kegel direction = upward) -->
-  <line x1="88" y1="272" x2="88" y2="248" stroke="#7CB87C" stroke-width="2" marker-end="url(#arr-green)" />
-  <line x1="272" y1="272" x2="272" y2="248" stroke="#7CB87C" stroke-width="2" marker-end="url(#arr-green)" />
-  <text x="180" y="398" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">Kegel: co cơ → kéo lên ↑</text>
-
-  <!-- Urethra label -->
-  <line x1="181" y1="240" x2="222" y2="240" stroke="#9ABFE8" stroke-width="1" stroke-dasharray="3,2" />
-  <text x="225" y="237" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7.5" fill="#9ABFE8">Niệu đạo</text>
-  <text x="225" y="247" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#7AAAD5">(Urethra)</text>
+  <line x1="78" y1="290" x2="78" y2="265" stroke="#3D6B4A" stroke-width="2" marker-end="url(#arr-gold)" />
+  <line x1="282" y1="290" x2="282" y2="265" stroke="#3D6B4A" stroke-width="2" marker-end="url(#arr-gold)" />
+  <text x="178" y="398" font-size="8.5" font-weight="700" fill="#3D6B4A" text-anchor="middle">Kegel: Co cơ chậu kéo hướng lên ↑</text>
 
   <!-- ── RIGHT PANEL: Information ── -->
   <rect x="354" y="60" width="318" height="365" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />

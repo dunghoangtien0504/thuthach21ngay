@@ -95,28 +95,8 @@
   <rect x="10" y="60" width="304" height="365" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
   <text x="162" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#3D6B4A" text-anchor="middle">GIẢI PHẪU &amp; VỊ TRÍ ÉP</text>
 
-  <!-- Shaft body -->
-  <rect x="22" y="183" width="148" height="88" rx="8" fill="url(#shaft-g)" stroke="#9A4228" stroke-width="1.5" />
-  <text x="96" y="230" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C8BFB0" text-anchor="middle">Trục dương vật</text>
-
-  <!-- Coronal widening -->
-  <path d="M 170,172 L 198,162 L 198,292 L 170,282 Z" fill="#7A3218" stroke="#9A4228" stroke-width="1.5" />
-
-  <!-- Glans dome (bezier) -->
-  <path d="M 198,162 C 234,158 268,178 282,227 C 268,276 234,296 198,292" fill="url(#glans-g)" stroke="#C06040" stroke-width="2" />
-
-  <!-- Glans tip slit -->
-  <ellipse cx="281" cy="227" rx="5" ry="11" fill="#0D2B1A" opacity="0.55" />
-
-  <!-- Coronal groove dashed line -->
-  <line x1="198" y1="162" x2="198" y2="292" stroke="#B8860B" stroke-width="2.5" class="glow-path" stroke-dasharray="5,3" />
-
-  <!-- Frenulum star dot (ventral, bottom of coronal groove) -->
-  <ellipse cx="198" cy="300" rx="16" ry="10" fill="#C0390E" opacity="0.9" />
-  <text x="198" y="304" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" font-weight="800" fill="#0D2B1A" text-anchor="middle">★</text>
-
-  <!-- Squeeze zone circle -->
-  <circle cx="198" cy="227" r="60" fill="none" stroke="#C0390E" stroke-width="1.8" stroke-dasharray="7,4" opacity="0.5" />
+  <!-- Realistic Squeeze Technique Background Image -->
+  <image href="/images/free-course/squeeze_technique_bg.png" x="12" y="90" width="300" height="220" preserveAspectRatio="xMidYMid slice" />
 
   <!-- Thumb (dorsal) arrow pressing DOWN -->
   <line x1="198" y1="122" x2="198" y2="158" stroke="#C0390E" stroke-width="3.5" class="glow-path" marker-end="url(#arr-rust)" />
