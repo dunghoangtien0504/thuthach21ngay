@@ -434,7 +434,7 @@ async function handleSubmit(e) {
   // ── Supabase path ──────────────────────────────────────────────────────
   if (isSupabaseEnabled) {
     const redirectTo = `${window.location.origin}/portal.html`;
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -461,16 +461,24 @@ async function handleSubmit(e) {
       return;
     }
 
-    // Show email-sent state
-    document.getElementById('reg-sent-email').textContent = email;
-    document.getElementById('reg-form-wrap').style.display = 'none';
-    document.getElementById('reg-email-sent').style.display = 'block';
-
-    // Notifications
     await notifyTelegram(account);
     if (WEBHOOK_URL) {
       try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(account) }); } catch (_) {}
     }
+
+    // If Supabase returned a session, "Confirm email" is OFF — the account is
+    // already active, no email is sent. Go straight to the portal instead of
+    // showing a "check your inbox" screen that would never resolve.
+    if (data?.session) {
+      toast('Đăng ký thành công! Đang chuyển vào khóa học...', 'success');
+      window.location.href = '/my-courses.html';
+      return;
+    }
+
+    // Otherwise email confirmation is required — show the "check inbox" state.
+    document.getElementById('reg-sent-email').textContent = email;
+    document.getElementById('reg-form-wrap').style.display = 'none';
+    document.getElementById('reg-email-sent').style.display = 'block';
     return;
   }
 
@@ -598,8 +606,9 @@ function init() {
         }
         return;
       }
-      toast('Đăng nhập thành công!', 'success');
+      toast('Đăng nhập thành công! Đang chuyển vào khóa học...', 'success');
       closeModal();
+      window.location.href = '/my-courses.html';
       return;
     }
 
@@ -612,8 +621,9 @@ function init() {
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({
         email: found.email, name: found.name, phone: found.phone || ''
       }));
-      toast('Đăng nhập thành công!', 'success');
+      toast('Đăng nhập thành công! Đang chuyển vào khóa học...', 'success');
       closeModal();
+      window.location.href = '/my-courses.html';
     } else {
       showLoginError('Email hoặc mật khẩu không chính xác.');
     }
