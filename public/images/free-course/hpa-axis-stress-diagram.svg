@@ -1,118 +1,150 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
-  <defs>
-    <!-- Premium Styles & Filters -->
+    <defs>
+    <!-- Import Google Fonts for rendering in isolated contexts like <img> tags -->
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Lora:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap');
+      
       text {
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
       }
       .title-text {
-        font-weight: 800;
-        letter-spacing: 1.5px;
+        font-family: 'Lora', Georgia, serif;
+        font-weight: 700;
+        font-size: 14px;
+        fill: #0D2B1A;
+        letter-spacing: -0.1px;
       }
       .glow-path {
-        filter: url(#glow-filter);
+        filter: url(#arrow-glow);
       }
     </style>
-    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
+    
+    <!-- Shadow and Glow Filters -->
+    <filter id="card-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0D2B1A" flood-opacity="0.04"/>
+    </filter>
+    
+    <filter id="arrow-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
       <feMerge>
         <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-    <linearGradient id="obsidian-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050B08" />
-      <stop offset="100%" stop-color="#0D1D15" />
-    </linearGradient>
-    <linearGradient id="neon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="100%" stop-color="#D97706" />
-    </linearGradient>
-    <linearGradient id="neon-red" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F43F5E" />
-      <stop offset="100%" stop-color="#BE123C" />
-    </linearGradient>
-    <linearGradient id="neon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06B6D4" />
-      <stop offset="100%" stop-color="#0891B2" />
-    </linearGradient>
-    <linearGradient id="neon-green" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10B981" />
-      <stop offset="100%" stop-color="#059669" />
+    
+    <!-- Gradients matching Ivory & Forest Green system -->
+    <linearGradient id="cream-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7" />
+      <stop offset="100%" stop-color="#F8F4EA" />
     </linearGradient>
     
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="url(#neon-gold)"/><stop offset="100%" stop-color="#D97706"/></linearGradient>
-    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="url(#neon-red)"/><stop offset="100%" stop-color="#BE123C"/></linearGradient>
-    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-gold)"/></marker>
-    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-red)"/></marker>
-    <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+    
+    <linearGradient id="forest-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#163f27" />
+      <stop offset="100%" stop-color="#0D2B1A" />
+    </linearGradient>
+    
+    <linearGradient id="rust-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#9E2E0A" />
+    </linearGradient>
+    
+    <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3A86C8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <linearGradient id="skin-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9" />
+      <stop offset="100%" stop-color="#E8E2D5" />
+    </linearGradient>
+
+    <!-- Markers -->
+    <marker id="arr-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#B8860B" />
+    </marker>
+    <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-rust" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#C0390E" />
+    </marker>
+    <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#B8860B" />
+    </marker>
+    <marker id="arr-red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#C0390E" />
+    </marker>
   </defs>
-  <rect width="680" height="400" rx="16" fill="url(#obsidian-bg)"/>
-  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.2"/>
-  <text x="340" y="30" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="url(#neon-gold)" text-anchor="middle" letter-spacing="1">TRỤC HPA — VÌ SAO LO ÂU LÀM XUẤT TINH SỚM HƠN</text>
+  <rect width="680" height="400" rx="16" fill="url(#cream-bg)" stroke="#E6DEC9" stroke-width="1.5" />
+  
+  <text x="340" y="30" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="#B8860B" text-anchor="middle" letter-spacing="1" class="title-text">TRỤC HPA — VÌ SAO LO ÂU LÀM XUẤT TINH SỚM HƠN</text>
 
   <!-- Left: Anxiety Loop -->
-  <rect x="20" y="45" width="300" height="330" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1" stroke-opacity="0.25" ry="8"/>
-  <text x="170" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">⚠️ VÒNG XOÁY LO ÂU</text>
+  <rect x="20" y="45" width="300" height="330" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
+  <text x="170" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#B8860B" text-anchor="middle">⚠️ VÒNG XOÁY LO ÂU</text>
 
   <!-- Cascade boxes -->
-  <rect x="60" y="78" width="220" height="36" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="170" y="93" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F3F4F6" text-anchor="middle">🧠 Amygdala nhận "nguy hiểm"</text>
-  <text x="170" y="108" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Suy nghĩ: "Mình sẽ lại ra sớm"</text>
+  <rect x="60" y="78" width="220" height="36" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="170" y="93" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#0D2B1A" text-anchor="middle">🧠 Amygdala nhận "nguy hiểm"</text>
+  <text x="170" y="108" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Suy nghĩ: "Mình sẽ lại ra sớm"</text>
 
-  <line x1="170" y1="114" x2="170" y2="130" stroke="url(#neon-gold)" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="170" y1="114" x2="170" y2="130" stroke="#B8860B" stroke-width="2" marker-end="url(#arr-gold)" />
 
-  <rect x="60" y="132" width="220" height="36" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="170" y="147" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F3F4F6" text-anchor="middle">Hypothalamus → CRH</text>
-  <text x="170" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Kích hoạt trục stress HPA</text>
+  <rect x="60" y="132" width="220" height="36" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="170" y="147" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#0D2B1A" text-anchor="middle">Hypothalamus → CRH</text>
+  <text x="170" y="162" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Kích hoạt trục stress HPA</text>
 
-  <line x1="170" y1="168" x2="170" y2="184" stroke="url(#neon-gold)" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="170" y1="168" x2="170" y2="184" stroke="#B8860B" stroke-width="2" marker-end="url(#arr-gold)" />
 
-  <rect x="60" y="186" width="220" height="36" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="170" y="201" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F3F4F6" text-anchor="middle">Tuyến yên → ACTH</text>
-  <text x="170" y="216" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Hormone kích thích tuyến thượng thận</text>
+  <rect x="60" y="186" width="220" height="36" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="170" y="201" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#0D2B1A" text-anchor="middle">Tuyến yên → ACTH</text>
+  <text x="170" y="216" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Hormone kích thích tuyến thượng thận</text>
 
-  <line x1="170" y1="222" x2="170" y2="238" stroke="url(#neon-gold)" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="170" y1="222" x2="170" y2="238" stroke="#B8860B" stroke-width="2" marker-end="url(#arr-gold)" />
 
-  <rect x="60" y="240" width="220" height="36" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="1.5" stroke-opacity="0.3" ry="8"/>
-  <text x="170" y="255" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F3F4F6" text-anchor="middle">Adrenaline + Cortisol tăng</text>
-  <text x="170" y="270" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Nhịp tim ↑ · Cơ căng · Mạch co</text>
+  <rect x="60" y="240" width="220" height="36" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1.5" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
+  <text x="170" y="255" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#0D2B1A" text-anchor="middle">Adrenaline + Cortisol tăng</text>
+  <text x="170" y="270" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A" text-anchor="middle">Nhịp tim ↑ · Cơ căng · Mạch co</text>
 
-  <line x1="170" y1="276" x2="170" y2="292" stroke="url(#neon-red)" stroke-width="2" class="glow-path" marker-end="url(#arr-red)"/>
+  <line x1="170" y1="276" x2="170" y2="292" stroke="#C0390E" stroke-width="2" class="glow-path" marker-end="url(#arr-rust)" />
 
-  <rect x="60" y="294" width="220" height="36" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="2" class="glow-path" stroke-opacity="0.3" ry="8"/>
-  <text x="170" y="309" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F4A87A" text-anchor="middle">🔴 Ngưỡng xuất tinh HẠ xuống</text>
-  <text x="170" y="324" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Xuất tinh sớm hơn → xác nhận nỗi sợ</text>
+  <rect x="60" y="294" width="220" height="36" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="2" class="glow-path" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
+  <text x="170" y="309" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#9E2E0A" text-anchor="middle">🔴 Ngưỡng xuất tinh HẠ xuống</text>
+  <text x="170" y="324" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A" text-anchor="middle">Xuất tinh sớm hơn → xác nhận nỗi sợ</text>
 
   <!-- Loop back arrow -->
-  <path d="M 280 312 Q 310 312 310 95 Q 310 78 280 78" fill="none" stroke="url(#neon-red)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-red)"/>
+  <path d="M 280 312 Q 310 312 310 95 Q 310 78 280 78" fill="none" stroke="#C0390E" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-rust)" />
 
   <!-- Right: Solutions -->
-  <rect x="360" y="45" width="300" height="330" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1" stroke-opacity="0.25" ry="8"/>
-  <text x="510" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">✅ CÁCH PHÁ VỠ VÒNG XOÁY</text>
+  <rect x="360" y="45" width="300" height="330" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
+  <text x="510" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#B8860B" text-anchor="middle">✅ CÁCH PHÁ VỠ VÒNG XOÁY</text>
 
-  <rect x="375" y="80" width="270" height="54" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="510" y="99" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-cyan)" text-anchor="middle">Tái cấu trúc nhận thức (CBT)</text>
-  <text x="510" y="114" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Thay suy nghĩ thảm họa → suy nghĩ</text>
-  <text x="510" y="126" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">cân bằng · Amygdala không kích hoạt</text>
+  <rect x="375" y="80" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="510" y="99" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Tái cấu trúc nhận thức (CBT)</text>
+  <text x="510" y="114" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Thay suy nghĩ thảm họa → suy nghĩ</text>
+  <text x="510" y="126" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">cân bằng · Amygdala không kích hoạt</text>
 
-  <rect x="375" y="146" width="270" height="54" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="510" y="165" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-cyan)" text-anchor="middle">Thở 4-2-6 (Vagal Breathing)</text>
-  <text x="510" y="180" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Kích hoạt dây thần kinh phế vị</text>
-  <text x="510" y="192" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Cortisol hạ trong 30 giây</text>
+  <rect x="375" y="146" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="510" y="165" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Thở 4-2-6 (Vagal Breathing)</text>
+  <text x="510" y="180" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Kích hoạt dây thần kinh phế vị</text>
+  <text x="510" y="192" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">→ Cortisol hạ trong 30 giây</text>
 
-  <rect x="375" y="212" width="270" height="54" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="510" y="231" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">Luyện tập cơ sàn chậu</text>
-  <text x="510" y="246" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Nâng ngưỡng SEG tủy sống</text>
-  <text x="510" y="258" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Không phụ thuộc vào trạng thái tâm lý</text>
+  <rect x="375" y="212" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="510" y="231" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#B8860B" text-anchor="middle">Luyện tập cơ sàn chậu</text>
+  <text x="510" y="246" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Nâng ngưỡng SEG tủy sống</text>
+  <text x="510" y="258" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">→ Không phụ thuộc vào trạng thái tâm lý</text>
 
-  <rect x="375" y="278" width="270" height="54" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="1.5" stroke-opacity="0.35" ry="8"/>
-  <text x="510" y="297" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">Mindfulness (Hiện diện)</text>
-  <text x="510" y="312" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Tập trung cảm giác → không theo dõi</text>
-  <text x="510" y="324" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">kết quả → vòng xoáy bị phá vỡ</text>
+  <rect x="375" y="278" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="510" y="297" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#B8860B" text-anchor="middle">Mindfulness (Hiện diện)</text>
+  <text x="510" y="312" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Tập trung cảm giác → không theo dõi</text>
+  <text x="510" y="324" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">kết quả → vòng xoáy bị phá vỡ</text>
 
-  <text x="340" y="390" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle" opacity="0.7">Patrick 2005 · Taren 2015 · Mật Mã 21 R&amp;D</text>
+  <text x="340" y="390" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle" opacity="0.7" class="title-text">Patrick 2005 · Taren 2015 · Mật Mã 21 R&amp;D</text>
 </svg>

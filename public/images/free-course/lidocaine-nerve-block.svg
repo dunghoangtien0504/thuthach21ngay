@@ -1,149 +1,183 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
-  <defs>
-    <!-- Premium Styles & Filters -->
+    <defs>
+    <!-- Import Google Fonts for rendering in isolated contexts like <img> tags -->
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Lora:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap');
+      
       text {
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
       }
       .title-text {
-        font-weight: 800;
-        letter-spacing: 1.5px;
+        font-family: 'Lora', Georgia, serif;
+        font-weight: 700;
+        font-size: 14px;
+        fill: #0D2B1A;
+        letter-spacing: -0.1px;
       }
       .glow-path {
-        filter: url(#glow-filter);
+        filter: url(#arrow-glow);
       }
     </style>
-    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
+    
+    <!-- Shadow and Glow Filters -->
+    <filter id="card-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0D2B1A" flood-opacity="0.04"/>
+    </filter>
+    
+    <filter id="arrow-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
       <feMerge>
         <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-    <linearGradient id="obsidian-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#050B08" />
-      <stop offset="100%" stop-color="#0D1D15" />
-    </linearGradient>
-    <linearGradient id="neon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="100%" stop-color="#D97706" />
-    </linearGradient>
-    <linearGradient id="neon-red" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F43F5E" />
-      <stop offset="100%" stop-color="#BE123C" />
-    </linearGradient>
-    <linearGradient id="neon-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#06B6D4" />
-      <stop offset="100%" stop-color="#0891B2" />
-    </linearGradient>
-    <linearGradient id="neon-green" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10B981" />
-      <stop offset="100%" stop-color="#059669" />
+    
+    <!-- Gradients matching Ivory & Forest Green system -->
+    <linearGradient id="cream-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7" />
+      <stop offset="100%" stop-color="#F8F4EA" />
     </linearGradient>
     
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0D2B1A"/><stop offset="100%" stop-color="#1B442D"/></linearGradient>
-    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-gold)"/></marker>
-    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="url(#neon-red)"/></marker>
-    <marker id="arr-block" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10B981"/></marker>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+    
+    <linearGradient id="forest-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#163f27" />
+      <stop offset="100%" stop-color="#0D2B1A" />
+    </linearGradient>
+    
+    <linearGradient id="rust-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C0390E" />
+      <stop offset="100%" stop-color="#9E2E0A" />
+    </linearGradient>
+    
+    <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3A86C8" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <linearGradient id="skin-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9" />
+      <stop offset="100%" stop-color="#E8E2D5" />
+    </linearGradient>
+
+    <!-- Markers -->
+    <marker id="arr-gold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#B8860B" />
+    </marker>
+    <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#2563EB" />
+    </marker>
+    <marker id="arr-rust" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#C0390E" />
+    </marker>
+    <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#B8860B" />
+    </marker>
+    <marker id="arr-red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#C0390E" />
+    </marker>
   </defs>
-  <rect width="680" height="400" rx="16" fill="url(#obsidian-bg)"/>
-  <rect x="2" y="2" width="676" height="396" rx="15" fill="none" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.2"/>
-  <text x="340" y="28" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="url(#neon-gold)" text-anchor="middle">CƠ CHẾ LIDOCAINE — PHONG BẾ KÊNH Na⁺ THẦN KINH</text>
+  <rect width="680" height="400" rx="16" fill="url(#cream-bg)" stroke="#E6DEC9" stroke-width="1.5" />
+  
+  <text x="340" y="28" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="#B8860B" text-anchor="middle" class="title-text">CƠ CHẾ LIDOCAINE — PHONG BẾ KÊNH Na⁺ THẦN KINH</text>
 
   <!-- Left: Normal nerve firing -->
-  <rect x="18" y="44" width="295" height="240" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.25" ry="8"/>
-  <text x="165" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="url(#neon-red)" text-anchor="middle">KHÔNG CÓ GEL — Dẫn truyền bình thường</text>
+  <rect x="18" y="44" width="295" height="240" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1.5" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
+  <text x="165" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#C0390E" text-anchor="middle">KHÔNG CÓ GEL — Dẫn truyền bình thường</text>
 
   <!-- Nerve cell diagram -->
-  <ellipse cx="80" cy="130" rx="35" ry="25" fill="#1B3320" stroke="url(#neon-red)" stroke-width="1.5"/>
-  <text x="80" y="125" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-red)" text-anchor="middle">Tế bào</text>
-  <text x="80" y="137" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-red)" text-anchor="middle">thần kinh</text>
+  <ellipse cx="80" cy="130" rx="35" ry="25" fill="#F0F8FF" stroke="#C0390E" stroke-width="1.5" filter="url(#card-shadow)" />
+  <text x="80" y="125" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C0390E" text-anchor="middle">Tế bào</text>
+  <text x="80" y="137" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C0390E" text-anchor="middle">thần kinh</text>
 
   <!-- Ion channel open -->
-  <rect x="140" y="110" width="30" height="40" rx="8" fill="#111827" stroke="url(#neon-red)" stroke-width="2" class="glow-path" stroke-opacity="0.3" ry="8"/>
-  <text x="155" y="128" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-red)" text-anchor="middle">Na⁺</text>
-  <text x="155" y="140" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="url(#neon-red)" text-anchor="middle">Mở</text>
+  <rect x="140" y="110" width="30" height="40" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="2" class="glow-path" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
+  <text x="155" y="128" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#C0390E" text-anchor="middle">Na⁺</text>
+  <text x="155" y="140" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#C0390E" text-anchor="middle">Mở</text>
   <!-- Na+ ions flowing in -->
-  <text x="130" y="122" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#F4A87A">Na⁺</text>
-  <line x1="128" y1="120" x2="140" y2="120" stroke="#F4A87A" stroke-width="1.5" marker-end="url(#arr-red)"/>
-  <text x="130" y="140" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#F4A87A">Na⁺</text>
-  <line x1="128" y1="138" x2="140" y2="138" stroke="#F4A87A" stroke-width="1.5" marker-end="url(#arr-red)"/>
+  <text x="130" y="122" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#9E2E0A">Na⁺</text>
+  <line x1="128" y1="120" x2="140" y2="120" stroke="#9E2E0A" stroke-width="1.5" marker-end="url(#arr-rust)" />
+  <text x="130" y="140" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#9E2E0A">Na⁺</text>
+  <line x1="128" y1="138" x2="140" y2="138" stroke="#9E2E0A" stroke-width="1.5" marker-end="url(#arr-rust)" />
 
   <!-- Action potential wave -->
-  <path d="M 175 130 L 195 130 L 200 100 L 210 155 L 220 130 L 280 130" fill="none" stroke="url(#neon-red)" stroke-width="2.5"/>
-  <text x="240" y="118" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-red)">Điện thế</text>
-  <text x="240" y="130" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-red)">hoạt động</text>
+  <path d="M 175 130 L 195 130 L 200 100 L 210 155 L 220 130 L 280 130" fill="none" stroke="#C0390E" stroke-width="2.5" />
+  <text x="240" y="118" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C0390E">Điện thế</text>
+  <text x="240" y="130" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C0390E">hoạt động</text>
 
   <!-- Arrow to brain -->
-  <line x1="280" y1="130" x2="304" y2="130" stroke="url(#neon-red)" stroke-width="2" class="glow-path" marker-end="url(#arr-red)"/>
-  <text x="165" y="175" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">→ Tín hiệu truyền đến tủy sống</text>
-  <text x="165" y="190" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">→ Phản xạ xuất tinh kích hoạt</text>
+  <line x1="280" y1="130" x2="304" y2="130" stroke="#C0390E" stroke-width="2" class="glow-path" marker-end="url(#arr-rust)" />
+  <text x="165" y="175" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A" text-anchor="middle">→ Tín hiệu truyền đến tủy sống</text>
+  <text x="165" y="190" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A" text-anchor="middle">→ Phản xạ xuất tinh kích hoạt</text>
 
   <!-- Labels -->
-  <text x="165" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Kênh Na⁺ mở → Khử cực tế bào</text>
-  <text x="165" y="229" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Tạo điện thế hoạt động</text>
-  <text x="165" y="243" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Dẫn truyền thần kinh</text>
-  <text x="165" y="258" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">(Tốc độ 30-70 m/s)</text>
+  <text x="165" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Kênh Na⁺ mở → Khử cực tế bào</text>
+  <text x="165" y="229" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">→ Tạo điện thế hoạt động</text>
+  <text x="165" y="243" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">→ Dẫn truyền thần kinh</text>
+  <text x="165" y="258" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">(Tốc độ 30-70 m/s)</text>
 
   <!-- Right: Lidocaine blocking -->
-  <rect x="365" y="44" width="295" height="240" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1.5" stroke-opacity="0.25" ry="8"/>
-  <text x="512" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#10B981" text-anchor="middle">CÓ LIDOCAINE — Phong bế kênh Na⁺</text>
+  <rect x="365" y="44" width="295" height="240" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1.5" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
+  <text x="512" y="68" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#3D6B4A" text-anchor="middle">CÓ LIDOCAINE — Phong bế kênh Na⁺</text>
 
   <!-- Nerve cell with lidocaine -->
-  <ellipse cx="420" cy="130" rx="35" ry="25" fill="#1B3320" stroke="#7CB87C" stroke-width="1.5"/>
-  <text x="420" y="125" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Tế bào</text>
-  <text x="420" y="137" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">thần kinh</text>
+  <ellipse cx="420" cy="130" rx="35" ry="25" fill="#F0F8FF" stroke="#7CB87C" stroke-width="1.5" filter="url(#card-shadow)" />
+  <text x="420" y="125" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Tế bào</text>
+  <text x="420" y="137" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">thần kinh</text>
 
   <!-- Ion channel BLOCKED -->
-  <rect x="480" y="110" width="30" height="40" rx="8" fill="#0A1811" stroke="url(#neon-green)" stroke-width="2" stroke-opacity="0.35" ry="8"/>
-  <text x="495" y="122" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#10B981" text-anchor="middle">Na⁺</text>
-  <text x="495" y="133" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#10B981" text-anchor="middle">Bị</text>
-  <text x="495" y="144" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#10B981" text-anchor="middle">khóa</text>
+  <rect x="480" y="110" width="30" height="40" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="2" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
+  <text x="495" y="122" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">Na⁺</text>
+  <text x="495" y="133" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">Bị</text>
+  <text x="495" y="144" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">khóa</text>
   <!-- Lidocaine molecule blocking -->
-  <ellipse cx="480" cy="125" rx="12" ry="8" fill="url(#neon-gold)" opacity="0.8"/>
-  <text x="462" y="110" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="url(#neon-gold)">Lidocaine</text>
+  <ellipse cx="480" cy="125" rx="12" ry="8" fill="#B8860B" opacity="0.8" />
+  <text x="462" y="110" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="7" fill="#B8860B">Lidocaine</text>
 
   <!-- Na+ blocked -->
-  <text x="455" y="120" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#10B981" opacity="0.5">Na⁺</text>
-  <text x="465" y="120" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="url(#neon-red)">✕</text>
+  <text x="455" y="120" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#3D6B4A" opacity="0.5">Na⁺</text>
+  <text x="465" y="120" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#C0390E">✕</text>
 
   <!-- Flat line (no AP) -->
-  <path d="M 515 130 L 640 130" fill="none" stroke="#7CB87C" stroke-width="2.5"/>
-  <text x="575" y="118" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981">Không có</text>
-  <text x="575" y="130" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981">điện thế</text>
+  <path d="M 515 130 L 640 130" fill="none" stroke="#7CB87C" stroke-width="2.5" />
+  <text x="575" y="118" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">Không có</text>
+  <text x="575" y="130" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">điện thế</text>
 
-  <text x="512" y="175" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">→ Không có tín hiệu truyền lên</text>
-  <text x="512" y="190" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">→ Ngưỡng kích hoạt tăng lên</text>
-  <text x="512" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Hiệu quả: IELT tăng 3-8x</text>
-  <text x="512" y="229" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Tác dụng trong 15-30 phút</text>
-  <text x="512" y="243" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Cần thoa 15-20 phút trước</text>
-  <text x="512" y="258" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">&amp; rửa sạch trước khi quan hệ</text>
+  <text x="512" y="175" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">→ Không có tín hiệu truyền lên</text>
+  <text x="512" y="190" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">→ Ngưỡng kích hoạt tăng lên</text>
+  <text x="512" y="215" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Hiệu quả: IELT tăng 3-8x</text>
+  <text x="512" y="229" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Tác dụng trong 15-30 phút</text>
+  <text x="512" y="243" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Cần thoa 15-20 phút trước</text>
+  <text x="512" y="258" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">&amp; rửa sạch trước khi quan hệ</text>
 
   <!-- Bottom comparison table -->
-  <rect x="18" y="296" width="642" height="90" rx="8" fill="#06120D" stroke="url(#neon-gold)" stroke-width="1" stroke-opacity="0.25" ry="8"/>
-  <text x="340" y="316" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="url(#neon-gold)" text-anchor="middle">BẢNG SO SÁNH GEL GÂY TÊ</text>
+  <rect x="18" y="296" width="642" height="90" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
+  <text x="340" y="316" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#B8860B" text-anchor="middle" class="title-text">BẢNG SO SÁNH GEL GÂY TÊ</text>
 
   <!-- Table headers -->
-  <text x="60" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Hoạt chất</text>
-  <text x="170" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Nồng độ</text>
-  <text x="280" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Thời gian tác dụng</text>
-  <text x="420" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Ưu điểm</text>
-  <text x="570" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#86EFAC" text-anchor="middle">Nhược điểm</text>
-  <line x1="25" y1="338" x2="655" y2="338" stroke="url(#neon-gold)" stroke-width="0.5" opacity="0.4"/>
+  <text x="60" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Hoạt chất</text>
+  <text x="170" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Nồng độ</text>
+  <text x="280" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Thời gian tác dụng</text>
+  <text x="420" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Ưu điểm</text>
+  <text x="570" y="334" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Nhược điểm</text>
+  <line x1="25" y1="338" x2="655" y2="338" stroke="#B8860B" stroke-width="0.5" opacity="0.4" />
 
-  <text x="60" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Lidocaine</text>
-  <text x="170" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">4-10%</text>
-  <text x="280" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">15-30 phút</text>
-  <text x="420" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Phổ biến, giá hợp lý</text>
-  <text x="570" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Cần rửa kỹ, đối tác có thể tê</text>
+  <text x="60" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A" text-anchor="middle">Lidocaine</text>
+  <text x="170" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A" text-anchor="middle">4-10%</text>
+  <text x="280" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A" text-anchor="middle">15-30 phút</text>
+  <text x="420" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Phổ biến, giá hợp lý</text>
+  <text x="570" y="353" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A" text-anchor="middle">Cần rửa kỹ, đối tác có thể tê</text>
 
-  <text x="60" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">Prilocaine</text>
-  <text x="170" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">2.5% (EMLA)</text>
-  <text x="280" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F3F4F6" text-anchor="middle">60-90 phút</text>
-  <text x="420" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Tác dụng kéo dài hơn</text>
-  <text x="570" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#F4A87A" text-anchor="middle">Cần kê đơn ở VN</text>
+  <text x="60" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A" text-anchor="middle">Prilocaine</text>
+  <text x="170" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A" text-anchor="middle">2.5% (EMLA)</text>
+  <text x="280" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A" text-anchor="middle">60-90 phút</text>
+  <text x="420" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Tác dụng kéo dài hơn</text>
+  <text x="570" y="370" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A" text-anchor="middle">Cần kê đơn ở VN</text>
 
-  <text x="340" y="390" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="url(#neon-gold)" text-anchor="middle" opacity="0.7">Nguồn: Doan 2017 · EAU 2024 · Mật Mã 21 R&amp;D</text>
+  <text x="340" y="390" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle" opacity="0.7" class="title-text">Nguồn: Doan 2017 · EAU 2024 · Mật Mã 21 R&amp;D</text>
 </svg>
