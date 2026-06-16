@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="100%" height="100%">
-    <defs>
+      <defs>
     <!-- Import Google Fonts for rendering in isolated contexts like <img> tags -->
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Lora:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap');
@@ -10,11 +10,11 @@
         font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
       }
       .title-text {
-        font-family: 'Lora', Georgia, serif;
-        font-weight: 700;
+        font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+        font-weight: 800;
         font-size: 14px;
         fill: #0D2B1A;
-        letter-spacing: -0.1px;
+        letter-spacing: -0.2px;
       }
       .glow-path {
         filter: url(#arrow-glow);
@@ -82,87 +82,101 @@
       <path d="M0,0 L0,6 L6,3 z" fill="#C0390E" />
     </marker>
   </defs>
+
+  <!-- Background Container -->
   <rect width="680" height="400" rx="16" fill="url(#cream-bg)" stroke="#E6DEC9" stroke-width="1.5" />
+
+  <!-- Title -->
+  <text x="340" y="32" class="title-text" text-anchor="middle">GIẢI PHẪU THẦN KINH MU CỤT &amp; CAN THIỆP XTS</text>
+  <line x1="220" y1="40" x2="460" y2="40" stroke="#D4AF37" stroke-width="1" stroke-opacity="0.5" />
+
+  <!-- ================= LEFT PANEL: ANATOMY VISUAL ================= -->
   
-  <text x="340" y="28" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="14" font-weight="800" fill="#B8860B" text-anchor="middle" class="title-text">GIẢI PHẪU THẦN KINH MU CỤT &amp; PHẪU THUẬT XTS</text>
+  <!-- Spinal Cord (S2-S4) Box -->
+  <g filter="url(#card-shadow)">
+    <rect x="25" y="70" width="105" height="44" rx="8" fill="#FFFFFF" stroke="#E6DEC9" stroke-width="1" />
+    <rect x="25" y="70" width="105" height="3" rx="1" fill="url(#blue-grad)" />
+    <text x="77.5" y="85" font-size="9" font-weight="800" fill="#2563EB" text-anchor="middle">⚡ TỦY SỐNG S2–S4</text>
+    <text x="77.5" y="98" font-size="7.5" font-weight="600" fill="#485A4F" text-anchor="middle">(Sacral Roots)</text>
+  </g>
 
-  <!-- Anatomy: dorsal nerve pathway -->
-  <text x="200" y="52" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="11" fill="#3D6B4A" text-anchor="middle">ĐƯỜNG ĐI THẦN KINH MU CỤT</text>
+  <!-- Pudendal Nerve Connection Path -->
+  <path d="M 77.5,114 Q 77.5,145 120,145" fill="none" stroke="#B8860B" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arr-gold)" />
+  <text x="100" y="137" font-size="7.5" font-weight="700" fill="#B8860B">TK Thẹn</text>
 
-  <!-- Spinal cord S2-S4 -->
-  <rect x="30" y="62" width="90" height="55" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="2" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
-  <text x="75" y="83" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#2563EB" text-anchor="middle">Tủy sống</text>
-  <text x="75" y="97" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">S2 — S4</text>
-  <text x="75" y="110" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">Sacral region</text>
+  <!-- Penis Shaft & Glans Drawing -->
+  <g filter="url(#card-shadow)">
+    <!-- Shaft Body -->
+    <path d="M 40,195 L 180,195 C 190,195 190,198 190,205 L 190,255 C 190,262 190,265 180,265 L 40,265 Z" fill="url(#skin-grad)" stroke="#C8BFB0" stroke-width="1.5" />
+    <text x="110" y="235" font-size="9.5" font-weight="700" fill="#485A4F" text-anchor="middle">Thân dương vật</text>
 
-  <!-- Pudendal nerve -->
-  <line x1="120" y1="89" x2="165" y2="89" stroke="#B8860B" stroke-width="3" marker-end="url(#arr-gold)" />
-  <text x="142" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#B8860B" text-anchor="middle">TK Thẹn</text>
-  <text x="142" y="100" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#B8860B" text-anchor="middle">(Pudendal n.)</text>
+    <!-- Glans Dome -->
+    <path d="M 190,205 C 190,165 250,165 250,230 C 250,295 190,295 190,255 Z" fill="#FDF2F0" stroke="#C0390E" stroke-width="1" stroke-opacity="0.3" />
+    <text x="215" y="235" font-size="8.5" font-weight="800" fill="#9E2E0A" text-anchor="middle">QUY ĐẦU</text>
+  </g>
 
-  <!-- Pudendal nerve block point -->
-  <rect x="167" y="70" width="76" height="40" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="1.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
-  <text x="205" y="86" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle">Điểm phân</text>
-  <text x="205" y="99" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle">nhánh TK</text>
+  <!-- Dorsal Nerve Line (Yellow) -->
+  <path d="M 120,145 Q 155,145 190,185" fill="none" stroke="#D4AF37" stroke-width="3.2" class="glow-path" />
+  <text x="160" y="167" font-size="8.5" font-weight="800" fill="#B8860B" transform="rotate(22, 160, 167)">TK mu cụt</text>
 
-  <!-- Dorsal nerve of penis -->
-  <line x1="243" y1="89" x2="305" y2="89" stroke="#B8860B" stroke-width="3" marker-end="url(#arr-gold)" />
-  <text x="273" y="82" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#B8860B" text-anchor="middle">TK mu cụt</text>
-  <text x="273" y="100" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#B8860B" text-anchor="middle">(Dorsal n.)</text>
+  <!-- Fine Nerve Endings inside Glans -->
+  <path d="M 190,185 Q 210,185 235,200" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="2,2" />
+  <path d="M 190,185 Q 220,205 242,225" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="2,2" />
+  <path d="M 190,185 Q 220,225 238,245" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="2,2" />
+  <path d="M 190,185 Q 205,245 220,250" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-dasharray="2,2" />
+  <text x="238" y="185" font-size="7.5" font-weight="700" fill="#C0390E" text-anchor="middle">~4.000 đầu mút</text>
 
-  <!-- Penis shaft -->
-  <rect x="307" y="68" width="130" height="42" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="2" class="glow-path" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
-  <text x="372" y="86" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C8BFB0" text-anchor="middle">Thân dương vật</text>
-  <text x="372" y="101" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A" text-anchor="middle">2 dây thần kinh mu cụt song song</text>
+  <!-- 1. Intersecting Cut Mark: Dorsal Neurectomy -->
+  <circle cx="150" cy="145" r="13" fill="none" stroke="#C0390E" stroke-width="1.5" stroke-dasharray="3,2" />
+  <text x="150" y="150" font-size="14" fill="#C0390E" text-anchor="middle" font-weight="700">✂️</text>
+  <path d="M 150,132 L 150,95 L 140,95" fill="none" stroke="#C0390E" stroke-width="1" stroke-dasharray="2,2" />
+  <g filter="url(#card-shadow)">
+    <rect x="25" y="80" width="110" height="28" rx="4" fill="#FFFFFF" stroke="#C0390E" stroke-width="1" stroke-opacity="0.3" />
+    <text x="80" y="92" font-size="8" font-weight="800" fill="#C0390E" text-anchor="middle">VỊ TRÍ CẮT TK</text>
+    <text x="80" y="102" font-size="7.5" font-weight="600" fill="#9E2E0A" text-anchor="middle">(Neurectomy)</text>
+  </g>
 
-  <!-- Glans -->
-  <ellipse cx="490" cy="89" rx="40" ry="25" fill="#C8BFB0" opacity="0.4" stroke="#C8BFB0" stroke-width="2" />
-  <line x1="437" y1="89" x2="450" y2="89" stroke="#B8860B" stroke-width="3" marker-end="url(#arr-gold)" />
-  <text x="490" y="85" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#0D2B1A" text-anchor="middle">QUY ĐẦU</text>
-  <text x="490" y="100" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#9E2E0A" text-anchor="middle">~4.000 đầu mút TK</text>
+  <!-- 2. Barrier Layer: HA Injection -->
+  <!-- Translucent Cyan Barrier in Glans -->
+  <path d="M 190,205 C 190,165 250,165 250,230 C 250,295 190,295 190,255 Z" fill="#2563EB" fill-opacity="0.12" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="4,3" stroke-opacity="0.5" />
+  <path d="M 230,220 L 265,220 C 280,220 285,200 285,130 L 255,130" fill="none" stroke="#2563EB" stroke-width="1" stroke-dasharray="2,2" />
+  <g filter="url(#card-shadow)">
+    <rect x="235" y="75" width="105" height="40" rx="5" fill="#FFFFFF" stroke="#2563EB" stroke-width="1" stroke-opacity="0.3" />
+    <text x="287.5" y="89" font-size="8" font-weight="800" fill="#2563EB" text-anchor="middle">TIÊM HA TẠO ĐỆM</text>
+    <text x="287.5" y="99" font-size="7" font-weight="600" fill="#485A4F" text-anchor="middle">(Glans Augmentation)</text>
+    <text x="287.5" y="109" font-size="7.5" font-weight="700" fill="#3D6B4A" text-anchor="middle">Chặn bớt cảm giác</text>
+  </g>
 
-  <!-- Surgical information -->
-  <rect x="18" y="130" width="310" height="245" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1.5" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
-  <text x="173" y="152" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#C0390E" text-anchor="middle">PHẪU THUẬT CẮT NHÁNH TK MU CỤT</text>
-  <text x="173" y="166" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">(Dorsal Neurectomy)</text>
+  <!-- ================= RIGHT PANEL: COMPARATIVE CARDS ================= -->
 
-  <rect x="28" y="174" width="292" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
-  <text x="174" y="191" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#B8860B" text-anchor="middle">Nguyên tắc phẫu thuật:</text>
-  <text x="32" y="207" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">Cắt một phần nhánh thần kinh mu cụt</text>
-  <text x="32" y="221" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A">→ Giảm cảm giác quy đầu 20-40%</text>
+  <!-- Card 1: Dorsal Neurectomy -->
+  <g filter="url(#card-shadow)">
+    <rect x="350" y="60" width="310" height="144" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1.5" stroke-opacity="0.4" />
+    <rect x="350" y="60" width="310" height="4" rx="2" fill="url(#rust-grad)" />
+    <text x="365" y="80" class="card-title" fill="#C0390E">✂️ PHẪU THUẬT CẮT THẦN KINH MU CỤT</text>
+    <text x="365" y="94" font-size="8" font-weight="600" fill="#485A4F">(Selective Dorsal Neurectomy)</text>
+    
+    <text x="365" y="112" class="card-desc" fill="#0D2B1A">• Nguyên tắc: Cắt chọn lọc một số nhánh thần kinh mu cụt.</text>
+    <text x="365" y="125" class="card-desc" fill="#0D2B1A">• Hiệu quả: Giảm cảm giác quy đầu khoảng 20% – 40%.</text>
+    <text x="365" y="138" class="card-desc" fill="#9E2E0A">• Rủi ro cao: Mất cảm giác vĩnh viễn (10-30%), rối loạn cương dương.</text>
+    <text x="365" y="150" class="card-desc" fill="#9E2E0A">  Không thể phục hồi thần kinh sau khi đã cắt.</text>
+    <text x="365" y="163" class="card-desc" font-weight="700" fill="#C0390E">⚠️ EAU Guidelines 2024: KHÔNG khuyến nghị rộng rãi.</text>
+  </g>
 
-  <rect x="28" y="236" width="292" height="54" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
-  <text x="174" y="253" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C0390E" text-anchor="middle">⚠️ Rủi ro nghiêm trọng:</text>
-  <text x="32" y="269" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A">• Mất cảm giác vĩnh viễn (10-30%)</text>
-  <text x="32" y="283" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#9E2E0A">• Rối loạn cương dương sau phẫu thuật</text>
+  <!-- Card 2: Hyaluronic Acid Injection -->
+  <g filter="url(#card-shadow)">
+    <rect x="350" y="216" width="310" height="136" rx="8" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5" stroke-opacity="0.4" />
+    <rect x="350" y="216" width="310" height="4" rx="2" fill="url(#blue-grad)" />
+    <text x="365" y="236" class="card-title" fill="#2563EB">💉 TIÊM CHẤT LÀM ĐẦY (HA) QUY ĐẦU</text>
+    <text x="365" y="250" font-size="8" font-weight="600" fill="#485A4F">(Glans Augmentation with Hyaluronic Acid)</text>
+    
+    <text x="365" y="268" class="card-desc" fill="#0D2B1A">• Nguyên tắc: Bơm HA dưới da tạo màng đệm ngăn kích thích.</text>
+    <text x="365" y="281" class="card-desc" fill="#0D2B1A">• Hiệu quả: Tăng IELT từ 1.4 → 3.8 phút (Hyun 2018, n=145).</text>
+    <text x="365" y="294" class="card-desc" fill="#3D6B4A">• Ưu điểm: Không phẫu thuật, an toàn, tự tiêu sau 12–18 tháng.</text>
+    <text x="365" y="307" class="card-desc" fill="#0D2B1A">• Chi phí: 5 - 15 triệu VNĐ · Yêu cầu bác sĩ chuyên khoa nam học.</text>
+    <text x="365" y="320" class="card-desc" font-weight="700" fill="#2563EB">⭐ Giải pháp tạm thời và có thể đảo ngược.</text>
+  </g>
 
-  <rect x="28" y="298" width="292" height="68" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
-  <text x="174" y="315" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#B8860B" text-anchor="middle">Bằng chứng khoa học:</text>
-  <text x="32" y="331" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">Cochrane 2021 review: Không đủ bằng chứng</text>
-  <text x="32" y="345" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">chất lượng cao để khuyến nghị rộng rãi</text>
-  <text x="32" y="359" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C0390E">→ EAU 2024: Chỉ cân nhắc khi thất bại với</text>
-  <text x="32" y="373" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#C0390E">tất cả phương pháp bảo tồn</text>
-
-  <!-- HA injection info -->
-  <rect x="352" y="130" width="310" height="245" rx="8" fill="#FFFFFF" stroke="#B8860B" stroke-width="1.5" stroke-opacity="0.25" ry="8" filter="url(#card-shadow)" />
-  <text x="507" y="152" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="12" font-weight="700" fill="#3D6B4A" text-anchor="middle">TIÊM HYALURONIC ACID (HA)</text>
-  <text x="507" y="166" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">(Glans Penis Augmentation)</text>
-
-  <rect x="362" y="174" width="292" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
-  <text x="508" y="191" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#3D6B4A" text-anchor="middle">Cơ chế hoạt động:</text>
-  <text x="366" y="207" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">HA tạo lớp đệm giữa da và đầu mút TK</text>
-  <text x="366" y="221" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#0D2B1A">→ Giảm cường độ kích thích ~30-40%</text>
-
-  <rect x="362" y="236" width="292" height="70" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
-  <text x="508" y="253" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#B8860B" text-anchor="middle">Nghiên cứu Hyun 2018 (n=145):</text>
-  <text x="366" y="270" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">IELT trung bình tăng từ 1.5 → 5.2 phút</text>
-  <text x="366" y="284" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">(tăng 3.5x) · Tác dụng kéo dài 12-18 tháng</text>
-  <text x="366" y="298" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">Hài lòng của cặp đôi: 73.1%</text>
-
-  <rect x="362" y="314" width="292" height="54" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
-  <text x="508" y="331" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#B8860B" text-anchor="middle">Lưu ý quan trọng:</text>
-  <text x="366" y="347" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">• Cần bác sĩ chuyên khoa nam học thực hiện</text>
-  <text x="366" y="361" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A">• Tiêm lại sau 12-18 tháng · Giá 5-15 triệu VND</text>
-
-  <text x="340" y="390" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle" opacity="0.7" class="title-text">Nguồn: Hyun 2018 · Cochrane 2021 · EAU 2024 · Gray's Anatomy · Mật Mã 21 R&amp;D</text>
+  <!-- Footer Citation -->
+  <text x="340" y="380" font-size="8.5" font-weight="600" fill="#485A4F" text-anchor="middle" opacity="0.8" class="title-text">Nguồn: Hyun 2018 · Cochrane 2021 · EAU 2024 · Gray's Anatomy · Mật Mã 21 R&amp;D</text>
 </svg>
