@@ -1068,16 +1068,7 @@
         `<strong>${shown.length}</strong> khóa học &amp; tài nguyên`;
     }
 
-    // ===== Login/Register button visibility =====
-    const loggedIn = localStorage.getItem('thuthach21ngay_user_session');
-    if (loggedIn) {
-      const loginBtn = document.getElementById('login-btn-desktop');
-      const regBtn = document.getElementById('register-btn-desktop');
-      if (loginBtn) loginBtn.textContent = 'Khóa Học Của Tôi';
-      if (loginBtn) loginBtn.href = '/my-courses.html';
-      if (regBtn) regBtn.style.display = 'none';
-      document.querySelectorAll('.btn-login').forEach(b => { b.style.removeProperty('display'); b.textContent = 'Khóa Học Của Tôi'; b.href = '/my-courses.html'; });
-    }
+    // Header auth state is handled globally by register.js (initHeaderAuth)
   </script>
   <script type="module" src="/analytics-tracker.js"></script>
   <script type="module" src="/register.js"></script>

@@ -655,4 +655,57 @@ if (document.readyState === 'loading') {
   init();
 }
 
+// ── Header auth state ──────────────────────────────────────────────────────
+// Runs on every page that imports register.js. If a session exists (Supabase or
+// localStorage), replaces the Đăng Nhập/Đăng Ký buttons with a single
+// "Khóa Học Của Tôi" link. This prevents the header from looking logged-out
+// when navigating back to the landing page after signing in.
+async function initHeaderAuth() {
+  let loggedIn = false;
+  let userName  = '';
+
+  // Check Supabase session first (authoritative)
+  if (isSupabaseEnabled) {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        loggedIn = true;
+        userName = session.user.user_metadata?.name || session.user.email;
+      }
+    } catch (_) {}
+  }
+
+  // Fallback: localStorage session
+  if (!loggedIn) {
+    const raw = localStorage.getItem('thuthach21ngay_user_session');
+    if (raw) {
+      try { const s = JSON.parse(raw); loggedIn = !!s?.email; userName = s?.name || s?.email || ''; } catch (_) {}
+    }
+  }
+
+  if (!loggedIn) return;
+
+  // Desktop: replace the two buttons with one "Khóa Học Của Tôi" link
+  const loginBtnDesktop = document.getElementById('login-btn-desktop');
+  const regBtnDesktop   = document.getElementById('register-btn-desktop');
+  if (loginBtnDesktop) {
+    const link = document.createElement('a');
+    link.href      = '/my-courses.html';
+    link.className = loginBtnDesktop.className;
+    link.innerHTML = `<i class="fa-solid fa-graduation-cap"></i> Khóa Học Của Tôi`;
+    loginBtnDesktop.replaceWith(link);
+  }
+  if (regBtnDesktop) regBtnDesktop.style.display = 'none';
+
+  // Mobile nav: show the login link (already points to /my-courses.html)
+  const loginBtnMobile = document.getElementById('login-btn-mobile');
+  if (loginBtnMobile) {
+    loginBtnMobile.textContent = 'Khóa Học Của Tôi';
+    loginBtnMobile.href        = '/my-courses.html';
+    loginBtnMobile.style.display = '';
+  }
+}
+
+initHeaderAuth();
+
 export { openModal as openRegisterModal, toast };
