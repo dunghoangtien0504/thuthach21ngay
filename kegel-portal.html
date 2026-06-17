@@ -89,10 +89,89 @@
       padding: 40px 48px;
       max-width: 800px;
     }
+    /* ─── MOBILE RESPONSIVE ─────────────────────────────────────────────────── */
     @media (max-width: 768px) {
-      .portal-layout { flex-direction: column; }
-      aside.lesson-nav { width: 100%; min-width: unset; border-right: none; border-bottom: 1px solid var(--border); padding: 12px 0; max-height: 220px; }
-      main.lesson-content { padding: 24px 20px; }
+      /* Header compact */
+      header { padding: 10px 16px; }
+      .logo { font-size: 17px; gap: 8px; }
+      .header-user-name { display: none; }
+      .btn-logout { font-size: 13px; padding: 6px 10px; gap: 4px; }
+      .header-right { gap: 8px; }
+
+      /* Progress bar compact */
+      .progress-header { padding: 9px 16px; gap: 10px; }
+      .progress-label { font-size: 12px; }
+      .progress-text { font-size: 12px; }
+      .progress-bar-track { min-width: 80px; height: 6px; }
+
+      /* Layout: stack vertically */
+      .portal-layout { flex-direction: column; height: auto; }
+
+      /* Sidebar: scrollable strip at top */
+      aside.lesson-nav {
+        width: 100%; min-width: unset;
+        border-right: none;
+        border-bottom: 2px solid var(--border);
+        padding: 10px 0;
+        max-height: 300px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-shrink: 0;
+      }
+      .nav-section-title { padding: 0 16px 8px; font-size: 10px; }
+      .lesson-nav-item { padding: 10px 16px; font-size: 13px; gap: 10px; }
+      .nav-check { width: 24px; height: 24px; font-size: 10px; }
+      .nav-item-title { font-size: 13px; }
+      .nav-day-label { font-size: 11px; }
+
+      /* Main content: generous reading room */
+      main.lesson-content { padding: 20px 16px; max-width: 100%; }
+
+      /* Lesson typography */
+      .lesson-tag { font-size: 10px; margin-bottom: 12px; }
+      .lesson-title { font-size: 22px; margin-bottom: 6px; }
+      .lesson-subtitle { font-size: 14px; }
+      .lesson-body { font-size: 15px; line-height: 1.75; }
+      .lesson-body h3 { font-size: 16px; margin-top: 24px; }
+      .lesson-body p { margin-bottom: 14px; }
+      .lesson-body ol, .lesson-body ul { padding-left: 20px; }
+      .lesson-body li { margin-bottom: 8px; }
+
+      /* Illustrations: full width on mobile */
+      .lesson-illustration { width: 100% !important; max-width: 100% !important; border-radius: 10px; }
+
+      /* Tip / warning boxes */
+      .tip-box { padding: 14px 16px; font-size: 14px; }
+      .warning-box { padding: 14px 16px; font-size: 14px; }
+
+      /* Exercise block */
+      .exercise-block { padding: 16px; border-radius: 12px; }
+      .exercise-block h4 { font-size: 12px; margin-bottom: 12px; }
+      .exercise-row { flex-direction: column; align-items: flex-start; gap: 6px; padding: 10px 0; font-size: 14px; }
+      .exercise-badge { font-size: 11px; }
+
+      /* Check-in table: scroll horizontally */
+      .checkin-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+      .checkin-table th, .checkin-table td { padding: 8px 10px; font-size: 13px; }
+
+      /* Lesson footer: stack buttons */
+      .lesson-footer { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 32px; padding-top: 24px; }
+      .btn-done { width: 100%; justify-content: center; font-size: 15px; padding: 14px 20px; }
+      .btn-next { width: 100%; justify-content: center; font-size: 14px; padding: 12px 20px; }
+
+      /* Auth gate card */
+      .gate-card { padding: 32px 20px; border-radius: 16px; }
+      .gate-card h2 { font-size: 20px; }
+      .gate-card p { font-size: 14px; }
+    }
+
+    /* Extra small phones (≤380px) */
+    @media (max-width: 380px) {
+      .logo span { display: none; } /* icon only on tiny screens */
+      .btn-logout { font-size: 12px; padding: 5px 8px; }
+      main.lesson-content { padding: 16px 12px; }
+      .lesson-title { font-size: 20px; }
+      aside.lesson-nav { max-height: 260px; }
     }
 
     .lesson-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: var(--green); background: var(--green-light); padding: 4px 12px; border-radius: 99px; margin-bottom: 16px; }
