@@ -2699,6 +2699,20 @@
         status: "pending"
       };
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(sessionObj));
+
+      // Call register-pending to save profile to Supabase
+      fetch('/api/register-pending', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          name: name,
+          phone: phone,
+          course_id: 'mat-ma-21',
+          source: 'index_checkout',
+          referred_by: localStorage.getItem('mm21_ref_code') || null
+        })
+      }).catch(err => console.error('Error registering pending user:', err));
       
       // Pre-add into account lists
       let accounts = JSON.parse(localStorage.getItem('thuthach21ngay_accounts')) || [];

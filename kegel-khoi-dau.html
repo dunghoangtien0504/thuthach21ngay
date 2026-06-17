@@ -855,6 +855,20 @@
       if (idx >= 0) users[idx] = userObj; else users.push(userObj);
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(users));
 
+      // Call register-pending to save profile to Supabase
+      fetch('/api/register-pending', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          name: name,
+          phone: phone,
+          course_id: 'kegel',
+          source: 'kegel_checkout',
+          referred_by: localStorage.getItem('mm21_ref_code') || null
+        })
+      }).catch(err => console.error('Error registering pending user:', err));
+
       // Chuyển sang bước QR
       document.getElementById('modal-step-form').style.display = 'none';
       document.getElementById('modal-step-qr').style.display = '';

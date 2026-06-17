@@ -1,18 +1,4 @@
-/**
- * api/admin-activate-user.js — Vercel serverless function
- * Creates a Supabase user (or resets password) and grants full course access.
- * Protected by admin password header.
- *
- * POST /api/admin-activate-user
- * Headers: Authorization: Bearer <VITE_ADMIN_PASS>
- * Body: { email, password?, name?, courses?: string[] }
- * courses: array of course_ids to grant — omit to grant all
- */
-
-const COURSE_LIST = [
-  { course_id: 'mat-ma-21',  course_name: 'Mật Mã 21' },
-  { course_id: 'kegel',      course_name: 'Kegel Chuyên Sâu' },
-];
+import { activateUserCourse } from './_activation-helper.js';
 
 export default async function handler(req, res) {
   // CORS
@@ -31,84 +17,36 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // Supabase credentials
-  const supabaseUrl    = process.env.VITE_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!supabaseUrl || !serviceRoleKey) {
-    return res.status(503).json({ error: 'Supabase not configured' });
-  }
-
-  const { email, password, name, courses: requestedCourses } = req.body || {};
+  const { email, name, phone, courses: requestedCourses } = req.body || {};
   if (!email) return res.status(400).json({ error: 'email is required' });
 
-  // If caller specifies course IDs, only activate those; otherwise activate all
-  const activeCourses = (Array.isArray(requestedCourses) && requestedCourses.length)
-    ? COURSE_LIST.filter(c => requestedCourses.includes(c.course_id))
-    : COURSE_LIST;
+  // If caller specifies course IDs, only activate those; otherwise activate both
+  const coursesToActivate = (Array.isArray(requestedCourses) && requestedCourses.length)
+    ? requestedCourses
+    : ['mat-ma-21', 'kegel'];
 
   try {
-    const { createClient } = await import('@supabase/supabase-js');
-    const admin = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    });
-
-    // 1. Find or create user
-    const { data: { users } } = await admin.auth.admin.listUsers({ perPage: 1000 });
-    let userId;
-    const existing = users.find(u => u.email?.toLowerCase() === email.toLowerCase());
-
-    if (existing) {
-      userId = existing.id;
-      // Update password if provided
-      if (password) {
-        const { error: pwErr } = await admin.auth.admin.updateUserById(userId, { password });
-        if (pwErr) throw pwErr;
-      }
-      // Confirm email if not confirmed
-      if (!existing.email_confirmed_at) {
-        await admin.auth.admin.updateUserById(userId, { email_confirm: true });
-      }
-    } else {
-      // Create new user — admin path bypasses email verification and password length limits
-      const { data: created, error: createErr } = await admin.auth.admin.createUser({
+    const results = [];
+    for (const courseId of coursesToActivate) {
+      const result = await activateUserCourse({
         email,
-        password: password || 'MatMa21!Temp',
-        email_confirm: true,
-        user_metadata: { name: name || email.split('@')[0] },
+        name,
+        phone,
+        courseId,
+        source: 'admin_panel',
       });
-      if (createErr) throw createErr;
-      userId = created.user.id;
-    }
-
-    // 2. Upsert profile (user_profiles has no `status` column — access is granted
-    //    via course_enrollments below, which is the source of truth for paid access)
-    await admin.from('user_profiles').upsert({
-      id: userId,
-      name: name || (existing?.user_metadata?.name) || email.split('@')[0],
-    }, { onConflict: 'id' });
-
-    // 3. Insert enrollment records for selected courses
-    const enrolledAt = new Date().toISOString();
-    for (const course of activeCourses) {
-      await admin.from('course_enrollments').upsert({
-        user_id:     userId,
-        course_id:   course.course_id,
-        course_name: course.course_name,
-        status:      'active',
-        enrolled_at: enrolledAt,
-      }, { onConflict: 'user_id,course_id' });
+      results.push(result);
     }
 
     return res.status(200).json({
       success: true,
-      userId,
       email,
-      courses: activeCourses.map(c => c.course_id),
-      message: `Đã kích hoạt ${activeCourses.length} khóa học cho ${email}`,
+      courses: coursesToActivate,
+      message: `Đã kích hoạt ${coursesToActivate.length} khóa học cho ${email}`,
     });
 
   } catch (err) {
-    console.error('[admin-activate-user]', err);
+    console.error('[admin-activate-user] Error:', err);
     return res.status(500).json({ error: err.message || 'Internal server error' });
   }
 }

@@ -1,3 +1,5 @@
+import { activateUserCourse } from './_activation-helper.js';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -60,6 +62,18 @@ export default async function handler(req, res) {
     });
 
     if (matched) {
+      try {
+        const courseId = isKegel ? 'kegel' : 'mat-ma-21';
+        await activateUserCourse({
+          email: cleanEmail,
+          phone: cleanPhone,
+          courseId,
+          source: isKegel ? 'kegel_checkout' : 'index_checkout'
+        });
+      } catch (actErr) {
+        console.error('Activation error during check-payment:', actErr);
+      }
+
       return res.status(200).json({
         success: true,
         transaction: {
