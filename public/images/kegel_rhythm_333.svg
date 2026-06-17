@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  <defs>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="gold-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#B8922A"/>
+    </linearGradient>
+    <linearGradient id="hold-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B442D"/>
+      <stop offset="100%" stop-color="#2A5C3F"/>
+    </linearGradient>
+    <linearGradient id="relax-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5B9EC9"/>
+      <stop offset="100%" stop-color="#3D7BA8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Card -->
+  <rect x="2" y="2" width="596" height="356" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#sh)"/>
+
+  <!-- Title -->
+  <text x="300" y="36" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="800" fill="#0D2B1A">NHỊP TẬP 3-3-3 — TIÊU CHUẨN VÀNG</text>
+  <text x="300" y="55" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#5A6E61">Mỗi hiệp = 3 giây co · 3 giây giữ · 3 giây thả — lặp 10 hiệp/buổi</text>
+
+  <!-- Timeline bar -->
+  <rect x="40" y="75" width="520" height="6" rx="3" fill="#E6DFD3"/>
+
+  <!-- Phase 1: CO (seconds 0-3) — Gold -->
+  <rect x="40" y="75" width="156" height="6" rx="3" fill="url(#gold-g)"/>
+  <!-- Phase 2: GIỮ (seconds 3-6) — Dark Green -->
+  <rect x="196" y="75" width="156" height="6" rx="3" fill="url(#hold-g)"/>
+  <!-- Phase 3: THẢ (seconds 6-9) — Blue -->
+  <rect x="352" y="75" width="156" height="6" rx="3" fill="url(#relax-g)"/>
+  <!-- Rest tick marks for seconds -->
+  <line x1="196" y1="70" x2="196" y2="90" stroke="#0D2B1A" stroke-width="1.5"/>
+  <line x1="352" y1="70" x2="352" y2="90" stroke="#0D2B1A" stroke-width="1.5"/>
+  <line x1="508" y1="70" x2="508" y2="90" stroke="#0D2B1A" stroke-width="1.5"/>
+  <text x="40" y="102" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8A9E90">0s</text>
+  <text x="196" y="102" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8A9E90">3s</text>
+  <text x="352" y="102" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8A9E90">6s</text>
+  <text x="508" y="102" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8A9E90">9s</text>
+
+  <!-- Phase cards row -->
+
+  <!-- PHASE 1: CO -->
+  <rect x="36" y="112" width="168" height="170" rx="14" fill="#FBF6E6" stroke="#D4AF37" stroke-width="2"/>
+  <rect x="36" y="112" width="168" height="42" rx="14" fill="url(#gold-g)"/>
+  <rect x="36" y="140" width="168" height="14" fill="url(#gold-g)"/>
+  <text x="120" y="139" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="900" fill="#0D2B1A">CO</text>
+  <text x="120" y="168" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="900" fill="#D4AF37">3</text>
+  <text x="120" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">giây</text>
+  <!-- Wave up -->
+  <path d="M60,212 Q80,195 100,212 Q120,229 140,212 Q160,195 176,212" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="120" y="242" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Siết cơ PC từ từ</text>
+  <text x="120" y="256" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Cảm nhận sức căng tăng dần</text>
+  <text x="120" y="272" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#B8922A" font-weight="700">Thở bình thường ✓</text>
+
+  <!-- PHASE 2: GIỮ -->
+  <rect x="216" y="112" width="168" height="170" rx="14" fill="#F0F7F2" stroke="#1B442D" stroke-width="2"/>
+  <rect x="216" y="112" width="168" height="42" rx="14" fill="url(#hold-g)"/>
+  <rect x="216" y="140" width="168" height="14" fill="url(#hold-g)"/>
+  <text x="300" y="139" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="900" fill="white">GIỮ</text>
+  <text x="300" y="168" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="900" fill="#1B442D">3</text>
+  <text x="300" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">giây</text>
+  <!-- Flat line (hold) -->
+  <line x1="240" y1="212" x2="372" y2="212" stroke="#1B442D" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="240" cy="212" r="4" fill="#1B442D"/>
+  <circle cx="372" cy="212" r="4" fill="#1B442D"/>
+  <text x="300" y="242" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Duy trì lực co tối đa</text>
+  <text x="300" y="256" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Đây là lúc cơ được rèn</text>
+  <text x="300" y="272" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#1B442D" font-weight="700">Không thở gấp ✓</text>
+
+  <!-- PHASE 3: THẢ -->
+  <rect x="396" y="112" width="168" height="170" rx="14" fill="#EEF6FB" stroke="#5B9EC9" stroke-width="2"/>
+  <rect x="396" y="112" width="168" height="42" rx="14" fill="url(#relax-g)"/>
+  <rect x="396" y="140" width="168" height="14" fill="url(#relax-g)"/>
+  <text x="480" y="139" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="900" fill="white">THẢ</text>
+  <text x="480" y="168" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="900" fill="#3D7BA8">3</text>
+  <text x="480" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">giây</text>
+  <!-- Wave down -->
+  <path d="M420,200 Q440,215 460,200 Q480,185 500,200 Q520,215 552,200" fill="none" stroke="#5B9EC9" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="480" y="242" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Buông cơ hoàn toàn</text>
+  <text x="480" y="256" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Quan trọng như lúc co</text>
+  <text x="480" y="272" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#3D7BA8" font-weight="700">Hít thở sâu ✓</text>
+
+  <!-- Bottom info bar -->
+  <rect x="36" y="295" width="524" height="52" rx="10" fill="#1B442D" opacity="0.06"/>
+  <rect x="36" y="295" width="524" height="52" rx="10" fill="none" stroke="#1B442D" stroke-width="1.5"/>
+  <text x="300" y="316" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="800" fill="#0D2B1A">MỖI BUỔI TẬP = 10 HIỆP × 9 GIÂY = 1,5 PHÚT</text>
+  <text x="180" y="337" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Sáng: 10 hiệp · 2 sets</text>
+  <text x="300" y="337" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#D4AF37" font-weight="700">|</text>
+  <text x="420" y="337" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Tối: 10 hiệp · 2 sets</text>
+</svg>

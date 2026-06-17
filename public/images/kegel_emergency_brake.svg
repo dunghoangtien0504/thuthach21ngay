@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="track-g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2ECC71"/>
+      <stop offset="35%" stop-color="#F1C40F"/>
+      <stop offset="65%" stop-color="#E67E22"/>
+      <stop offset="82%" stop-color="#E74C3C"/>
+      <stop offset="100%" stop-color="#8E1A10"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Card -->
+  <rect x="2" y="2" width="596" height="376" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#sh)"/>
+
+  <!-- Title -->
+  <text x="300" y="36" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="800" fill="#0D2B1A">PHANH KHẨN CẤP — THỜI ĐIỂM KÍch HOẠT</text>
+  <text x="300" y="55" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#5A6E61">Nhận ra điểm bùng phát trước 5-10 giây → kích hoạt cơ PC ngay</text>
+
+  <!-- Arousal scale bar -->
+  <rect x="40" y="78" width="520" height="34" rx="17" fill="url(#track-g)"/>
+
+  <!-- Level markers -->
+  <line x1="92" y1="74" x2="92" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="144" y1="74" x2="144" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="196" y1="74" x2="196" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="248" y1="74" x2="248" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="300" y1="74" x2="300" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="352" y1="74" x2="352" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="404" y1="74" x2="404" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="456" y1="74" x2="456" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+  <line x1="508" y1="74" x2="508" y2="120" stroke="white" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Level numbers -->
+  <text x="40" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">1</text>
+  <text x="92" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">2</text>
+  <text x="144" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">3</text>
+  <text x="196" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">4</text>
+  <text x="248" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">5</text>
+  <text x="300" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">6</text>
+  <text x="352" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">7</text>
+  <text x="404" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">8</text>
+  <text x="456" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">9</text>
+  <text x="508" y="126" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">10</text>
+
+  <!-- Labels -->
+  <text x="120" y="144" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#2ECC71" font-weight="700">An toàn</text>
+  <text x="300" y="144" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#E67E22" font-weight="700">Vùng cảnh báo</text>
+  <text x="510" y="144" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8E1A10" font-weight="700">Quá điểm</text>
+
+  <!-- BRAKE ZONE highlight at 7.5 -->
+  <rect x="362" y="70" width="72" height="50" rx="8" fill="#D4AF37" opacity="0.15"/>
+  <rect x="362" y="70" width="72" height="50" rx="8" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="398" y="66" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="800" fill="#B8922A">↓ KÍCH HOẠT TẠI ĐÂY</text>
+
+  <!-- Pointer triangle at 7.5 -->
+  <polygon points="398,82 388,65 408,65" fill="#D4AF37" filter="url(#glow)"/>
+
+  <!-- Point of no return marker -->
+  <line x1="456" y1="60" x2="456" y2="128" stroke="#E74C3C" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="456" y="56" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#E74C3C" font-weight="700">ĐIỂM BỘC PHÁT</text>
+
+  <!-- 3 State cards -->
+
+  <!-- State A: "Cảm nhận" -->
+  <rect x="40" y="160" width="158" height="158" rx="14" fill="#F0F7F2" stroke="#1B442D" stroke-width="2"/>
+  <circle cx="119" cy="192" r="22" fill="#1B442D"/>
+  <text x="119" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="white">👁</text>
+  <text x="119" y="204" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="8" fill="white">CẢM NHẬN</text>
+  <text x="119" y="230" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="800" fill="#1B442D">Mức 6-7</text>
+  <text x="119" y="248" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Nhận ra tín hiệu:</text>
+  <text x="119" y="263" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">tim nhanh hơn,</text>
+  <text x="119" y="278" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">cơ thể tăng nhiệt</text>
+  <text x="119" y="296" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#1B442D" font-weight="700">→ Chủ động ghi nhớ</text>
+  <text x="119" y="308" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#1B442D" font-weight="700">mức này</text>
+
+  <!-- Arrow -->
+  <text x="222" y="246" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="#D4AF37">→</text>
+
+  <!-- State B: "Phanh" -->
+  <rect x="221" y="160" width="158" height="158" rx="14" fill="#FBF6E6" stroke="#D4AF37" stroke-width="2.5"/>
+  <circle cx="300" cy="192" r="22" fill="#D4AF37"/>
+  <text x="300" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#0D2B1A">⚡</text>
+  <text x="300" y="204" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="8" fill="#0D2B1A" font-weight="800">KÍCH HOẠT</text>
+  <text x="300" y="230" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="800" fill="#B8922A">Mức 7-7.5</text>
+  <text x="300" y="248" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Co cơ PC mạnh</text>
+  <text x="300" y="263" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">và giữ 3-5 giây</text>
+  <text x="300" y="278" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Thở ra chậm rãi</text>
+  <text x="300" y="296" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#B8922A" font-weight="700">★ Thời điểm vàng</text>
+  <text x="300" y="308" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#B8922A" font-weight="700">để phanh hiệu quả</text>
+
+  <!-- Arrow -->
+  <text x="403" y="246" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="#2ECC71">→</text>
+
+  <!-- State C: "Tiếp tục" -->
+  <rect x="402" y="160" width="158" height="158" rx="14" fill="#F0F7F2" stroke="#2ECC71" stroke-width="2"/>
+  <circle cx="481" cy="192" r="22" fill="#27AE60"/>
+  <text x="481" y="188" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="white">✓</text>
+  <text x="481" y="204" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="8" fill="white">KIỂM SOÁT</text>
+  <text x="481" y="230" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="800" fill="#27AE60">Mức về 5-6</text>
+  <text x="481" y="248" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Cảm giác hạ nhiệt</text>
+  <text x="481" y="263" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Tiếp tục bình thường</text>
+  <text x="481" y="278" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Không lo lắng</text>
+  <text x="481" y="296" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#27AE60" font-weight="700">Anh đang kiểm soát</text>
+  <text x="481" y="308" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#27AE60" font-weight="700">có chủ đích ✓</text>
+
+  <!-- Bottom bar -->
+  <rect x="40" y="330" width="520" height="38" rx="10" fill="#D4AF37" opacity="0.12"/>
+  <rect x="40" y="330" width="520" height="38" rx="10" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+  <text x="300" y="350" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="800" fill="#0D2B1A">Nguyên tắc vàng: Phanh trước khi đến điểm không thể dừng</text>
+  <text x="300" y="364" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Kỹ năng này cần 7-14 ngày luyện tập để nhận ra tín hiệu cơ thể chính xác</text>
+</svg>

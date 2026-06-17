@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="gold-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA7C11"/>
+    </linearGradient>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#AA7C11"/>
+    </marker>
+  </defs>
+
+  <!-- Card -->
+  <rect x="2" y="2" width="596" height="396" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#sh)"/>
+
+  <!-- Title -->
+  <text x="300" y="40" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="800" fill="#0D2B1A">VỊ TRÍ CƠ PC — CƠ KIỂM SOÁT TRỰC TIẾP</text>
+  <text x="300" y="60" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#5A6E61">Sơ đồ giải phẫu vùng sàn chậu nam giới</text>
+
+  <!-- Divider -->
+  <line x1="296" y1="75" x2="296" y2="390" stroke="#E6DFD3" stroke-width="1.5"/>
+
+  <!-- ─── LEFT: Body silhouette ─── -->
+  <!-- Head -->
+  <circle cx="148" cy="108" r="22" fill="none" stroke="#C5CECC" stroke-width="2"/>
+  <!-- Neck -->
+  <rect x="141" y="128" width="14" height="13" rx="3" fill="none" stroke="#C5CECC" stroke-width="1.5"/>
+  <!-- Torso -->
+  <path d="M115,141 L98,208 L108,318 L188,318 L198,208 L181,141 Z" fill="#F0F4F2" stroke="#C5CECC" stroke-width="1.5"/>
+  <!-- Arms -->
+  <path d="M115,152 L86,228 L96,232 L123,160" fill="none" stroke="#C5CECC" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M181,152 L210,228 L200,232 L173,160" fill="none" stroke="#C5CECC" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Legs -->
+  <line x1="118" y1="318" x2="104" y2="385" stroke="#C5CECC" stroke-width="11" stroke-linecap="round"/>
+  <line x1="178" y1="318" x2="192" y2="385" stroke="#C5CECC" stroke-width="11" stroke-linecap="round"/>
+
+  <!-- Pelvic floor zone highlight (gold) -->
+  <ellipse cx="148" cy="285" rx="34" ry="16" fill="#D4AF37" opacity="0.45" filter="url(#glow)"/>
+  <ellipse cx="148" cy="285" rx="34" ry="16" fill="none" stroke="#AA7C11" stroke-width="2.5"/>
+
+  <!-- Label -->
+  <text x="148" y="350" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#AA7C11" font-weight="800">Vùng sàn chậu</text>
+  <text x="148" y="366" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">▶ Xem phóng to</text>
+
+  <!-- Zoom arrow -->
+  <path d="M185,285 C225,285 248,230 296,220" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arr)"/>
+
+  <!-- ─── RIGHT: Pelvic floor zoom ─── -->
+  <text x="448" y="92" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="800" fill="#0D2B1A">PHÓNG TO: SÀN CHẬU</text>
+
+  <!-- Pelvis oval outline -->
+  <ellipse cx="448" cy="218" rx="118" ry="86" fill="#F0F4F2" stroke="#C5CECC" stroke-width="2"/>
+
+  <!-- Pubic bone (left) -->
+  <rect x="316" y="195" width="36" height="46" rx="10" fill="#C5CECC" stroke="#8A9E90" stroke-width="1.5"/>
+  <text x="334" y="225" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#3D5A45">Xương mu</text>
+
+  <!-- Coccyx (right) -->
+  <rect x="548" y="195" width="36" height="46" rx="10" fill="#C5CECC" stroke="#8A9E90" stroke-width="1.5"/>
+  <text x="566" y="225" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#3D5A45">Xương cụt</text>
+
+  <!-- Bladder -->
+  <ellipse cx="448" cy="172" rx="52" ry="32" fill="#D0E8F5" stroke="#5B9EC9" stroke-width="1.5" opacity="0.88"/>
+  <text x="448" y="169" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#1A3B5C" font-weight="700">Bàng quang</text>
+  <text x="448" y="184" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#1A3B5C">đỡ bởi cơ PC bên dưới</text>
+
+  <!-- Prostate dot -->
+  <circle cx="448" cy="213" r="10" fill="#AA7C11" opacity="0.3"/>
+  <circle cx="448" cy="213" r="10" fill="none" stroke="#AA7C11" stroke-width="1.5"/>
+  <text x="448" y="217" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="8" fill="#5A6E61">Tuyến tiền liệt</text>
+
+  <!-- PC Muscle band (GOLD - star element) -->
+  <rect x="352" y="228" width="192" height="36" rx="18" fill="url(#gold-g)" filter="url(#glow)"/>
+  <text x="448" y="250" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="800" fill="#0D2B1A">★ CƠ  PC  (Pubococcygeus)</text>
+
+  <!-- Contraction direction arrows on PC muscle -->
+  <text x="380" y="250" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="18" fill="#0D2B1A" font-weight="900">›</text>
+  <text x="516" y="250" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="18" fill="#0D2B1A" font-weight="900">‹</text>
+
+  <!-- Bottom info box -->
+  <rect x="320" y="278" width="256" height="72" rx="10" fill="#D4AF37" opacity="0.12"/>
+  <rect x="320" y="278" width="256" height="72" rx="10" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+  <text x="448" y="299" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#0D2B1A">Khi cơ PC co mạnh có chủ đích:</text>
+  <text x="448" y="317" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">• Chặn phản xạ xuất tinh từ bên trong</text>
+  <text x="448" y="333" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#5A6E61">• Kiểm soát có ý thức — không cần thuốc</text>
+  <text x="448" y="349" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#AA7C11">→ Đây là cơ anh sẽ rèn trong 7 ngày</text>
+
+  <!-- Bottom legend -->
+  <rect x="18" y="368" width="564" height="24" rx="6" fill="#0D2B1A" opacity="0.04"/>
+  <circle cx="38" cy="381" r="5" fill="#D4AF37" opacity="0.7"/>
+  <text x="48" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#0D2B1A">Cơ PC (Mục tiêu luyện tập)</text>
+  <circle cx="200" cy="381" r="5" fill="#5B9EC9" opacity="0.7"/>
+  <text x="210" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#0D2B1A">Bàng quang</text>
+  <circle cx="310" cy="381" r="5" fill="#C5CECC"/>
+  <text x="320" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#0D2B1A">Xương chậu</text>
+  <text x="440" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">Minh họa giải phẫu học</text>
+</svg>

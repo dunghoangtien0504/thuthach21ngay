@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 370" width="100%" height="100%">
+  <defs>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0D2B1A" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="slow-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1B442D"/>
+      <stop offset="100%" stop-color="#2A6040"/>
+    </linearGradient>
+    <linearGradient id="fast-g" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#B8922A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Card -->
+  <rect x="2" y="2" width="596" height="366" rx="16" fill="#FDFBF7" stroke="#E6DFD3" stroke-width="2" filter="url(#sh)"/>
+
+  <!-- Title -->
+  <text x="300" y="36" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="800" fill="#0D2B1A">2 LOẠI SỢI CƠ — RÈNKHÁC NHAU, CÔNG DỤNG KHÁC NHAU</text>
+  <text x="300" y="55" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#5A6E61">Cơ PC gồm hai loại sợi — mỗi loại cần bài tập riêng biệt</text>
+
+  <!-- Vertical divider -->
+  <line x1="300" y1="68" x2="300" y2="338" stroke="#E6DFD3" stroke-width="1.5"/>
+
+  <!-- ─── LEFT: SỢI CHẬM (Type I) ─── -->
+  <rect x="36" y="72" width="246" height="44" rx="12" fill="url(#slow-g)"/>
+  <text x="159" y="96" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="800" fill="white">SỢI CHẬM (Type I)</text>
+  <text x="159" y="112" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#D0EDDF">70% cơ PC — nền tảng bền vững</text>
+
+  <!-- Muscle fiber visual: slow = long steady waves -->
+  <rect x="36" y="128" width="246" height="72" rx="8" fill="#F0F7F2"/>
+  <path d="M60,175 Q85,155 110,175 Q135,195 160,175 Q185,155 210,175 Q235,195 258,175" fill="none" stroke="#1B442D" stroke-width="3" stroke-linecap="round"/>
+  <path d="M60,162 Q85,142 110,162 Q135,182 160,162 Q185,142 210,162 Q235,182 258,162" fill="none" stroke="#1B442D" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <text x="159" y="208" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#5A6E61">Sóng dài — co chậm, bền</text>
+
+  <!-- Properties -->
+  <rect x="36" y="212" width="246" height="92" rx="8" fill="#F0F7F2"/>
+  <text x="56" y="232" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#1B442D">Đặc điểm:</text>
+  <text x="56" y="249" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Co chậm, giữ lâu không mỏi</text>
+  <text x="56" y="264" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Cung cấp sức bền liên tục</text>
+  <text x="56" y="279" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Hoạt động khi đứng/ngồi hàng giờ</text>
+  <text x="56" y="294" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Kiểm soát cơ bản toàn thời gian</text>
+
+  <!-- Training badge -->
+  <rect x="36" y="316" width="246" height="24" rx="8" fill="#1B442D"/>
+  <text x="159" y="333" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="white">Rèn: Co Chậm — Giữ 3-10 giây</text>
+
+  <!-- ─── RIGHT: SỢI NHANH (Type II) ─── -->
+  <rect x="318" y="72" width="246" height="44" rx="12" fill="url(#fast-g)"/>
+  <text x="441" y="96" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="800" fill="#0D2B1A">SỢI NHANH (Type II)</text>
+  <text x="441" y="112" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A3C00">30% cơ PC — lực phản xạ tức thời</text>
+
+  <!-- Muscle fiber visual: fast = sharp spikes -->
+  <rect x="318" y="128" width="246" height="72" rx="8" fill="#FBF6E6"/>
+  <polyline points="338,180 358,148 368,180 388,148 398,180 418,148 428,180 448,148 458,180 478,148 488,180 508,148 518,180 538,148 548,180" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="441" y="208" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#5A6E61">Sóng nhọn — co nhanh, mạnh</text>
+
+  <!-- Properties -->
+  <rect x="318" y="212" width="246" height="92" rx="8" fill="#FBF6E6"/>
+  <text x="338" y="232" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#B8922A">Đặc điểm:</text>
+  <text x="338" y="249" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Co nhanh, lực mạnh tức thời</text>
+  <text x="338" y="264" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Mỏi nhanh nhưng lực đỉnh cao</text>
+  <text x="338" y="279" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Hoạt động khi cần "phanh" khẩn</text>
+  <text x="338" y="294" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">• Quyết định phản xạ tức thời</text>
+
+  <!-- Training badge -->
+  <rect x="318" y="316" width="246" height="24" rx="8" fill="#D4AF37"/>
+  <text x="441" y="333" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#0D2B1A">Rèn: Co Nhanh — Thả ngay lập tức</text>
+
+  <!-- Bottom summary -->
+  <rect x="36" y="344" width="524" height="16" rx="6" fill="none"/>
+  <text x="300" y="357" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#5A6E61">→ Bài 4 &amp; 5 kết hợp cả hai loại trong cùng một buổi tập để tạo kiểm soát toàn diện</text>
+</svg>
