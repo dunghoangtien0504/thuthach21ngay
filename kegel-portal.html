@@ -5,135 +5,735 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kegel Khởi Đầu — Portal Học | FORMEN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary: #0D2B1A; --accent: #B8860B; --accent-bright: #D4AF37;
-      --font-heading: 'Lora', Georgia, serif; --font-body: 'Raleway', system-ui, sans-serif;
+      --primary: #0D2B1A;
+      --accent: #B8860B;
+      --accent-bright: #D4AF37;
+      --green: #1A6B3A;
+      --green-light: #E8F5EE;
+      --font-heading: 'Lora', Georgia, serif;
+      --font-body: 'Raleway', system-ui, sans-serif;
+      --bg: #FBF9F4;
+      --text: #0E2519;
+      --text-muted: #485A4F;
+      --border: rgba(13,43,26,0.1);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font-body); background: #FBF9F4; color: #0E2519; min-height: 100vh; display: flex; flex-direction: column; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Header */
     header {
-      padding: 14px 24px; border-bottom: 1px solid rgba(13,43,26,0.08);
-      background: rgba(251,249,244,0.96); backdrop-filter: blur(16px);
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(251,249,244,0.97);
+      backdrop-filter: blur(16px);
       display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
     }
     .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--primary); text-decoration: none; }
     .logo i { color: var(--accent); }
-    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 20px; }
-    .card {
-      max-width: 520px; width: 100%; background: #fff;
-      border-radius: 24px; padding: 48px 40px; text-align: center;
-      box-shadow: 0 20px 40px rgba(13,43,26,0.09);
-      border: 1px solid rgba(13,43,26,0.06);
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-user-name { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .btn-logout { background: none; border: none; cursor: pointer; font-size: 14px; color: var(--text-muted); padding: 6px 10px; border-radius: 8px; transition: all 0.2s; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .btn-logout:hover { background: var(--green-light); color: var(--primary); }
+
+    /* Progress bar */
+    .progress-header { padding: 12px 24px; background: var(--primary); color: white; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .progress-label { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; opacity: 0.85; }
+    .progress-bar-track { flex: 1; min-width: 120px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 99px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-bright)); border-radius: 99px; transition: width 0.4s ease; }
+    .progress-text { font-size: 13px; font-weight: 800; color: var(--accent-bright); white-space: nowrap; }
+
+    /* Layout */
+    .portal-layout { display: flex; flex: 1; min-height: 0; }
+
+    /* Sidebar */
+    aside.lesson-nav {
+      width: 280px; min-width: 260px;
+      background: #fff;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 20px 0;
+      display: flex; flex-direction: column;
     }
-    .icon-wrap {
-      width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 24px;
-      background: linear-gradient(135deg, rgba(184,134,11,0.15), rgba(212,175,55,0.2));
-      border: 2px solid rgba(184,134,11,0.3);
+    .nav-section-title { padding: 0 20px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 800; }
+    .lesson-nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .lesson-nav-item:hover { background: var(--green-light); }
+    .lesson-nav-item.active { background: var(--green-light); border-left-color: var(--green); font-weight: 700; color: var(--green); }
+    .lesson-nav-item.done .nav-check { background: var(--green); color: white; }
+    .nav-check {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(13,43,26,0.08);
       display: flex; align-items: center; justify-content: center;
-      font-size: 32px; color: var(--accent);
+      font-size: 11px; font-weight: 800; flex-shrink: 0; color: var(--text-muted);
+      transition: all 0.2s;
     }
-    h1 { font-family: var(--font-heading); font-size: 26px; color: var(--primary); margin-bottom: 12px; }
-    .subtitle { font-size: 15px; color: #485A4F; line-height: 1.6; margin-bottom: 32px; }
-    .progress-box {
-      background: linear-gradient(135deg, #0D2B1A, #163f27);
-      border-radius: 16px; padding: 24px; margin-bottom: 32px;
-      color: rgba(255,255,255,0.85);
+    .nav-day-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-weight: 400; }
+    .nav-item-text { flex: 1; }
+    .nav-item-title { font-size: 13px; line-height: 1.4; }
+
+    /* Main lesson content */
+    main.lesson-content {
+      flex: 1; overflow-y: auto;
+      padding: 40px 48px;
+      max-width: 800px;
     }
-    .progress-box h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-bright); margin-bottom: 16px; }
-    .step-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; font-size: 14px; }
-    .step-row + .step-row { border-top: 1px solid rgba(255,255,255,0.08); }
-    .step-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
-    .step-icon.done { background: rgba(46,125,50,0.3); color: #4CAF70; }
-    .step-icon.pending { background: rgba(184,134,11,0.2); color: var(--accent-bright); }
-    .step-icon.locked { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35); }
-    .btn-primary {
+    @media (max-width: 768px) {
+      .portal-layout { flex-direction: column; }
+      aside.lesson-nav { width: 100%; min-width: unset; border-right: none; border-bottom: 1px solid var(--border); padding: 12px 0; max-height: 220px; }
+      main.lesson-content { padding: 24px 20px; }
+    }
+
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; color: var(--green); background: var(--green-light); padding: 4px 12px; border-radius: 99px; margin-bottom: 16px; }
+    .lesson-title { font-family: var(--font-heading); font-size: 28px; line-height: 1.3; color: var(--primary); margin-bottom: 8px; }
+    .lesson-subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; }
+    .lesson-body h3 { font-family: var(--font-heading); font-size: 18px; color: var(--primary); margin: 28px 0 10px; }
+    .lesson-body p { font-size: 15px; line-height: 1.75; color: #2A3E2F; margin-bottom: 14px; }
+    .lesson-body ul, .lesson-body ol { padding-left: 20px; margin-bottom: 14px; }
+    .lesson-body li { font-size: 15px; line-height: 1.7; color: #2A3E2F; margin-bottom: 6px; }
+    .lesson-body strong { color: var(--primary); font-weight: 700; }
+
+    .tip-box {
+      background: linear-gradient(135deg, #F0FBF4, #E8F5EE);
+      border-left: 4px solid var(--green);
+      border-radius: 0 12px 12px 0;
+      padding: 18px 20px;
+      margin: 20px 0;
+      font-size: 14px; line-height: 1.65;
+      color: #1A3D25;
+    }
+    .tip-box strong { color: var(--green); display: block; margin-bottom: 6px; }
+    .warning-box {
+      background: #FFF8E7;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 18px 20px;
+      margin: 20px 0;
+      font-size: 14px; line-height: 1.65;
+      color: #3D2E00;
+    }
+    .warning-box strong { color: var(--accent); display: block; margin-bottom: 6px; }
+
+    .exercise-block {
+      background: var(--primary);
+      border-radius: 16px; padding: 24px;
+      margin: 24px 0; color: white;
+    }
+    .exercise-block h4 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-bright); margin-bottom: 16px; font-weight: 800; }
+    .exercise-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 14px; }
+    .exercise-badge { background: rgba(184,134,11,0.2); color: var(--accent-bright); font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
+
+    .checkin-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .checkin-table th, .checkin-table td { border: 1px solid var(--border); padding: 10px 14px; font-size: 14px; text-align: left; }
+    .checkin-table th { background: var(--primary); color: white; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .checkin-table tr:nth-child(even) td { background: var(--green-light); }
+
+    /* Done button */
+    .lesson-footer { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .btn-done {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 32px; border-radius: 50px;
+      padding: 14px 28px; border-radius: 99px;
+      background: linear-gradient(135deg, var(--green), #246644);
+      color: white; font-weight: 800; font-size: 15px;
+      border: none; cursor: pointer;
+      box-shadow: 0 6px 16px rgba(26,107,58,0.3);
+      transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    .btn-done:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(26,107,58,0.4); }
+    .btn-done.completed { background: linear-gradient(135deg, #888, #666); box-shadow: none; }
+    .btn-next {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 99px;
+      background: transparent; color: var(--green);
+      font-weight: 700; font-size: 14px;
+      border: 1.5px solid var(--green);
+      cursor: pointer; transition: all 0.2s;
+      font-family: var(--font-body);
+    }
+    .btn-next:hover { background: var(--green-light); }
+
+    /* Not enrolled overlay */
+    .gate-overlay {
+      position: fixed; inset: 0; background: rgba(13,43,26,0.7); z-index: 999;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .gate-card {
+      background: white; border-radius: 24px; padding: 48px 40px; max-width: 480px; width: 100%;
+      text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .gate-card h2 { font-family: var(--font-heading); color: var(--primary); font-size: 24px; margin-bottom: 12px; }
+    .gate-card p { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; line-height: 1.65; }
+    .btn-gate {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 99px;
       background: linear-gradient(135deg, var(--accent), var(--accent-bright));
       color: var(--primary); font-weight: 800; font-size: 15px;
-      text-decoration: none; box-shadow: 0 8px 20px rgba(184,134,11,0.3);
-      transition: all 0.2s ease; margin-bottom: 12px; border: none; cursor: pointer; font-family: var(--font-body);
+      text-decoration: none;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(184,134,11,0.4); }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: 50px;
-      background: transparent; color: #485A4F; font-size: 14px; font-weight: 600;
-      text-decoration: none; border: 1.5px solid rgba(13,43,26,0.15);
-      transition: all 0.2s ease;
-    }
-    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
-    .actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .note { font-size: 12px; color: #8FA497; margin-top: 24px; }
-    footer { padding: 20px; text-align: center; font-size: 12px; color: #8FA497; border-top: 1px solid rgba(13,43,26,0.06); }
+
+    footer { padding: 20px; text-align: center; font-size: 12px; color: #8FA497; border-top: 1px solid var(--border); }
   </style>
 </head>
 <body>
+
+<!-- Auth gate overlay (shown if not enrolled) -->
+<div class="gate-overlay" id="gate-overlay" style="display:none;">
+  <div class="gate-card">
+    <div style="font-size:48px;margin-bottom:16px;">🔒</div>
+    <h2>Bạn Chưa Đăng Ký Khóa Học</h2>
+    <p>Khóa học Kegel Khởi Đầu yêu cầu đăng ký trước khi truy cập. Đăng nhập và kiểm tra trạng thái khóa học của bạn.</p>
+    <a href="/my-courses.html" class="btn-gate"><i class="fa-solid fa-book-open"></i> Về Trang Khóa Học</a>
+  </div>
+</div>
 
 <header>
   <a href="/" class="logo">
     <i class="fa-solid fa-shield-halved"></i>
     <span>FORMEN</span>
   </a>
-  <a href="/khoa-hoc.html" style="font-size:13px;color:#485A4F;text-decoration:none;">
-    <i class="fa-solid fa-book-open"></i> Tất cả khóa học
-  </a>
+  <div class="header-right">
+    <span class="header-user-name" id="display-name">Học Viên</span>
+    <a href="/my-courses.html" class="btn-logout">
+      <i class="fa-solid fa-book-open"></i> Khóa học
+    </a>
+    <button class="btn-logout" id="btn-logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
 </header>
 
-<main>
-  <div class="card">
-    <div class="icon-wrap">
-      <i class="fa-solid fa-dumbbell"></i>
-    </div>
-    <h1>Kegel Khởi Đầu</h1>
-    <p class="subtitle">
-      Cảm ơn anh đã tin tưởng FORMEN.<br>
-      Nội dung 7 bài học đang được hoàn thiện và sẽ mở ngay trong thời gian tới.
-    </p>
-
-    <div class="progress-box">
-      <h3>Lộ trình 7 ngày của anh</h3>
-      <div class="step-row">
-        <div class="step-icon pending"><i class="fa-solid fa-clock"></i></div>
-        <div>Ngày 1–2: Tìm và cô lập đúng cơ PC</div>
-      </div>
-      <div class="step-row">
-        <div class="step-icon locked"><i class="fa-solid fa-lock"></i></div>
-        <div>Ngày 3–4: Bài tập nhịp 3-3-3 cơ bản</div>
-      </div>
-      <div class="step-row">
-        <div class="step-icon locked"><i class="fa-solid fa-lock"></i></div>
-        <div>Ngày 5–6: Nâng cấp nhịp 5-5-5 + kỹ thuật nhanh</div>
-      </div>
-      <div class="step-row">
-        <div class="step-icon locked"><i class="fa-solid fa-lock"></i></div>
-        <div>Ngày 7: Kiểm tra tiến độ + lộ trình tiếp theo</div>
-      </div>
-    </div>
-
-    <div class="actions">
-      <a href="https://t.me/matma21_support" target="_blank" class="btn-primary">
-        <i class="fa-brands fa-telegram"></i> Nhận thông báo qua Telegram
-      </a>
-      <a href="/portal.html" class="btn-secondary">
-        <i class="fa-solid fa-book-open"></i> Xem khóa học miễn phí trong khi chờ
-      </a>
-    </div>
-
-    <p class="note">
-      <i class="fa-solid fa-envelope"></i>
-      Anh sẽ nhận email hướng dẫn ngay khi nội dung sẵn sàng.<br>
-      Liên hệ hỗ trợ: <a href="mailto:support@themencode.vn" style="color:var(--accent);">support@themencode.vn</a>
-    </p>
+<div class="progress-header">
+  <span class="progress-label"><i class="fa-solid fa-dumbbell"></i> &nbsp;Kegel Khởi Đầu — 7 ngày luyện nền tảng</span>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
   </div>
-</main>
+  <span class="progress-text" id="progress-text">0 / 7 bài</span>
+</div>
 
-<footer>
-  © 2026 FORMEN · Bảo lưu mọi quyền
-</footer>
+<div class="portal-layout">
 
+  <!-- Sidebar -->
+  <aside class="lesson-nav">
+    <div class="nav-section-title">Lộ Trình 7 Ngày</div>
+    <div id="nav-list">
+      <!-- Dynamically rendered -->
+    </div>
+  </aside>
+
+  <!-- Lesson content -->
+  <main class="lesson-content" id="lesson-content">
+    <!-- Dynamically rendered -->
+  </main>
+
+</div>
+
+<footer>© 2026 FORMEN · Bảo lưu mọi quyền</footer>
+
+<script>
+const LS_SESSION  = 'thuthach21ngay_user_session';
+const LS_ENROLL   = 'mm21_course_enrollments';
+const LS_PROGRESS = 'kegel_lesson_progress';
+
+// ─── Lesson data ───────────────────────────────────────────────────────────────
+const LESSONS = [
+  {
+    id: 1,
+    days: 'Ngày 1',
+    title: 'Tại Sao Cơ PC Là "Cần Số" Kiểm Soát Của Anh',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-brain"></i> Nền tảng — Ngày 1</div>
+<h1 class="lesson-title">Tại Sao Cơ PC Là "Cần Số" Kiểm Soát Của Anh</h1>
+<p class="lesson-subtitle">Hiểu đúng về cơ chế trước khi luyện — đây là điều 90% đàn ông bỏ qua.</p>
+<div class="lesson-body">
+<h3>Cơ PC là gì?</h3>
+<p>Cơ PC (pubococcygeus) là nhóm cơ nằm giữa xương mu và xương cụt — hay còn gọi là <strong>cơ sàn chậu</strong>. Đây là nhóm cơ kiểm soát dòng nước tiểu, điều chỉnh áp lực vùng chậu, và quan trọng hơn — <strong>kiểm soát thời điểm xuất tinh</strong>.</p>
+<p>Khi cơ PC yếu, tín hiệu "kích thích" đi thẳng đến não mà không có điểm dừng. Khi cơ PC khỏe và anh biết cách co-giãn có ý thức, anh có một "cần số" — anh chọn khi nào tăng tốc, khi nào hãm lại.</p>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-lightbulb"></i> Tại sao đây quan trọng hơn mọi "thuốc" hay "kỹ thuật tâm lý"?</strong>
+Thuốc làm chậm phản xạ toàn thân — anh cảm thấy kém nhạy cảm. Tâm lý phụ thuộc vào trạng thái tâm trí lúc đó. Cơ PC mạnh là khả năng thể chất — luôn hoạt động, không phụ thuộc vào thuốc hay tâm trạng.
+</div>
+
+<h3>Bài Kiểm Tra Gương — Xác Định Đúng Cơ Trong 2 Phút</h3>
+<p>Trước khi tập, anh cần biết mình đang co đúng cơ không. Làm bài này ngay hôm nay:</p>
+<ol>
+<li>Vào nhà vệ sinh khi bàng quang còn đầy (không phải lúc vừa đi tiểu xong).</li>
+<li>Bắt đầu tiểu bình thường.</li>
+<li><strong>Cố gắng dừng dòng tiểu lại giữa chừng</strong> trong 2–3 giây, rồi thả ra.</li>
+<li>Nhóm cơ anh vừa dùng để dừng đó chính là cơ PC.</li>
+</ol>
+
+<div class="warning-box">
+<strong><i class="fa-solid fa-triangle-exclamation"></i> Lưu ý quan trọng</strong>
+Bài kiểm tra gương chỉ để "định vị" cơ — KHÔNG phải để tập hàng ngày bằng cách dừng tiểu. Tập Kegel khi tiểu sẽ gây hại dài hạn cho bàng quang. Chỉ làm 1 lần để biết đúng cơ.
+</div>
+
+<h3>Điều Anh Nên Làm Hôm Nay</h3>
+<p>1. Làm bài kiểm tra gương 1 lần để định vị cơ PC.</p>
+<p>2. Thư giãn hoàn toàn — không tập gì thêm hôm nay. Chỉ cần biết vị trí cơ.</p>
+<p>3. Nhớ lại cảm giác co đó — ngày mai anh sẽ bắt đầu tập chính thức.</p>
+</div>
+`
+  },
+  {
+    id: 2,
+    days: 'Ngày 1',
+    title: 'Cô Lập Đúng Cơ Kegel: 3 Dấu Hiệu Biết Mình Đang Làm Đúng',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-crosshairs"></i> Kỹ thuật — Ngày 1</div>
+<h1 class="lesson-title">Cô Lập Đúng Cơ Kegel: 3 Dấu Hiệu Biết Mình Đang Làm Đúng</h1>
+<p class="lesson-subtitle">Bài quan trọng nhất trong cả chương trình — sai kỹ thuật từ đây thì không có kết quả dù tập bao lâu.</p>
+<div class="lesson-body">
+<h3>Sai lầm phổ biến nhất</h3>
+<p>Hơn 60% đàn ông tập Kegel sai cách — họ co cơ bụng, cơ mông, hoặc cơ đùi thay vì cơ PC. Kết quả: mỏi lưng, không có tiến bộ, bỏ cuộc sau 2 tuần.</p>
+<p>Cơ PC nằm <strong>sâu bên trong</strong> — không nhìn thấy từ ngoài. Nhưng anh có thể cảm nhận được nếu biết 3 dấu hiệu sau:</p>
+
+<div class="exercise-block">
+<h4>3 Dấu Hiệu Anh Đang Co Đúng Cơ PC</h4>
+<div class="exercise-row">
+  <span class="exercise-badge">Dấu hiệu 1</span>
+  <span><strong>Cảm giác "kéo lên"</strong> ở vùng đáy chậu — như thể anh đang kéo một cái gì đó từ bên trong lên phía trên.</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Dấu hiệu 2</span>
+  <span><strong>Hậu môn khép lại nhẹ</strong> — không phải siết chặt, chỉ khép tự nhiên khi cơ PC co.</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Dấu hiệu 3</span>
+  <span><strong>Bụng, mông, đùi không di chuyển</strong> — nếu anh cảm thấy bụng cứng lại hay mông siết, đó là sai cơ.</span>
+</div>
+</div>
+
+<h3>Bài Tập Xác Nhận Kỹ Thuật (5 phút)</h3>
+<ol>
+<li>Ngồi thoải mái trên ghế, tay đặt lên bụng để kiểm tra.</li>
+<li>Hít thở sâu, thở ra hoàn toàn và thư giãn toàn thân.</li>
+<li>Co cơ PC — <strong>bụng phải không di chuyển dưới tay anh</strong>.</li>
+<li>Giữ 2 giây. Thả ra hoàn toàn. Lặp lại 5 lần chậm.</li>
+<li>Nếu bụng phồng lên hoặc cứng lại: dừng lại, thở đều, thử lại nhẹ hơn.</li>
+</ol>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-check-circle"></i> Mẹo để cô lập đúng ngay lần đầu</strong>
+Tưởng tượng anh đang cố nhặt một hạt đậu bằng hậu môn. Nghe lạ — nhưng đây là hình ảnh tâm lý hiệu quả nhất để kích hoạt đúng nhóm cơ sàn chậu mà không co kéo cơ lân cận.
+</div>
+
+<h3>Thả Cơ — Quan Trọng Ngang Bằng Co Cơ</h3>
+<p>Nhiều người tập quên mất phần <strong>thả cơ hoàn toàn</strong>. Cơ PC cần thời gian phục hồi giữa mỗi lần co — nếu không thả hết, cơ sẽ mỏi nhanh và tập không hiệu quả.</p>
+<p>Sau mỗi lần co: <strong>đếm đủ số giây thả, cảm nhận cơ mềm hoàn toàn</strong> trước khi co lần tiếp.</p>
+</div>
+`
+  },
+  {
+    id: 3,
+    days: 'Ngày 1–2',
+    title: 'Bài Tập Cơ Bản Nhịp 3-3-3 (Ngày 1–2)',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-dumbbell"></i> Luyện tập — Ngày 1–2</div>
+<h1 class="lesson-title">Bài Tập Cơ Bản Nhịp 3-3-3</h1>
+<p class="lesson-subtitle">Co 3 giây · Giữ 3 giây · Thả 3 giây — 3 hiệp × 10 lần · Tổng 10 phút</p>
+<div class="lesson-body">
+<h3>Bài tập chính — Nhịp 3-3-3</h3>
+<p>Đây là nền tảng của cả chương trình. Bắt đầu chậm — không cần cố làm nhiều hơn vào ngày đầu.</p>
+
+<div class="exercise-block">
+<h4>Cách Thực Hiện Nhịp 3-3-3</h4>
+<div class="exercise-row">
+  <span class="exercise-badge">Bước 1</span>
+  <span><strong>Co</strong> cơ PC trong <strong>3 giây</strong> — đếm "1-2-3" chậm rãi</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Bước 2</span>
+  <span><strong>Giữ nguyên</strong> lực co trong <strong>3 giây tiếp</strong> — đếm "4-5-6"</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Bước 3</span>
+  <span><strong>Thả ra hoàn toàn</strong> trong <strong>3 giây</strong> — đếm "7-8-9" và cảm nhận cơ giãn ra</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">1 hiệp</span>
+  <span>Lặp lại 10 lần → nghỉ 60 giây → làm tiếp hiệp 2 → nghỉ 60 giây → hiệp 3</span>
+</div>
+</div>
+
+<p><strong>Tổng thời gian:</strong> 3 hiệp × (10 lần × 9 giây) + 2 × 60 giây nghỉ ≈ <strong>9–10 phút</strong></p>
+
+<h3>Tập Ở Đâu, Khi Nào</h3>
+<ul>
+<li><strong>Ngồi làm việc tại bàn:</strong> không ai biết anh đang tập gì — không có chuyển động cơ thể.</li>
+<li><strong>Nằm ngửa trên giường:</strong> đặc biệt tốt cho người mới vì dễ cảm nhận hơn.</li>
+<li><strong>Đứng chờ (thang máy, xếp hàng):</strong> lý tưởng để tích lũy thêm.</li>
+<li>Tránh tập ngay sau bữa ăn no hoặc khi bàng quang đầy.</li>
+</ul>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-clock"></i> Buổi sáng hoặc tối là tốt nhất</strong>
+Chọn cùng một thời điểm mỗi ngày — sáng sau đánh răng hoặc tối trước ngủ. Tập cùng giờ giúp hình thành thói quen tự động sau 7 ngày, anh không cần nhắc nhở nữa.
+</div>
+
+<h3>Ngày 1 vs Ngày 2</h3>
+<p><strong>Ngày 1:</strong> Tập 1 hiệp đầu tiên — quan sát cảm giác. Nếu ổn, tập thêm hiệp 2. Không bắt buộc đủ 3 hiệp ngay ngày 1.</p>
+<p><strong>Ngày 2:</strong> Hoàn thành đủ 3 hiệp × 10 lần. Theo dõi xem cơ có mỏi không — mỏi nhẹ là bình thường, đau là dấu hiệu tập sai hoặc tập quá sức.</p>
+
+<div class="warning-box">
+<strong><i class="fa-solid fa-triangle-exclamation"></i> Dấu hiệu tập sai cần dừng lại</strong>
+Đau vùng chậu hoặc hậu môn sau khi tập → đang co sai cơ hoặc quá mạnh. Dừng lại, nghỉ 1 ngày, đọc lại Bài 2 về cách cô lập đúng cơ, rồi bắt đầu lại nhẹ hơn.
+</div>
+</div>
+`
+  },
+  {
+    id: 4,
+    days: 'Ngày 3–5',
+    title: 'Nâng Cường Độ: Nhịp 5-5-5 & Bài Tập Nhanh Kết Hợp',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-arrow-up"></i> Nâng cấp — Ngày 3–5</div>
+<h1 class="lesson-title">Nâng Cường Độ: Nhịp 5-5-5 & Bài Tập Nhanh Kết Hợp</h1>
+<p class="lesson-subtitle">Từ ngày 3, anh bắt đầu cảm nhận sự khác biệt đầu tiên. Thêm biến thể nhanh để kích hoạt thêm nhóm sợi cơ.</p>
+<div class="lesson-body">
+<h3>Tại Sao Cần Nâng Cường Độ?</h3>
+<p>Cơ PC có 2 loại sợi cơ: <strong>sợi chậm</strong> (phụ trách sức bền, kiểm soát dài hạn) và <strong>sợi nhanh</strong> (phụ trách phản xạ tức thì). Nhịp 3-3-3 đã rèn sợi chậm. Để kiểm soát thực sự, anh cần rèn thêm sợi nhanh.</p>
+
+<div class="exercise-block">
+<h4>Nhịp 5-5-5 — Tăng sức bền</h4>
+<div class="exercise-row">
+  <span class="exercise-badge">Co</span>
+  <span>5 giây — giữ lực ổn định, không co mạnh hơn ở cuối</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Giữ</span>
+  <span>5 giây — tập trung giữ mức co đều, không rung/run</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Thả</span>
+  <span>5 giây — thả chậm rãi, cảm nhận cơ giãn hoàn toàn</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Hiệp</span>
+  <span>10 lần × 3 hiệp, nghỉ 60–90 giây giữa hiệp</span>
+</div>
+</div>
+
+<div class="exercise-block">
+<h4>Bài Tập Nhanh — Kích hoạt sợi cơ phản xạ</h4>
+<div class="exercise-row">
+  <span class="exercise-badge">Cách làm</span>
+  <span>Co nhanh và mạnh trong 1 giây — thả ngay trong 1 giây. Không giữ, không đếm dài.</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Nhịp độ</span>
+  <span>20 lần liên tiếp — co-thả-co-thả như bật tắt nhanh</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Hiệp</span>
+  <span>2 hiệp × 20 lần, nghỉ 30 giây giữa hiệp</span>
+</div>
+</div>
+
+<h3>Lịch Tập Ngày 3–5</h3>
+<ol>
+<li><strong>Khởi động:</strong> 1 hiệp nhịp 3-3-3 (từ bài trước) — 3 phút</li>
+<li><strong>Chính:</strong> 3 hiệp nhịp 5-5-5 — 8 phút</li>
+<li><strong>Kết thúc:</strong> 2 hiệp bài nhanh — 3 phút</li>
+<li><strong>Tổng:</strong> ~14 phút</li>
+</ol>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-star"></i> Ngày 3–4: Thường cảm nhận thay đổi đầu tiên</strong>
+Sau 2 ngày tập đúng kỹ thuật, hầu hết học viên bắt đầu nhận ra sự khác biệt nhỏ — cảm giác kiểm soát rõ hơn. Đây là dấu hiệu bình thường và cho thấy anh đang đi đúng hướng.
+</div>
+
+<div class="warning-box">
+<strong><i class="fa-solid fa-triangle-exclamation"></i> Không tăng cường độ quá nhanh</strong>
+Nếu cơ mỏi sau ngày đầu tiên của bài này, giảm xuống còn 2 hiệp 5-5-5 thay vì 3 hiệp. Cơ PC cần 48 giờ phục hồi nếu tập quá sức — không tập nếu còn đang mỏi từ buổi trước.
+</div>
+</div>
+`
+  },
+  {
+    id: 5,
+    days: 'Ngày 5–6',
+    title: 'Kỹ Thuật "Bóp Khẩn Cấp": Dùng Đúng Lúc Anh Cần Nhất',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-bolt"></i> Kỹ thuật thực chiến — Ngày 5–6</div>
+<h1 class="lesson-title">Kỹ Thuật "Bóp Khẩn Cấp"</h1>
+<p class="lesson-subtitle">1 kỹ thuật ứng dụng thực tế — dùng đúng khoảnh khắc anh cần kiểm soát nhất.</p>
+<div class="lesson-body">
+<h3>Kỹ Thuật Này Làm Gì?</h3>
+<p>Khi cảm giác hưng phấn lên cao và anh cần "hãm phanh" — thay vì dừng hoạt động hoặc nghĩ đến chủ đề phân tâm (không hiệu quả) — anh dùng cơ PC để <strong>chặn phản xạ xuất tinh từ bên trong</strong>.</p>
+<p>Đây là kỹ thuật được gọi trong y học là <em>pelvic floor contraction technique</em> — hiệu quả nhất khi cơ PC đã đủ mạnh (sau 4–5 ngày tập như bài trước).</p>
+
+<div class="exercise-block">
+<h4>Cách Thực Hiện Bóp Khẩn Cấp</h4>
+<div class="exercise-row">
+  <span class="exercise-badge">Bước 1</span>
+  <span>Khi cảm thấy hưng phấn lên mức 7/10 — đây là thời điểm dùng kỹ thuật này</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Bước 2</span>
+  <span><strong>Co mạnh cơ PC 2–3 lần liên tiếp</strong>, mỗi lần co khoảng 2 giây</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Bước 3</span>
+  <span><strong>Thở ra chậm</strong> đồng thời với mỗi lần co — hơi thở giúp não "nhận tín hiệu bình tĩnh"</span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Kết quả</span>
+  <span>Cảm giác hưng phấn giảm từ 7/10 xuống 4–5/10 trong vòng 5–10 giây</span>
+</div>
+</div>
+
+<h3>Luyện Tập Kỹ Thuật Này (Không Cần Bạn Đời)</h3>
+<p>Anh có thể tập kỹ thuật này một mình để xây dựng phản xạ tự động:</p>
+<ol>
+<li>Tập tưởng tượng tình huống cần kiểm soát.</li>
+<li>Co cơ PC mạnh 3 lần, mỗi lần 2 giây, thở ra theo.</li>
+<li>Lặp lại 5 lần mỗi ngày trong 2 ngày — não sẽ ghi nhớ phản xạ.</li>
+</ol>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-brain"></i> Tại sao hơi thở quan trọng?</strong>
+Hệ thần kinh phó giao cảm (giúp bình tĩnh) được kích hoạt mạnh nhất qua hơi thở chậm ra. Kết hợp co PC + thở ra = tín hiệu kép gửi lên não để giảm kích thích. Làm riêng lẻ thì kém hiệu quả hơn.
+</div>
+
+<h3>Sai Lầm Phổ Biến Khi Dùng Kỹ Thuật Này</h3>
+<ul>
+<li><strong>Chờ đến lúc 9–10/10:</strong> quá muộn — lúc đó phản xạ xuất tinh đã được kích hoạt và không thể hãm được nữa. Dùng ở mức 6–7/10.</li>
+<li><strong>Co một lần rồi chờ:</strong> cần 2–3 lần co liên tiếp để đủ hiệu quả.</li>
+<li><strong>Nín thở:</strong> nín thở làm tăng căng thẳng — phải thở ra đồng thời.</li>
+</ul>
+</div>
+`
+  },
+  {
+    id: 6,
+    days: 'Ngày 6–7',
+    title: 'Lịch Duy Trì 7 Ngày Đầy Đủ & Cách Theo Dõi Tiến Độ',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-calendar-check"></i> Kế hoạch — Ngày 6–7</div>
+<h1 class="lesson-title">Lịch Duy Trì 7 Ngày Đầy Đủ & Cách Theo Dõi Tiến Độ</h1>
+<p class="lesson-subtitle">Anh không cần nhớ gì cả — chỉ cần mở bảng này và làm theo.</p>
+<div class="lesson-body">
+<h3>Lịch Tập 7 Ngày</h3>
+<table class="checkin-table">
+  <thead>
+    <tr><th>Ngày</th><th>Bài tập chính</th><th>Thời gian</th><th>Ghi chú</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Ngày 1</td><td>Định vị cơ PC + Bài 2 (cô lập kỹ thuật)</td><td>10 phút</td><td>Không cần tập nhiều, tập đúng</td></tr>
+    <tr><td>Ngày 2</td><td>3 hiệp nhịp 3-3-3 × 10 lần</td><td>10 phút</td><td>Tập đủ 3 hiệp</td></tr>
+    <tr><td>Ngày 3</td><td>3-3-3 (khởi động) + 2 hiệp 5-5-5</td><td>12 phút</td><td>Thêm nhịp 5-5-5 từ hôm nay</td></tr>
+    <tr><td>Ngày 4</td><td>3 hiệp 5-5-5 + 2 hiệp bài nhanh</td><td>14 phút</td><td>Ngày thường bắt đầu cảm nhận</td></tr>
+    <tr><td>Ngày 5</td><td>3 hiệp 5-5-5 + luyện bóp khẩn cấp</td><td>14 phút</td><td>Bắt đầu tập Bài 5</td></tr>
+    <tr><td>Ngày 6</td><td>Combo đầy đủ: 3-3-3 + 5-5-5 + nhanh + bóp KCấp</td><td>18 phút</td><td>Buổi tập toàn diện</td></tr>
+    <tr><td>Ngày 7</td><td>Kiểm tra tiến độ + tập nhẹ duy trì</td><td>10 phút</td><td>Đánh giá kết quả 7 ngày</td></tr>
+  </tbody>
+</table>
+
+<h3>Dấu Hiệu Cho Thấy Anh Đang Tiến Bộ</h3>
+<ul>
+<li>Co cơ PC rõ hơn, cô lập tốt hơn khỏi cơ bụng/mông.</li>
+<li>Thời gian giữ co tăng lên mà không mỏi quá nhanh.</li>
+<li>Cảm giác kiểm soát rõ hơn trong cuộc sống thực.</li>
+<li>Cơ mỏi vừa phải sau tập — không đau, chỉ cảm giác "đã dùng".</li>
+</ul>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-chart-line"></i> Cách đo tiến độ đơn giản nhất</strong>
+Cuối ngày 7, thử giữ co liên tục bao lâu có thể (không giật, không run, không co kéo cơ khác). Ngày 1 anh có thể giữ 3–5 giây. Cuối ngày 7 thường đạt 10–15 giây. Đây là thước đo rõ nhất của sức mạnh cơ PC.
+</div>
+
+<h3>Nếu Cơ Mỏi Hoặc Bỏ 1–2 Ngày</h3>
+<p>Không sao — không cần bắt đầu lại từ đầu. Quay lại bài tập của ngày bị bỏ và tiếp tục. Cơ PC giữ sức mạnh tốt hơn bạn nghĩ trong 1–2 ngày nghỉ.</p>
+<p>Nếu mỏi: nghỉ hoàn toàn 1 ngày, ngày hôm sau chỉ tập 1 hiệp nhẹ rồi tăng dần lại.</p>
+</div>
+`
+  },
+  {
+    id: 7,
+    days: 'Ngày 7',
+    title: 'Đánh Giá Sau 7 Ngày & Con Đường Tiếp Theo',
+    content: `
+<div class="lesson-tag"><i class="fa-solid fa-trophy"></i> Kết thúc — Ngày 7</div>
+<h1 class="lesson-title">Đánh Giá Sau 7 Ngày & Con Đường Tiếp Theo</h1>
+<p class="lesson-subtitle">Anh sẽ biết mình đang ở đâu và cần làm gì tiếp theo để tiếp tục cải thiện bền vững.</p>
+<div class="lesson-body">
+<h3>Bài Kiểm Tra Sau 7 Ngày</h3>
+<p>Trả lời thành thật 4 câu hỏi sau (không cần điền vào đâu, chỉ tự đánh giá):</p>
+
+<div class="exercise-block">
+<h4>4 Câu Hỏi Tự Đánh Giá</h4>
+<div class="exercise-row">
+  <span class="exercise-badge">Câu 1</span>
+  <span>Anh có thể co cơ PC mà không co cơ bụng/mông không? → <strong>Có = kỹ thuật đúng</strong></span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Câu 2</span>
+  <span>Thời gian giữ co liên tục tối đa là bao lâu? → <strong>10 giây trở lên = tiến bộ tốt</strong></span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Câu 3</span>
+  <span>Anh có nhận ra cơ PC trong sinh hoạt hàng ngày không? → <strong>Có = nhận thức cơ thể tốt</strong></span>
+</div>
+<div class="exercise-row">
+  <span class="exercise-badge">Câu 4</span>
+  <span>Anh đã thử kỹ thuật bóp khẩn cấp chưa? → <strong>Đã thử = có công cụ thực chiến</strong></span>
+</div>
+</div>
+
+<h3>Kết Quả Bình Thường Sau 7 Ngày</h3>
+<ul>
+<li>Cơ PC mạnh hơn 20–40% so với ngày đầu (theo nghiên cứu lâm sàng 8 tuần, 7 ngày đầu là giai đoạn tăng nhanh nhất về nhận thức cơ thể).</li>
+<li>Kỹ thuật bóp khẩn cấp hoạt động ở mức 60–70% hiệu quả — cần thêm 2–3 tuần để đạt 90%.</li>
+<li>Sức bền cơ tăng — anh có thể giữ nhịp 5-5-5 dễ dàng hơn ngày đầu.</li>
+</ul>
+
+<div class="tip-box">
+<strong><i class="fa-solid fa-road"></i> 7 ngày tiếp theo — Duy trì và nâng cấp</strong>
+Tiếp tục tập 3 hiệp mỗi ngày với nhịp 5-5-5. Thêm 1 hiệp bài nhanh 20 lần vào cuối mỗi buổi. Kết quả tốt nhất thường xuất hiện ở tuần thứ 3–4.
+</div>
+
+<h3>Con Đường Tiếp Theo: Mật Mã 21</h3>
+<p>Anh đã xây được nền tảng cơ sàn chậu trong 7 ngày. Nhưng để đạt kiểm soát thực sự bền vững — cần thêm 2 yếu tố mà Kegel Khởi Đầu chưa đề cập đến:</p>
+<ul>
+<li><strong>Điều hòa hệ thần kinh tự chủ</strong> — kiểm soát phản xạ xuất tinh từ cấp độ não, không chỉ từ cơ bắp.</li>
+<li><strong>Kỹ thuật hô hấp điều tiết hưng phấn</strong> — biến thở trở thành công cụ kiểm soát.</li>
+</ul>
+<p>Chương trình <strong>Mật Mã 21</strong> kết hợp cả 3 trụ cột: Kegel nâng cao + Hô hấp + Tâm lý — trong lộ trình 21 ngày có cấu trúc rõ ràng từng ngày.</p>
+
+<div style="text-align:center; margin-top: 32px;">
+  <a href="/khoa-hoc.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:99px;background:linear-gradient(135deg,#B8860B,#D4AF37);color:#0D2B1A;font-weight:800;font-size:16px;text-decoration:none;box-shadow:0 8px 20px rgba(184,134,11,0.3);">
+    <i class="fa-solid fa-shield-halved"></i> Khám Phá Mật Mã 21
+  </a>
+</div>
+</div>
+`
+  }
+];
+
+// ─── State ────────────────────────────────────────────────────────────────────
+let currentLesson = 0;
+let progress = JSON.parse(localStorage.getItem(LS_PROGRESS) || '[]'); // array of completed lesson IDs
+
+// ─── Auth check ───────────────────────────────────────────────────────────────
+(function checkAccess() {
+  const session = JSON.parse(localStorage.getItem(LS_SESSION) || 'null');
+  if (!session?.email) {
+    document.getElementById('gate-overlay').style.display = 'flex';
+    return;
+  }
+  const enrollments = JSON.parse(localStorage.getItem(LS_ENROLL) || '[]');
+  const enrolled = enrollments.some(e => e.course_id === 'kegel' && e.email === session.email);
+  if (!enrolled) {
+    document.getElementById('gate-overlay').style.display = 'flex';
+    return;
+  }
+  document.getElementById('display-name').textContent = session.name || session.email.split('@')[0];
+})();
+
+// ─── Logout ───────────────────────────────────────────────────────────────────
+document.getElementById('btn-logout').addEventListener('click', () => {
+  localStorage.removeItem(LS_SESSION);
+  window.location.href = '/my-courses.html';
+});
+
+// ─── Render sidebar ───────────────────────────────────────────────────────────
+function renderNav() {
+  const nav = document.getElementById('nav-list');
+  nav.innerHTML = LESSONS.map((l, i) => {
+    const done = progress.includes(l.id);
+    const active = i === currentLesson;
+    return `<div class="lesson-nav-item ${active ? 'active' : ''} ${done ? 'done' : ''}" data-index="${i}">
+      <div class="nav-check">${done ? '<i class="fa-solid fa-check"></i>' : l.id}</div>
+      <div class="nav-item-text">
+        <div class="nav-item-title">${l.title}</div>
+        <div class="nav-day-label">${l.days}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  nav.querySelectorAll('.lesson-nav-item').forEach(el => {
+    el.addEventListener('click', () => {
+      currentLesson = parseInt(el.dataset.index);
+      renderNav();
+      renderLesson();
+    });
+  });
+}
+
+// ─── Render lesson ────────────────────────────────────────────────────────────
+function renderLesson() {
+  const l = LESSONS[currentLesson];
+  const done = progress.includes(l.id);
+  const isLast = currentLesson === LESSONS.length - 1;
+
+  document.getElementById('lesson-content').innerHTML = `
+    ${l.content}
+    <div class="lesson-footer">
+      <button class="btn-done ${done ? 'completed' : ''}" id="btn-mark-done">
+        ${done
+          ? '<i class="fa-solid fa-check-circle"></i> Đã hoàn thành'
+          : '<i class="fa-solid fa-check"></i> Đánh dấu hoàn thành'
+        }
+      </button>
+      ${!isLast ? `<button class="btn-next" id="btn-next-lesson"><i class="fa-solid fa-arrow-right"></i> Bài tiếp theo</button>` : ''}
+    </div>
+  `;
+
+  document.getElementById('btn-mark-done').addEventListener('click', () => {
+    if (!progress.includes(l.id)) {
+      progress.push(l.id);
+      localStorage.setItem(LS_PROGRESS, JSON.stringify(progress));
+    }
+    renderNav();
+    renderLesson();
+    updateProgress();
+    // Auto-advance to next lesson
+    if (!isLast) {
+      setTimeout(() => {
+        currentLesson++;
+        renderNav();
+        renderLesson();
+      }, 600);
+    }
+  });
+
+  const btnNext = document.getElementById('btn-next-lesson');
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      currentLesson++;
+      renderNav();
+      renderLesson();
+      document.querySelector('main.lesson-content').scrollTop = 0;
+    });
+  }
+
+  document.querySelector('main.lesson-content').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Update progress bar ──────────────────────────────────────────────────────
+function updateProgress() {
+  const pct = Math.round((progress.length / LESSONS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${progress.length} / ${LESSONS.length} bài`;
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+renderNav();
+renderLesson();
+updateProgress();
+</script>
 </body>
 </html>
