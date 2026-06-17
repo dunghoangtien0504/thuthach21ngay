@@ -647,9 +647,16 @@ let progress = JSON.parse(localStorage.getItem(LS_PROGRESS) || '[]'); // array o
     document.getElementById('gate-overlay').style.display = 'flex';
     return;
   }
+  // Check thuthach21ngay_registered_users (local primary database)
+  const registeredUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users') || '[]');
+  const localUser = registeredUsers.find(u => u.email === session.email);
+  const isKegelActive = localUser && localUser.kegel_status === 'active';
+
+  // Check mm21_course_enrollments (standard enrollment list)
   const enrollments = JSON.parse(localStorage.getItem(LS_ENROLL) || '[]');
-  const enrolled = enrollments.some(e => e.course_id === 'kegel' && e.email === session.email);
-  if (!enrolled) {
+  const enrolledInList = enrollments.some(e => e.course_id === 'kegel' && e.email === session.email);
+
+  if (!isKegelActive && !enrolledInList) {
     document.getElementById('gate-overlay').style.display = 'flex';
     return;
   }

@@ -878,6 +878,15 @@
               localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(allUsers));
             }
 
+            // Cập nhật/tạo session đăng nhập để vào học ngay không bị gate-overlay chặn
+            const sessionObj = {
+              email: email,
+              name: name,
+              phone: phone,
+              status: "active"
+            };
+            localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(sessionObj));
+
             // Sync buyer to Brevo — Segment B (Kegel → MM21 upsell)
             fetch('/api/brevo-add-contact', {
               method: 'POST',
