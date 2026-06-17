@@ -1354,13 +1354,36 @@ function activateStudentAccount(email) {
   }
 }
 
-function deleteStudentAccount(email) {
-  if (confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn tài khoản học viên ${email} không?`)) {
-    const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
-    const filtered = localUsers.filter(u => u.email !== email);
-    localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(filtered));
-    loadDatabase();
+async function deleteStudentAccount(email) {
+  if (!confirm(`Xóa vĩnh viễn tài khoản "${email}"? Hành động này không thể hoàn tác.`)) return;
+
+  // 1. Xóa khỏi localStorage ngay lập tức
+  const localUsers = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
+  localStorage.setItem('thuthach21ngay_registered_users',
+    JSON.stringify(localUsers.filter(u => u.email !== email)));
+
+  // 2. Xóa khỏi Supabase qua API (nếu có)
+  try {
+    const res = await fetch('/api/admin-delete-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${_adminKey}` },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showToast(`✅ Đã xóa ${email} (localStorage + Supabase)`, 'success');
+    } else if (res.status === 404) {
+      showToast(`✅ Đã xóa ${email} (chỉ localStorage — không có trong Supabase)`, 'success');
+    } else if (res.status === 503) {
+      showToast(`✅ Đã xóa ${email} khỏi localStorage. Supabase chưa cấu hình nên không sync được.`, 'warning');
+    } else {
+      showToast(`✅ Đã xóa localStorage. Supabase lỗi: ${data.error}`, 'warning');
+    }
+  } catch {
+    showToast(`✅ Đã xóa ${email} khỏi localStorage (mất kết nối API).`, 'warning');
   }
+
+  loadDatabase();
 }
 
 async function deleteSupabaseAccount(email) {
@@ -1369,25 +1392,18 @@ async function deleteSupabaseAccount(email) {
   try {
     const res = await fetch('/api/admin-delete-user', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${_adminKey}`,
-      },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${_adminKey}` },
       body: JSON.stringify({ email }),
     });
     const data = await res.json();
-
-    if (!res.ok) {
-      if (res.status === 503) {
-        showToast('Supabase chưa cấu hình — thêm SUPABASE_SERVICE_ROLE_KEY vào Vercel env vars.', 'warning');
-      } else {
-        showToast(`Lỗi: ${data.error || 'Không xác định'}`, 'error');
-      }
-      return;
+    if (res.ok) {
+      showToast(`✅ Đã xóa tài khoản Supabase ${email}`, 'success');
+      loadDatabase();
+    } else if (res.status === 503) {
+      showToast('Supabase chưa cấu hình — thêm SUPABASE_SERVICE_ROLE_KEY vào Vercel env vars.', 'warning');
+    } else {
+      showToast(`Lỗi: ${data.error || 'Không xác định'}`, 'error');
     }
-
-    showToast(`✅ Đã xóa tài khoản ${email}`, 'success');
-    loadDatabase();
   } catch (err) {
     showToast(`Lỗi kết nối: ${err.message}`, 'error');
   }
