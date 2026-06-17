@@ -1,5 +1,12 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/admin-verify", "destination": "/api/admin?action=verify" },
+    { "source": "/api/admin-users", "destination": "/api/admin?action=users" },
+    { "source": "/api/admin-transactions", "destination": "/api/admin?action=transactions" },
+    { "source": "/api/admin-activate-user", "destination": "/api/admin?action=activate" },
+    { "source": "/api/admin-delete-user", "destination": "/api/admin?action=delete" }
+  ],
   "crons": [
     {
       "path": "/api/process-email-queue",
