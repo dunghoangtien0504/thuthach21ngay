@@ -1,3 +1,6 @@
+import { createClient } from '@supabase/supabase-js';
+import { activateUserCourse } from './_activation-helper.js';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -32,11 +35,78 @@ export default async function handler(req, res) {
     const isMM21 = amount >= 680000;
 
     let productLabel = '';
+    const courseId = isKegel ? 'kegel' : 'mat-ma-21';
     if (isKegel) productLabel = '🥋 *Kegel Khởi Đầu* (199k)';
     else if (isMM21) productLabel = '🔑 *Mật Mã 21* (686k)';
     else productLabel = `Giao dịch ${amount.toLocaleString('vi-VN')}đ`;
 
-    const messageText = `✅ *Thanh Toán Thành Công!*\n\n• Sản phẩm: ${productLabel}\n• Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n• Ngân hàng: *${bankGateway}*\n• Số TK nhận: \`${accountNo}\`\n• Nội dung CK: *${content}*\n• Thời gian: _${dateStr}_\n• Mã đối chiếu: \`${refCode}\``;
+    // Try to auto-activate the account
+    let activatedUser = null;
+    let activationErrorMsg = '';
+
+    // Extract phone number from content (digits of length 9 to 11)
+    const phoneMatch = content.match(/\d{9,11}/);
+    const cleanPhone = phoneMatch ? phoneMatch[0].replace(/[^0-9]/g, '') : null;
+
+    if (cleanPhone) {
+      try {
+        const supabaseUrl = process.env.VITE_SUPABASE_URL;
+        const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+        if (supabaseUrl && serviceRoleKey) {
+          const admin = createClient(supabaseUrl, serviceRoleKey, {
+            auth: { autoRefreshToken: false, persistSession: false },
+          });
+
+          // Query user_profiles by matching the last 9 digits of the phone number
+          const suffix = cleanPhone.substring(cleanPhone.length - 9);
+          const { data: profiles, error: profErr } = await admin
+            .from('user_profiles')
+            .select('id, name, phone')
+            .like('phone', `%${suffix}`);
+
+          if (profErr) throw profErr;
+
+          if (profiles && profiles.length > 0) {
+            const profile = profiles[0];
+            // Get user's email from auth
+            const { data: { user }, error: userErr } = await admin.auth.admin.getUserById(profile.id);
+            if (userErr) throw userErr;
+
+            if (user && user.email) {
+              await activateUserCourse({
+                email: user.email,
+                name: profile.name || user.user_metadata?.name,
+                phone: profile.phone,
+                courseId,
+                source: 'sepay_webhook',
+              });
+              activatedUser = { email: user.email, name: profile.name || user.user_metadata?.name || 'Học viên' };
+            } else {
+              activationErrorMsg = 'Không tìm thấy email của user trong Auth.';
+            }
+          } else {
+            activationErrorMsg = `Không tìm thấy số điện thoại đuôi \`...${suffix}\` trong user_profiles.`;
+          }
+        } else {
+          activationErrorMsg = 'Chưa cấu hình Supabase URL hoặc Service Role Key.';
+        }
+      } catch (err) {
+        console.error('Webhook auto-activation failed:', err);
+        activationErrorMsg = `Lỗi hệ thống: ${err.message || 'Unknown error'}`;
+      }
+    } else {
+      activationErrorMsg = 'Không tìm thấy số điện thoại trong nội dung chuyển khoản.';
+    }
+
+    let activationLabel = '';
+    if (activatedUser) {
+      activationLabel = `\n⚡ *Tài khoản tự động kích hoạt*: ${activatedUser.name} (${activatedUser.email})`;
+    } else {
+      activationLabel = `\n⚠️ *Không tự động kích hoạt*: ${activationErrorMsg}`;
+    }
+
+    const messageText = `✅ *Thanh Toán Thành Công!*\n\n• Sản phẩm: ${productLabel}\n• Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n• Ngân hàng: *${bankGateway}*\n• Số TK nhận: \`${accountNo}\`\n• Nội dung CK: *${content}*\n• Thời gian: _${dateStr}_\n• Mã đối chiếu: \`${refCode}\`${activationLabel}`;
 
     try {
       await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
