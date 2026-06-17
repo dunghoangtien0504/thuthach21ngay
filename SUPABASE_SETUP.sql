@@ -146,6 +146,36 @@ end;
 $$ language plpgsql security definer;
 
 -- ============================================================
+-- 7. EMAIL QUEUE — Hệ thống gửi email tự động theo lịch
+-- Vercel Cron chạy mỗi ngày 8h sáng VN → gửi email đúng ngày
+-- ============================================================
+
+create table if not exists public.email_queue (
+  id             bigserial primary key,
+  email          text not null,
+  name           text,
+  sequence       text not null,       -- 'registered' | 'buyer_kegel' | 'buyer_mm21'
+  email_number   int not null,        -- vị trí trong chuỗi (1-based)
+  subject        text not null,
+  html_content   text not null,
+  scheduled_for  date not null,       -- ngày sẽ gửi (YYYY-MM-DD)
+  sent           boolean default false,
+  sent_at        timestamptz,
+  created_at     timestamptz default now()
+);
+
+-- Index để query nhanh email chưa gửi theo ngày
+create index if not exists idx_email_queue_due
+  on public.email_queue (scheduled_for, sent)
+  where sent = false;
+
+-- RLS: chỉ service role mới đọc/ghi (Cron dùng service role key)
+alter table public.email_queue enable row level security;
+
+-- Không có policy nào → chỉ service role (bypass RLS) mới access được
+-- Service role key dùng trong process-email-queue.js và schedule-email-sequence.js
+
+-- ============================================================
 -- Sau khi chạy xong SQL, thêm vào .env và Vercel Dashboard:
 --
 -- VITE_SUPABASE_URL=https://xxxx.supabase.co
