@@ -1437,12 +1437,10 @@ function openCourseUnlockModal(student) {
         const data = await res.json();
 
         if (!res.ok) {
-          // 401 = Vercel env var chưa cấu hình
           if (res.status === 401) {
-            showUnlockStatus(
-              '⚠️ API chưa được cấu hình. Thêm VITE_ADMIN_PASS + SUPABASE_SERVICE_ROLE_KEY vào Vercel → Settings → Environment Variables rồi redeploy.',
-              'warn'
-            );
+            showUnlockStatus('⚠️ Phiên đăng nhập hết hạn. Vui lòng đăng xuất và đăng nhập lại.', 'warn');
+          } else if (res.status === 503) {
+            showUnlockStatus('⚠️ Supabase chưa cấu hình trên server. Thêm SUPABASE_SERVICE_ROLE_KEY vào Vercel → Settings → Environment Variables rồi redeploy.', 'warn');
           } else {
             showUnlockStatus(`Lỗi: ${data.error || 'Không xác định'}`, 'error');
           }
