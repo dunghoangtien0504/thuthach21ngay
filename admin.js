@@ -991,7 +991,11 @@ function renderStudentsTable() {
             <button class="btn btn-danger btn-sm btn-delete-student" data-email="${escHtml(student.email)}">
               Xóa
             </button>
-          ` : `<span style="font-size:11px;color:var(--text-dimmed);font-style:italic">${isSupabase ? 'Supabase' : 'Hệ thống'}</span>`}
+          ` : isSupabase ? `
+            <button class="btn btn-danger btn-sm btn-delete-supabase" data-email="${escHtml(student.email)}">
+              Xóa
+            </button>
+          ` : `<span style="font-size:11px;color:var(--text-dimmed);font-style:italic">Hệ thống</span>`}
         </div>
       </td>
     `;
@@ -1014,6 +1018,13 @@ function renderStudentsTable() {
     if (btnDelete) {
       btnDelete.addEventListener('click', () => {
         deleteStudentAccount(student.email);
+      });
+    }
+
+    const btnDeleteSupa = row.querySelector('.btn-delete-supabase');
+    if (btnDeleteSupa) {
+      btnDeleteSupa.addEventListener('click', () => {
+        deleteSupabaseAccount(student.email);
       });
     }
 
@@ -1349,6 +1360,36 @@ function deleteStudentAccount(email) {
     const filtered = localUsers.filter(u => u.email !== email);
     localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(filtered));
     loadDatabase();
+  }
+}
+
+async function deleteSupabaseAccount(email) {
+  if (!confirm(`Xóa vĩnh viễn tài khoản Supabase "${email}"? Hành động này không thể hoàn tác.`)) return;
+
+  try {
+    const res = await fetch('/api/admin-delete-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${_adminKey}`,
+      },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      if (res.status === 503) {
+        showToast('Supabase chưa cấu hình — thêm SUPABASE_SERVICE_ROLE_KEY vào Vercel env vars.', 'warning');
+      } else {
+        showToast(`Lỗi: ${data.error || 'Không xác định'}`, 'error');
+      }
+      return;
+    }
+
+    showToast(`✅ Đã xóa tài khoản ${email}`, 'success');
+    loadDatabase();
+  } catch (err) {
+    showToast(`Lỗi kết nối: ${err.message}`, 'error');
   }
 }
 
