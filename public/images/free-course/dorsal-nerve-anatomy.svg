@@ -16,6 +16,15 @@
         fill: #0D2B1A;
         letter-spacing: -0.2px;
       }
+      .card-title {
+        font-weight: 700;
+        font-size: 10px;
+        letter-spacing: -0.1px;
+      }
+      .card-desc {
+        font-size: 8px;
+        font-weight: 500;
+      }
       .glow-path {
         filter: url(#arrow-glow);
       }
@@ -143,9 +152,9 @@
     
     <text x="365" y="112" class="card-desc" fill="#0D2B1A">• Nguyên tắc: Cắt chọn lọc một số nhánh thần kinh mu cụt.</text>
     <text x="365" y="125" class="card-desc" fill="#0D2B1A">• Hiệu quả: Giảm cảm giác quy đầu khoảng 20% – 40%.</text>
-    <text x="365" y="138" class="card-desc" fill="#9E2E0A">• Rủi ro cao: Mất cảm giác vĩnh viễn (10-30%), rối loạn cương dương.</text>
-    <text x="365" y="150" class="card-desc" fill="#9E2E0A">  Không thể phục hồi thần kinh sau khi đã cắt.</text>
-    <text x="365" y="163" class="card-desc" font-weight="700" fill="#C0390E">⚠️ EAU Guidelines 2024: KHÔNG khuyến nghị rộng rãi.</text>
+    <text x="365" y="138" class="card-desc" fill="#9E2E0A">• Rủi ro: Rối loạn cương, mất cảm giác vĩnh viễn (10-30%).</text>
+    <text x="365" y="150" class="card-desc" fill="#9E2E0A">  Tổn thương dây thần kinh, không thể phục hồi.</text>
+    <text x="365" y="163" class="card-desc" font-weight="700" fill="#C0390E">⚠️ EAU 2024: Không khuyến nghị phẫu thuật rộng rãi.</text>
   </g>
 
   <!-- Card 2: Hyaluronic Acid Injection -->
@@ -156,9 +165,9 @@
     <text x="365" y="250" font-size="8" font-weight="600" fill="#485A4F">(Glans Augmentation with Hyaluronic Acid)</text>
     
     <text x="365" y="268" class="card-desc" fill="#0D2B1A">• Nguyên tắc: Bơm HA dưới da tạo màng đệm ngăn kích thích.</text>
-    <text x="365" y="281" class="card-desc" fill="#0D2B1A">• Hiệu quả: Tăng IELT từ 1.4 → 3.8 phút (Hyun 2018, n=145).</text>
-    <text x="365" y="294" class="card-desc" fill="#3D6B4A">• Ưu điểm: Không phẫu thuật, an toàn, tự tiêu sau 12–18 tháng.</text>
-    <text x="365" y="307" class="card-desc" fill="#0D2B1A">• Chi phí: 5 - 15 triệu VNĐ · Yêu cầu bác sĩ chuyên khoa nam học.</text>
+    <text x="365" y="281" class="card-desc" fill="#0D2B1A">• Hiệu quả: Tăng IELT từ 1.4 → 3.8 phút (Hyun 2018).</text>
+    <text x="365" y="294" class="card-desc" fill="#3D6B4A">• Ưu điểm: Không phẫu thuật, tự tiêu sau 12–18 tháng.</text>
+    <text x="365" y="307" class="card-desc" fill="#0D2B1A">• Chi phí: 5–15 triệu VNĐ. Yêu cầu bác sĩ chuyên khoa.</text>
     <text x="365" y="320" class="card-desc" font-weight="700" fill="#2563EB">⭐ Giải pháp tạm thời và có thể đảo ngược.</text>
   </g>
 

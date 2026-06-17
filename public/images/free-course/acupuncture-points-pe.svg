@@ -159,12 +159,12 @@
   <rect x="368" y="294" width="292" height="38" rx="8" fill="#FFFFFF" stroke="#3D6B4A" stroke-width="0.5" stroke-opacity="0.35" ry="8" filter="url(#card-shadow)" />
   <circle cx="384" cy="313" r="6" fill="#2563EB" />
   <text x="396" y="308" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#2563EB">PC6 — Nội Quan (cổ tay, 2 thốn trên nếp gấp)</text>
-  <text x="396" y="323" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A">An thần, giảm cortisol, cân bằng hệ thần kinh tự chủ</text>
+  <text x="396" y="323" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="8" fill="#3D6B4A">An thần, giảm cortisol, cân bằng thần kinh tự chủ</text>
 
   <!-- RCT data note -->
   <rect x="368" y="338" width="292" height="36" rx="8" fill="#FFFFFF" stroke="#C0390E" stroke-width="1" stroke-opacity="0.3" ry="8" filter="url(#card-shadow)" />
   <text x="514" y="352" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle">Nghiên cứu: IELT tăng 2.4x sau 4 tuần</text>
-  <text x="514" y="366" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Kim 2014 (n=90) · Kết hợp châm + bài tập cho kết quả tốt nhất</text>
+  <text x="514" y="366" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#3D6B4A" text-anchor="middle">Kim 2014 (n=90): Châm + tập luyện cho kết quả tốt nhất</text>
 
   <text x="340" y="392" font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-size="9" fill="#B8860B" text-anchor="middle" opacity="0.7" class="title-text">Nguồn: Kim 2014 · WHO Acupuncture Points 2008 · Mật Mã 21 R&amp;D</text>
 </svg>
