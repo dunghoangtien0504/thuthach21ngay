@@ -135,6 +135,47 @@
     }
     .bullets li i { color: var(--accent); margin-top: 3px; flex-shrink: 0; }
 
+    /* ===== FEATURE BULLETS (FASCINATIONS) ===== */
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .feature-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: #fbfbf9;
+      border: 1px solid rgba(13,43,26,0.07);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      transition: var(--transition);
+    }
+    .feature-item:hover {
+      transform: translateY(-1px);
+      background: #fff;
+      border-color: rgba(184,134,11,0.25);
+      box-shadow: var(--shadow-md);
+    }
+    .feature-item-icon {
+      color: var(--accent);
+      font-size: 18px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .feature-item-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .feature-item-title {
+      font-weight: 700;
+      font-size: 15.5px;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+    .feature-item-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
     /* ===== PAIN / AGITATE ===== */
     .pain-box {
       background: #fff; border: 1px solid rgba(13,43,26,0.07);
@@ -403,40 +444,40 @@
   <section class="section">
     <div class="container">
       <p style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;font-weight:800;margin-bottom:20px;">Đọc hết trang này, anh sẽ biết:</p>
-      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;">
-        <li style="display:flex;align-items:flex-start;gap:14px;background:#f9fbf7;border:1px solid rgba(13,43,26,0.08);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;">
-          <i class="fa-solid fa-circle-check" style="color:var(--accent);margin-top:2px;flex-shrink:0;font-size:17px;"></i>
-          <div>
-            <p style="margin:0 0 4px;font-weight:700;font-size:15px;color:var(--text-main);line-height:1.5;">Sai lầm âm thầm khiến 9/10 đàn ông tập Kegel cả tháng không ra kết quả</p>
-            <p style="margin:0;font-size:14px;color:var(--text-muted);line-height:1.6;">Không phải lười, không phải yếu — chỉ là đang co nhầm cơ.</p>
+      <ul class="feature-list">
+        <li class="feature-item">
+          <i class="fa-solid fa-circle-check feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h3 class="feature-item-title">Sai lầm âm thầm khiến 9/10 đàn ông tập Kegel cả tháng không ra kết quả</h3>
+            <p class="feature-item-desc">Không phải lười, không phải yếu — chỉ là đang co nhầm cơ.</p>
           </div>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:14px;background:#f9fbf7;border:1px solid rgba(13,43,26,0.08);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;">
-          <i class="fa-solid fa-circle-check" style="color:var(--accent);margin-top:2px;flex-shrink:0;font-size:17px;"></i>
-          <div>
-            <p style="margin:0 0 4px;font-weight:700;font-size:15px;color:var(--text-main);line-height:1.5;">Nhóm cơ "ẩn" nào thực sự quyết định thời gian của anh</p>
-            <p style="margin:0;font-size:14px;color:var(--text-muted);line-height:1.6;">Và cách biết ngay bằng 1 bài kiểm tra 2 phút — không cần thiết bị hay ai giúp.</p>
+        <li class="feature-item">
+          <i class="fa-solid fa-circle-check feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h3 class="feature-item-title">Nhóm cơ "ẩn" nào thực sự quyết định thời gian của anh</h3>
+            <p class="feature-item-desc">Và cách biết ngay bằng 1 bài kiểm tra 2 phút — không cần thiết bị hay ai giúp.</p>
           </div>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:14px;background:#f9fbf7;border:1px solid rgba(13,43,26,0.08);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;">
-          <i class="fa-solid fa-circle-check" style="color:var(--accent);margin-top:2px;flex-shrink:0;font-size:17px;"></i>
-          <div>
-            <p style="margin:0 0 4px;font-weight:700;font-size:15px;color:var(--text-main);line-height:1.5;">Kỹ thuật "bóp 1 giây" — dùng đúng khoảnh khắc anh cần nhất</p>
-            <p style="margin:0;font-size:14px;color:var(--text-muted);line-height:1.6;">Kỹ năng thực chiến, không phải lý thuyết.</p>
+        <li class="feature-item">
+          <i class="fa-solid fa-circle-check feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h3 class="feature-item-title">Kỹ thuật "bóp 1 giây" — dùng đúng khoảnh khắc anh cần nhất</h3>
+            <p class="feature-item-desc">Kỹ năng thực chiến, không phải lý thuyết.</p>
           </div>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:14px;background:#f9fbf7;border:1px solid rgba(13,43,26,0.08);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;">
-          <i class="fa-solid fa-circle-check" style="color:var(--accent);margin-top:2px;flex-shrink:0;font-size:17px;"></i>
-          <div>
-            <p style="margin:0 0 4px;font-weight:700;font-size:15px;color:var(--text-main);line-height:1.5;">Tại sao đàn ông 35-50 tuổi tập Kegel lại thấy kết quả nhanh hơn hồi 20 tuổi</p>
-            <p style="margin:0;font-size:14px;color:var(--text-muted);line-height:1.6;">Và cách dùng điều đó có lợi cho anh.</p>
+        <li class="feature-item">
+          <i class="fa-solid fa-circle-check feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h3 class="feature-item-title">Tại sao đàn ông 35-50 tuổi tập Kegel lại thấy kết quả nhanh hơn hồi 20 tuổi</h3>
+            <p class="feature-item-desc">Và cách dùng điều đó có lợi cho anh.</p>
           </div>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:14px;background:#f9fbf7;border:1px solid rgba(13,43,26,0.08);border-left:4px solid var(--accent);border-radius:8px;padding:16px 18px;">
-          <i class="fa-solid fa-circle-check" style="color:var(--accent);margin-top:2px;flex-shrink:0;font-size:17px;"></i>
-          <div>
-            <p style="margin:0 0 4px;font-weight:700;font-size:15px;color:var(--text-main);line-height:1.5;">Cảm giác cụ thể anh sẽ nhận ra vào ngày thứ 3-4</p>
-            <p style="margin:0;font-size:14px;color:var(--text-muted);line-height:1.6;">Biết dấu hiệu này để anh biết mình đang đúng hướng.</p>
+        <li class="feature-item">
+          <i class="fa-solid fa-circle-check feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h3 class="feature-item-title">Cảm giác cụ thể anh sẽ nhận ra vào ngày thứ 3-4</h3>
+            <p class="feature-item-desc">Biết dấu hiệu này để anh biết mình đang đúng hướng.</p>
           </div>
         </li>
       </ul>
