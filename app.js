@@ -319,6 +319,19 @@ async function setupAuth() {
           }
           return;
         }
+        // Add to Brevo as registered (not yet purchased)
+        fetch('/api/brevo-add-contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, segment: 'registered' })
+        }).catch(() => {});
+        // Schedule 15-email nurture sequence
+        fetch('/api/schedule-email-sequence', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, segment: 'registered' })
+        }).catch(() => {});
+
         showAuthSuccess('Đã gửi email xác nhận! Kiểm tra hộp thư và bấm link để kích hoạt tài khoản.');
         return;
       }
@@ -334,6 +347,19 @@ async function setupAuth() {
       const status = isValidKey ? 'active' : 'pending';
       localUsers.push({ name, email, password: pass, status, key_used: key || null, date: new Date().toLocaleDateString('vi-VN'), referredBy: referredBy || null });
       localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(localUsers));
+
+      // Add to Brevo as registered (localStorage path)
+      fetch('/api/brevo-add-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, segment: 'registered' })
+      }).catch(() => {});
+      // Schedule 15-email nurture sequence
+      fetch('/api/schedule-email-sequence', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, segment: 'registered' })
+      }).catch(() => {});
       userSession = { email, name, phone: '' };
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(userSession));
       if (isValidKey && generatedKeys.includes(key)) {
@@ -434,8 +460,30 @@ function updatePaymentActivationUI() {
               // Show success, hide pending payment panel
               if (paymentPanel) paymentPanel.style.display = 'none';
               if (successBanner) successBanner.style.display = 'block';
-              
+
               showToast("Thanh toán thành công! Tài khoản của anh đã được nâng cấp lên VIP.", "success");
+
+              fetch('/api/brevo-add-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  email: userSession.email,
+                  name: userSession.name || '',
+                  phone: userSession.phone || '',
+                  segment: 'buyer_mm21',
+                  product: 'mm21',
+                  purchaseDate: new Date().toISOString().split('T')[0]
+                })
+              }).catch(() => {});
+              fetch('/api/schedule-email-sequence', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  email: userSession.email,
+                  name: userSession.name || '',
+                  segment: 'buyer_mm21'
+                })
+              }).catch(() => {});
             }
           }
         } catch (err) {
@@ -495,8 +543,30 @@ function updatePaymentActivationUI() {
 
               if (paymentPanel) paymentPanel.style.display = 'none';
               if (successBanner) successBanner.style.display = 'block';
-              
+
               showToast("Thanh toán thành công! Tài khoản của anh đã được nâng cấp lên VIP.", "success");
+
+              fetch('/api/brevo-add-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  email: userSession.email,
+                  name: userSession.name || '',
+                  phone: userSession.phone || '',
+                  segment: 'buyer_mm21',
+                  product: 'mm21',
+                  purchaseDate: new Date().toISOString().split('T')[0]
+                })
+              }).catch(() => {});
+              fetch('/api/schedule-email-sequence', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  email: userSession.email,
+                  name: userSession.name || '',
+                  segment: 'buyer_mm21'
+                })
+              }).catch(() => {});
             } else {
               showToast("Hệ thống chưa nhận được khoản chuyển khoản của anh. Vui lòng đợi thêm hoặc liên hệ hỗ trợ Telegram.", "warning");
               if (statusText) statusText.textContent = "Chưa tìm thấy giao dịch. Vui lòng quét mã QR chuyển khoản chính xác.";
