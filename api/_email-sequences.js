@@ -15,7 +15,7 @@ function wrap(body) {
 <div style="max-width:580px;margin:0 auto;padding:40px 24px;color:#1a1a1a;font-size:16px;line-height:1.8;">
 ${body}
 <hr style="border:none;border-top:1px solid #eeeeee;margin:32px 0;">
-<p style="font-size:12px;color:#aaaaaa;">FORMEN · <a href="{{unsubscribe}}" style="color:#aaaaaa;">Hủy đăng ký</a></p>
+<p style="font-size:12px;color:#aaaaaa;">FORMEN · Email tự động · Để ngừng nhận, reply "DỪNG"</p>
 </div></body></html>`;
 }
 
