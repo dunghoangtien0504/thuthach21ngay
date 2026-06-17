@@ -5,7 +5,8 @@
  *
  * POST /api/admin-activate-user
  * Headers: Authorization: Bearer <VITE_ADMIN_PASS>
- * Body: { email, password, name? }
+ * Body: { email, password?, name?, courses?: string[] }
+ * courses: array of course_ids to grant — omit to grant all
  */
 
 const COURSE_LIST = [
@@ -37,8 +38,13 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'Supabase not configured' });
   }
 
-  const { email, password, name } = req.body || {};
+  const { email, password, name, courses: requestedCourses } = req.body || {};
   if (!email) return res.status(400).json({ error: 'email is required' });
+
+  // If caller specifies course IDs, only activate those; otherwise activate all
+  const activeCourses = (Array.isArray(requestedCourses) && requestedCourses.length)
+    ? COURSE_LIST.filter(c => requestedCourses.includes(c.course_id))
+    : COURSE_LIST;
 
   try {
     const { createClient } = await import('@supabase/supabase-js');
@@ -81,9 +87,9 @@ export default async function handler(req, res) {
       name: name || (existing?.user_metadata?.name) || email.split('@')[0],
     }, { onConflict: 'id' });
 
-    // 3. Insert enrollment records for all courses
+    // 3. Insert enrollment records for selected courses
     const enrolledAt = new Date().toISOString();
-    for (const course of COURSE_LIST) {
+    for (const course of activeCourses) {
       await admin.from('course_enrollments').upsert({
         user_id:     userId,
         course_id:   course.course_id,
@@ -97,8 +103,8 @@ export default async function handler(req, res) {
       success: true,
       userId,
       email,
-      courses: COURSE_LIST.map(c => c.course_id),
-      message: `Đã kích hoạt ${COURSE_LIST.length} khóa học cho ${email}`,
+      courses: activeCourses.map(c => c.course_id),
+      message: `Đã kích hoạt ${activeCourses.length} khóa học cho ${email}`,
     });
 
   } catch (err) {

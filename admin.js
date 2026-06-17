@@ -44,6 +44,12 @@ function showToast(message, type = 'info', duration = 4500) {
 // Expose admin key for inline scripts in admin.html (populated after login)
 window._adminApiKey = _adminKey;
 
+// Available courses for manual unlock
+const COURSE_CATALOG = [
+  { id: 'mat-ma-21',  name: 'Mật Mã 21 — Lộ trình 21 ngày' },
+  { id: 'kegel',      name: 'Kegel Chuyên Sâu — Cơ sàn chậu' },
+];
+
 // State
 let studentsList = [];
 let allowedAccounts = [];
@@ -977,6 +983,10 @@ function renderStudentsTable() {
               Kích hoạt
             </button>
           ` : ''}
+          <button class="btn btn-sm btn-unlock-courses" data-email="${escHtml(student.email)}"
+            style="background:#EEF2FF;color:#4F46E5;border:1px solid #C7D2FE;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">
+            <i class="fa-solid fa-unlock" style="font-size:10px;"></i> Khóa học
+          </button>
           ${isLocal && !isSupabase ? `
             <button class="btn btn-danger btn-sm btn-delete-student" data-email="${escHtml(student.email)}">
               Xóa
@@ -990,6 +1000,13 @@ function renderStudentsTable() {
     if (btnActivate) {
       btnActivate.addEventListener('click', () => {
         activateStudentAccount(student.email);
+      });
+    }
+
+    const btnUnlock = row.querySelector('.btn-unlock-courses');
+    if (btnUnlock) {
+      btnUnlock.addEventListener('click', () => {
+        openCourseUnlockModal(student);
       });
     }
 
@@ -1333,6 +1350,151 @@ function deleteStudentAccount(email) {
     localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(filtered));
     loadDatabase();
   }
+}
+
+// ==========================================================================
+// COURSE UNLOCK MODAL
+// ==========================================================================
+function openCourseUnlockModal(student) {
+  const modal = document.getElementById('course-unlock-modal');
+  if (!modal) return;
+
+  // Populate user info
+  document.getElementById('course-unlock-name').textContent = student.name || '(Chưa có tên)';
+  document.getElementById('course-unlock-email').textContent = student.email;
+  document.getElementById('course-unlock-subtitle').textContent =
+    student.source === 'supabase' ? 'Tài khoản Supabase' : 'Tài khoản Local';
+
+  // Render course checkboxes — pre-check enrolled courses
+  const enrolled = enrollmentsList
+    .filter(e => e.email === student.email)
+    .map(e => e.course_id);
+
+  const list = document.getElementById('course-unlock-list');
+  list.innerHTML = COURSE_CATALOG.map(c => `
+    <label style="
+      display:flex; align-items:center; gap:12px;
+      padding:12px 14px; border-radius:10px; cursor:pointer;
+      border:1.5px solid ${enrolled.includes(c.id) ? '#A7F3D0' : '#E5E7EB'};
+      background:${enrolled.includes(c.id) ? '#F0FDF4' : '#FAFAFA'};
+      transition:border-color .15s;
+    " onmouseover="this.style.borderColor='#6EE7B7'" onmouseout="this.style.borderColor='${enrolled.includes(c.id) ? '#A7F3D0' : '#E5E7EB'}'">
+      <input type="checkbox" name="course" value="${c.id}" ${enrolled.includes(c.id) ? 'checked' : ''}
+        style="width:16px;height:16px;accent-color:#059669;cursor:pointer;">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#0D2B1A;">${c.name}</div>
+        ${enrolled.includes(c.id)
+          ? '<div style="font-size:11px;color:#059669;">✓ Đã đăng ký</div>'
+          : '<div style="font-size:11px;color:#9CA3AF;">Chưa đăng ký</div>'}
+      </div>
+    </label>
+  `).join('');
+
+  // Reset
+  document.getElementById('course-unlock-password').value = '';
+  const status = document.getElementById('course-unlock-status');
+  status.style.display = 'none';
+
+  // Store current student for save handler
+  modal.dataset.email = student.email;
+  modal.dataset.name  = student.name || '';
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Wire close buttons (once)
+  if (!modal.dataset.wired) {
+    modal.dataset.wired = '1';
+    document.getElementById('course-unlock-close').addEventListener('click', closeCourseUnlockModal);
+    document.getElementById('course-unlock-cancel').addEventListener('click', closeCourseUnlockModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeCourseUnlockModal(); });
+
+    document.getElementById('course-unlock-save').addEventListener('click', async () => {
+      const email    = modal.dataset.email;
+      const name     = modal.dataset.name;
+      const password = document.getElementById('course-unlock-password').value.trim();
+      const checked  = [...document.querySelectorAll('#course-unlock-list input[type=checkbox]:checked')]
+                         .map(cb => cb.value);
+
+      if (!checked.length) {
+        showUnlockStatus('Chọn ít nhất một khóa học!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('course-unlock-save');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang xử lý...';
+
+      try {
+        const res = await fetch('/api/admin-activate-user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${_adminKey}`,
+          },
+          body: JSON.stringify({ email, name, password: password || undefined, courses: checked }),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          // 401 = Vercel env var chưa cấu hình
+          if (res.status === 401) {
+            showUnlockStatus(
+              '⚠️ API chưa được cấu hình. Thêm VITE_ADMIN_PASS + SUPABASE_SERVICE_ROLE_KEY vào Vercel → Settings → Environment Variables rồi redeploy.',
+              'warn'
+            );
+          } else {
+            showUnlockStatus(`Lỗi: ${data.error || 'Không xác định'}`, 'error');
+          }
+          return;
+        }
+
+        // Cập nhật enrollmentsList local để UI phản ánh ngay
+        checked.forEach(courseId => {
+          const course = COURSE_CATALOG.find(c => c.id === courseId);
+          if (!enrollmentsList.some(e => e.email === email && e.course_id === courseId)) {
+            enrollmentsList.push({
+              course_id: courseId,
+              course_name: course?.name || courseId,
+              email,
+              enrolled_at: new Date().toISOString(),
+            });
+          }
+        });
+
+        showUnlockStatus(
+          `✅ Đã mở khóa ${checked.length} khóa học cho ${email}!`,
+          'success'
+        );
+        setTimeout(() => { closeCourseUnlockModal(); loadDatabase(); }, 1800);
+
+      } catch (err) {
+        showUnlockStatus(`Lỗi kết nối: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-unlock"></i> Áp dụng';
+      }
+    });
+  }
+}
+
+function closeCourseUnlockModal() {
+  const modal = document.getElementById('course-unlock-modal');
+  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+}
+
+function showUnlockStatus(msg, type) {
+  const el = document.getElementById('course-unlock-status');
+  if (!el) return;
+  const colors = {
+    success: { bg: '#F0FDF4', border: '#A7F3D0', color: '#065F46' },
+    error:   { bg: '#FEF2F2', border: '#FECACA', color: '#991B1B' },
+    warn:    { bg: '#FFFBEB', border: '#FDE68A', color: '#92400E' },
+  };
+  const c = colors[type] || colors.error;
+  el.style.cssText = `display:block;padding:10px 14px;border-radius:8px;font-size:12.5px;
+    background:${c.bg};border:1px solid ${c.border};color:${c.color};line-height:1.5;`;
+  el.textContent = msg;
 }
 
 // ==========================================================================
