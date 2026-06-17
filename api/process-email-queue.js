@@ -2,40 +2,29 @@
  * GET /api/process-email-queue
  * Called daily by Vercel Cron (0 1 * * * = 8 AM Vietnam time / UTC+7).
  * Fetches all email_queue rows scheduled for today or earlier that haven't been sent,
- * sends them via Brevo transactional API, and marks them as sent.
+ * sends them via Resend API, and marks them as sent.
  */
 
 import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
 
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const BREVO_API_KEY = process.env.BREVO_API_KEY;
-const SENDER = { name: 'FORMEN', email: 'no-reply@thuthach21ngay.org' };
-const BATCH_SIZE = 50; // Brevo free: 300/day. Batching to stay safe.
+const resend = new Resend(process.env.RESEND_API_KEY);
+const FROM = 'FORMEN <no-reply@thuthach21ngay.org>';
+const BATCH_SIZE = 50; // Resend free: 100/day
 
-async function sendBrevoEmail({ to, toName, subject, htmlContent }) {
-  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
-    method: 'POST',
-    headers: {
-      'api-key': BREVO_API_KEY,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      sender: SENDER,
-      to: [{ email: to, name: toName || to }],
-      subject,
-      htmlContent
-    })
+async function sendEmail({ to, toName, subject, htmlContent }) {
+  const { error } = await resend.emails.send({
+    from: FROM,
+    to: [to],
+    subject,
+    html: htmlContent,
   });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Brevo error ${res.status}: ${text}`);
-  }
-  return res.json();
+  if (error) throw new Error(`Resend error: ${error.message}`);
 }
 
 export default async function handler(req, res) {
@@ -74,7 +63,7 @@ export default async function handler(req, res) {
 
   for (const row of dueEmails) {
     try {
-      await sendBrevoEmail({
+      await sendEmail({
         to: row.email,
         toName: row.name,
         subject: row.subject,
