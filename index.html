@@ -2705,7 +2705,6 @@
       accounts = accounts.filter(a => a.email !== email);
       accounts.push({
         email: email,
-        password: "123", // default temp pwd
         name: name,
         phone: phone,
         role: "student"
@@ -2719,7 +2718,6 @@
         name: name,
         email: email,
         phone: phone,
-        password: "123",
         status: "pending",
         key_used: "-",
         registeredAt: new Date().toISOString(),

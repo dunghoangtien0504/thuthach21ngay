@@ -847,7 +847,7 @@
       const users = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users') || '[]');
       const idx = users.findIndex(u => u.email === email);
       const userObj = idx >= 0 ? users[idx] : {
-        email, name, phone, password: '123',
+        email, name, phone,
         registeredAt: new Date().toISOString(), source: 'kegel_checkout',
         referredBy: localStorage.getItem('mm21_ref_code') || null
       };
