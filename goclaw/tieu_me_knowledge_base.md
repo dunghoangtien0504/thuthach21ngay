@@ -2837,7 +2837,7 @@ Phản xạ mới của bạn lúc này giống cơ bắp sau 21 ngày tập gym
 - [ ] Lập lịch duy trì cá nhân cụ thể (ngày nào, bài gì, bao nhiêu phút) và lưu vào điện thoại
 - [ ] Viết 3 dòng cho chính mình của 21 ngày trước — bạn sẽ ngạc nhiên vì chặng đường đã đi
 
-> 📝 **Ghi vào Nhật Ký Tracker:** Bộ chỉ số tốt nghiệp đầy đủ + IELT hiện tại. Nếu cần đồng hành tiếp, đội ngũ vẫn ở đây: Telegram @matma21_support.
+> 📝 **Ghi vào Nhật Ký Tracker:** Bộ chỉ số tốt nghiệp đầy đủ + IELT hiện tại. Nếu cần đồng hành tiếp, đội ngũ vẫn ở đây: Telegram @kenthoang.
 
 
 ---
