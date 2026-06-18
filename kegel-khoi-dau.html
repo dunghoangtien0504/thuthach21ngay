@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -42,6 +42,18 @@
     .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
     .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
     img { max-width: 100%; height: auto; display: block; }
+
+    /* ===== ANNOUNCEMENT BAR ===== */
+    .announce-bar {
+      background-color: var(--danger);
+      color: #fff;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 1001;
+      position: relative;
+    }
 
     /* ===== HEADER ===== */
     header {
@@ -112,6 +124,25 @@
     }
     .hero-meta span { display: flex; align-items: center; gap: 6px; }
     .hero-meta i { color: var(--accent); }
+
+    /* ===== TRUST BAR ===== */
+    .trust-bar {
+      background-color: var(--primary-light);
+      color: rgba(255,255,255,0.7);
+      padding: 16px 0;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .trust-layout {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
 
     /* ===== SECTION WRAPPER ===== */
     .section { padding: 56px 0; }
@@ -214,14 +245,16 @@
       border-bottom: 1px solid rgba(13,43,26,0.06);
     }
     .value-table th { font-weight: 800; color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
-    .value-table td:last-child { text-align: right; font-weight: 700; color: var(--green); }
-    .value-total td { font-weight: 800; color: var(--primary) !important; border-top: 2px solid rgba(13,43,26,0.1); }
-    .value-total td:last-child { color: var(--accent) !important; font-size: 17px; }
+    .value-table td:last-child { text-align: right; font-weight: 700; color: var(--accent-bright); }
+    .value-table td { color: rgba(255,255,255,0.8); }
+    .value-total td { font-weight: 800; color: #fff !important; border-top: 2px solid rgba(255,255,255,0.15); }
+    .value-total td:last-child { color: var(--accent-bright) !important; font-size: 17px; }
 
     /* ===== PRICE BOX ===== */
     .price-box {
-      background: var(--primary); border-radius: var(--radius-lg);
+      background: var(--primary-light); border-radius: var(--radius-lg);
       padding: 40px 36px; text-align: center; position: relative; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .price-box::before {
       content: ''; position: absolute; inset: 0;
@@ -242,6 +275,7 @@
       color: var(--primary); font-weight: 800; font-size: 17px;
       text-decoration: none; box-shadow: var(--shadow-gold);
       transition: var(--transition); width: 100%; justify-content: center;
+      border: none; cursor: pointer;
     }
     .price-cta:hover { transform: translateY(-3px); box-shadow: 0 18px 32px -6px rgba(184,134,11,0.5); }
     .price-note { font-size: 12.5px; color: rgba(255,255,255,0.4); margin-top: 14px; }
@@ -297,7 +331,6 @@
       font-size: 12px; font-weight: 800;
     }
 
-    /* ===== UPSELL HINT ===== */
     .upsell-hint {
       background: rgba(13,43,26,0.04); border: 1px solid rgba(13,43,26,0.08);
       border-radius: var(--radius-md); padding: 20px 24px;
@@ -305,6 +338,72 @@
       margin-top: 16px;
     }
     .upsell-hint strong { color: var(--primary); }
+
+    /* ===== STICKY CTA BAR ===== */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(251, 249, 244, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(13, 43, 26, 0.08);
+      padding: 12px 20px;
+      z-index: 999;
+      box-shadow: 0 -8px 24px -4px rgba(13,43,26,0.08);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .sticky-cta-container {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .sticky-cta-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--danger);
+    }
+    .sticky-cta-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 13.5px;
+      text-decoration: none;
+      box-shadow: var(--shadow-gold);
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .sticky-cta-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 20px -4px rgba(184,134,11,0.35);
+    }
+
+    /* ===== TELEGRAM SUPPORT FLOAT ===== */
+    .tg-float {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background-color: #229ED9;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(34, 158, 217, 0.4);
+      z-index: 998;
+      transition: transform 0.2s;
+    }
+    .tg-float:hover {
+      transform: scale(1.1);
+    }
 
     /* ===== FOOTER ===== */
     footer {
@@ -322,6 +421,18 @@
       .bonus-card { flex-direction: column; }
       .hero-meta { gap: 16px; }
       .price-now-big { font-size: 40px; }
+      .sticky-cta-container {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+      .sticky-cta-btn {
+        width: 100%;
+        text-align: center;
+      }
+      .tg-float {
+        bottom: 140px;
+      }
     }
     :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
@@ -401,7 +512,12 @@
 </head>
 <body>
 
-  <!-- ======== HEADER ======== -->
+  <!-- ======== [0] ANNOUNCEMENT BAR ======== -->
+  <div class="announce-bar">
+    🔥 Ưu Đãi Giới Hạn: Chỉ còn 14 suất đăng ký học với giá 199.000đ trước khi đóng cổng đợt này.
+  </div>
+
+  <!-- ======== [1] HEADER ======== -->
   <header>
     <div class="container-wide header-layout">
       <a href="/" class="logo">
@@ -414,22 +530,22 @@
     </div>
   </header>
 
-  <!-- ======== HERO ======== -->
+  <!-- ======== [2] HERO ======== -->
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-badge">
-        <i class="fa-solid fa-flask"></i> Phương pháp Dr. Arnold Kegel — Xác nhận bởi hơn 200 nghiên cứu y khoa
+        <i class="fa-solid fa-flask"></i> Nghiên Cứu Y Khoa & Khảo Sát ISSM Xác Thực
       </div>
       <h1>
         Chỉ Mất <span>7 Ngày × 10 Phút</span><br>
         Để Anh Lần Đầu Tiên Cảm Nhận<br>
-        Mình Đang Kiểm Soát Được
+        Sự Kiểm Soát Phản Xạ Xuất Tinh
       </h1>
       <p class="hero-sub">
-        Không thuốc. Không dụng cụ. Không ai biết anh đang làm gì. Chỉ 10 phút mỗi ngày — kể cả khi ngồi tại bàn làm việc — để kích hoạt lại nhóm cơ mà cơ thể anh đã có sẵn từ khi sinh ra nhưng chưa bao giờ được dùng đúng cách.
+        Không thuốc. Không dụng cụ. Tuyệt đối riêng tư. Giáo trình khoa học giúp anh cô lập chính xác cơ sàn chậu PC để xây dựng lực phanh vật lý đầu tiên của bản thân.
       </p>
-      <a href="#" class="hero-cta" onclick="openPaymentModal();return false;">
-        <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — Chỉ 199.000đ
+      <a href="#order-section" class="hero-cta">
+        <i class="fa-solid fa-arrow-down"></i> Xem Chi Tiết Lộ Trình Luyện Tập ↓
       </a>
       <div class="hero-meta">
         <span><i class="fa-solid fa-clock"></i> 10 phút/ngày</span>
@@ -440,209 +556,249 @@
     </div>
   </section>
 
-  <!-- ======== FASCINATION BULLETS ======== -->
-  <section class="section">
-    <div class="container">
-      <p style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;font-weight:800;margin-bottom:20px;">Đọc hết trang này, anh sẽ biết:</p>
-      <ul class="feature-list">
-        <li class="feature-item">
-          <i class="fa-solid fa-circle-check feature-item-icon"></i>
-          <div class="feature-item-content">
-            <h3 class="feature-item-title">Sai lầm âm thầm khiến 9/10 đàn ông tập Kegel cả tháng không ra kết quả</h3>
-            <p class="feature-item-desc">Không phải lười, không phải yếu — chỉ là đang co nhầm cơ.</p>
-          </div>
-        </li>
-        <li class="feature-item">
-          <i class="fa-solid fa-circle-check feature-item-icon"></i>
-          <div class="feature-item-content">
-            <h3 class="feature-item-title">Nhóm cơ "ẩn" nào thực sự quyết định thời gian của anh</h3>
-            <p class="feature-item-desc">Và cách biết ngay bằng 1 bài kiểm tra 2 phút — không cần thiết bị hay ai giúp.</p>
-          </div>
-        </li>
-        <li class="feature-item">
-          <i class="fa-solid fa-circle-check feature-item-icon"></i>
-          <div class="feature-item-content">
-            <h3 class="feature-item-title">Kỹ thuật "bóp 1 giây" — dùng đúng khoảnh khắc anh cần nhất</h3>
-            <p class="feature-item-desc">Kỹ năng thực chiến, không phải lý thuyết.</p>
-          </div>
-        </li>
-        <li class="feature-item">
-          <i class="fa-solid fa-circle-check feature-item-icon"></i>
-          <div class="feature-item-content">
-            <h3 class="feature-item-title">Tại sao đàn ông 35-50 tuổi tập Kegel lại thấy kết quả nhanh hơn hồi 20 tuổi</h3>
-            <p class="feature-item-desc">Và cách dùng điều đó có lợi cho anh.</p>
-          </div>
-        </li>
-        <li class="feature-item">
-          <i class="fa-solid fa-circle-check feature-item-icon"></i>
-          <div class="feature-item-content">
-            <h3 class="feature-item-title">Cảm giác cụ thể anh sẽ nhận ra vào ngày thứ 3-4</h3>
-            <p class="feature-item-desc">Biết dấu hiệu này để anh biết mình đang đúng hướng.</p>
-          </div>
-        </li>
-      </ul>
+  <!-- ======== [3] TRUST BAR ======== -->
+  <section class="trust-bar">
+    <div class="container-wide trust-layout">
+      <span>Đồng hành cùng 15,420+ học viên</span>
+      <span>•</span>
+      <span>Xác thực bởi nghiên cứu y khoa Arnold Kegel (1948)</span>
+      <span>•</span>
+      <span>Bảo mật thông tin & giao dịch 100%</span>
     </div>
   </section>
 
-  <!-- ======== PAIN ======== -->
+  <!-- ======== [4] PAIN SECTION (PAIN 3 LỚP) ======== -->
   <section class="section section-alt">
     <div class="container">
-      <h2 class="section-title">Anh không phải người duy nhất đang giấu điều này.</h2>
-      <p class="section-sub">Ở Việt Nam có hàng triệu đàn ông cùng tình trạng. Không ai nói ra. Nhưng ai cũng thầm nghĩ về nó mỗi ngày.</p>
+      <h2 class="section-title">Anh Không Phải Người Duy Nhất Đang Âm Thầm Giấu Đi Nỗi Đau Này</h2>
+      <p class="section-sub">Ở Việt Nam có hàng triệu đàn ông cùng chung cảnh ngộ, nhưng ai cũng chọn cách im lặng trốn tránh.</p>
 
       <div class="pain-box">
-        <p>Anh có nhớ lần cuối cùng mình thật sự tự tin không? Không phải giả vờ tự tin — mà là cái cảm giác làm chủ hoàn toàn, biết mình có thể đáp ứng được, không cần lo lắng hay tính toán trước?</p>
-        <p>Với nhiều anh, đó đã là ký ức xa lắc. Thay vào đó là: tránh né cơ hội, tìm cớ từ chối, cảm giác lo âu trước mỗi lần gần gũi. Rồi sau đó — im lặng, tự trách mình, tự hỏi "tại sao mình lại như vậy?"</p>
-        <p>Anh đã thử gì rồi? Thuốc "tăng cường bản lĩnh"? Kìm nén — cố nghĩ chuyện khác? Gel, xịt, thực phẩm chức năng? Hay đơn giản là... chấp nhận và không nói với ai?</p>
-        <p><strong>Không cái nào đụng đến gốc rễ.</strong> Vì vấn đề không nằm ở hormone, không nằm ở tâm lý — nó nằm ở một nhóm cơ mà anh chưa bao giờ được dạy cách dùng đúng.</p>
+        <p><strong>Lớp 1 — Triệu Chứng Hàng Ngày (Symptom):</strong> Anh có nhớ cảm giác bất lực khi thời gian trôi qua quá nhanh? Mọi sự chuẩn bị, mọi mong đợi của cả hai đều sụp đổ chỉ sau vài chục giây ngắn ngủi. Sự ngượng ngùng, hụt hẫng sau đó biến thành nỗi ám ảnh lặp đi lặp lại.</p>
+        <p><strong>Lớp 2 — Hậu Quả Dài Hạn (Consequence):</strong> Nếu để tình trạng này tiếp diễn 3 tháng, 6 tháng hay 1 năm nữa? Sự tránh né gần gũi bắt đầu xuất hiện. Anh tìm cớ bận rộn, mệt mỏi. Vợ chồng ít nói chuyện hơn, khoảng cách vô hình xuất hiện giữa hai người trong phòng ngủ và lan ra cả cuộc sống thường ngày.</p>
+        <p><strong>Lớp 3 — Bản Sắc Bị Tổn Thương (Identity):</strong> Từ một người đàn ông tự tin, quyết đoán ngoài xã hội, anh bỗng trở thành một kẻ tự ti và đầy lo âu hiệu suất trong chuyện phòng the. Anh bắt đầu nghi ngờ năng lực bản thân, tự trách mình, và mang cảm giác thất bại âm thầm mỗi đêm.</p>
       </div>
 
-      <p style="font-size:15.5px;color:var(--text-muted);margin-top:20px;line-height:1.8;background:#fff;padding:24px 28px;border-radius:12px;border-left:4px solid var(--accent);">
-        Điều đáng sợ nhất không phải là bản thân vấn đề. Điều đáng sợ là <strong style="color:var(--primary);">để lâu thành quen</strong>. Anh bắt đầu tránh né → mất tự tin → tránh né nhiều hơn → mối quan hệ lạnh đi → anh tự cô lập. Rồi một ngày anh nhìn lại và nhận ra mình đã mất rất nhiều thứ — không phải vì không giỏi, không phải vì không đủ — chỉ vì không có ai chỉ cho anh đúng lúc.
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:28px;line-height:1.8;text-align:center;">
+        <em>Tôi biết anh đang bận rộn với hàng trăm áp lực mỗi ngày. Nhưng việc trốn tránh sẽ không khiến vấn đề biến mất. Đã đến lúc anh <strong>Quyết Định Thay Đổi</strong> và kích hoạt lại lực phanh tự nhiên vốn có của cơ thể.</em>
       </p>
+
+      <div style="text-align:center;">
+        <a href="#" class="price-cta" onclick="openPaymentModal();return false;" style="max-width:380px;margin:0 auto;">
+          Tôi Muốn Thay Đổi — Bắt Đầu Ngay →
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- ======== SOLUTION ======== -->
+  <!-- ======== [5] SOLUTION BRIDGE (BEFORE-AFTER STORY) ======== -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Tin tốt: Không có gì "hỏng" ở cơ thể anh cả.</h2>
-      <p class="section-sub">Chỉ là anh chưa bao giờ được dạy cách dùng đúng hệ thống mà cơ thể đã có sẵn.</p>
+      <h2 class="section-title">Câu Chuyện Của Hoàng — Từ Bế Tắc Đến Làm Chủ Cuộc Chơi</h2>
+      <p class="section-sub">Một ví dụ điển hình của việc tự tập Kegel sai cách và tìm ra lối thoát khoa học.</p>
 
-      <p style="font-size:15px;color:var(--text-muted);line-height:1.8;margin-bottom:16px;">
-        Năm 1948, <strong style="color:var(--primary);">Bác Sĩ Arnold Kegel</strong> phát hiện ra nhóm cơ PC (pubococcygeus) — nhóm cơ thật sự kiểm soát thời gian của đàn ông. Ông chứng minh nhóm cơ này có thể luyện tập và cải thiện — giống như bắp tay hay bắp chân. Hơn 200 nghiên cứu y khoa trong 75 năm sau đó đều xác nhận điều này.
-      </p>
-      <p style="font-size:15px;color:var(--text-muted);line-height:1.8;margin-bottom:20px;">
-        Vấn đề là: <strong style="color:var(--danger);">hầu hết hướng dẫn Kegel trên internet sai kỹ thuật.</strong> Sai cơ. Sai nhịp. Không có cách kiểm tra bản thân. Kết quả là nhiều anh tập cả tháng không thấy khác biệt — rồi kết luận "Kegel không hiệu quả với mình." Không phải Kegel không hiệu quả. Là đang tập sai.
-      </p>
+      <div style="background:#fff; border:1px solid rgba(13,43,26,0.08); border-radius:var(--radius-lg); padding:32px; line-height:1.8; color:var(--text-muted); font-size:15px; box-shadow: var(--shadow-sm);">
+        <p><strong>A — Mong muốn:</strong> Giống như bao người đàn ông khác, Hoàng mong muốn mang lại hạnh phúc trọn vẹn và sự tự hào cho người bạn đời của mình mỗi khi gần gũi.</p>
+        <p style="margin-top:8px;"><strong>B — Hiện tại:</strong> Nhưng thực tế thì ngược lại, mỗi lần thâm nhập của anh chỉ kéo dài dưới 1 phút. Sự thất vọng hiện rõ trên khuôn mặt cả hai sau mỗi trận chiến chóng vánh.</p>
+        <p style="margin-top:8px;"><strong>C — Khó khăn:</strong> Hoàng tự mò mẫm các bài tập Kegel trên mạng. Anh tập hăng say suốt 3 tuần, nhưng kết quả vẫn bằng không. Sau này anh mới biết: mình đang co nhầm cơ bụng và cơ mông, khiến vùng sàn chậu càng căng cứng và xuất tinh nhanh hơn.</p>
+        <p style="margin-top:8px;"><strong>D — Mentor:</strong> Thông qua chương trình <strong>Kegel Khởi Đầu</strong> của FORMEN, Hoàng được hướng dẫn chi tiết cách cô lập đúng nhóm cơ PC sàn chậu bằng "Bài kiểm tra gương" đơn giản trong 2 phút.</p>
+        <p style="margin-top:8px;"><strong>E — Hành động:</strong> Anh kiên trì dành đúng 10 phút mỗi sáng ngay tại bàn làm việc để thực hành các nhịp co thắt cơ PC có lộ trình rõ ràng.</p>
+        <p style="margin-top:8px;"><strong>F — Kết quả:</strong> Chỉ sau 3 ngày tập đúng cơ, Hoàng bắt đầu cảm nhận rõ rệt sự co thắt chủ động. Sau 7 ngày, anh chính thức kéo dài thêm được 3-5 phút thâm nhập đầu tiên đầy kiểm soát.</p>
+        <p style="margin-top:8px;"><strong>G — Vươn cao:</strong> Không còn lo lắng hiệu suất, Hoàng lấy lại được sự tự tôn bản lĩnh vốn có của mình và hâm nóng hoàn toàn tình cảm gia đình.</p>
+      </div>
+    </div>
+  </section>
 
-      <div style="background:linear-gradient(135deg,rgba(13,43,26,0.04),rgba(184,134,11,0.05));border:1px solid rgba(184,134,11,0.15);border-radius:16px;padding:28px 32px;display:flex;gap:20px;align-items:flex-start;">
-        <div style="font-size:32px;flex-shrink:0;line-height:1;">🎯</div>
-        <div>
-          <p style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px;">Kegel Khởi Đầu dạy anh đúng từ ngày đầu tiên.</p>
-          <p style="font-size:14.5px;color:var(--text-muted);line-height:1.75;">Không chỉ dạy "co cơ" — mà dạy anh <strong>xác định đúng cơ, co đúng kỹ thuật, đo tiến độ của bản thân</strong> và ứng dụng ngay vào thực tế. 7 ngày để anh lần đầu tiên cảm nhận mình đang nắm quyền kiểm soát.</p>
+  <!-- ======== [6] HOW IT WORKS (CLARITY 5 PHẦN) ======== -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;">Lộ Trình Kegel Khởi Đầu Hoạt Động Như Thế Nào?</h2>
+      <p class="section-sub" style="text-align:center;">5 phần minh bạch giúp anh hoàn toàn an tâm trước khi tham gia tập luyện.</p>
+
+      <div class="feature-list" style="margin-top:24px;">
+        <div class="feature-item">
+          <i class="fa-solid fa-circle-info feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h4 class="feature-item-title">1. Khóa Học Này Là Gì?</h4>
+            <p class="feature-item-desc">Là chương trình huấn luyện online trong 7 ngày, tập trung hướng dẫn anh cô lập và rèn luyện cơ sàn chậu (cơ PC) đúng kỹ thuật y khoa để tạo lực phanh sinh học đầu tiên.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-user-check feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h4 class="feature-item-title">2. Chương Trình Dành Cho Ai?</h4>
+            <p class="feature-item-desc">Dành cho nam giới gặp tình trạng xuất tinh sớm, người bận rộn chỉ có 10 phút/ngày, hoặc những anh đã tập Kegel nhưng tập sai cơ và không thấy hiệu quả.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-bullseye feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h4 class="feature-item-title">3. Anh Sẽ Đạt Được Kết Quả Gì?</h4>
+            <p class="feature-item-desc">Nhận diện chính xác cơ PC trong 2 phút, thành thạo kỹ thuật phanh vật lý, cải thiện thời gian kiểm soát thêm 3-5 phút sau 7 ngày.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-triangle-exclamation feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h4 class="feature-item-title">4. Khóa Học KHÔNG PHẢI Là Gì?</h4>
+            <p class="feature-item-desc">Không phải thuốc kích dục, không phải gel xịt tê tạm thời gây hại thần kinh quy đầu, và không phải những lý thuyết suông thiếu thực tế trên mạng.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-box-open feature-item-icon"></i>
+          <div class="feature-item-content">
+            <h4 class="feature-item-title">5. Có Gì Bên Trong Khóa Học?</h4>
+            <p class="feature-item-desc">7 bài học lộ trình, 1 PDF Lịch luyện Kegel in ra được, nhóm hỗ trợ Telegram kín hoàn toàn riêng tư để giải đáp thắc mắc cùng ban trợ lý chuyên môn.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======== COURSE CONTENT ======== -->
-  <section class="section section-alt">
+  <!-- ======== [7] FEATURES / INSIDE (FAB + BENEFITS) ======== -->
+  <section class="section" id="detail-section">
     <div class="container">
       <div style="text-align:center;margin-bottom:8px;">
-        <span style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;font-weight:800;">Nội dung khóa học</span>
+        <span style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px;font-weight:800;">Nội dung chi tiết</span>
       </div>
-      <h2 class="section-title" style="text-align:center;">Kegel Khởi Đầu</h2>
-      <p style="text-align:center;font-size:16px;color:var(--accent);font-weight:700;margin-bottom:8px;">7 Ngày Luyện Nền Tảng — Chỉ 10 Phút Mỗi Ngày</p>
-      <p style="text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:36px;">Tự làm tại nhà · Không ai biết ngoài anh · Bắt đầu cảm nhận từ ngày 3-4</p>
+      <h2 class="section-title" style="text-align:center;">Lộ Trình Huấn Luyện 7 Ngày</h2>
+      <p style="text-align:center;font-size:15px;color:var(--text-muted);margin-bottom:36px;">Cô lập cơ sàn chậu và kích hoạt lực phanh vật lý chủ động</p>
 
       <div class="lessons">
         <div class="lesson-card">
           <div class="lesson-num">1</div>
           <div class="lesson-body">
             <h4>Tại Sao Cơ PC Là "Cần Số" Kiểm Soát Của Anh</h4>
-            <p>Anh sẽ hiểu chính xác nhóm cơ nào đang kiểm soát thời gian của anh — và tại sao luyện sai cơ thì dù cố đến đâu cũng không ra kết quả. Có kèm Bài Kiểm Tra Gương để anh xác nhận đúng vị trí trong 2 phút.</p>
+            <p><strong>Tính năng (Feature):</strong> Bài học về cơ chế giải phẫu phản xạ xuất tinh và vai trò cơ PC.</p>
+            <p><strong>Lợi ích (Benefit):</strong> Hiểu đúng nguyên lý giúp anh ngừng đổ lỗi cho bản thân, làm "Bài kiểm tra gương" để định vị chính xác cơ PC sàn chậu trong 2 phút.</p>
           </div>
         </div>
         <div class="lesson-card">
           <div class="lesson-num">2</div>
           <div class="lesson-body">
             <h4>Cô Lập Đúng Cơ Kegel: 3 Dấu Hiệu Biết Mình Đang Làm Đúng</h4>
-            <p>Bài quan trọng nhất trong cả chương trình. Sai lầm phổ biến nhất: co cơ bụng hoặc cơ mông thay vì cơ PC. Anh sẽ biết chính xác mình đang làm đúng hay sai — không cần đoán, không cần ai kiểm tra giúp.</p>
+            <p><strong>Tính năng (Feature):</strong> Hướng dẫn loại bỏ co cơ mông/đùi và các lỗi sai khi tập Kegel.</p>
+            <p><strong>Lợi ích (Benefit):</strong> Bảo đảm tập đúng cơ ngay từ đầu, tránh mỏi cơ đùi và ngăn ngừa các chấn thương không mong muốn.</p>
           </div>
         </div>
         <div class="lesson-card">
           <div class="lesson-num">3</div>
           <div class="lesson-body">
             <h4>Bài Tập Cơ Bản Nhịp 3-3-3 (Ngày 1-2)</h4>
-            <p>Co 3 giây. Giữ 3 giây. Thả 3 giây. 3 hiệp × 10 lần. Tổng cộng 10 phút. Anh có thể làm ngay tại bàn làm việc — không ai biết anh đang làm gì.</p>
+            <p><strong>Tính năng (Feature):</strong> Kịch bản co 3s, giữ 3s, thả 3s. Luyện tập 10 phút/ngày.</p>
+            <p><strong>Lợi ích (Benefit):</strong> Bắt đầu kích hoạt cơ PC thụ động, xây dựng tính dẻo dai ban đầu của cơ chậu.</p>
           </div>
         </div>
         <div class="lesson-card">
           <div class="lesson-num">4</div>
           <div class="lesson-body">
             <h4>Nâng Cường Độ: Nhịp 5-5-5 & Bài Tập Nhanh Kết Hợp (Ngày 3-4-5)</h4>
-            <p>Từ ngày 3, anh bắt đầu cảm nhận sự khác biệt đầu tiên. Bài này thêm biến thể nhanh để kích hoạt thêm nhóm sợi cơ — tăng kết quả mà không tốn thêm thời gian.</p>
+            <p><strong>Tính năng (Feature):</strong> Tăng thời gian giữ và kết hợp bài tập co nhả nhanh (Flutter Kegel).</p>
+            <p><strong>Lợi ích (Benefit):</strong> Tăng thể tích phì đại cơ PC, rèn luyện sợi cơ co nhanh giúp phản ứng kịp thời khi lâm trận.</p>
           </div>
         </div>
         <div class="lesson-card">
           <div class="lesson-num">5</div>
           <div class="lesson-body">
             <h4>Kỹ Thuật "Bóp Khẩn Cấp": Dùng Đúng Lúc Anh Cần Nhất</h4>
-            <p>1 kỹ thuật ứng dụng thực tế. Không phải lý thuyết. Là kỹ năng thực chiến — dùng đúng khoảnh khắc anh cần kiểm soát nhất.</p>
+            <p><strong>Tính năng (Feature):</strong> Kỹ năng kích hoạt phản xạ phanh cơ học tức thời.</p>
+            <p><strong>Lợi ích (Benefit):</strong> Kỹ năng thực chiến giúp anh ngắt nhịp hưng phấn ngay lập tức trong cuộc yêu khi cảm giác quá ngưỡng ập đến.</p>
           </div>
         </div>
         <div class="lesson-card">
           <div class="lesson-num">6</div>
           <div class="lesson-body">
             <h4>Lịch Duy Trì 7 Ngày Đầy Đủ & Cách Theo Dõi Tiến Độ</h4>
-            <p>Anh không cần nhớ gì cả. Chỉ cần mở bảng check-in và làm theo. Biết dấu hiệu nào cho thấy anh đang tiến bộ — và cách điều chỉnh nếu cơ mỏi.</p>
+            <p><strong>Tính năng (Feature):</strong> Bảng check-in tiến trình tập luyện hàng ngày.</p>
+            <p><strong>Lợi ích (Benefit):</strong> Anh không cần nhớ lịch, chỉ cần mở checklist và đánh dấu hoàn thành, cảm nhận sự an tâm khi theo dõi cơ thể tiến bộ từng ngày.</p>
           </div>
         </div>
         <div class="lesson-card">
           <div class="lesson-num">7</div>
           <div class="lesson-body">
             <h4>Đánh Giá Sau 7 Ngày & Con Đường Tiếp Theo</h4>
-            <p>Anh sẽ biết mình đang ở đâu sau 7 ngày — và những gì cần làm tiếp theo để tiếp tục cải thiện bền vững.</p>
+            <p><strong>Tính năng (Feature):</strong> Tổng kết hiệu quả và hướng dẫn duy trì dài hạn.</p>
+            <p><strong>Lợi ích (Benefit):</strong> Đánh giá ngưỡng kiểm soát mới và chuẩn bị tâm thế vững vàng để nâng cấp bản lĩnh lên các cột mốc cao hơn.</p>
           </div>
         </div>
       </div>
 
       <div class="upsell-hint">
-        💡 <strong>Lưu ý:</strong> Kegel Khởi Đầu dạy anh <strong>Hệ Thống 1 trong 5 hệ thống kiểm soát</strong>. Kết quả kỳ vọng: tự chủ hơn 3-5 phút. Để đạt 15-30 phút bền vững — anh cần cả 5 hệ thống. Đó là những gì <strong>Mật Mã 21</strong> dạy sau khi anh có nền tảng.
+        💡 <strong>Lưu ý quan trọng:</strong> Giáo trình Kegel Khởi Đầu dạy anh <strong>lực phanh vật lý cơ bản</strong> ở đầu ra. Kết quả mong đợi: tự chủ thêm 3-5 phút. Để kiểm soát bền vững 15-30 phút không giới hạn, anh sẽ cần làm chủ toàn diện cả 3 trụ cột (Vật lý sàn chậu, Hơi thở thần kinh phế vị, và Tái cấu trúc nhận thức não bộ) được dạy rất sâu trong chương trình **Mật Mã 21**.
       </div>
     </div>
   </section>
 
-  <!-- ======== BONUS ======== -->
+  <!-- ======== [8] EMOTION SECTION (MASTERS) ======== -->
+  <section class="section section-alt" style="background: linear-gradient(135deg, #F4F1EA 0%, #EBE7DD 100%);">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title">Hãy Tưởng Tượng Cảm Giác Tự Chủ Tuyệt Đối Sẽ Như Thế Nào...</h2>
+      <p class="section-sub">Sự khác biệt từ cảm xúc lo âu sang thế chủ động làm chủ hoàn toàn.</p>
+      <div style="font-size:16px;line-height:1.8;color:var(--text-muted);max-width:620px;margin:0 auto;text-align:left;">
+        <p>Nhắm mắt lại và hình dung: 7 ngày sau, anh bước vào cuộc yêu với một tâm thế hoàn toàn thư thái. Điện thoại rung nhẹ báo tin nhắn công việc, nhưng tâm trí anh lúc này chỉ tập trung vào hiện tại. Không còn tiếng tim đập thình thịch lo sợ, không còn việc đếm giây căng thẳng trong đầu.</p>
+        <p style="margin-top:12px;">Khi cảm giác hưng phấn dâng cao, anh chủ động kích hoạt cơ PC — một lực phanh êm ái và chắc chắn. Nhịp thở đều đặn, và anh kéo dài cuộc yêu thêm 3 phút, 5 phút, rồi lâu hơn nữa theo ý muốn. Tiếng cười, cái ôm ấm áp và sự thỏa mãn thực sự từ người bạn đời chính là phần thưởng ngọt ngào nhất.</p>
+        <p style="margin-top:12px;font-weight:700;color:var(--primary);text-align:center;">Anh xứng đáng có được sự tự tin và hạnh phúc đó!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== [9] Authority STACK ======== -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title" style="margin-bottom:24px;">Quà Tặng Kèm Theo</h2>
-      <div class="bonus-card">
-        <div class="bonus-icon"><i class="fa-solid fa-file-pdf"></i></div>
-        <div class="bonus-body">
-          <h4>"Lịch Luyện Kegel 7 Ngày Cho Nam Giới — Chỉ 10 Phút Mỗi Sáng"</h4>
-          <p>PDF Checklist — In ra hoặc lưu điện thoại. Không cần nhớ hôm nay là bài gì, cần làm bao nhiêu hiệp. Chỉ cần mở ra và làm theo.</p>
-          <span class="bonus-price">Trị giá 599.000đ — Anh nhận miễn phí</span>
+      <h2 class="section-title" style="text-align:center;">Nền Tảng Khoa Học Vững Chắc</h2>
+      <p class="section-sub" style="text-align:center;">Phương pháp được chứng thực bởi hơn 75 năm y học hiện đại.</p>
+
+      <div style="display:flex;flex-direction:column;gap:18px;margin-top:24px;">
+        <div style="background:#fff;border:1.5px solid rgba(13,43,26,0.06);padding:24px;border-radius:12px;box-shadow: var(--shadow-sm);">
+          <h4 style="font-family:var(--font-heading);font-weight:700;color:var(--primary);margin-bottom:8px;">Bác sĩ Arnold Kegel (1948)</h4>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Ông là giáo sư sản phụ khoa tại Đại học Nam California (USC), người đầu tiên phát minh ra các bài tập cơ sàn chậu để kiểm soát phản xạ bài tiết và sinh lý tự nhiên của con người.</p>
+        </div>
+        <div style="background:#fff;border:1.5px solid rgba(13,43,26,0.06);padding:24px;border-radius:12px;box-shadow: var(--shadow-sm);">
+          <h4 style="font-family:var(--font-heading);font-weight:700;color:var(--primary);margin-bottom:8px;">Đội ngũ R&D Mật Mã 21</h4>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Chúng tôi đã nghiên cứu và bản địa hóa giáo trình này, hỗ trợ hơn 15,420 học viên Việt Nam tập luyện thành công nhờ các cải tiến về kỹ thuật cô lập cơ PC không cần máy móc phức tạp.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======== VALUE STACK + ORDER ======== -->
-  <section class="section section-dark" id="order">
+  <!-- ======== [10] VALUE STACK + PRICING ======== -->
+  <section class="section section-dark" id="order-section">
     <div class="container">
-      <h2 class="section-title" style="text-align:center;margin-bottom:28px;">Bắt Đầu 7 Ngày Của Anh Ngay Hôm Nay</h2>
+      <h2 class="section-title" style="text-align:center;margin-bottom:28px;">Bắt Đầu 7 Ngày Luyện Nền Tảng Của Anh</h2>
 
       <table class="value-table" style="background:rgba(255,255,255,0.05);border-radius:var(--radius-md);overflow:hidden;margin-bottom:28px;">
         <thead>
           <tr style="background:rgba(255,255,255,0.07);">
-            <th style="color:rgba(255,255,255,0.4);">Nội dung</th>
+            <th style="color:rgba(255,255,255,0.4);">Nội dung khóa học</th>
             <th style="color:rgba(255,255,255,0.4);text-align:right;">Trị giá</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="color:rgba(255,255,255,0.8);">7 bài học Kegel cơ bản (truy cập mãi mãi)</td>
+            <td style="color:rgba(255,255,255,0.8);">7 ngày giáo trình Kegel Khởi Đầu (Truy cập trọn đời)</td>
             <td style="color:var(--accent-bright);">999.000đ</td>
           </tr>
           <tr>
             <td style="color:rgba(255,255,255,0.8);">PDF Lịch Luyện Kegel 7 Ngày</td>
             <td style="color:var(--accent-bright);">599.000đ</td>
           </tr>
+          <tr>
+            <td style="color:rgba(255,255,255,0.8);">Nhóm Telegram kín đồng hành & giải đáp bảo mật</td>
+            <td style="color:var(--accent-bright);">499.000đ</td>
+          </tr>
           <tr class="value-total">
-            <td style="color:#fff;border-top:1px solid rgba(255,255,255,0.1);">Tổng giá trị</td>
-            <td style="color:var(--accent-bright);border-top:1px solid rgba(255,255,255,0.1);">1.598.000đ</td>
+            <td style="color:#fff;border-top:1px solid rgba(255,255,255,0.15);">Tổng Giá Trị Nhận Được</td>
+            <td style="color:var(--accent-bright);border-top:1px solid rgba(255,255,255,0.15);">2.097.000đ</td>
           </tr>
         </tbody>
       </table>
 
       <div class="price-box">
         <div class="price-box-inner">
-          <p class="price-label">Hôm nay anh chỉ trả</p>
-          <p class="price-was-big">1.598.000đ</p>
+          <p class="price-label">Mức đầu tư hôm nay của anh</p>
+          <p class="price-was-big">2.097.000đ</p>
           <p class="price-now-big">199.000đ</p>
-          <p class="price-save">Tiết kiệm 1.399.000đ — Truy cập ngay sau thanh toán</p>
+          <p class="price-save">Tiết kiệm 1.898.000đ (Chỉ bằng 1 bữa ăn để làm chủ cơ thể cả đời)</p>
           <a href="#" class="price-cta" onclick="openPaymentModal();return false;">
             <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — 199.000đ
           </a>
@@ -655,87 +811,126 @@
     </div>
   </section>
 
-  <!-- ======== GUARANTEE ======== -->
+  <!-- ======== [11] GUARANTEE ======== -->
   <section class="section">
     <div class="container">
       <div class="guarantee-box">
         <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
         <div class="guarantee-body">
-          <h3>Cam Kết Thử 7 Ngày — Không Thấy Khác Biệt, Hoàn Toàn Bộ Tiền</h3>
-          <p>Anh có 7 ngày để luyện tập theo đúng hướng dẫn. Nếu sau 7 ngày anh tập đúng theo chỉ dẫn mà không cảm nhận bất kỳ khác biệt nào — nhắn tin cho FORMEN. Hoàn <strong>100%</strong> không hỏi thêm câu nào.</p>
-          <p style="margin-top:8px;">Chúng tôi làm điều này vì chúng tôi tin vào phương pháp. Và vì 199.000đ là số tiền đủ để anh thử mà không cần đặt quá nhiều rủi ro.</p>
+          <h3>Cam Kết 7 Ngày — Không Hài Lòng, Hoàn Tiền 100%</h3>
+          <p>Anh có 7 ngày tập thử theo đúng giáo trình. Nếu sau khi tập đúng theo hướng dẫn mà anh không cảm nhận bất cứ sự thay đổi nào của cơ sàn chậu — chỉ cần nhắn tin cho FORMEN. Chúng tôi sẽ hoàn trả <strong>100% mức đầu tư</strong> không hỏi thêm câu nào.</p>
+          <p style="margin-top:8px;">Chúng tôi dám cam kết điều này vì sự thành công của hơn 15,420 học viên là minh chứng rõ nhất cho hiệu quả phương pháp.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======== FAQ ======== -->
+  <!-- ======== [12] IS FOR / NOT FOR ======== -->
   <section class="section section-alt">
     <div class="container">
-      <h2 class="section-title" style="margin-bottom:24px;">Câu Hỏi Thường Gặp</h2>
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <div style="background:#fff;border-left:4px solid var(--green);padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
+          <h4 style="font-weight:700;color:var(--green);margin-bottom:10px;"><i class="fa-solid fa-square-check"></i> CHƯƠNG TRÌNH DÀNH CHO ANH NẾU:</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--text-muted);">
+            <li>• Anh muốn tìm giải pháp khoa học, tự nhiên và an toàn cho sức khỏe lâu dài.</li>
+            <li>• Anh cam kết dành đúng 10 phút tập luyện tập trung mỗi ngày.</li>
+            <li>• Anh muốn xây dựng lực phanh cơ học sàn chậu vững chắc trước khi tập nâng cao.</li>
+          </ul>
+        </div>
+        <div style="background:#fff;border-left:4px solid var(--danger);padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
+          <h4 style="font-weight:700;color:var(--danger);margin-bottom:10px;"><i class="fa-solid fa-square-xmark"></i> CHƯƠNG TRÌNH KHÔNG DÀNH CHO ANH NẾU:</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--text-muted);">
+            <li>• Anh tìm kiếm một loại thuốc xịt gây tê quy đầu hay thuốc uống chứa hóa chất độc hại.</li>
+            <li>• Anh lười tập luyện, không muốn dành ra dù chỉ 10 phút mỗi ngày để rèn luyện.</li>
+            <li>• Anh hy vọng có kết quả tức thì chỉ sau 1 lần tập mà không có sự kiên trì thực tế.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== [13] FAQ (7 OBJECTION) ======== -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;margin-bottom:24px;">Câu Hỏi Thường Gặp</h2>
       <div class="faq">
         <div class="faq-item">
           <div class="faq-q">
-            Tôi chưa biết gì về Kegel — có học được không?
+            Tôi chưa biết gì về Kegel và cơ PC thì có tập được không?
             <i class="fa-solid fa-plus"></i>
           </div>
-          <div class="faq-a">Hoàn toàn được. Kegel Khởi Đầu được thiết kế cho người bắt đầu từ số 0. Bài 1 và Bài 2 dạy anh từ đầu — không giả định anh đã biết gì.</div>
+          <div class="faq-a">Hoàn toàn được. Lộ trình được thiết kế cho người bắt đầu từ số 0. Chúng tôi dạy anh cách cô lập đúng cơ PC bằng các dấu hiệu trực quan ngay từ Ngày 1 và Ngày 2.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
-            Mất bao lâu để thấy kết quả?
+            Tôi có cần phải chuẩn bị dụng cụ gì khi tập không?
             <i class="fa-solid fa-plus"></i>
           </div>
-          <div class="faq-a">Hầu hết học viên bắt đầu cảm nhận khác biệt đầu tiên vào ngày 3-4. Kết quả rõ hơn sau 7 ngày luyện đúng. "Cảm nhận khác biệt" ở đây là cảm giác kiểm soát được cơ — kết quả tổng thể cần thêm thời gian duy trì.</div>
+          <div class="faq-a">Không cần bất kỳ dụng cụ nào. Lực tập hoàn toàn là do anh chủ động siết nhả nhóm cơ PC sàn chậu của chính mình theo nhịp đếm của giáo trình.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
-            Tôi có thể tập ở văn phòng không?
+            Tập cái này có ai phát hiện ra không?
             <i class="fa-solid fa-plus"></i>
           </div>
-          <div class="faq-a">Hoàn toàn được. Bài tập Kegel không cần tư thế đặc biệt và không ai biết anh đang làm gì. Nhiều học viên tập ngay tại bàn làm việc hoặc trên xe.</div>
+          <div class="faq-a">Tuyệt đối không. Kỹ thuật tập co thắt cơ sàn chậu diễn ra hoàn toàn ẩn bên trong cơ thể. Anh có thể tập khi đang ngồi làm việc tại văn phòng, ngồi trên xe hay nằm trên giường mà không ai hay biết.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
-            Nếu không thấy kết quả thì sao?
+            Nếu tôi tập 7 ngày mà chưa thấy cải thiện thì sao?
             <i class="fa-solid fa-plus"></i>
           </div>
-          <div class="faq-a">Anh có 7 ngày để thử. Nếu tập đúng theo hướng dẫn mà không thấy khác biệt — FORMEN hoàn 100% không hỏi gì thêm.</div>
+          <div class="faq-a">Hãy yên tâm vì anh có cam kết hoàn tiền 100% trong 7 ngày đầu. Nếu tập đúng hướng dẫn mà không cảm nhận được cơ hay cải thiện tự chủ, hãy liên hệ hỗ trợ để nhận lại tiền đầu tư.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
-            Khóa này có đủ để giải quyết hoàn toàn vấn đề của tôi không?
+            Khóa học này có giúp tôi kéo dài 20-30 phút luôn không?
             <i class="fa-solid fa-plus"></i>
           </div>
-          <div class="faq-a">Kegel Khởi Đầu được thiết kế để anh có kết quả đầu tiên và xây nền tảng đúng — kéo dài thêm 3-5 phút và bắt đầu cảm nhận kiểm soát. Đây là bước đầu tiên. Để đạt kết quả đầy đủ và bền vững hơn, FORMEN có chương trình 21 ngày toàn diện (Mật Mã 21) cho anh khi sẵn sàng bước tiếp.</div>
+          <div class="faq-a">Khóa Kegel Khởi Đầu giúp anh xây dựng nền móng lực phanh vật lý ban đầu (kỳ vọng thêm 3-5 phút thâm nhập). Để kiểm soát hoàn toàn 15-30 phút tự chủ, anh cần làm chủ hệ thần kinh phó giao cảm và kiểm soát não bộ hưng phấn, đây là lộ trình chuyên sâu của chương trình Mật Mã 21.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Thông tin đăng ký của tôi có bị lộ ra ngoài không?
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <div class="faq-a">FOR MEN cam kết bảo mật 100% thông tin cá nhân của học viên. Hóa đơn ngân hàng MB Bank chỉ hiển thị nội dung chuyển khoản mã hóa gọn nhẹ và sao kê là "FORMEN - Suc Khoe Nam Gioi".</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ======== FINAL CTA ======== -->
-  <section class="section" style="background:linear-gradient(135deg,#0D2B1A 0%,#163f27 100%);">
-    <div class="container" style="text-align:center;">
-      <p style="font-size:13px;color:rgba(212,175,55,0.7);text-transform:uppercase;letter-spacing:1px;font-weight:800;margin-bottom:16px;">Quyết định của anh hôm nay</p>
-      <h2 style="font-family:var(--font-heading);font-size:clamp(22px,4vw,30px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.3;">
-        199.000đ để anh biết mình có thể kiểm soát.<br>
-        <span style="color:var(--accent-bright);">Hay tiếp tục tránh né và hy vọng nó tự thay đổi?</span>
-      </h2>
-      <p style="font-size:15px;color:rgba(255,255,255,0.65);max-width:520px;margin:0 auto 32px;line-height:1.75;">
-        Anh đã đọc đến đây — tức là anh đã đủ dũng cảm để thừa nhận mình muốn thay đổi. Phần còn lại chỉ là bước đầu tiên. 7 ngày. 10 phút mỗi ngày. Không ai biết ngoài anh.
-      </p>
-      <a href="#" class="price-cta" onclick="openPaymentModal();return false;" style="max-width:380px;margin:0 auto;font-size:18px;padding:20px 40px;">
-        <i class="fa-solid fa-graduation-cap"></i> Bắt Đầu 7 Ngày — 199.000đ
-      </a>
-      <p style="font-size:12.5px;color:rgba(255,255,255,0.35);margin-top:18px;line-height:1.7;">
-        <i class="fa-solid fa-shield-halved"></i> Hoàn tiền 100% trong 7 ngày nếu không thấy khác biệt &nbsp;·&nbsp;
-        <i class="fa-solid fa-lock"></i> Thanh toán bảo mật &nbsp;·&nbsp;
-        <i class="fa-solid fa-bolt"></i> Truy cập ngay sau thanh toán
-      </p>
+  <!-- ======== [14] TESTIMONIAL + CTA L5 ======== -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;">Phản Hồi Từ Học Viên Thực Tế</h2>
+      <p class="section-sub" style="text-align:center;">Những chia sẻ chân thực từ những người đàn ông đã hành động và thành công.</p>
+
+      <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:28px;">
+        <div style="background:#fff;padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
+          <div style="color:var(--accent-bright);margin-bottom:8px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size:14px;color:var(--text-main);font-style:italic;line-height:1.6;">"Trước đây mình tự tập Kegel theo mạng toàn bị đau đùi, hóa ra tập sai cơ. Nhờ Kegel Khởi Đầu chỉ rõ Bài kiểm tra gương, mình tập đúng ngay ngày thứ 2. Hiện tại đã tự tin kiểm soát kéo dài thêm được 4 phút rất hài lòng."</p>
+          <p style="font-size:12px;color:var(--text-light);margin-top:8px;font-weight:700;">— Anh Tuấn (34 tuổi, Hà Nội)</p>
+        </div>
+        <div style="background:#fff;padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
+          <div style="color:var(--accent-bright);margin-bottom:8px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-size:14px;color:var(--text-main);font-style:italic;line-height:1.6;">"Khóa học rất tinh gọn, 10 phút tập sáng sớm trước khi đi làm. Ban đầu cũng hoài nghi vì giá rẻ, nhưng tập đúng cơ PC thấy khác hẳn. Cảm nhận rõ rệt lực phanh chủ động của mình."</p>
+          <p style="font-size:12px;color:var(--text-light);margin-top:8px;font-weight:700;">— Anh Khánh (29 tuổi, TP. HCM)</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:32px;">
+        <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">
+          Quyết định hôm nay của anh sẽ định hình hạnh phúc gia đình trong suốt năm tới.
+        </p>
+        <a href="#" class="price-cta" onclick="openPaymentModal();return false;" style="max-width:420px;margin:0 auto;font-size:18px;padding:18px 36px;">
+          Quyết Định Hôm Nay — Thay Đổi Cả Năm →
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- ======== FOOTER ======== -->
+  <!-- ======== [15] FOOTER ======== -->
   <footer>
     <div class="container-wide">
       <p>© 2026 FORMEN. Bảo lưu mọi quyền.</p>
@@ -747,6 +942,21 @@
       </div>
     </div>
   </footer>
+
+  <!-- ======== STICKY CTA BAR ======== -->
+  <div id="sticky-cta-bar" class="sticky-cta" style="display:none; opacity:0; transform:translateY(100%);">
+    <div class="sticky-cta-container">
+      <span class="sticky-cta-text">🔥 Ưu đãi đợt này còn 14 suất</span>
+      <a href="#" class="sticky-cta-btn" onclick="openPaymentModal();return false;">
+        Giữ Chỗ Cho Tôi — 199.000đ →
+      </a>
+    </div>
+  </div>
+
+  <!-- ======== TELEGRAM SUPPORT FLOAT ======== -->
+  <a href="https://t.me/kenthoang" target="_blank" class="tg-float" aria-label="Hỗ trợ Telegram">
+    <i class="fa-brands fa-telegram"></i>
+  </a>
 
   <!-- ======== PAYMENT MODAL ======== -->
   <div id="payment-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -833,6 +1043,30 @@
         document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
         if (!isOpen) item.classList.add('open');
       });
+    });
+
+    // ===== SHOW/HIDE STICKY CTA BAR =====
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero');
+      const stickyBar = document.getElementById('sticky-cta-bar');
+      if (hero && stickyBar) {
+        const heroBottom = hero.offsetTop + hero.offsetHeight;
+        if (window.scrollY > heroBottom - 80) {
+          stickyBar.style.display = 'block';
+          setTimeout(() => {
+            stickyBar.style.opacity = '1';
+            stickyBar.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          stickyBar.style.opacity = '0';
+          stickyBar.style.transform = 'translateY(100%)';
+          setTimeout(() => {
+            if (stickyBar.style.opacity === '0') {
+              stickyBar.style.display = 'none';
+            }
+          }, 300);
+        }
+      }
     });
 
     // ===== PAYMENT MODAL =====
