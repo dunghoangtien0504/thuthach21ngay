@@ -67,6 +67,7 @@
     }
     .logo i { color: var(--accent); }
     .nav-menu { display: flex; gap: 30px; align-items: center; }
+    .nav-menu .btn-login { display: none; }
     .nav-link {
       font-size: 15px; font-weight: 700; color: var(--text-muted);
       text-decoration: none; transition: var(--transition);
@@ -503,7 +504,7 @@
         <a href="/" class="nav-link">Trang Chủ</a>
         <a href="/khoa-hoc.html" class="nav-link active">Khóa Học</a>
         <a href="/kien-thuc.html" class="nav-link">Kiến Thức</a>
-        <a href="/portal.html" class="btn btn-outline btn-login" style="display:none;">
+        <a href="/portal.html" class="btn btn-outline btn-login" style="display:none;" id="login-btn-mobile">
           <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
         </a>
       </nav>
