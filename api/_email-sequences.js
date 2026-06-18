@@ -28,7 +28,7 @@ ${body}
 // Email 11-15: Bridge sang Mật Mã 21
 const REGISTERED = [
 
-  // ── EMAIL 1 (Day 0): Chào — đồng cảm ngay, không bán ──────────────────
+  // ── EMAIL 1 (Day 0): Chào — đồng cảm sâu, không bán ──────────────────
   {
     day: 0,
     subject: 'tôi biết anh đang cảm thấy gì',
@@ -36,21 +36,29 @@ const REGISTERED = [
 
 <p>Tôi không biết chính xác câu chuyện của anh. Nhưng tôi đoán được một phần.</p>
 
+<p>Bởi vì tôi đã nhận hàng trăm tin nhắn từ những người đàn ông giống anh. Và họ đều bắt đầu giống nhau — không phải bằng một câu hỏi, mà bằng một sự im lặng rất dài trước khi gõ dòng đầu tiên.</p>
+
 <p>Có điều gì đó đang làm anh không yên. Không hẳn là đau đớn thể xác. Mà là một loại gánh nặng khác — loại không nói với ai được. Không hỏi bạn bè được. Không hỏi bác sĩ được vì quá xấu hổ.</p>
 
-<p>Loại gánh nặng anh mang một mình. Đêm nào cũng vậy.</p>
+<p>Loại gánh nặng mà anh mang một mình. Đêm nào cũng vậy. Sáng nào cũng vậy. Mỗi lần nhìn vợ/người yêu, nó lại nhắc anh rằng nó vẫn ở đó.</p>
 
 <p>Tôi muốn anh biết một điều trước khi đọc tiếp:</p>
 
 <p><strong>Anh không phải người duy nhất.</strong></p>
 
-<p>Và quan trọng hơn — vấn đề này giải quyết được. Không phải bằng thuốc. Không phải bằng ý chí. Mà bằng phương pháp đúng.</p>
+<p>Có khoảng 30% nam giới trưởng thành ở Việt Nam đang sống với vấn đề này. Nghĩa là trong phòng họp 10 người — có 3 người đang mang cùng nỗi lo như anh. Chỉ là không ai nói ra.</p>
 
-<p>Trong những ngày tới tôi sẽ chia sẻ với anh một số thứ thiết thực. Không phải để bán hàng ngay. Mà để anh thật sự hiểu cơ thể và tâm lý của mình.</p>
+<p>Và quan trọng hơn — vấn đề này giải quyết được. Không phải bằng thuốc. Không phải bằng ý chí. Không phải bằng cách "nghĩ chuyện khác." Mà bằng phương pháp đúng — phương pháp mà khoa học đã chứng minh, nhưng ít ai ở Việt Nam được tiếp cận đúng cách.</p>
+
+<p>Trong những ngày tới, tôi sẽ chia sẻ với anh một số thứ thiết thực. Không phải để bán hàng ngay. Tôi hứa điều đó.</p>
+
+<p>Mà để anh thật sự hiểu cơ thể mình. Hiểu tâm lý mình. Hiểu tại sao anh đã thử nhiều cách mà vẫn chưa được — và điều gì thật sự sẽ tạo ra sự khác biệt.</p>
+
+<p>Anh chỉ cần đọc. Tôi sẽ viết ngắn gọn, thật lòng, và không vòng vo.</p>
 
 <p>—<br>FORMEN</p>
 
-<p style="font-size:13px;color:#888;">P.S. Nếu anh muốn bắt đầu ngay hôm nay — <a href="${KEGEL_URL}" style="color:#2d6a4f;">Kegel Khởi Đầu (199k)</a> là bước đầu tiên. Nhưng không vội. Đọc email của tôi trước.</p>`)
+<p style="font-size:13px;color:#888;">P.S. Nếu anh muốn bắt đầu ngay hôm nay — <a href="${KEGEL_URL}" style="color:#2d6a4f;">Kegel Khởi Đầu (199k)</a> là bước đầu tiên. Nhưng không vội. Đọc email của tôi trước. Tôi muốn anh hiểu rõ trước khi quyết định bất cứ điều gì.</p>`)
   },
 
   // ── EMAIL 2 (Day 2): Pain #1 — Kết thúc quá nhanh ─────────────────────
@@ -63,15 +71,21 @@ const REGISTERED = [
 
 <p>Họ không nói thêm gì. Không cần. 6 từ đó chứa cả một câu chuyện dài.</p>
 
-<p>Chứa những lần nằm im sau đó, không biết nói gì.<br>
-Chứa ánh mắt của vợ/người yêu — không trách, nhưng cũng không nói gì.<br>
-Chứa cái cảm giác "mình vừa lại thất vọng cô ấy rồi."</p>
+<p>Chứa những lần nằm im sau đó, nhìn lên trần nhà, không biết nói gì.<br>
+Chứa ánh mắt của vợ/người yêu — không trách, nhưng cũng không nói gì. Cái im lặng đó đau hơn bất kỳ lời trách nào.<br>
+Chứa cái cảm giác "mình vừa lại thất vọng cô ấy rồi." Lần này. Lần trước. Và có lẽ lần sau cũng vậy.</p>
 
-<p>Anh có biết không — vấn đề này ảnh hưởng khoảng 30% nam giới trưởng thành ở Việt Nam. Nhưng chỉ 6% tìm đến giải pháp thật sự. Số còn lại tự chịu đựng. Giả vờ ổn. Rồi sống như vậy nhiều năm.</p>
+<p>Anh biết cảm giác đó không? Cái khoảnh khắc ngay sau khi kết thúc — khi mọi thứ đang tốt đẹp bỗng dưng dừng lại. Và anh ước mình có thể quay ngược lại 30 giây. Chỉ 30 giây thôi.</p>
 
-<p>Anh đang không giả vờ nữa. Đó là lý do anh ở đây.</p>
+<p>Nhưng không được. Và cái cảm giác đó theo anh ra ngoài phòng ngủ. Theo vào giấc ngủ. Theo đến sáng hôm sau. Theo vào cuộc họp, vào bữa cơm gia đình, vào mỗi lần cô ấy chạm vào tay anh mà anh không dám đáp lại vì sợ "lại đến lúc đó."</p>
 
-<p>Ngày mai tôi sẽ giải thích tại sao thuốc và gel không hiệu quả — và cơ thể anh thật sự cần gì.</p>
+<p>Anh có biết không — vấn đề này ảnh hưởng khoảng 30% nam giới trưởng thành ở Việt Nam. Nhưng chỉ 6% tìm đến giải pháp thật sự. Số còn lại tự chịu đựng. Giả vờ ổn. Giả vờ mệt. Giả vờ bận. Rồi sống như vậy nhiều năm — cho đến khi khoảng cách giữa hai người lớn đến mức không ai nhớ nó bắt đầu từ đâu.</p>
+
+<p>Anh đang đọc email này. Điều đó có nghĩa anh không muốn giả vờ nữa.</p>
+
+<p>Đó là bước quan trọng nhất. Thật sự. Dũng cảm nhất không phải là giải quyết vấn đề — mà là thừa nhận nó tồn tại.</p>
+
+<p>Trong email tới, tôi sẽ giải thích tại sao thuốc và gel không hiệu quả — và cơ thể anh thật sự cần gì để thay đổi từ gốc rễ.</p>
 
 <p>—<br>FORMEN</p>`)
   },
@@ -82,25 +96,31 @@ Chứa cái cảm giác "mình vừa lại thất vọng cô ấy rồi."</p>
     subject: 'tại sao anh thử đủ cách mà vẫn thế?',
     body: wrap(`<p>Hầu hết đàn ông đến với FORMEN đều kể tôi nghe một danh sách dài.</p>
 
-<p>Thuốc. Gel. Đá lạnh. Kìm nén. Thở sâu. Nghĩ chuyện khác. Video YouTube. Thậm chí uống nước trước khi bắt đầu.</p>
+<p>Thuốc kê đơn. Gel bôi. Bao cao su dày hơn. Đá lạnh trước khi bắt đầu. Kìm nén. Thở sâu. Nghĩ chuyện khác — từ đề thi đại học đến bảng cửu chương. Video YouTube hướng dẫn "kéo dài 30 phút." Thậm chí uống nước thật nhiều trước khi bắt đầu.</p>
 
-<p>Không phải vì anh thiếu thông minh. Mà vì không ai giải thích cho anh nguyên nhân thật sự.</p>
+<p>Mỗi lần thử một cách mới, anh lại có chút hy vọng. "Lần này chắc được." Và mỗi lần thất bại, chút hy vọng đó lại biến thành thất vọng sâu hơn lần trước.</p>
 
-<p>Vấn đề không nằm ở một chỗ. Nó nằm ở 5 hệ thống đồng thời:</p>
+<p>Đến một lúc, anh không còn muốn thử nữa. Vì thử mà thất bại — đau hơn là không thử.</p>
+
+<p>Nhưng tôi muốn nói thật với anh: <strong>không phải vì anh thiếu thông minh hay thiếu ý chí.</strong> Mà vì không ai giải thích cho anh nguyên nhân thật sự.</p>
+
+<p>Vấn đề không nằm ở một chỗ. Nó nằm ở 5 hệ thống hoạt động đồng thời trong cơ thể anh:</p>
 
 <p>
-1. <strong>Cơ sàn chậu</strong> — chưa được huấn luyện đúng cách<br>
-2. <strong>Hệ thần kinh</strong> — phản xạ tự động quá nhạy<br>
-3. <strong>Nội tiết tố</strong> — testosterone và cortisol mất cân bằng<br>
-4. <strong>Tâm lý</strong> — vòng lặp lo lắng tự tạo ra vòng lặp tiếp theo<br>
-5. <strong>Tuần hoàn</strong> — độ nhạy cảm chưa được điều chỉnh
+1. <strong>Cơ sàn chậu</strong> — nhóm cơ kiểm soát trực tiếp, chưa bao giờ được huấn luyện đúng cách. Giống như cầm lái mà không có phanh.<br>
+2. <strong>Hệ thần kinh</strong> — phản xạ tự động quá nhạy, não gửi tín hiệu quá sớm mà anh không kịp can thiệp.<br>
+3. <strong>Nội tiết tố</strong> — testosterone và cortisol mất cân bằng, đặc biệt khi căng thẳng kéo dài.<br>
+4. <strong>Tâm lý</strong> — vòng lặp lo lắng: sợ thất bại → căng thẳng → thất bại → sợ hơn lần sau. Mỗi vòng lặp mạnh hơn vòng trước.<br>
+5. <strong>Tuần hoàn</strong> — độ nhạy cảm chưa được điều chỉnh, khiến cơ thể phản ứng quá mức với kích thích nhỏ.
 </p>
 
-<p>Thuốc chỉ đụng đến 1 hệ thống — và thường không đúng hệ thống nào thật sự cần. Đó là lý do anh uống xong vẫn thất vọng. Hoặc tê liệt mà không cảm nhận được gì.</p>
+<p>Thuốc chỉ đụng đến 1 trong 5 hệ thống — và thường không đúng hệ thống nào thật sự cần. Gel bôi làm tê vùng da — nhưng hệ thần kinh bên trong vẫn hoạt động giống hệt. Kìm nén bằng ý chí giống như bảo tim đừng đập — không ai làm được lâu dài.</p>
 
-<p>Giải pháp thật sự phải xây cả 5 hệ thống. Từng bước. Đúng thứ tự.</p>
+<p>Đó là lý do anh uống xong vẫn thất vọng. Hoặc bôi xong thì tê liệt, không cảm nhận được gì — mà cảm xúc và kết nối mới là thứ quan trọng nhất.</p>
 
-<p>Tôi sẽ kể anh nghe về câu chuyện anh Minh trong email tới.</p>
+<p>Giải pháp thật sự phải xây cả 5 hệ thống. Từng bước. Đúng thứ tự. Không có đường tắt.</p>
+
+<p>Trong email tới, tôi sẽ kể anh nghe về anh Minh — 34 tuổi, Hà Nội, và điều thật sự mà anh ấy đang cố bảo vệ khi tìm đến FORMEN.</p>
 
 <p>—<br>FORMEN</p>`)
   },
@@ -109,23 +129,35 @@ Chứa cái cảm giác "mình vừa lại thất vọng cô ấy rồi."</p>
   {
     day: 8,
     subject: 'điều anh thật sự đang cố bảo vệ',
-    body: wrap(`<p>Anh Minh, 34 tuổi, Hà Nội. Kỹ sư. Vợ làm giáo viên. Có 1 con nhỏ.</p>
+    body: wrap(`<p>Anh Minh, 34 tuổi, Hà Nội. Kỹ sư phần mềm. Vợ làm giáo viên. Có 1 con gái 3 tuổi.</p>
 
-<p>Anh kể cho tôi nghe: "Vợ tôi không nói gì. Nhưng tôi thấy cô ấy dần ít chủ động hơn. Ít muốn gần nhau hơn. Tôi biết lý do nhưng không biết làm sao."</p>
+<p>Anh nhắn cho tôi lúc 1 giờ sáng. Tin nhắn rất ngắn:</p>
+
+<p><em>"Vợ tôi không nói gì. Nhưng tôi thấy cô ấy dần ít chủ động hơn. Ít muốn gần nhau hơn. Tôi biết lý do nhưng không biết làm sao."</em></p>
+
+<p>Tôi đọc đi đọc lại tin nhắn đó nhiều lần. Vì nó chứa rất nhiều thứ không được nói ra.</p>
+
+<p>Nó chứa những buổi tối hai vợ chồng nằm quay lưng lại nhau — không phải vì giận, mà vì không biết phải làm gì. Nó chứa những lần anh muốn chạm vào vợ nhưng rụt tay lại vì sợ "lại đến lúc đó." Nó chứa nụ cười của con gái mỗi sáng — và cái ý nghĩ đau đớn rằng gia đình này đang dần lỏng ra ở một chỗ mà con bé không biết.</p>
 
 <p>Anh Minh không sợ mất "kỷ lục." Anh sợ mất vợ.</p>
 
-<p>Anh muốn là người chồng tốt. Muốn vợ hạnh phúc. Muốn hôn nhân ổn — không phải vì trách nhiệm. Mà vì anh yêu cô ấy thật sự.</p>
+<p>Anh muốn là người chồng tốt. Muốn vợ hạnh phúc. Muốn hôn nhân ổn — không phải vì trách nhiệm. Không phải vì "phải." Mà vì anh yêu cô ấy thật sự. Và vì anh biết — nếu khoảng cách này kéo dài thêm, nó sẽ trở thành thứ không ai sửa được.</p>
 
-<p>Đó mới là điều thật sự đang bị đặt cược.</p>
+<p><strong>Đó mới là điều thật sự đang bị đặt cược.</strong></p>
 
-<p>Anh Minh thử Kegel Khởi Đầu sau khi đọc email thứ 3 của tôi. Sau ngày 5, anh nhắn: <em>"Cảm giác kiểm soát khác hẳn. Vợ tôi cũng thấy."</em></p>
+<p>Không phải phút giây. Không phải thể diện. Là hôn nhân. Là gia đình. Là người phụ nữ đã chọn sống cả đời với anh.</p>
 
-<p>7 ngày. 10 phút mỗi ngày. Không ai biết anh đang làm gì.</p>
+<p>Anh Minh thử Kegel Khởi Đầu sau khi đọc email thứ 3 của tôi. Anh không kỳ vọng nhiều — "thử xem sao, 199k thì mất gì." Sau ngày 3, anh nhận ra mình đang co đúng cơ. Sau ngày 5, anh nhắn tôi:</p>
 
-<p>Kegel không phải kỳ tích. Nhưng đó là bước đầu tiên mà khoa học đã xác nhận — xây cơ sàn chậu, tầng kiểm soát nền tảng nhất.</p>
+<p><em>"Cảm giác kiểm soát khác hẳn. Vợ tôi cũng thấy. Cô ấy không nói gì nhưng tối hôm đó cô ấy nằm sát tôi hơn. Lần đầu tiên sau rất lâu."</em></p>
 
-<p><a href="${KEGEL_URL}" style="color:#2d6a4f;">Kegel Khởi Đầu — 199.000đ, hoàn tiền 7 ngày →</a></p>
+<p>7 ngày. 10 phút mỗi ngày. Không ai biết anh đang làm gì. Không cần dụng cụ. Không cần thuốc. Chỉ cần đúng phương pháp, đúng thứ tự.</p>
+
+<p>Kegel không phải kỳ tích. Nhưng đó là bước đầu tiên mà khoa học đã xác nhận — xây cơ sàn chậu, tầng kiểm soát nền tảng nhất. Và đôi khi, bước đầu tiên là bước quan trọng nhất.</p>
+
+<p>Nếu câu chuyện anh Minh nghe quen thuộc — có lẽ anh biết phải làm gì tiếp.</p>
+
+<p><a href="${KEGEL_URL}" style="color:#2d6a4f;">Kegel Khởi Đầu — 199.000đ, hoàn tiền 7 ngày nếu không thấy khác biệt →</a></p>
 
 <p>—<br>FORMEN</p>`)
   },
@@ -138,23 +170,35 @@ Chứa cái cảm giác "mình vừa lại thất vọng cô ấy rồi."</p>
 
 <p>Không hỏi gì. Không nhờ giúp đỡ. Chỉ gửi câu đó rồi thôi.</p>
 
-<p>Tôi nghĩ anh ấy không cần câu trả lời. Anh ấy chỉ cần ai đó biết mình đang cảm thấy gì.</p>
+<p>Tôi nghĩ anh ấy không cần câu trả lời. Anh ấy chỉ cần ai đó biết mình đang cảm thấy gì. Chỉ cần một người — dù là người lạ — hiểu được cái nặng nề đó.</p>
 
-<p>Cái khó nhất không phải là vấn đề thể chất. Cái khó nhất là sự im lặng.</p>
+<p>Tôi ngồi nhìn tin nhắn đó rất lâu trước khi trả lời. Vì tôi biết — phía sau màn hình kia là một người đàn ông đang ngồi một mình trong bóng tối, vợ có lẽ đã ngủ cạnh bên, và anh ấy đang cảm thấy cô đơn ngay trong chính ngôi nhà của mình.</p>
 
-<p>Vợ/người yêu không nói. Anh không hỏi. Cả hai đều biết. Nhưng không ai đụng vào.</p>
+<p>Cái khó nhất không phải là vấn đề thể chất. Cái khó nhất là <strong>sự im lặng</strong>.</p>
 
-<p>Và mỗi ngày trôi qua, khoảng cách đó rộng thêm một chút. Không ồn ào. Nhưng thật.</p>
+<p>Vợ/người yêu không nói. Không phải vì không quan tâm — mà vì sợ làm anh đau thêm. Cô ấy thấy anh đã tự giày vò đủ rồi. Nói ra chỉ thêm nặng nề.</p>
 
-<p>Anh đang đọc email này lúc mấy giờ? Tôi đoán là tối muộn. Khi không ai nhìn.</p>
+<p>Anh không hỏi. Không phải vì không biết — mà vì biết quá rõ. Hỏi nghĩa là phải đối mặt. Và đối mặt mà không có giải pháp — thì chỉ thêm đau.</p>
 
-<p>Đó là khoảnh khắc anh dũng cảm nhất — khi chịu thừa nhận với bản thân rằng mình muốn thay đổi.</p>
+<p>Cả hai đều biết. Nhưng không ai đụng vào. Và cái im lặng đó nằm giữa hai người như một bức tường kính — nhìn thấy nhau, nhưng không chạm được nhau.</p>
 
-<p>Bước đầu tiên nhỏ thôi. 7 ngày. 10 phút/ngày. Tự tập tại nhà, không ai biết.</p>
+<p>Mỗi ngày trôi qua, khoảng cách đó rộng thêm một chút. Không ồn ào. Không kịch tính. Chỉ là ít đi một chút — ít chạm, ít cười, ít nhìn vào mắt nhau.</p>
+
+<p>Cho đến một ngày, cả hai nhận ra mình đang sống như hai người bạn cùng phòng hơn là vợ chồng. Và không ai nhớ mọi thứ bắt đầu thay đổi từ lúc nào.</p>
+
+<p>Anh đang đọc email này lúc mấy giờ? Tôi đoán là tối muộn. Khi vợ con đã ngủ. Khi không ai nhìn.</p>
+
+<p>Đó là khoảnh khắc anh dũng cảm nhất — khi chịu thừa nhận với bản thân rằng mình muốn thay đổi. Rằng mình xứng đáng được tốt hơn. Rằng người bên cạnh mình xứng đáng được tốt hơn.</p>
+
+<p>Bước đầu tiên nhỏ thôi. 7 ngày. 10 phút/ngày. Tự tập tại nhà, không ai biết. Không cần giải thích với ai. Không cần kể với ai. Chỉ cần bắt đầu.</p>
+
+<p>Và nếu sau 7 ngày anh không cảm nhận bất kỳ sự khác biệt nào — hoàn tiền. Không hỏi lý do.</p>
 
 <p><a href="${KEGEL_URL}" style="color:#2d6a4f;">Kegel Khởi Đầu — 199.000đ →</a></p>
 
-<p>—<br>FORMEN</p>`)
+<p>—<br>FORMEN</p>
+
+<p style="font-size:13px;color:#888;">P.S. Anh không cần phải sẵn sàng 100%. Không ai sẵn sàng 100% khi bắt đầu điều gì mới. Chỉ cần đủ muốn thay đổi — và anh đang ở đây, nên tôi biết anh đủ rồi.</p>`)
   },
 
   // ── EMAIL 6 (Day 14): Giới thiệu Kegel — Logic ─────────────────────────
