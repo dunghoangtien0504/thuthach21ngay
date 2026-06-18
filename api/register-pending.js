@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { sendConfirmation } from './send-confirmation.js';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -82,6 +83,10 @@ export default async function handler(req, res) {
         if (enrollErr) throw enrollErr;
       }
     }
+
+    // Send immediate welcome email with Telegram community invite
+    const userName = profileData.name || name || '';
+    await sendConfirmation({ type: 'register', email, name: userName });
 
     return res.status(200).json({ success: true, userId });
   } catch (err) {

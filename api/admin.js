@@ -197,5 +197,113 @@ export default async function handler(req, res) {
     }
   }
 
+  if (action === 'email_stats') {
+    if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+    if (!dbConfigured) return res.status(503).json({ error: 'Supabase not configured' });
+
+    const adminClient = createClient(supabaseUrl, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    try {
+      // --- Queue summary per sequence ---
+      const { data: queueRows } = await adminClient
+        .from('email_queue')
+        .select('sequence, email_number, sent, error_message, sent_at');
+
+      // --- Events: opens, clicks, errors ---
+      const { data: events } = await adminClient
+        .from('email_events')
+        .select('queue_id, email, sequence, email_number, event_type, url, error_msg, created_at')
+        .order('created_at', { ascending: false })
+        .limit(500);
+
+      // --- Aggregate by sequence + email_number ---
+      const map = {}; // key: `${sequence}__${email_number}`
+      for (const row of (queueRows || [])) {
+        const k = `${row.sequence}__${row.email_number}`;
+        if (!map[k]) map[k] = { sequence: row.sequence, email_number: row.email_number, sent: 0, pending: 0, errors: 0, opens: 0, clicks: 0, uniqueOpens: new Set(), uniqueClicks: new Set() };
+        if (row.sent) map[k].sent++;
+        else if (row.error_message) map[k].errors++;
+        else map[k].pending++;
+      }
+
+      for (const ev of (events || [])) {
+        const k = `${ev.sequence}__${ev.email_number}`;
+        if (!map[k]) continue;
+        if (ev.event_type === 'open')  { map[k].opens++;  map[k].uniqueOpens.add(ev.email); }
+        if (ev.event_type === 'click') { map[k].clicks++; map[k].uniqueClicks.add(ev.email); }
+        if (ev.event_type === 'error') map[k].errors++;
+      }
+
+      const stats = Object.values(map).map(r => ({
+        sequence:     r.sequence,
+        email_number: r.email_number,
+        sent:         r.sent,
+        pending:      r.pending,
+        errors:       r.errors,
+        opens:        r.uniqueOpens.size,
+        clicks:       r.uniqueClicks.size,
+        open_rate:    r.sent > 0 ? Math.round(r.uniqueOpens.size / r.sent * 100) : 0,
+        click_rate:   r.sent > 0 ? Math.round(r.uniqueClicks.size / r.sent * 100) : 0,
+      })).sort((a, b) => {
+        const seqOrder = { registered: 0, buyer_kegel: 1, buyer_mm21: 2 };
+        const sd = (seqOrder[a.sequence] ?? 9) - (seqOrder[b.sequence] ?? 9);
+        return sd !== 0 ? sd : a.email_number - b.email_number;
+      });
+
+      // --- Recent errors (last 20) ---
+      const recentErrors = (events || [])
+        .filter(e => e.event_type === 'error')
+        .slice(0, 20)
+        .map(e => ({ email: e.email, sequence: e.sequence, email_number: e.email_number, error_msg: e.error_msg, created_at: e.created_at }));
+
+      // --- Overall totals ---
+      const total = (queueRows || []).length;
+      const totalSent = (queueRows || []).filter(r => r.sent).length;
+      const totalPending = (queueRows || []).filter(r => !r.sent && !r.error_message).length;
+      const totalErrors = (queueRows || []).filter(r => !r.sent && r.error_message).length;
+      const totalOpens = new Set((events || []).filter(e => e.event_type === 'open').map(e => e.email + e.sequence + e.email_number)).size;
+      const totalClicks = new Set((events || []).filter(e => e.event_type === 'click').map(e => e.email + e.sequence + e.email_number)).size;
+
+      return res.status(200).json({
+        totals: { total, sent: totalSent, pending: totalPending, errors: totalErrors, opens: totalOpens, clicks: totalClicks },
+        stats,
+        recentErrors,
+      });
+    } catch (err) {
+      console.error('[admin-email_stats]', err);
+      return res.status(500).json({ error: err.message });
+    }
+  }
+
+  if (action === 'email_queue') {
+    if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+    if (!dbConfigured) return res.status(503).json({ error: 'Supabase not configured' });
+
+    const adminClient = createClient(supabaseUrl, serviceRoleKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    try {
+      const { email: filterEmail, seq } = req.query;
+      let query = adminClient
+        .from('email_queue')
+        .select('id, email, name, sequence, email_number, subject, scheduled_for, sent, sent_at, error_message, retry_count')
+        .order('scheduled_for', { ascending: true })
+        .limit(200);
+
+      if (filterEmail) query = query.eq('email', filterEmail);
+      if (seq) query = query.eq('sequence', seq);
+
+      const { data, error } = await query;
+      if (error) throw error;
+      return res.status(200).json({ rows: data || [] });
+    } catch (err) {
+      console.error('[admin-email_queue]', err);
+      return res.status(500).json({ error: err.message });
+    }
+  }
+
   return res.status(400).json({ error: 'Invalid action' });
 }

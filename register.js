@@ -312,6 +312,23 @@ function injectModal() {
             <button id="reg-resend-btn" type="button">Gửi lại</button>
           </p>
         </div>
+
+        <!-- Registration success state (email confirm OFF) -->
+        <div id="reg-success-state" style="display:none;text-align:center;padding:12px 0;">
+          <div style="font-size:52px;margin-bottom:12px;">🎉</div>
+          <h3 style="font-size:20px;font-weight:800;margin:0 0 8px;color:#0D2B1A;">Chào Mừng Anh Đến Với FORMEN!</h3>
+          <p style="font-size:14px;color:#555;margin-bottom:20px;line-height:1.6;">
+            Tài khoản đã được tạo thành công.<br>Anh có thể vào học ngay hoặc tham gia cộng đồng.
+          </p>
+          <a href="https://web.telegram.org/a/#-5485155652" target="_blank"
+             style="display:flex;align-items:center;justify-content:center;gap:8px;background:#229ED9;color:#fff;padding:13px 20px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;margin-bottom:12px;">
+            <i class="fa-brands fa-telegram"></i> Vào Cộng Đồng FORMEN
+          </a>
+          <a href="/my-courses.html"
+             style="display:flex;align-items:center;justify-content:center;gap:8px;background:#0D2B1A;color:#D4AF37;padding:13px 20px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;">
+            <i class="fa-solid fa-graduation-cap"></i> Vào Học Ngay
+          </a>
+        </div>
       </div>
     </div>
     <div id="mm21-toast-container" aria-live="polite"></div>
@@ -350,6 +367,8 @@ function openModal() {
   // Reset to form state each time
   document.getElementById('reg-form-wrap').style.display = '';
   document.getElementById('reg-email-sent').style.display = 'none';
+  const successState = document.getElementById('reg-success-state');
+  if (successState) successState.style.display = 'none';
   document.getElementById('reg-email')?.focus();
 }
 
@@ -470,8 +489,10 @@ async function handleSubmit(e) {
     // already active, no email is sent. Go straight to the portal instead of
     // showing a "check your inbox" screen that would never resolve.
     if (data?.session) {
-      toast('Đăng ký thành công! Đang chuyển vào khóa học...', 'success');
-      window.location.href = '/my-courses.html';
+      // Show success panel with Telegram community invite
+      document.getElementById('reg-form-wrap').style.display = 'none';
+      document.getElementById('reg-email-sent').style.display = 'none';
+      document.getElementById('reg-success-state').style.display = 'block';
       return;
     }
 

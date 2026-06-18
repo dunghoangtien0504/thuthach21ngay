@@ -2,7 +2,8 @@
  * GET /api/process-email-queue
  * Called daily by Vercel Cron (0 1 * * * = 8 AM Vietnam time / UTC+7).
  * Fetches all email_queue rows scheduled for today or earlier that haven't been sent,
- * sends them via Resend API, and marks them as sent.
+ * injects open/click tracking, sends via Resend, marks as sent.
+ * Errors are stored in email_queue.error_message and logged to email_events.
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -14,37 +15,61 @@ const supabase = createClient(
 );
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM = 'FORMEN <no-reply@thuthach21ngay.org>';
-const BATCH_SIZE = 50; // Resend free: 100/day
+const FROM      = 'FORMEN <no-reply@thuthach21ngay.org>';
+const SITE_URL  = (process.env.VITE_SITE_URL || 'https://www.thuthach21ngay.org').replace(/\/$/, '');
+const BATCH_SIZE = 50;
 
-async function sendEmail({ to, toName, subject, htmlContent }) {
-  const { error } = await resend.emails.send({
-    from: FROM,
-    to: [to],
-    subject,
-    html: htmlContent,
-  });
-  if (error) throw new Error(`Resend error: ${error.message}`);
+// ─── Inject open-pixel + wrap every <a href> through click tracker ─────────
+function injectTracking(html, { id, email, sequence, emailNumber }) {
+  const params = `id=${id}&email=${encodeURIComponent(email)}&seq=${encodeURIComponent(sequence || '')}&num=${emailNumber || ''}`;
+
+  // 1. Replace <a href="..."> with click tracker
+  const tracked = html.replace(
+    /<a\s([^>]*?)href="([^"#][^"]*)"([^>]*)>/gi,
+    (match, before, url, after) => {
+      // Skip unsubscribe links and anchor links
+      if (url.startsWith('#') || url.includes('track')) return match;
+      const wrapped = `${SITE_URL}/api/track?type=click&${params}&url=${encodeURIComponent(url)}`;
+      return `<a ${before}href="${wrapped}"${after}>`;
+    }
+  );
+
+  // 2. Insert open-pixel before </body>
+  const pixel = `<img src="${SITE_URL}/api/track?type=open&${params}" width="1" height="1" style="display:block;max-height:1px;overflow:hidden;" alt="" />`;
+  return tracked.replace(/<\/body>/i, `${pixel}</body>`);
+}
+
+// ─── Record error event to email_events ────────────────────────────────────
+async function recordError({ queueId, email, sequence, emailNumber, errorMsg }) {
+  try {
+    await supabase.from('email_events').insert({
+      queue_id:     queueId,
+      email,
+      sequence:     sequence || null,
+      email_number: emailNumber ? parseInt(emailNumber) : null,
+      event_type:   'error',
+      error_msg:    errorMsg,
+    });
+  } catch (e) {
+    console.error('[process-email-queue] Failed to record error event:', e.message);
+  }
 }
 
 export default async function handler(req, res) {
-  // Vercel Cron sends GET requests; also allow POST for manual triggers
   if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Cron security: Vercel sets Authorization header automatically
   const authHeader = req.headers['authorization'];
   if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const today = new Date().toISOString().split('T')[0];
 
-  // Fetch due emails (scheduled_for <= today, not sent yet)
   const { data: dueEmails, error: fetchError } = await supabase
     .from('email_queue')
-    .select('id, email, name, subject, html_content')
+    .select('id, email, name, sequence, email_number, subject, html_content')
     .lte('scheduled_for', today)
     .eq('sent', false)
     .order('scheduled_for', { ascending: true })
@@ -63,24 +88,50 @@ export default async function handler(req, res) {
 
   for (const row of dueEmails) {
     try {
-      await sendEmail({
-        to: row.email,
-        toName: row.name,
-        subject: row.subject,
-        htmlContent: row.html_content
+      // Inject tracking before sending
+      const trackedHtml = injectTracking(row.html_content, {
+        id:          row.id,
+        email:       row.email,
+        sequence:    row.sequence,
+        emailNumber: row.email_number,
       });
 
-      // Mark as sent
+      const { error } = await resend.emails.send({
+        from:    FROM,
+        to:      [row.email],
+        subject: row.subject,
+        html:    trackedHtml,
+      });
+
+      if (error) throw new Error(`Resend error: ${error.message}`);
+
       await supabase
         .from('email_queue')
-        .update({ sent: true, sent_at: new Date().toISOString() })
+        .update({ sent: true, sent_at: new Date().toISOString(), error_message: null })
         .eq('id', row.id);
 
       results.sent++;
     } catch (err) {
-      console.error(`Failed to send email to ${row.email}:`, err.message);
+      const msg = err.message || 'Unknown error';
+      console.error(`Failed to send email to ${row.email}:`, msg);
+
+      // Store error in the queue row
+      await supabase
+        .from('email_queue')
+        .update({ error_message: msg, retry_count: (row.retry_count || 0) + 1 })
+        .eq('id', row.id);
+
+      // Log to email_events for admin dashboard
+      await recordError({
+        queueId:     row.id,
+        email:       row.email,
+        sequence:    row.sequence,
+        emailNumber: row.email_number,
+        errorMsg:    msg,
+      });
+
       results.failed++;
-      results.errors.push({ email: row.email, error: err.message });
+      results.errors.push({ email: row.email, error: msg });
     }
   }
 

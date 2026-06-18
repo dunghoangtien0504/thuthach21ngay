@@ -2483,12 +2483,112 @@ function generateAIResponse(query) {
   }
   
   return `Dạ thưa anh Bảo, em chưa hiểu rõ câu hỏi của anh.
-  
+
   Anh có muốn em thực hiện các thống kê phân tích sau:
   • **📊 Báo cáo chung:** Sức khỏe hệ thống, doanh thu, học viên.
   • **🟢 Báo cáo online:** Xem số người và trang đang xem realtime.
   • **🔥 Thống kê click:** Vùng được nhấn nhiều nhất trên Heatmap và cách tối ưu.
   • **💡 Đề xuất UX:** Giải pháp tăng tỷ lệ chuyển đổi CRM/Đăng ký.
-  
+
   Hãy chọn câu hỏi gợi ý nhanh hoặc gõ trực tiếp nội dung anh muốn em hỗ trợ nhé!`;
 }
+
+// ─── Email Analytics (custom system) ────────────────────────────────────────
+
+const EMAIL_SUBJECTS = {};
+
+async function fetchEmailStats() {
+  const btn = document.getElementById('btn-fetch-email-stats');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tải...'; }
+
+  try {
+    const res = await fetch('/api/admin?action=email_stats', {
+      headers: { 'Authorization': `Bearer ${_adminKey}` }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Lỗi server');
+    renderEmailStats(data);
+  } catch (err) {
+    showToast('Không tải được email analytics: ' + err.message, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Tải dữ liệu'; }
+  }
+}
+
+function renderEmailStats({ totals, stats, recentErrors }) {
+  // KPI cards
+  document.getElementById('estats-total').textContent   = totals.total ?? '—';
+  document.getElementById('estats-sent').textContent    = totals.sent ?? '—';
+  document.getElementById('estats-pending').textContent = totals.pending ?? '—';
+  document.getElementById('estats-errors').textContent  = totals.errors ?? '—';
+  document.getElementById('estats-opens').textContent   = totals.opens ?? '—';
+  document.getElementById('estats-clicks').textContent  = totals.clicks ?? '—';
+
+  // Hide empty state, show tables
+  document.getElementById('email-stats-empty').style.display  = 'none';
+  document.getElementById('email-stats-tables').style.display = '';
+
+  // Per-sequence tables
+  const seqs = ['registered', 'buyer_kegel', 'buyer_mm21'];
+  for (const seq of seqs) {
+    const rows = stats.filter(r => r.sequence === seq);
+    const tbody = document.getElementById(`estats-tbody-${seq}`);
+    if (!tbody) continue;
+
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:12px;">Chưa có dữ liệu</td></tr>`;
+      continue;
+    }
+
+    tbody.innerHTML = rows.map(r => {
+      const openColor  = r.open_rate  >= 30 ? '#2e7d32' : r.open_rate  >= 15 ? '#e65100' : '#c62828';
+      const clickColor = r.click_rate >= 5  ? '#2e7d32' : r.click_rate >= 2  ? '#e65100' : '#aaa';
+      const errBadge   = r.errors > 0 ? `<span style="color:#e53935;font-weight:700;">${r.errors}</span>` : '0';
+      return `<tr>
+        <td style="text-align:center;font-weight:700;">${r.email_number}</td>
+        <td style="font-size:12px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(r.subject || '—')}</td>
+        <td style="text-align:center;">${r.sent}</td>
+        <td style="text-align:center;color:var(--text-muted);">${r.pending}</td>
+        <td style="text-align:center;">${errBadge}</td>
+        <td style="text-align:center;">${r.opens}</td>
+        <td style="text-align:center;font-weight:700;color:${openColor};">${r.open_rate}%</td>
+        <td style="text-align:center;">${r.clicks}</td>
+        <td style="text-align:center;font-weight:700;color:${clickColor};">${r.click_rate}%</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Recent errors
+  const errSection = document.getElementById('estats-errors-section');
+  const errTbody   = document.getElementById('estats-errors-tbody');
+  if (recentErrors && recentErrors.length > 0) {
+    errSection.style.display = '';
+    errTbody.innerHTML = recentErrors.map(e => {
+      const dt = e.created_at ? new Date(e.created_at).toLocaleString('vi-VN') : '—';
+      return `<tr>
+        <td style="white-space:nowrap;font-size:11px;">${dt}</td>
+        <td style="font-size:11px;">${escHtml(e.email)}</td>
+        <td><span style="font-size:11px;">${escHtml(e.sequence || '—')}</span></td>
+        <td style="text-align:center;">${e.email_number ?? '—'}</td>
+        <td style="font-size:11px;color:#c62828;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(e.error_msg || '')}">${escHtml(e.error_msg || '—')}</td>
+      </tr>`;
+    }).join('');
+  } else {
+    errSection.style.display = 'none';
+  }
+}
+
+window.fetchEmailStats = fetchEmailStats;
+
+// Auto-load email stats when the email tab is opened
+document.addEventListener('DOMContentLoaded', () => {
+  const emailTabBtn = document.querySelector('[data-target="admin-tab-email-list"]');
+  if (emailTabBtn) {
+    emailTabBtn.addEventListener('click', () => {
+      // Only fetch if stats haven't been loaded yet (empty state still showing)
+      if (document.getElementById('email-stats-empty')?.style.display !== 'none') {
+        setTimeout(fetchEmailStats, 150);
+      }
+    });
+  }
+});

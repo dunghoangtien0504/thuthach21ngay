@@ -1024,6 +1024,129 @@
         <!-- ================= TAB: EMAIL MARKETING ================= -->
         <section class="admin-tab-section" id="admin-tab-email-list" style="display:none">
 
+          <!-- ── Email Analytics (custom system) ── -->
+          <div class="dashboard-card" style="margin-bottom:28px;padding:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+              <div>
+                <h4 style="margin:0 0 4px;"><i class="fa-solid fa-chart-line text-primary"></i> Phân Tích Email Tự Động — FORMEN</h4>
+                <p style="font-size:12px;color:var(--text-muted);margin:0;">Dữ liệu thực từ hệ thống email queue: tỷ lệ mở, click, lỗi theo từng chuỗi email.</p>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="fetchEmailStats()" id="btn-fetch-email-stats">
+                <i class="fa-solid fa-rotate-right"></i> Tải dữ liệu
+              </button>
+            </div>
+
+            <!-- Overall KPI cards -->
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px;" id="email-stats-kpi-grid">
+              <div class="admin-stat-card" style="padding:14px;">
+                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Tổng queue</div>
+                <div style="font-size:22px;font-weight:800;color:var(--text-primary);line-height:1;" id="estats-total">—</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">emails</div>
+              </div>
+              <div class="admin-stat-card" style="padding:14px;border-left:3px solid #1565C0;">
+                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Đã gửi</div>
+                <div style="font-size:22px;font-weight:800;color:#1565C0;line-height:1;" id="estats-sent">—</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">emails</div>
+              </div>
+              <div class="admin-stat-card" style="padding:14px;">
+                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Chờ gửi</div>
+                <div style="font-size:22px;font-weight:800;color:var(--text-primary);line-height:1;" id="estats-pending">—</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">emails</div>
+              </div>
+              <div class="admin-stat-card" style="padding:14px;border-left:3px solid #e53935;">
+                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Lỗi</div>
+                <div style="font-size:22px;font-weight:800;color:#e53935;line-height:1;" id="estats-errors">—</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">emails</div>
+              </div>
+              <div class="admin-stat-card orange" style="padding:14px;">
+                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Đã mở</div>
+                <div style="font-size:22px;font-weight:800;line-height:1;" id="estats-opens">—</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">unique opens</div>
+              </div>
+              <div class="admin-stat-card purple" style="padding:14px;">
+                <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Đã click</div>
+                <div style="font-size:22px;font-weight:800;line-height:1;" id="estats-clicks">—</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">unique clicks</div>
+              </div>
+            </div>
+
+            <!-- Per-sequence tables -->
+            <div id="email-stats-tables" style="display:none;">
+
+              <!-- Registered sequence -->
+              <div style="margin-bottom:24px;">
+                <h5 style="margin:0 0 10px;font-size:14px;display:flex;align-items:center;gap:8px;">
+                  <span style="background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">Registered</span>
+                  Chuỗi Lead chưa mua (15 email)
+                </h5>
+                <div style="overflow-x:auto;">
+                  <table class="admin-table" style="font-size:12.5px;width:100%;">
+                    <thead><tr>
+                      <th>#</th><th>Subject</th><th>Đã gửi</th><th>Chờ</th><th>Lỗi</th>
+                      <th>Mở</th><th>Tỷ lệ mở</th><th>Click</th><th>Tỷ lệ click</th>
+                    </tr></thead>
+                    <tbody id="estats-tbody-registered"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Buyer Kegel sequence -->
+              <div style="margin-bottom:24px;">
+                <h5 style="margin:0 0 10px;font-size:14px;display:flex;align-items:center;gap:8px;">
+                  <span style="background:#fff3e0;color:#e65100;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">Buyer Kegel</span>
+                  Chuỗi Kegel 199k (21 email)
+                </h5>
+                <div style="overflow-x:auto;">
+                  <table class="admin-table" style="font-size:12.5px;width:100%;">
+                    <thead><tr>
+                      <th>#</th><th>Subject</th><th>Đã gửi</th><th>Chờ</th><th>Lỗi</th>
+                      <th>Mở</th><th>Tỷ lệ mở</th><th>Click</th><th>Tỷ lệ click</th>
+                    </tr></thead>
+                    <tbody id="estats-tbody-buyer_kegel"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Buyer MM21 sequence -->
+              <div style="margin-bottom:24px;">
+                <h5 style="margin:0 0 10px;font-size:14px;display:flex;align-items:center;gap:8px;">
+                  <span style="background:#f3e5f5;color:#6a1b9a;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">Buyer MM21</span>
+                  Chuỗi Mật Mã 21 (9 email)
+                </h5>
+                <div style="overflow-x:auto;">
+                  <table class="admin-table" style="font-size:12.5px;width:100%;">
+                    <thead><tr>
+                      <th>#</th><th>Subject</th><th>Đã gửi</th><th>Chờ</th><th>Lỗi</th>
+                      <th>Mở</th><th>Tỷ lệ mở</th><th>Click</th><th>Tỷ lệ click</th>
+                    </tr></thead>
+                    <tbody id="estats-tbody-buyer_mm21"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Recent errors -->
+              <div id="estats-errors-section" style="display:none;">
+                <h5 style="margin:0 0 10px;font-size:14px;color:#e53935;"><i class="fa-solid fa-triangle-exclamation"></i> Lỗi gần đây (20 lỗi cuối)</h5>
+                <div style="overflow-x:auto;">
+                  <table class="admin-table" style="font-size:12px;width:100%;">
+                    <thead><tr>
+                      <th>Thời gian</th><th>Email</th><th>Chuỗi</th><th>#</th><th>Nội dung lỗi</th>
+                    </tr></thead>
+                    <tbody id="estats-errors-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty state -->
+            <div id="email-stats-empty" style="text-align:center;padding:36px;color:var(--text-muted);">
+              <i class="fa-solid fa-chart-bar" style="font-size:36px;margin-bottom:12px;opacity:0.35;display:block;"></i>
+              <p style="margin:0 0 6px;font-weight:600;">Chưa có dữ liệu email analytics</p>
+              <p style="font-size:13px;margin:0 0 16px;">Bấm <strong>"Tải dữ liệu"</strong> để xem thống kê chi tiết từng email.</p>
+              <p style="font-size:12px;color:var(--text-muted);">Lưu ý: cần chạy SQL tạo bảng <code>email_events</code> trên Supabase trước.</p>
+            </div>
+          </div>
+
           <!-- ── Brevo Email Analytics ── -->
           <div class="dashboard-card" style="margin-bottom:28px;padding:20px;">
             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">

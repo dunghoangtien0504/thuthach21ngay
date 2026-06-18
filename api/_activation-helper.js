@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { EMAIL_SEQUENCES } from './_email-sequences.js';
+import { sendConfirmation } from './send-confirmation.js';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -151,6 +152,10 @@ export async function activateUserCourse({ email, name, phone, courseId, source,
       console.error('[sequence-schedule-helper] Error:', seqErr);
     }
   }
+
+  // 6. Send immediate confirmation email with Telegram invite
+  const confirmType = courseId === 'kegel' ? 'kegel' : 'mm21';
+  await sendConfirmation({ type: confirmType, email, name: profileData.name });
 
   return { userId, email, courseId };
 }
