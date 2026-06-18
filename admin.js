@@ -156,7 +156,7 @@ const adminHomeworkList = document.getElementById('admin-homework-list');
 const defaultBlogs = [
   { title: "Vai Trò Của Cơ Sàn Chậu Trong Sức Khỏe Sinh Lý Nam Giới", author: "Dr. Nam Trần", date: "05/06/2026", summary: "Tìm hiểu cơ chế giải phẫu của nhóm cơ sàn chậu (cơ PC, BC, IC) đối với sức khỏe sinh lý nam và tầm quan trọng của việc rèn luyện khoa học." },
   { title: "Lo Âu Hiệu Suất Và Tâm Lý Phòng The Ở Nam Giới", author: "Bác Sĩ Phong", date: "02/06/2026", summary: "Tìm hiểu cơ chế sinh học của lo âu hiệu suất, cách adrenaline ảnh hưởng đến hệ thần kinh giao cảm và vai trò của việc giải tỏa tâm lý." },
-  { title: "Các Vi Chất Dinh Dưỡng Thiết Yếu Cho Sinh Lý Nam Giới", author: "Thanh Bảo", date: "30/05/2026", summary: "Vai trò của các vi chất dinh dưỡng như Kẽm, Magiê, Vitamin D đối với quá trình tổng hợp Testosterone nội sinh và hồi phục cơ chậu." }
+  { title: "Các Vi Chất Dinh Dưỡng Thiết Yếu Cho Sinh Lý Nam Giới", author: "Kent Hoàng", date: "30/05/2026", summary: "Vai trò của các vi chất dinh dưỡng như Kẽm, Magiê, Vitamin D đối với quá trình tổng hợp Testosterone nội sinh và hồi phục cơ chậu." }
 ];
 
 if (blogPosts.length === 0) {
@@ -524,7 +524,7 @@ function updateStatsUI() {
     if (activeUserSession && student.email === activeUserSession.email) {
       const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
       percent = Math.round((trainingDays.length / 21) * 100);
-    } else if (student.name === "Thanh Bảo") {
+    } else if (student.name === "Kent Hoàng") {
       percent = 76;
     } else if (student.name === "Học Viên Thử Nghiệm") {
       percent = 14;
@@ -1649,7 +1649,7 @@ function renderProgressTable() {
         logSnippet = `Lần cuối: IELT ${last.ielt}s (Tuần ${last.week})`;
       }
     } else {
-      if (student.name === "Thanh Bảo") {
+      if (student.name === "Kent Hoàng") {
         percent = 76;
         completedCount = 16;
         logSnippet = "Lần cuối: IELT 180s (Kiểm soát 8/10)";
@@ -1703,7 +1703,7 @@ function renderCertsTable() {
       const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
       percent = Math.round((trainingDays.length / 21) * 100);
       dateStr = new Date().toLocaleDateString('vi-VN');
-    } else if (student.name === "Thanh Bảo") {
+    } else if (student.name === "Kent Hoàng") {
       percent = 76;
     } else if (student.name === "Học Viên Thử Nghiệm") {
       percent = 14;
@@ -1759,7 +1759,7 @@ function renderHomeworkTable() {
   let mockLogs = [];
   if (ieltLogs.length === 0) {
     mockLogs = [
-      { name: "Thanh Bảo", email: "thanhbaotran.business@gmail.com", week: "Tuần 3", ielt: 180, control: 8, confidence: 9, note: "Thực hành dừng nhịp rất ổn, kiểm soát tốt ở tư thế đứng.", date: "08/06/2026" },
+      { name: "Kent Hoàng", email: "kenthoang@gmail.com", week: "Tuần 3", ielt: 180, control: 8, confidence: 9, note: "Thực hành dừng nhịp rất ổn, kiểm soát tốt ở tư thế đứng.", date: "08/06/2026" },
       { name: "Học Viên Thử Nghiệm", email: "hocvien@thuthach21ngay.us", week: "Tuần 1", ielt: 45, control: 4, confidence: 5, note: "Bắt đầu nhận diện cơ PC hơi mỏi, thở bụng 4-2-6 tốt.", date: "02/06/2026" }
     ];
   } else {
@@ -1777,7 +1777,7 @@ function renderHomeworkTable() {
       });
     });
     // Add default mock logs to populate
-    mockLogs.push({ name: "Thanh Bảo", email: "thanhbaotran.business@gmail.com", week: "Tuần 3", ielt: 180, control: 8, confidence: 9, note: "Thực hành dừng nhịp rất ổn, kiểm soát tốt ở tư thế đứng.", date: "08/06/2026" });
+    mockLogs.push({ name: "Kent Hoàng", email: "kenthoang@gmail.com", week: "Tuần 3", ielt: 180, control: 8, confidence: 9, note: "Thực hành dừng nhịp rất ổn, kiểm soát tốt ở tư thế đứng.", date: "08/06/2026" });
   }
 
   // Sort logs by date newest first
@@ -1879,7 +1879,7 @@ function initializeAnalyticsSimulation() {
     const paths = ['/', '/portal.html', '/khoa-hoc.html', '/kien-thuc.html'];
     const pathWeights = [0.45, 0.25, 0.20, 0.10];
     
-    const names = ['Thanh Bảo', 'Lâm Vũ', 'Đăng Khoa', 'Hoàng Minh', 'Quốc Bảo', 'Tuấn Hải', 'Văn Nam', 'Khách viếng thăm'];
+    const names = ['Kent Hoàng', 'Lâm Vũ', 'Đăng Khoa', 'Hoàng Minh', 'Quốc Bảo', 'Tuấn Hải', 'Văn Nam', 'Khách viếng thăm'];
     
     // Generate last 30 days of data
     for (let i = 30; i >= 0; i--) {
@@ -2412,7 +2412,7 @@ function generateAIResponse(query) {
     if (activeUserSession && student.email === activeUserSession.email) {
       const trainingDays = completedLessons.filter(id => id >= 1 && id <= 21);
       percent = Math.round((trainingDays.length / 21) * 100);
-    } else if (student.name === "Thanh Bảo") {
+    } else if (student.name === "Kent Hoàng") {
       percent = 76;
     } else if (student.name === "Học Viên Thử Nghiệm") {
       percent = 14;
@@ -2438,7 +2438,7 @@ function generateAIResponse(query) {
   const clickCount = clicks.length;
 
   if (q.includes('báo cáo') || q.includes('sức khỏe') || q.includes('tổng quan') || q.includes('doanh thu') || q.includes('tiền') || q.includes('học viên')) {
-    return `Dạ thưa anh Bảo, em xin gửi **Báo cáo sức khỏe hệ thống Mật Mã 21** cập nhật thời gian thực:
+    return `Dạ thưa anh Kent, em xin gửi **Báo cáo sức khỏe hệ thống Mật Mã 21** cập nhật thời gian thực:
     
     • **Doanh thu tích lũy:** **${revenueStr}** (từ **${activeLocalCount}** giao dịch được kích hoạt tài khoản).
     • **Tổng số học viên:** **${studentCount} học viên** đã đăng ký tài khoản học tập.
@@ -2473,7 +2473,7 @@ function generateAIResponse(query) {
   }
   
   if (q.includes('tối ưu') || q.includes('gợi ý') || q.includes('ux') || q.includes('cải thiện') || q.includes('khuyên')) {
-    return `Dạ thưa anh Bảo, từ phân tích heatmap và hành vi người dùng, em xin đề xuất **3 điểm tối ưu UX** giúp nâng cao chuyển đổi đăng ký lộ trình:
+    return `Dạ thưa anh Kent, từ phân tích heatmap và hành vi người dùng, em xin đề xuất **3 điểm tối ưu UX** giúp nâng cao chuyển đổi đăng ký lộ trình:
     
     1. **Làm nổi bật CTA trên Mobile:** 65% lưu lượng truy cập là Mobile, anh nên bổ sung một nút **"Đăng ký ngay" cố định (sticky button) ở chân màn hình** khi khách hàng cuộn trang quá 1 màn hình.
     2. **Tận dụng nhiệt độ click FAQ:** Do học viên click đọc FAQ rất nhiều, anh nên đưa nút CTA nhỏ nằm xen kẽ trực tiếp bên trong câu trả lời FAQ. Khi họ được giải tỏa thắc mắc, họ có thể đăng ký mua ngay lập tức.
@@ -2482,7 +2482,7 @@ function generateAIResponse(query) {
     Anh thấy các đề xuất này thế nào ạ?`;
   }
   
-  return `Dạ thưa anh Bảo, em chưa hiểu rõ câu hỏi của anh.
+  return `Dạ thưa anh Kent, em chưa hiểu rõ câu hỏi của anh.
 
   Anh có muốn em thực hiện các thống kê phân tích sau:
   • **📊 Báo cáo chung:** Sức khỏe hệ thống, doanh thu, học viên.
