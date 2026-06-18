@@ -5,6 +5,12 @@ import { getReferralCode } from './referral.js';
 // Load Config (prioritize localStorage custom config, fallback to env)
 const customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {};
 
+// Migrate stale support handle — if localStorage still has old value, clear it
+if (customConfig.telegramUsername === 'matma21_support') {
+  delete customConfig.telegramUsername;
+  localStorage.setItem('thuthach21ngay_custom_config', JSON.stringify(customConfig));
+}
+
 const SITE_TITLE = customConfig.siteTitle || import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh";
 const PRICE = customConfig.price || import.meta.env.VITE_PRICE || "686.868đ";
 const TELEGRAM_USERNAME = customConfig.telegramUsername || import.meta.env.VITE_TELEGRAM_USERNAME || "kenthoang";
@@ -158,6 +164,12 @@ function applyEnvConfigurations() {
   if (siteTelegramLink) {
     siteTelegramLink.href = `https://t.me/${TELEGRAM_USERNAME}`;
     siteTelegramLink.innerHTML = `<i class="fa-brands fa-telegram"></i> Hỗ trợ Telegram 1:1`;
+  }
+
+  // Also update auth-page telegram support link
+  const authTelegramSupport = document.getElementById('auth-telegram-support');
+  if (authTelegramSupport) {
+    authTelegramSupport.href = `https://t.me/${TELEGRAM_USERNAME}`;
   }
 }
 
