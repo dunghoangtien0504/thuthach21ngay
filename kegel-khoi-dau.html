@@ -508,6 +508,152 @@
       .modal-box { padding: 28px 20px; }
       .qr-wrap img { width: 190px; height: 190px; }
     }
+
+    /* ===== IS FOR / NOT FOR REDESIGN ===== */
+    .isfor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin: 40px 0 0;
+    }
+    .isfor-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .isfor-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .isfor-card.success-card {
+      border: 2px solid var(--green);
+    }
+    .isfor-card.danger-card {
+      border: 2px solid var(--danger);
+    }
+    .isfor-title {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      line-height: 1.4;
+    }
+    .isfor-title.success { color: var(--green); }
+    .isfor-title.danger { color: var(--danger); }
+    
+    .isfor-title-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .isfor-title-icon.success { background-color: var(--green); }
+    .isfor-title-icon.danger { background-color: var(--danger); }
+    
+    .isfor-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 0;
+      margin: 0;
+    }
+    .isfor-list li {
+      position: relative;
+      padding-left: 28px;
+      font-size: 15.5px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+    .isfor-list li i {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      font-size: 14px;
+    }
+    .success-card .isfor-list li i { color: var(--green); }
+    .danger-card .isfor-list li i { color: var(--danger); }
+
+    /* ===== TESTIMONIAL REDESIGN ===== */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 40px;
+    }
+    .testimonial-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(13, 43, 26, 0.08);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .testimonial-stars {
+      color: var(--accent-bright);
+      margin-bottom: 18px;
+      font-size: 15px;
+      letter-spacing: 2px;
+    }
+    .testimonial-text {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 16.5px;
+      line-height: 1.8;
+      color: var(--text-main);
+      margin-bottom: 24px;
+      flex: 1;
+    }
+    .testimonial-author {
+      font-size: 12.5px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin: 0;
+      border-top: 1px solid rgba(13, 43, 26, 0.04);
+      padding-top: 16px;
+    }
+    @media (max-width: 991px) {
+      .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .isfor-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .isfor-card, .testimonial-card {
+        padding: 32px 24px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -827,22 +973,28 @@
 
   <!-- ======== [12] IS FOR / NOT FOR ======== -->
   <section class="section section-alt">
-    <div class="container">
-      <div style="display:flex;flex-direction:column;gap:24px;">
-        <div style="background:#fff;border-left:4px solid var(--green);padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
-          <h4 style="font-weight:700;color:var(--green);margin-bottom:10px;"><i class="fa-solid fa-square-check"></i> CHƯƠNG TRÌNH DÀNH CHO ANH NẾU:</h4>
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--text-muted);">
-            <li>• Anh muốn tìm giải pháp khoa học, tự nhiên và an toàn cho sức khỏe lâu dài.</li>
-            <li>• Anh cam kết dành đúng 10 phút tập luyện tập trung mỗi ngày.</li>
-            <li>• Anh muốn xây dựng lực phanh cơ học sàn chậu vững chắc trước khi tập nâng cao.</li>
+    <div class="container-wide">
+      <div class="isfor-grid">
+        <div class="isfor-card success-card">
+          <h4 class="isfor-title success">
+            <span class="isfor-title-icon success"><i class="fa-solid fa-check"></i></span>
+            CHƯƠNG TRÌNH DÀNH CHO ANH NẾU:
+          </h4>
+          <ul class="isfor-list">
+            <li><i class="fa-solid fa-check"></i> Anh muốn tìm giải pháp khoa học, tự nhiên và an toàn cho sức khỏe lâu dài.</li>
+            <li><i class="fa-solid fa-check"></i> Anh cam kết dành đúng 10 phút tập luyện tập trung mỗi ngày.</li>
+            <li><i class="fa-solid fa-check"></i> Anh muốn xây dựng lực phanh cơ học sàn chậu vững chắc trước khi tập nâng cao.</li>
           </ul>
         </div>
-        <div style="background:#fff;border-left:4px solid var(--danger);padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
-          <h4 style="font-weight:700;color:var(--danger);margin-bottom:10px;"><i class="fa-solid fa-square-xmark"></i> CHƯƠNG TRÌNH KHÔNG DÀNH CHO ANH NẾU:</h4>
-          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--text-muted);">
-            <li>• Anh tìm kiếm một loại thuốc xịt gây tê quy đầu hay thuốc uống chứa hóa chất độc hại.</li>
-            <li>• Anh lười tập luyện, không muốn dành ra dù chỉ 10 phút mỗi ngày để rèn luyện.</li>
-            <li>• Anh hy vọng có kết quả tức thì chỉ sau 1 lần tập mà không có sự kiên trì thực tế.</li>
+        <div class="isfor-card danger-card">
+          <h4 class="isfor-title danger">
+            <span class="isfor-title-icon danger"><i class="fa-solid fa-xmark"></i></span>
+            CHƯƠNG TRÌNH KHÔNG DÀNH CHO ANH NẾU:
+          </h4>
+          <ul class="isfor-list">
+            <li><i class="fa-solid fa-xmark"></i> Anh tìm kiếm một loại thuốc xịt gây tê quy đầu hay thuốc uống chứa hóa chất độc hại.</li>
+            <li><i class="fa-solid fa-xmark"></i> Anh lười tập luyện, không muốn dành ra dù chỉ 10 phút mỗi ngày để rèn luyện.</li>
+            <li><i class="fa-solid fa-xmark"></i> Anh hy vọng có kết quả tức thì chỉ sau 1 lần tập mà không có sự kiên trì thực tế.</li>
           </ul>
         </div>
       </div>
@@ -902,28 +1054,63 @@
 
   <!-- ======== [14] TESTIMONIAL + CTA L5 ======== -->
   <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title" style="text-align:center;">Phản Hồi Từ Học Viên Thực Tế</h2>
-      <p class="section-sub" style="text-align:center;">Những chia sẻ chân thực từ những người đàn ông đã hành động và thành công.</p>
+    <div class="container-wide">
+      <div style="text-align:center;margin-bottom:48px;">
+        <span style="color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;display:block;margin-bottom:8px;">ĐÁNH GIÁ TỪ HỌC VIÊN</span>
+        <h2 class="section-title" style="text-align:center;margin-bottom:12px;">Phản Hồi Từ Học Viên Thực Tế</h2>
+        <p class="section-sub" style="text-align:center;margin-top:10px;">Những chia sẻ chân thực từ những người đàn ông đã hành động và thành công.</p>
+      </div>
 
-      <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:28px;">
-        <div style="background:#fff;padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
-          <div style="color:var(--accent-bright);margin-bottom:8px;">⭐⭐⭐⭐⭐</div>
-          <p style="font-size:14px;color:var(--text-main);font-style:italic;line-height:1.6;">"Trước đây mình tự tập Kegel theo mạng toàn bị đau đùi, hóa ra tập sai cơ. Nhờ Kegel Khởi Đầu chỉ rõ Bài kiểm tra gương, mình tập đúng ngay ngày thứ 2. Hiện tại đã tự tin kiểm soát kéo dài thêm được 4 phút rất hài lòng."</p>
-          <p style="font-size:12px;color:var(--text-light);margin-top:8px;font-weight:700;">— Anh Tuấn (34 tuổi, Hà Nội)</p>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div>
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Trước đây mình tự tập Kegel theo mạng toàn bị đau đùi, hóa ra tập sai cơ. Nhờ Kegel Khởi Đầu chỉ rõ Bài kiểm tra gương, mình tập đúng ngay ngày thứ 2. Hiện tại đã tự tin kiểm soát kéo dài thêm được 4 phút rất hài lòng."</p>
+          </div>
+          <p class="testimonial-author">— Anh Tuấn (34 tuổi, Hà Nội)</p>
         </div>
-        <div style="background:#fff;padding:24px;border-radius:12px;box-shadow:var(--shadow-sm);">
-          <div style="color:var(--accent-bright);margin-bottom:8px;">⭐⭐⭐⭐⭐</div>
-          <p style="font-size:14px;color:var(--text-main);font-style:italic;line-height:1.6;">"Khóa học rất tinh gọn, 10 phút tập sáng sớm trước khi đi làm. Ban đầu cũng hoài nghi vì giá rẻ, nhưng tập đúng cơ PC thấy khác hẳn. Cảm nhận rõ rệt lực phanh chủ động của mình."</p>
-          <p style="font-size:12px;color:var(--text-light);margin-top:8px;font-weight:700;">— Anh Khánh (29 tuổi, TP. HCM)</p>
+        <div class="testimonial-card">
+          <div>
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Khóa học rất tinh gọn, 10 phút tập sáng sớm trước khi đi làm. Ban đầu cũng hoài nghi vì giá rẻ, nhưng tập đúng cơ PC thấy khác hẳn. Cảm nhận rõ rệt lực phanh chủ động của mình."</p>
+          </div>
+          <p class="testimonial-author">— Anh Khánh (29 tuổi, TP. HCM)</p>
+        </div>
+        <div class="testimonial-card">
+          <div>
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Từng nghĩ xuất tinh sớm là do nhạy cảm bẩm sinh, định mua thuốc xịt tê nhưng sợ hại quy đầu. May mắn biết đến khóa học này. Tập đến ngày thứ 4 bắt đầu nhận diện rõ cơ PC. Luyện xong 7 ngày đã cải thiện đáng kể sự kiểm soát."</p>
+          </div>
+          <p class="testimonial-author">— Anh Minh (38 tuổi, Đà Nẵng)</p>
+        </div>
+        <div class="testimonial-card">
+          <div>
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Giáo trình rất thực chiến và bảo mật. Thích nhất là nhóm Telegram kín giải đáp mọi câu hỏi thầm kín của anh em rất văn minh, khoa học. Đã kéo dài thêm được 3-5 phút thâm nhập và tự tin hơn hẳn."</p>
+          </div>
+          <p class="testimonial-author">— Anh Hoàng (32 tuổi, Hải Phòng)</p>
+        </div>
+        <div class="testimonial-card">
+          <div>
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Tôi đã tập Kegel nhiều tháng trên mạng nhưng không kết quả, đến mức chán nản. Nhờ bài kiểm tra định vị cơ PC của khóa học này, tôi mới nhận ra mình đã co nhầm cơ mông bấy lâu nay. Sau 7 ngày tập đúng cơ PC, lực phanh đã tự chủ hơn nhiều."</p>
+          </div>
+          <p class="testimonial-author">— Anh Lâm (42 tuổi, Cần Thơ)</p>
+        </div>
+        <div class="testimonial-card">
+          <div>
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Trước đây xuất tinh sớm làm tôi stress vô cùng, mất hết tự tin. Tìm hiểu kĩ mới thấy khoá học này khoa học, không thuốc men gì nên mua thử. Quá hài lòng với kết quả sau 7 ngày tập luyện bài bản."</p>
+          </div>
+          <p class="testimonial-author">— Anh Quốc (35 tuổi, Bình Dương)</p>
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:32px;">
-        <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px;">
+      <div style="text-align:center;margin-top:56px;">
+        <p style="font-size:15px;color:var(--text-muted);margin-bottom:24px;">
           Quyết định hôm nay của anh sẽ định hình hạnh phúc gia đình trong suốt năm tới.
         </p>
-        <a href="#" class="price-cta" onclick="openPaymentModal();return false;" style="max-width:420px;margin:0 auto;font-size:18px;padding:18px 36px;">
+        <a href="#" class="price-cta" onclick="openPaymentModal();return false;" style="max-width:440px;margin:0 auto;font-size:18px;padding:18px 36px;">
           Quyết Định Hôm Nay — Thay Đổi Cả Năm →
         </a>
       </div>
