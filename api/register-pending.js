@@ -30,6 +30,7 @@ export default async function handler(req, res) {
 
     let userId;
     const existing = users.find(u => u.email?.toLowerCase() === email.toLowerCase());
+    const isNewUser = !existing;
 
     if (existing) {
       userId = existing.id;
@@ -66,11 +67,11 @@ export default async function handler(req, res) {
       
       // Check if they already have an active enrollment so we don't overwrite it
       const { data: currentEnroll } = await admin
-        .from('course_enrollments')
-        .select('status')
-        .eq('user_id', userId)
-        .eq('course_id', course_id)
-        .maybeSingle();
+         .from('course_enrollments')
+         .select('status')
+         .eq('user_id', userId)
+         .eq('course_id', course_id)
+         .maybeSingle();
 
       if (!currentEnroll || currentEnroll.status !== 'active') {
         const { error: enrollErr } = await admin.from('course_enrollments').upsert({
@@ -84,9 +85,11 @@ export default async function handler(req, res) {
       }
     }
 
-    // Send immediate welcome email with Telegram community invite
-    const userName = profileData.name || name || '';
-    await sendConfirmation({ type: 'register', email, name: userName });
+    // Send immediate welcome email with Telegram community invite only if it's a new user
+    if (isNewUser) {
+      const userName = profileData.name || name || '';
+      await sendConfirmation({ type: 'register', email, name: userName });
+    }
 
     return res.status(200).json({ success: true, userId });
   } catch (err) {

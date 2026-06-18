@@ -1241,6 +1241,32 @@
     let kegelPollInterval = null;
 
     function openPaymentModal() {
+      // Check if logged in
+      const sessionRaw = localStorage.getItem('thuthach21ngay_user_session');
+      let session = null;
+      if (sessionRaw) {
+        try { session = JSON.parse(sessionRaw); } catch(_) {}
+      }
+
+      if (!session || !session.email) {
+        alert('Anh cần đăng ký hoặc đăng nhập tài khoản trước khi đăng ký khóa học.');
+        if (window.openRegisterModal) {
+          window.openRegisterModal();
+        }
+        return;
+      }
+
+      // Pre-fill user details in checkout form
+      document.getElementById('kegel-name').value = session.name || '';
+      document.getElementById('kegel-phone').value = session.phone || '';
+      
+      const emailInput = document.getElementById('kegel-email');
+      emailInput.value = session.email;
+      emailInput.readOnly = true;
+      emailInput.style.background = '#e9ecef';
+      emailInput.style.cursor = 'not-allowed';
+      emailInput.style.opacity = '0.75';
+
       document.getElementById('modal-step-form').style.display = '';
       document.getElementById('modal-step-qr').style.display = 'none';
       document.getElementById('modal-step-success').style.display = 'none';

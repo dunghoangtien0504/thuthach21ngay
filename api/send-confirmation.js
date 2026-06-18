@@ -130,6 +130,11 @@ Nhóm hỗ trợ Kegel — anh hỏi là có người trả lời trong ngày:</
   }),
 };
 
+function capitalizeSubject(subject) {
+  if (!subject || typeof subject !== 'string') return subject;
+  return subject.replace(/^([^a-zA-Zà-ỹÀ-Ỹ]*)([a-zA-Zà-ỹÀ-Ỹ])/, (match, prefix, char) => prefix + char.toUpperCase());
+}
+
 /**
  * Send an immediate confirmation email.
  * @param {Object} opts
@@ -150,9 +155,10 @@ export async function sendConfirmation({ type, email, name }) {
   }
 
   const { subject, html } = tpl(name);
+  const capitalizedSubject = capitalizeSubject(subject);
 
   try {
-    const { error } = await resend.emails.send({ from: FROM, to: [email], subject, html });
+    const { error } = await resend.emails.send({ from: FROM, to: [email], subject: capitalizedSubject, html });
     if (error) throw new Error(error.message);
     console.log(`[send-confirmation] Sent type=${type} to ${email}`);
   } catch (err) {

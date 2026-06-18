@@ -377,6 +377,12 @@ function closeModal() {
   if (!modal) return;
   modal.classList.remove('open');
   document.body.style.overflow = '';
+
+  // Reload page if logged in on landing pages to refresh state
+  const session = localStorage.getItem('thuthach21ngay_user_session');
+  if (session && (window.location.pathname.includes('index') || window.location.pathname === '/' || window.location.pathname.includes('kegel-khoi-dau'))) {
+    window.location.reload();
+  }
 }
 
 // ── Validation ─────────────────────────────────────────────────────────────
@@ -627,9 +633,13 @@ function init() {
         }
         return;
       }
-      toast('Đăng nhập thành công! Đang chuyển vào khóa học...', 'success');
+      toast('Đăng nhập thành công!', 'success');
       closeModal();
-      window.location.href = '/my-courses.html';
+      if (!(window.location.pathname.includes('index') || window.location.pathname === '/' || window.location.pathname.includes('kegel-khoi-dau'))) {
+        setTimeout(() => {
+          window.location.href = '/my-courses.html';
+        }, 1000);
+      }
       return;
     }
 
@@ -642,9 +652,13 @@ function init() {
       localStorage.setItem('thuthach21ngay_user_session', JSON.stringify({
         email: found.email, name: found.name, phone: found.phone || ''
       }));
-      toast('Đăng nhập thành công! Đang chuyển vào khóa học...', 'success');
+      toast('Đăng nhập thành công!', 'success');
       closeModal();
-      window.location.href = '/my-courses.html';
+      if (!(window.location.pathname.includes('index') || window.location.pathname === '/' || window.location.pathname.includes('kegel-khoi-dau'))) {
+        setTimeout(() => {
+          window.location.href = '/my-courses.html';
+        }, 1000);
+      }
     } else {
       showLoginError('Email hoặc mật khẩu không chính xác.');
     }

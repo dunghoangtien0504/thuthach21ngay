@@ -4,6 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import { EMAIL_SEQUENCES } from './_email-sequences.js';
 
+function capitalizeSubject(subject) {
+  if (!subject || typeof subject !== 'string') return subject;
+  return subject.replace(/^([^a-zA-Zà-ỹÀ-Ỹ]*)([a-zA-Zà-ỹÀ-Ỹ])/, (match, prefix, char) => prefix + char.toUpperCase());
+}
+
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -56,7 +61,7 @@ async function handleScheduleEmails(req, res) {
       name,
       sequence: segment,
       email_number: index + 1,
-      subject: emailData.subject,
+      subject: capitalizeSubject(emailData.subject),
       html_content: emailData.body,
       scheduled_for: sendDate.toISOString().split('T')[0],
       sent: false

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -2669,6 +2669,72 @@
     const qrBox = document.getElementById('qr-box');
     const qrImg = document.getElementById('qr-img');
     const qrInfoCode = document.getElementById('qr-info-code');
+
+    // Auth checking for checkout
+    function checkCheckoutAuth() {
+      const sessionRaw = localStorage.getItem('thuthach21ngay_user_session');
+      let session = null;
+      if (sessionRaw) {
+        try { session = JSON.parse(sessionRaw); } catch(_) {}
+      }
+
+      const formSide = document.querySelector('.checkout-form-side');
+      if (!formSide) return;
+
+      // Check if prompt already exists
+      let prompt = document.getElementById('checkout-auth-prompt');
+
+      if (session && session.email) {
+        // Logged in: show form, hide prompt if any
+        if (prompt) prompt.style.display = 'none';
+        orderForm.style.display = 'block';
+
+        // Pre-fill fields
+        document.getElementById('order-name').value = session.name || '';
+        document.getElementById('order-phone').value = session.phone || '';
+        
+        const emailInput = document.getElementById('order-email');
+        emailInput.value = session.email;
+        emailInput.readOnly = true;
+        emailInput.style.background = '#e9ecef';
+        emailInput.style.cursor = 'not-allowed';
+        emailInput.style.opacity = '0.75';
+
+        // Update button text
+        const submitBtn = orderForm.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.innerHTML = '<i class="fa-solid fa-qrcode"></i> TẠO MÃ THANH TOÁN QR';
+        }
+      } else {
+        // Not logged in: hide form, show prompt
+        orderForm.style.display = 'none';
+        if (!prompt) {
+          prompt = document.createElement('div');
+          prompt.id = 'checkout-auth-prompt';
+          prompt.style.cssText = 'text-align: center; padding: 40px 20px; border: 1.5px dashed rgba(13, 43, 26, 0.15); border-radius: 20px; background: #FBF9F4; margin-top: 20px; box-shadow: 0 4px 12px rgba(13,43,26,0.03);';
+          prompt.innerHTML = `
+            <div style="font-size: 44px; color: #B8860B; margin-bottom: 16px; filter: drop-shadow(0 4px 6px rgba(184,134,11,0.15));"><i class="fa-solid fa-user-lock"></i></div>
+            <h4 style="font-family: var(--font-heading); font-size: 19px; font-weight: 700; color: #0D2B1A; margin-bottom: 10px;">Yêu Cầu Đăng Ký Tài Khoản</h4>
+            <p style="font-size: 13.5px; color: #4A5850; line-height: 1.6; margin-bottom: 28px; max-width: 320px; margin-left: auto; margin-right: auto;">
+              Anh cần đăng ký hoặc đăng nhập tài khoản trước để hệ thống tự động lưu trữ lộ trình học và gửi tài liệu sau khi thanh toán.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px; max-width: 280px; margin: 0 auto;">
+              <button class="btn btn-primary" onclick="window.openRegisterModal(); return false;" style="justify-content: center; width: 100%; padding: 14px; border-radius: 30px; font-weight: 700;">
+                <i class="fa-solid fa-user-plus"></i> Đăng Ký Tài Khoản Miễn Phí
+              </button>
+              <button class="btn btn-secondary" onclick="window.openLoginModal(); return false;" style="justify-content: center; width: 100%; padding: 12px; background: none; border: 1.5px solid #0D2B1A; color: #0D2B1A; border-radius: 30px; font-weight: 700; cursor: pointer;">
+                <i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập
+              </button>
+            </div>
+          `;
+          formSide.appendChild(prompt);
+        } else {
+          prompt.style.display = 'block';
+        }
+      }
+    }
+
+    checkCheckoutAuth();
 
     let paymentPollInterval = null;
 
