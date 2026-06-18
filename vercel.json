@@ -5,12 +5,17 @@
     { "source": "/api/admin-users", "destination": "/api/admin?action=users" },
     { "source": "/api/admin-transactions", "destination": "/api/admin?action=transactions" },
     { "source": "/api/admin-activate-user", "destination": "/api/admin?action=activate" },
-    { "source": "/api/admin-delete-user", "destination": "/api/admin?action=delete" }
+    { "source": "/api/admin-delete-user", "destination": "/api/admin?action=delete" },
+    { "source": "/api/brevo-add-contact", "destination": "/api/brevo" },
+    { "source": "/api/brevo-stats", "destination": "/api/brevo" },
+    { "source": "/api/schedule-email-sequence", "destination": "/api/emails" },
+    { "source": "/api/process-email-queue", "destination": "/api/emails" }
   ],
   "crons": [
     {
-      "path": "/api/process-email-queue",
+      "path": "/api/emails",
       "schedule": "0 1 * * *"
     }
   ]
 }
+

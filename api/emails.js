@@ -1,25 +1,89 @@
-/**
- * GET /api/process-email-queue
- * Called daily by Vercel Cron (0 1 * * * = 8 AM Vietnam time / UTC+7).
- * Fetches all email_queue rows scheduled for today or earlier that haven't been sent,
- * injects open/click tracking, sends via Resend, marks as sent.
- * Errors are stored in email_queue.error_message and logged to email_events.
- */
+// api/emails.js - Merged Email sequence & queue processor API handler
 
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
+import { EMAIL_SEQUENCES } from './_email-sequences.js';
 
 const supabase = createClient(
   process.env.VITE_SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    return handleScheduleEmails(req, res);
+  } else if (req.method === 'GET') {
+    return handleProcessEmailQueue(req, res);
+  }
+
+  return res.status(405).json({ error: 'Method Not Allowed' });
+}
+
+// ─── POST: Schedule Emails (Previously schedule-email-sequence.js) ─────────
+async function handleScheduleEmails(req, res) {
+  const { email, name = '', segment } = req.body || {};
+
+  if (!email || !segment) {
+    return res.status(400).json({ error: 'email and segment are required' });
+  }
+
+  const sequence = EMAIL_SEQUENCES[segment];
+  if (!sequence) {
+    return res.status(400).json({ error: `Unknown segment: ${segment}` });
+  }
+
+  // Check if this email+segment is already scheduled to avoid duplicates
+  const { data: existing } = await supabase
+    .from('email_queue')
+    .select('id')
+    .eq('email', email)
+    .eq('sequence', segment)
+    .limit(1);
+
+  if (existing && existing.length > 0) {
+    return res.status(200).json({ message: 'Already scheduled', skipped: true });
+  }
+
+  // Build all queue rows
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const rows = sequence.map((emailData, index) => {
+    const sendDate = new Date(today);
+    sendDate.setDate(sendDate.getDate() + emailData.day);
+    return {
+      email,
+      name,
+      sequence: segment,
+      email_number: index + 1,
+      subject: emailData.subject,
+      html_content: emailData.body,
+      scheduled_for: sendDate.toISOString().split('T')[0],
+      sent: false
+    };
+  });
+
+  const { error } = await supabase.from('email_queue').insert(rows);
+
+  if (error) {
+    console.error('Supabase insert error:', error);
+    return res.status(500).json({ error: 'Failed to schedule emails' });
+  }
+
+  return res.status(200).json({
+    message: 'Scheduled',
+    count: rows.length,
+    segment,
+    email
+  });
+}
+
+// ─── GET: Process Email Queue (Previously process-email-queue.js) ───────────
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM      = 'FORMEN <no-reply@thuthach21ngay.org>';
 const SITE_URL  = (process.env.VITE_SITE_URL || 'https://www.thuthach21ngay.org').replace(/\/$/, '');
 const BATCH_SIZE = 50;
 
-// ─── Inject open-pixel + wrap every <a href> through click tracker ─────────
 function injectTracking(html, { id, email, sequence, emailNumber }) {
   const params = `id=${id}&email=${encodeURIComponent(email)}&seq=${encodeURIComponent(sequence || '')}&num=${emailNumber || ''}`;
 
@@ -39,7 +103,6 @@ function injectTracking(html, { id, email, sequence, emailNumber }) {
   return tracked.replace(/<\/body>/i, `${pixel}</body>`);
 }
 
-// ─── Record error event to email_events ────────────────────────────────────
 async function recordError({ queueId, email, sequence, emailNumber, errorMsg }) {
   try {
     await supabase.from('email_events').insert({
@@ -55,11 +118,7 @@ async function recordError({ queueId, email, sequence, emailNumber, errorMsg }) 
   }
 }
 
-export default async function handler(req, res) {
-  if (req.method !== 'GET' && req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+async function handleProcessEmailQueue(req, res) {
   const authHeader = req.headers['authorization'];
   if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });
