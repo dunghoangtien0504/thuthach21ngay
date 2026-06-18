@@ -1,4 +1,4 @@
-# Email Luồng 2 — Kegel Buyer Onboarding (Emails 1-5)
+﻿# Email Luồng 2 — Kegel Buyer Onboarding (Emails 1-5)
 **Thương hiệu:** FORMEN  
 **Đối tượng:** Vừa mua Kegel Khởi Đầu 199k  
 **Mục tiêu:** Onboarding → giúp học xong → upsell MM21 686k  
@@ -39,7 +39,7 @@ Giờ là phần quan trọng: bắt đầu đúng cách.
 —
 FORMEN
 
-P.S. Nếu cần hỗ trợ, nhắn Telegram: @matma21_support
+P.S. Nếu cần hỗ trợ, nhắn Telegram: @kenthoang
 
 ---
 

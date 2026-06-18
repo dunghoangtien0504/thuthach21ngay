@@ -1,4 +1,4 @@
-# LỜI ĐỀ NGHỊ KHÔNG THỂ TỪ CHỐI (GODFATHER OFFER V2.1) — FORMEN SYSTEM
+﻿# LỜI ĐỀ NGHỊ KHÔNG THỂ TỪ CHỐI (GODFATHER OFFER V2.1) — FORMEN SYSTEM
 *Được thiết kế dựa trên công thức Godfather Strategy & Value Equation của Sabri Suby và Alex Hormozi*
 
 ## 1. Tên Sản Phẩm M-A-G-I-C
@@ -62,7 +62,7 @@ Phương pháp dựa trên nền tảng y học hành vi hiện đại:
 ## 6. Chính Sách Bảo Đảm Rủi Ro Tuyệt Đối (Risk Reversal)
 **🏆 Cam Kết Hoàn Tiền Trải Nghiệm 3 Ngày Đầu Tiên (Hài Lòng 100%)**
 Chúng tôi bảo đảm rủi ro tuyệt đối cho bạn. Ngay sau khi đăng ký, bạn có 3 ngày học thử và trải nghiệm toàn bộ giáo trình và tài liệu rèn luyện. Nếu trong vòng 3 ngày đầu tiên, bạn cảm thấy phương pháp rèn luyện tự nhiên này không phù hợp với mình, hoặc không thấy hiệu quả ban đầu như mong đợi:
-➔ *Hãy gửi tin nhắn yêu cầu hoàn tiền cho chúng tôi qua Telegram `@matma21_support`. Chúng tôi sẽ hoàn trả 100% số tiền 686.868đ ngay lập tức mà không hỏi thêm bất kỳ câu nào.*
+➔ *Hãy gửi tin nhắn yêu cầu hoàn tiền cho chúng tôi qua Telegram `@kenthoang`. Chúng tôi sẽ hoàn trả 100% số tiền 686.868đ ngay lập tức mà không hỏi thêm bất kỳ câu nào.*
 
 ## 7. Khan Hiếm & Thúc Giục (Scarcity & Urgency)
 *   **Khan hiếm (Scarcity):** Chỉ nhận tối đa **100 học viên** trong tháng này được quyền gửi Bảng tiến trình qua Telegram kín để đội ngũ FORMEN trực tiếp hỗ trợ sửa lỗi tập luyện miễn phí.

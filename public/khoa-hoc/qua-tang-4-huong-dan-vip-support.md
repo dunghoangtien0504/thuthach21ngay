@@ -1,4 +1,4 @@
-# 💳 QUÀ TẶNG 4: HƯỚNG DẪN KÍCH HOẠT THẺ VIP HỖ TRỢ KÍN 1:1 QUA TELEGRAM — 21 NGÀY
+﻿# 💳 QUÀ TẶNG 4: HƯỚNG DẪN KÍCH HOẠT THẺ VIP HỖ TRỢ KÍN 1:1 QUA TELEGRAM — 21 NGÀY
 ## (VIP Support Protocol & Technique Correction Guide — Trị Giá 1.000.000đ)
 
 ---
@@ -17,7 +17,7 @@ Chúng tôi tôn trọng tuyệt đối quyền riêng tư. Không cần tên th
 
 **1. Tải Telegram** (nếu chưa có) — iOS/Android/Desktop
 
-**2. Tìm kiếm tài khoản:** [@matma21_support](https://t.me/matma21_support)
+**2. Tìm kiếm tài khoản:** [@kenthoang](https://t.me/kenthoang)
 
 **3. Gửi tin nhắn kích hoạt theo cú pháp:**
 ```

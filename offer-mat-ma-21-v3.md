@@ -1,4 +1,4 @@
-# LỜI ĐỀ NGHỊ KHÔNG THỂ TỪ CHỐI (GODFATHER OFFER V3.0) — MẬT MÃ 21
+﻿# LỜI ĐỀ NGHỊ KHÔNG THỂ TỪ CHỐI (GODFATHER OFFER V3.0) — MẬT MÃ 21
 *Nâng cấp từ V2.1 — áp dụng đầy đủ 9 thành phần Godfather Strategy + Value Equation (Hormozi/Suby)*
 
 ---
@@ -118,7 +118,7 @@ Giá trị = (Kết quả mơ ước × Niềm tin đạt được) ÷ (Thời g
 ## 7. Cam Kết Bản Lĩnh Kép (Risk Reversal 2 Lớp)
 
 ### 🛡️ LỚP 1 — 7 Ngày Trải Nghiệm Vô Điều Kiện
-Bạn có trọn 7 ngày học thật, tập thật với toàn bộ hệ thống. Nếu cảm thấy không phù hợp — vì BẤT KỲ lý do gì, thậm chí "không thích giọng văn" — nhắn tin qua Telegram `@matma21_support`, chúng tôi hoàn 100% tiền trong 24 giờ, không hỏi một câu nào. *(Nâng cấp từ 3 ngày lên 7 ngày — đủ để bạn trải nghiệm Quick-Win 72 giờ và tuần nền tảng đầu tiên.)*
+Bạn có trọn 7 ngày học thật, tập thật với toàn bộ hệ thống. Nếu cảm thấy không phù hợp — vì BẤT KỲ lý do gì, thậm chí "không thích giọng văn" — nhắn tin qua Telegram `@kenthoang`, chúng tôi hoàn 100% tiền trong 24 giờ, không hỏi một câu nào. *(Nâng cấp từ 3 ngày lên 7 ngày — đủ để bạn trải nghiệm Quick-Win 72 giờ và tuần nền tảng đầu tiên.)*
 
 ### 🏆 LỚP 2 — Cam Kết Theo Kết Quả 21 Ngày
 Nếu bạn hoàn thành đủ 21 ngày luyện tập, ghi Nhật Ký Tracker đầy đủ (hệ thống tự lưu), mà **không thấy bất kỳ cải thiện nào** về khả năng kiểm soát — gửi tracker của bạn cho chúng tôi và nhận lại **100% tiền + giữ toàn bộ 6 quà tặng** như lời xin lỗi vì đã làm mất 21 ngày của bạn.

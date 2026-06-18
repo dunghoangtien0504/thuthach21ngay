@@ -1,4 +1,4 @@
-// admin.js - Portal Admin Dashboard Logic
+﻿// admin.js - Portal Admin Dashboard Logic
 
 const ADMIN_USER = "admin";
 // Admin password is NOT embedded in the client bundle. The operator types it at
@@ -66,7 +66,7 @@ let _studentFilterSource = '';
 let customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_config')) || {
   siteTitle: import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh",
   price: import.meta.env.VITE_PRICE || "686.868đ",
-  telegramUsername: import.meta.env.VITE_TELEGRAM_USERNAME || "matma21_support",
+  telegramUsername: import.meta.env.VITE_TELEGRAM_USERNAME || "kenthoang",
   supportEmail: import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn"
 };
 

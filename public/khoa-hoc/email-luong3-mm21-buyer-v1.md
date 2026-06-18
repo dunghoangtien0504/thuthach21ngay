@@ -1,4 +1,4 @@
-# Email Luồng 3 — MM21 Buyer → Supplement + Feedback + Affiliate
+﻿# Email Luồng 3 — MM21 Buyer → Supplement + Feedback + Affiliate
 **Thương hiệu:** FORMEN  
 **Đối tượng:** Vừa mua Mật Mã 21 (686.868đ)  
 **Mục tiêu:** Onboarding → hoàn thành khóa → upsell supplement → xin feedback → giới thiệu affiliate  
@@ -35,7 +35,7 @@ Tôi sẽ check-in với anh trong 3 ngày.
 —
 FORMEN
 
-P.S. Hỗ trợ 1-1: Telegram @matma21_support — tôi đọc mọi tin nhắn.
+P.S. Hỗ trợ 1-1: Telegram @kenthoang — tôi đọc mọi tin nhắn.
 
 ---
 
@@ -145,7 +145,7 @@ Tôi muốn hỏi anh thật lòng:
 
 Anh không cần phải chia sẻ công khai. Nhưng nếu anh muốn kể cho tôi nghe — dù chỉ 1-2 câu — tôi sẽ rất trân trọng.
 
-Reply email này hoặc nhắn Telegram @matma21_support.
+Reply email này hoặc nhắn Telegram @kenthoang.
 
 Feedback của anh giúp tôi cải thiện chương trình cho những người tiếp theo.
 
@@ -217,7 +217,7 @@ Không cần bán công khai. Không cần đăng quảng cáo. Chỉ cần link
 
 Anh có muốn biết thêm không?
 
-Reply email này hoặc nhắn Telegram @matma21_support — tôi sẽ gửi thông tin chi tiết và link affiliate của anh.
+Reply email này hoặc nhắn Telegram @kenthoang — tôi sẽ gửi thông tin chi tiết và link affiliate của anh.
 
 —
 FORMEN
@@ -243,7 +243,7 @@ Bí quyết của anh ấy rất đơn giản: "Tôi chỉ share với người 
 
 **Nếu anh muốn bắt đầu:**
 
-1. Nhắn Telegram @matma21_support: "Tôi muốn đăng ký affiliate"
+1. Nhắn Telegram @kenthoang: "Tôi muốn đăng ký affiliate"
 2. Nhận link cá nhân trong 24 giờ
 3. Share link — nhận hoa hồng tự động khi có người mua
 

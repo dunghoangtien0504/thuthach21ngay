@@ -1,4 +1,4 @@
-# 🛡️ Mật Mã 21 - Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh
+﻿# 🛡️ Mật Mã 21 - Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh
 
 Ứng dụng web học tập trực tuyến (LMS Portal) được thiết kế hiện đại, tinh tế với phong cách tối giản và bảo mật cao dành cho khóa học **Lộ Trình 21 Ngày Tái Sinh Bản Lĩnh Phái Mạnh Tại Nhà**.
 
@@ -30,7 +30,7 @@
    ```bash
    VITE_SITE_TITLE="Mật Mã 21 - Tái Sinh Bản Lĩnh Phái Mạnh"
    VITE_PRICE="686.868đ"
-   VITE_TELEGRAM_USERNAME="matma21_support"
+   VITE_TELEGRAM_USERNAME="kenthoang"
    VITE_SUPPORT_EMAIL="support@themencode.vn"
    ```
 

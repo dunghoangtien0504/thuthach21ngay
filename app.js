@@ -1,4 +1,4 @@
-// app.js - Course Learning Portal Client Logic
+﻿// app.js - Course Learning Portal Client Logic
 import { supabase, isSupabaseEnabled } from './supabase.js';
 import { getReferralCode } from './referral.js';
 
@@ -7,7 +7,7 @@ const customConfig = JSON.parse(localStorage.getItem('thuthach21ngay_custom_conf
 
 const SITE_TITLE = customConfig.siteTitle || import.meta.env.VITE_SITE_TITLE || "Mật Mã 21 - Tái Sinh Bản Lĩnh";
 const PRICE = customConfig.price || import.meta.env.VITE_PRICE || "686.868đ";
-const TELEGRAM_USERNAME = customConfig.telegramUsername || import.meta.env.VITE_TELEGRAM_USERNAME || "matma21_support";
+const TELEGRAM_USERNAME = customConfig.telegramUsername || import.meta.env.VITE_TELEGRAM_USERNAME || "kenthoang";
 const SUPPORT_EMAIL = customConfig.supportEmail || import.meta.env.VITE_SUPPORT_EMAIL || "support@themencode.vn";
 
 // Non-blocking toast notification (replaces alert())
