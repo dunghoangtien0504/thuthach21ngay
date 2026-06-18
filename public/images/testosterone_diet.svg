@@ -132,7 +132,7 @@
   <text x="500" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#FFF" text-anchor="middle">Zn + Mg chuẩn y tế</text>
   <text x="500" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#BEE3F8" text-anchor="middle">Liên hệ tư vấn &amp; đặt hàng</text>
   <rect x="455" y="440" width="90" height="14" rx="4" fill="#FFF" opacity="0.2"/>
-  <text x="500" y="451" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" fill="#FFF" text-anchor="middle">Telegram @matma21_support</text>
+  <text x="500" y="451" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" fill="#FFF" text-anchor="middle">Telegram @kenthoang</text>
 
   <!-- Warning bar at bottom -->
   <rect x="18" y="472" width="602" height="26" rx="8" fill="#C0390E" opacity="0.07"/>
