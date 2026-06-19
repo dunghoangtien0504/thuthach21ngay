@@ -661,6 +661,10 @@ function setupTabSwitcher() {
       tab.classList.add('active');
       document.getElementById(`tab-${targetTab}`).classList.add('active');
       
+      if (targetTab === 'affiliate') {
+        loadPortalAffiliateTab();
+      }
+      
       window.scrollTo(0, 0);
     });
   });
@@ -2219,4 +2223,168 @@ if (freeBtnNext) {
     const idx = allLessons.findIndex(l => l.lesson_id === currentFreeLessonId);
     if (idx < allLessons.length - 1) selectFreeLesson(allLessons[idx + 1].lesson_id);
   });
+}
+
+// ==========================================================================
+// STUDENT PORTAL AFFILIATE TAB LOGIC
+// ==========================================================================
+function makeAffiliateCode(name, email) {
+  const diacritics = new RegExp('[\u0300-\u036f]', 'g');
+  const base = (name || email.split('@')[0]).toLowerCase()
+    .normalize('NFD').replace(diacritics, '')
+    .replace(/[^a-z0-9]+/g, '').slice(0, 10) || 'hocvien';
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) hash = (hash * 31 + email.charCodeAt(i)) >>> 0;
+  return `${base}${hash.toString(36).slice(0, 4)}`;
+}
+
+async function loadPortalAffiliateTab() {
+  if (!userSession) return;
+  
+  const elLink = document.getElementById('portal-ref-link');
+  const elClicks = document.getElementById('portal-stat-clicks');
+  const elSignups = document.getElementById('portal-stat-signups');
+  const elBuyers = document.getElementById('portal-stat-buyers');
+  const elCommission = document.getElementById('portal-stat-commission');
+  const elList = document.getElementById('portal-ref-list');
+  const btnCopy = document.getElementById('btn-copy-portal-ref');
+  
+  if (!elLink) return;
+  
+  elList.innerHTML = '<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;"><i class="fa-solid fa-spinner fa-spin"></i> Đang tải dữ liệu...</td></tr>';
+  
+  // 1. Get or create affiliate code
+  let code = '';
+  if (isSupabaseEnabled && userSession.supabase_id) {
+    try {
+      // Check if already registered
+      const { data: aff } = await supabase
+        .from('affiliates')
+        .select('code')
+        .eq('user_id', userSession.supabase_id)
+        .maybeSingle();
+      
+      if (aff && aff.code) {
+        code = aff.code;
+      } else {
+        // Generate and insert
+        code = makeAffiliateCode(userSession.name, userSession.email);
+        await supabase.from('affiliates').insert({ user_id: userSession.supabase_id, code });
+      }
+    } catch (e) {
+      console.error('Error fetching/creating affiliate:', e);
+      code = makeAffiliateCode(userSession.name, userSession.email);
+    }
+  } else {
+    // Local fallback
+    code = makeAffiliateCode(userSession.name, userSession.email);
+  }
+  
+  const refLink = `${window.location.origin}/?ref=${code}`;
+  elLink.value = refLink;
+  
+  // Set up copy button
+  if (btnCopy) {
+    btnCopy.onclick = () => {
+      navigator.clipboard.writeText(refLink).then(() => {
+        const orig = btnCopy.innerHTML;
+        btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> Đã chép';
+        setTimeout(() => { btnCopy.innerHTML = orig; }, 1800);
+      });
+    };
+  }
+  
+  // Set up share buttons
+  const shareText = encodeURIComponent('Mình vừa tìm được lộ trình rèn luyện bản lĩnh phái mạnh rất hay — Mật Mã 21. Xem thử nhé:');
+  const fbShare = document.getElementById('portal-share-fb');
+  const teleShare = document.getElementById('portal-share-tele');
+  const zaloShare = document.getElementById('portal-share-zalo');
+  if (fbShare) fbShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(refLink)}`;
+  if (teleShare) teleShare.href = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${shareText}`;
+  if (zaloShare) zaloShare.href = `https://zalo.me/share?u=${encodeURIComponent(refLink)}`;
+  
+  // 2. Fetch stats
+  if (isSupabaseEnabled) {
+    try {
+      // Fetch clicks count
+      const { count: clicksCount } = await supabase
+        .from('referral_clicks')
+        .select('*', { count: 'exact', head: true })
+        .eq('ref_code', code);
+        
+      if (elClicks) elClicks.textContent = clicksCount ?? 0;
+      
+      // Fetch referred profiles
+      const { data: profiles } = await supabase
+        .from('user_profiles')
+        .select('id, name, created_at')
+        .eq('referred_by', code);
+        
+      const referredList = profiles || [];
+      if (elSignups) elSignups.textContent = referredList.length;
+      
+      let buyersCount = 0;
+      let totalCommission = 0;
+      const renderRows = [];
+      
+      if (referredList.length > 0) {
+        // Fetch enrollments of referred profiles
+        const profileIds = referredList.map(p => p.id);
+        const { data: enrollments } = await supabase
+          .from('course_enrollments')
+          .select('user_id, course_id, status')
+          .in('user_id', profileIds);
+          
+        const enrols = enrollments || [];
+        const userEnrolsMap = {};
+        enrols.forEach(e => {
+          if (e.status === 'active') {
+            if (!userEnrolsMap[e.user_id]) userEnrolsMap[e.user_id] = [];
+            userEnrolsMap[e.user_id].push(e);
+          }
+        });
+        
+        referredList.forEach(p => {
+          const userEnrols = userEnrolsMap[p.id] || [];
+          const bought = userEnrols.length > 0;
+          if (bought) buyersCount++;
+          
+          let comm = 0;
+          userEnrols.forEach(e => {
+            if (e.course_id === 'mat-ma-21') comm += 137374;
+            else if (e.course_id === 'kegel') comm += 39800;
+          });
+          totalCommission += comm;
+          
+          renderRows.push(`
+            <tr>
+              <td>${p.name || 'Học viên'}</td>
+              <td><span class="badge ${bought ? 'success' : 'warning'}" style="display: inline-block; padding: 4px 10px; border-radius: 50px; font-size: 11px; font-weight: bold; background: ${bought ? 'rgba(61,107,74,0.1)' : 'rgba(184,134,11,0.1)'}; color: ${bought ? 'var(--secondary)' : 'var(--warning)'};">${bought ? 'Đã mua khóa' : 'Đang theo dõi'}</span></td>
+            </tr>
+          `);
+        });
+      }
+      
+      if (elBuyers) elBuyers.textContent = buyersCount;
+      if (elCommission) elCommission.textContent = totalCommission.toLocaleString('vi-VN') + 'đ';
+      
+      if (renderRows.length > 0) {
+        elList.innerHTML = renderRows.join('');
+      } else {
+        elList.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;">Chưa có ai đăng ký qua link của bạn. Hãy chia sẻ link ngay!</td></tr>`;
+      }
+      
+    } catch (e) {
+      console.error('Error fetching affiliate stats:', e);
+      if (elClicks) elClicks.textContent = '—';
+      elList.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;">Lỗi tải dữ liệu. Vui lòng thử lại sau.</td></tr>`;
+    }
+  } else {
+    // Local fallback
+    if (elClicks) elClicks.textContent = '—';
+    if (elSignups) elSignups.textContent = '0';
+    if (elBuyers) elBuyers.textContent = '0';
+    if (elCommission) elCommission.textContent = '0đ';
+    elList.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;">Chế độ cục bộ — Số liệu không khả dụng.</td></tr>`;
+  }
 }

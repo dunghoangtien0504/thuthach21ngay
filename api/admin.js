@@ -305,5 +305,129 @@ export default async function handler(req, res) {
     }
   }
 
+  if (action === 'affiliates') {
+    if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+    if (!dbConfigured) {
+      return res.status(503).json({ error: 'Supabase not configured', affiliates: [] });
+    }
+
+    try {
+      const adminClient = createClient(supabaseUrl, serviceRoleKey, {
+        auth: { autoRefreshToken: false, persistSession: false },
+      });
+
+      // 1. Fetch all auth users
+      const { data: { users }, error: authErr } = await adminClient.auth.admin.listUsers({ perPage: 1000 });
+      if (authErr) throw authErr;
+
+      // 2. Fetch all affiliates
+      const { data: affiliates, error: affErr } = await adminClient.from('affiliates').select('*');
+      if (affErr) throw affErr;
+
+      // 3. Fetch all user profiles
+      const { data: profiles, error: profErr } = await adminClient.from('user_profiles').select('id, name, referred_by, created_at');
+      if (profErr) throw profErr;
+
+      // 4. Fetch all course enrollments
+      const { data: enrollments, error: enrolErr } = await adminClient.from('course_enrollments').select('user_id, course_id, status');
+      if (enrolErr) throw enrolErr;
+
+      // 5. Fetch referral clicks counts
+      const { data: clicks, error: clickErr } = await adminClient.from('referral_clicks').select('ref_code');
+      if (clickErr) throw clickErr;
+
+      // Map users for lookup
+      const userMap = Object.fromEntries(users.map(u => [u.id, u]));
+      const profileMap = Object.fromEntries(profiles.map(p => [p.id, p]));
+
+      // Group clicks by ref_code
+      const clicksCountMap = {};
+      clicks.forEach(c => {
+        if (c.ref_code) {
+          const code = c.ref_code.toLowerCase().trim();
+          clicksCountMap[code] = (clicksCountMap[code] || 0) + 1;
+        }
+      });
+
+      // Group referred profiles by referred_by code
+      const referredProfilesMap = {};
+      profiles.forEach(p => {
+        if (p.referred_by) {
+          const code = p.referred_by.toLowerCase().trim();
+          if (!referredProfilesMap[code]) referredProfilesMap[code] = [];
+          referredProfilesMap[code].push(p);
+        }
+      });
+
+      // Map enrollments by user_id
+      const userEnrollmentsMap = {};
+      enrollments.forEach(e => {
+        if (e.status === 'active') {
+          if (!userEnrollmentsMap[e.user_id]) userEnrollmentsMap[e.user_id] = [];
+          userEnrollmentsMap[e.user_id].push(e);
+        }
+      });
+
+      const result = affiliates.map(aff => {
+        const affUser = userMap[aff.user_id] || {};
+        const affProfile = profileMap[aff.user_id] || {};
+        const codeClean = aff.code.toLowerCase().trim();
+
+        const clicksCount = clicksCountMap[codeClean] || 0;
+        const referred = referredProfilesMap[codeClean] || [];
+        const signupsCount = referred.length;
+
+        let buyersCount = 0;
+        let totalCommission = 0;
+        const referredDetails = [];
+
+        referred.forEach(refProf => {
+          const refUser = userMap[refProf.id] || {};
+          const enrolls = userEnrollmentsMap[refProf.id] || [];
+          const bought = enrolls.length > 0;
+          if (bought) buyersCount++;
+
+          // Calculate commission
+          let studentCommission = 0;
+          enrolls.forEach(e => {
+            if (e.course_id === 'mat-ma-21') {
+              studentCommission += 137374;
+            } else if (e.course_id === 'kegel') {
+              studentCommission += 39800;
+            }
+          });
+          totalCommission += studentCommission;
+
+          referredDetails.push({
+            name: refProf.name || refUser.user_metadata?.name || 'Học viên',
+            email: refUser.email || '-',
+            registeredAt: refUser.created_at || refProf.created_at,
+            bought,
+            courses: enrolls.map(e => e.course_id),
+            commission: studentCommission
+          });
+        });
+
+        return {
+          user_id: aff.user_id,
+          email: affUser.email || '-',
+          name: affProfile.name || affUser.user_metadata?.name || 'Affiliate',
+          code: aff.code,
+          created_at: aff.created_at,
+          clicks: clicksCount,
+          signups: signupsCount,
+          buyers: buyersCount,
+          commission: totalCommission,
+          referrals: referredDetails
+        };
+      });
+
+      return res.status(200).json({ affiliates: result });
+    } catch (err) {
+      console.error('[admin-affiliates] Error:', err);
+      return res.status(500).json({ error: err.message || 'Internal server error', affiliates: [] });
+    }
+  }
+
   return res.status(400).json({ error: 'Invalid action' });
 }

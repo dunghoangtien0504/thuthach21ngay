@@ -1,4 +1,4 @@
-﻿// admin.js - Portal Admin Dashboard Logic
+// admin.js - Portal Admin Dashboard Logic
 
 const ADMIN_USER = "admin";
 // Admin password is NOT embedded in the client bundle. The operator types it at
@@ -316,6 +316,7 @@ function setupMenuSwitcher() {
       if (targetId === 'admin-tab-payments') renderPaymentsTab();
       if (targetId === 'admin-tab-email-list') renderEmailMarketingTab();
       if (targetId === 'admin-tab-enrollments') renderEnrollmentsTab();
+      if (targetId === 'admin-tab-affiliates') renderAffiliatesTab();
       if (targetId === 'admin-tab-analytics') {
         setTimeout(() => {
           renderAnalyticsCharts();
@@ -1845,9 +1846,14 @@ async function setupAnalyticsAndAI() {
   // 1. Fetch server analytics first to sync
   await fetchServerAnalytics();
 
-  // 2. Run simulation data generator if empty
-  initializeAnalyticsSimulation();
-  
+  // 2. Clear old fake data from local storage once
+  if (!localStorage.getItem('mm21_analytics_cleared_fake_v1')) {
+    localStorage.removeItem('mm21_analytics_visits');
+    localStorage.removeItem('mm21_analytics_clicks');
+    localStorage.removeItem('mm21_analytics_active_users');
+    localStorage.setItem('mm21_analytics_cleared_fake_v1', 'true');
+  }
+
   // 3. Setup Heatmap listeners
   const pageSelect = document.getElementById('heatmap-page-select');
   if (pageSelect) {
@@ -1870,93 +1876,7 @@ async function setupAnalyticsAndAI() {
 }
 
 function initializeAnalyticsSimulation() {
-  // Seed visits
-  let visits = JSON.parse(localStorage.getItem('mm21_analytics_visits') || '[]');
-  if (visits.length === 0) {
-    const now = Date.now();
-    const devices = ['Desktop', 'Mobile', 'Tablet'];
-    const deviceWeights = [0.35, 0.60, 0.05];
-    const paths = ['/', '/portal.html', '/khoa-hoc.html', '/kien-thuc.html'];
-    const pathWeights = [0.45, 0.25, 0.20, 0.10];
-    
-    const names = ['Kent Hoàng', 'Lâm Vũ', 'Đăng Khoa', 'Hoàng Minh', 'Quốc Bảo', 'Tuấn Hải', 'Văn Nam', 'Khách viếng thăm'];
-    
-    // Generate last 30 days of data
-    for (let i = 30; i >= 0; i--) {
-      const dateOffset = i * 24 * 60 * 60 * 1000;
-      const targetDate = now - dateOffset;
-      
-      // Random count: 180 - 450 per day
-      const dailyCount = Math.floor(180 + Math.random() * 270);
-      for (let j = 0; j < dailyCount; j++) {
-        const randDev = getWeightedRandom(devices, deviceWeights);
-        const randPath = getWeightedRandom(paths, pathWeights);
-        const randName = Math.random() > 0.85 ? names[Math.floor(Math.random() * names.length)] : 'Khách viếng thăm';
-        
-        visits.push({
-          sessionId: 'sess_' + Math.random().toString(36).substring(2, 11),
-          path: randPath,
-          timestamp: targetDate - Math.floor(Math.random() * 24 * 60 * 60 * 1000),
-          device: randDev,
-          name: randName
-        });
-      }
-    }
-    localStorage.setItem('mm21_analytics_visits', JSON.stringify(visits));
-  }
-  
-  // Seed clicks
-  let clicks = JSON.parse(localStorage.getItem('mm21_analytics_clicks') || '[]');
-  if (clicks.length === 0) {
-    // Add fake clicks
-    const clickPoints = [
-      // index.html clicks
-      { path: '/', x: 50.2, y: 12.5, target: 'a', text: 'Nhận tư vấn ngay' },
-      { path: '/', x: 50.5, y: 28.1, target: 'button', text: 'Đăng ký Lộ trình' },
-      { path: '/', x: 50.1, y: 28.4, target: 'button', text: 'Đăng ký Lộ trình' },
-      { path: '/', x: 65.2, y: 2.3, target: 'a', text: 'Khóa Học' },
-      { path: '/', x: 72.1, y: 2.3, target: 'a', text: 'Kiến Thức' },
-      { path: '/', x: 80.4, y: 2.3, target: 'a', text: 'Học Viên Đăng Nhập' },
-      { path: '/', x: 50.0, y: 81.6, target: 'div', text: 'Kegel PC là gì?' },
-      { path: '/', x: 49.8, y: 84.2, target: 'div', text: 'Bài tập hít thở 4-2-6?' },
-      { path: '/', x: 74.5, y: 72.3, target: 'button', text: 'Xác nhận Đăng ký' },
-      
-      // portal.html clicks
-      { path: '/portal.html', x: 22.4, y: 15.6, target: 'div', text: 'Ngày 1: Nhận diện cơ sàn chậu' },
-      { path: '/portal.html', x: 22.6, y: 22.4, target: 'div', text: 'Ngày 2: Bài tập Kegel phản xạ' },
-      { path: '/portal.html', x: 81.3, y: 45.2, target: 'button', text: 'Hoàn thành bài học' },
-      { path: '/portal.html', x: 12.5, y: 84.1, target: 'button', text: 'Nhập nhật ký tập' },
-      
-      // khoa-hoc.html clicks
-      { path: '/khoa-hoc.html', x: 50.1, y: 64.5, target: 'button', text: 'Đặt mua khóa học' },
-      { path: '/khoa-hoc.html', x: 50.3, y: 64.8, target: 'button', text: 'Đặt mua khóa học' },
-      
-      // kien-thuc.html clicks
-      { path: '/kien-thuc.html', x: 32.4, y: 40.2, target: 'a', text: 'Kegel Nam Giới & 3 Sai Lầm' },
-      { path: '/kien-thuc.html', x: 32.6, y: 56.4, target: 'a', text: 'Kỹ thuật thở phế vị 4-2-6' },
-    ];
-    
-    // Duplicate points to simulate density
-    clickPoints.forEach(pt => {
-      const density = Math.floor(10 + Math.random() * 40); // 10-50 clicks per node
-      for (let i = 0; i < density; i++) {
-        clicks.push({
-          path: pt.path,
-          x: pt.x + (Math.random() - 0.5) * 1.5, // add slight dispersion
-          y: pt.y + (Math.random() - 0.5) * 1.5,
-          target: pt.target,
-          id: '',
-          class: '',
-          text: pt.text,
-          timestamp: Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)
-        });
-      }
-    });
-    localStorage.setItem('mm21_analytics_clicks', JSON.stringify(clicks));
-  }
-  
-  // Seed simulated online sessions
-  updateSimulatedOnlineUsers();
+  // Disabled as per user request to use only real data
 }
 
 function getWeightedRandom(items, weights) {
@@ -1969,43 +1889,7 @@ function getWeightedRandom(items, weights) {
 }
 
 function updateSimulatedOnlineUsers() {
-  try {
-    const activeUsers = JSON.parse(localStorage.getItem('mm21_analytics_active_users') || '{}');
-    const now = Date.now();
-    
-    // Clean up first
-    for (const id in activeUsers) {
-      if (now - activeUsers[id].lastActive > 60 * 1000) {
-        delete activeUsers[id];
-      }
-    }
-    
-    // Generate 3 to 6 active simulated users
-    const paths = ['/', '/portal.html', '/khoa-hoc.html', '/kien-thuc.html'];
-    const devices = ['Mobile', 'Desktop', 'Tablet'];
-    const names = ['Lâm Vũ', 'Đăng Khoa', 'Hoàng Minh', 'Quốc Bảo', 'Tuấn Hải', 'Khách viếng thăm', 'Khách viếng thăm'];
-    
-    const count = 3 + Math.floor(Math.random() * 4);
-    for (let i = 0; i < count; i++) {
-      const dummyId = 'sess_sim_' + i;
-      if (!activeUsers[dummyId] || Math.random() > 0.4) {
-        activeUsers[dummyId] = {
-          path: paths[Math.floor(Math.random() * paths.length)],
-          name: names[Math.floor(Math.random() * names.length)],
-          lastActive: now - Math.floor(Math.random() * 30 * 1000), // active in last 30s
-          device: devices[Math.floor(Math.random() * devices.length)]
-        };
-      } else {
-        // Keep active
-        activeUsers[dummyId].lastActive = now - Math.floor(Math.random() * 10 * 1000);
-      }
-    }
-    
-    // Save
-    localStorage.setItem('mm21_analytics_active_users', JSON.stringify(activeUsers));
-  } catch (e) {
-    console.error(e);
-  }
+  // Disabled as per user request to use only real data
 }
 
 async function renderAnalyticsCharts() {
@@ -2142,10 +2026,18 @@ async function renderAnalyticsCharts() {
 
 async function updateRealtimeStats() {
   await fetchServerAnalytics();
-  updateSimulatedOnlineUsers(); // Refresh simulator
   
   const activeUsers = JSON.parse(localStorage.getItem('mm21_analytics_active_users') || '{}');
   const now = Date.now();
+  
+  // Clean up inactive sessions (older than 1 minute)
+  for (const id in activeUsers) {
+    if (now - activeUsers[id].lastActive > 60 * 1000) {
+      delete activeUsers[id];
+    }
+  }
+  localStorage.setItem('mm21_analytics_active_users', JSON.stringify(activeUsers));
+  
   const listBody = document.getElementById('realtime-users-list');
   if (!listBody) return;
   
@@ -2591,4 +2483,135 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+});
+
+// ==========================================================================
+// ADMIN AFFILIATE PARTNERS MANAGEMENT
+// ==========================================================================
+let allAffiliatesData = [];
+
+async function renderAffiliatesTab() {
+  const partnersCount = document.getElementById('aff-total-partners');
+  const clicksCount = document.getElementById('aff-total-clicks');
+  const conversionsCount = document.getElementById('aff-total-conversions');
+  const commissionsCount = document.getElementById('aff-total-commissions');
+  const listBody = document.getElementById('admin-affiliates-list');
+  
+  if (!listBody) return;
+  
+  listBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px;"><i class="fa-solid fa-spinner fa-spin"></i> Đang tải danh sách đối tác...</td></tr>';
+  
+  try {
+    const res = await fetch('/api/admin?action=affiliates', {
+      headers: { 'Authorization': `Bearer ${_adminKey}` }
+    });
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const data = await res.json();
+    
+    allAffiliatesData = data.affiliates || [];
+    
+    // Calculate total stats
+    const totalPartners = allAffiliatesData.length;
+    let totalClicks = 0;
+    let totalConversions = 0;
+    let totalCommissions = 0;
+    
+    allAffiliatesData.forEach(aff => {
+      totalClicks += aff.clicks;
+      totalConversions += aff.buyers;
+      totalCommissions += aff.commission;
+    });
+    
+    if (partnersCount) partnersCount.textContent = totalPartners;
+    if (clicksCount) clicksCount.textContent = totalClicks;
+    if (conversionsCount) conversionsCount.textContent = totalConversions;
+    if (commissionsCount) commissionsCount.textContent = totalCommissions.toLocaleString('vi-VN') + 'đ';
+    
+    displayAffiliatesTable(allAffiliatesData);
+    
+  } catch (err) {
+    console.error('Error loading affiliates:', err);
+    listBody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-danger); padding:24px;">Lỗi tải dữ liệu. Hãy kiểm tra kết nối mạng hoặc thử lại.</td></tr>';
+  }
+}
+
+function displayAffiliatesTable(affiliates) {
+  const listBody = document.getElementById('admin-affiliates-list');
+  if (!listBody) return;
+  
+  if (affiliates.length === 0) {
+    listBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--text-muted);">Không tìm thấy đối tác affiliate nào.</td></tr>';
+    return;
+  }
+  
+  listBody.innerHTML = affiliates.map(aff => `
+    <tr>
+      <td>
+        <div style="font-weight:600;color:var(--text-main);">${escHtml(aff.name)}</div>
+        <div style="font-size:11px;color:var(--text-muted);">${escHtml(aff.email)}</div>
+      </td>
+      <td><code style="background:var(--bg-app);padding:3px 8px;border-radius:4px;font-family:monospace;font-weight:bold;color:var(--primary);">${escHtml(aff.code)}</code></td>
+      <td><strong>${aff.clicks}</strong></td>
+      <td>${aff.signups}</td>
+      <td><span class="status-badge ${aff.buyers > 0 ? 'active' : 'pending'}">${aff.buyers} người mua</span></td>
+      <td style="font-weight:bold;color:var(--warning);">${aff.commission.toLocaleString('vi-VN')}đ</td>
+      <td>
+        <button class="btn btn-secondary btn-sm" onclick="showAffiliateDetails('${aff.user_id}')"><i class="fa-solid fa-eye"></i> Chi tiết</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+window.showAffiliateDetails = function(userId) {
+  const aff = allAffiliatesData.find(a => a.user_id === userId);
+  if (!aff) return;
+  
+  const modal = document.getElementById('affiliate-detail-modal');
+  const modalTitle = document.getElementById('aff-modal-title');
+  const modalSubtitle = document.getElementById('aff-modal-subtitle');
+  const modalList = document.getElementById('aff-modal-list');
+  
+  if (!modal || !modalList) return;
+  
+  modalTitle.textContent = `Chi tiết giới thiệu của: ${aff.name}`;
+  modalSubtitle.textContent = `Email: ${aff.email} | Mã Code: ${aff.code}`;
+  
+  if (!aff.referrals || aff.referrals.length === 0) {
+    modalList.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:24px; color:var(--text-muted);">Đối tác này chưa giới thiệu được ai đăng ký.</td></tr>';
+  } else {
+    modalList.innerHTML = aff.referrals.map(ref => `
+      <tr>
+        <td><strong>${escHtml(ref.name)}</strong></td>
+        <td>${escHtml(ref.email)}</td>
+        <td>${ref.registeredAt ? new Date(ref.registeredAt).toLocaleString('vi-VN') : '—'}</td>
+        <td><span class="status-badge ${ref.bought ? 'active' : 'pending'}">${ref.bought ? 'Đã mua khóa học' : 'Đang theo dõi'}</span></td>
+        <td style="font-weight:bold;color:var(--warning);">${ref.commission.toLocaleString('vi-VN')}đ</td>
+      </tr>
+    `).join('');
+  }
+  
+  modal.style.display = 'flex';
+};
+
+// Hook up search filter
+document.getElementById('affiliate-search')?.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase().trim();
+  if (!query) {
+    displayAffiliatesTable(allAffiliatesData);
+    return;
+  }
+  
+  const filtered = allAffiliatesData.filter(aff => 
+    aff.name.toLowerCase().includes(query) ||
+    aff.email.toLowerCase().includes(query) ||
+    aff.code.toLowerCase().includes(query)
+  );
+  
+  displayAffiliatesTable(filtered);
+});
+
+// Close modal
+document.getElementById('btn-close-aff-modal')?.addEventListener('click', () => {
+  const modal = document.getElementById('affiliate-detail-modal');
+  if (modal) modal.style.display = 'none';
 });

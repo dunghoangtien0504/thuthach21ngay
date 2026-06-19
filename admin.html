@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -148,6 +148,9 @@
         </li>
         <li class="admin-menu-item" data-target="admin-tab-students">
           <button><i class="fa-solid fa-user-graduate"></i> Học viên</button>
+        </li>
+        <li class="admin-menu-item" data-target="admin-tab-affiliates">
+          <button><i class="fa-solid fa-users-viewfinder"></i> Tiếp thị liên kết (Affiliate)</button>
         </li>
         <li class="admin-menu-item" data-target="admin-tab-keys">
           <button><i class="fa-solid fa-key"></i> Quản lý mã khoá</button>
@@ -980,6 +983,88 @@
               </div>
               <button type="submit" class="btn btn-success" style="margin-top: 10px;">Lưu cấu hình</button>
             </form>
+        </section>
+
+        <!-- ================= TAB: AFFILIATES ================= -->
+        <section class="admin-tab-section" id="admin-tab-affiliates" style="display: none;">
+          <div class="admin-section-header">
+            <h3>Quản lý Chương trình Tiếp thị Liên kết (Affiliate)</h3>
+          </div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px">
+            Xem danh sách các đối tác affiliate, số lượt click, số đăng ký và hoa hồng tích lũy của từng người.
+          </p>
+
+          <div class="admin-stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+            <div class="admin-stat-card">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng đối tác</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-users-viewfinder"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="aff-total-partners">0</p><span class="admin-stat-desc">Người giới thiệu</span></div>
+            </div>
+            <div class="admin-stat-card">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng lượt Click</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-mouse-pointer"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="aff-total-clicks">0</p><span class="admin-stat-desc">Qua link ref</span></div>
+            </div>
+            <div class="admin-stat-card">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng chuyển đổi</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-user-check"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="aff-total-conversions">0</p><span class="admin-stat-desc">Đăng ký & mua khóa</span></div>
+            </div>
+            <div class="admin-stat-card orange">
+              <div class="admin-stat-top"><span class="admin-stat-subtitle">Tổng hoa hồng</span><div class="admin-stat-icon-wrapper"><i class="fa-solid fa-sack-dollar"></i></div></div>
+              <div class="admin-stat-main"><p class="admin-stat-value" id="aff-total-commissions">0đ</p><span class="admin-stat-desc">Tích lũy toàn hệ thống</span></div>
+            </div>
+          </div>
+
+          <div class="student-toolbar">
+            <input type="search" class="student-search" id="affiliate-search" placeholder="🔍 Tìm tên, email, code...">
+          </div>
+
+          <div class="tracker-history-card">
+            <div class="table-container">
+              <table class="history-table" id="admin-affiliates-table">
+                <thead>
+                  <tr>
+                    <th>Đối tác (Affiliate)</th>
+                    <th>Mã code</th>
+                    <th>Click</th>
+                    <th>Đăng ký</th>
+                    <th>Đã mua</th>
+                    <th>Tổng hoa hồng</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-affiliates-list">
+                  <!-- Rendered dynamically -->
+                  <tr>
+                    <td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Đang tải danh sách đối tác...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Referrals Detail Modal (Hidden by default) -->
+          <div class="admin-modal" id="affiliate-detail-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+            <div class="dashboard-card" style="width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; background: var(--bg-card); padding: 24px; border-radius: 16px; position: relative;">
+              <button id="btn-close-aff-modal" style="position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+              <h3 style="margin-bottom: 8px;" id="aff-modal-title">Chi tiết giới thiệu của đối tác</h3>
+              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;" id="aff-modal-subtitle">Đối tác: email@example.com - Code: ABC</p>
+              
+              <div class="table-container">
+                <table class="history-table">
+                  <thead>
+                    <tr>
+                      <th>Học viên</th>
+                      <th>Email</th>
+                      <th>Ngày đăng ký</th>
+                      <th>Trạng thái</th>
+                      <th>Hoa hồng</th>
+                    </tr>
+                  </thead>
+                  <tbody id="aff-modal-list">
+                    <!-- Rendered dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </section>
         
