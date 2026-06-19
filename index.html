@@ -1670,6 +1670,237 @@
       }
     }
 
+    /* ================= NEW V3.0 STYLES ================= */
+    /* Timeline steps style */
+    .timeline-milestones {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .timeline-step {
+      background: var(--bg-card);
+      border: 1px solid rgba(13, 43, 26, 0.08);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .timeline-step:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(184, 134, 11, 0.3);
+    }
+    .timeline-step-badge {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--accent);
+      background: rgba(184, 134, 11, 0.08);
+      padding: 3px 12px;
+      border-radius: var(--radius-pill);
+      display: inline-block;
+    }
+    .timeline-step-text {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .timeline-step-text strong {
+      color: var(--text-main);
+    }
+    @media (max-width: 768px) {
+      .timeline-milestones {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .timeline-step {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+      }
+      .timeline-step-badge {
+        min-width: 80px;
+        text-align: center;
+      }
+    }
+
+    /* Comparison Table style */
+    .comparison-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 40px 0;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(13, 43, 26, 0.08);
+      background: var(--bg-card);
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14.5px;
+      min-width: 800px;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(13, 43, 26, 0.06);
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    .comparison-table th {
+      font-family: var(--font-heading);
+      background-color: var(--primary);
+      color: #FFF;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .comparison-table td:first-child {
+      font-weight: 700;
+      color: var(--text-main);
+      width: 25%;
+    }
+    .comparison-table .highlight-col {
+      background-color: rgba(184, 134, 11, 0.03);
+      border-left: 2px solid var(--accent);
+      border-right: 2px solid var(--accent);
+    }
+    .comparison-table th.highlight-col {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+      color: var(--primary);
+      border-left: 2px solid var(--accent);
+      border-right: 2px solid var(--accent);
+      font-weight: 800;
+      text-align: center;
+    }
+    .comparison-table td.highlight-col {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .comparison-table .text-danger {
+      color: var(--danger);
+      font-weight: 600;
+    }
+    .comparison-table .text-success {
+      color: #2E7D32;
+      font-weight: 600;
+    }
+    .comparison-table i {
+      margin-right: 6px;
+    }
+
+    /* Double Guarantee Box */
+    .double-guarantee-box {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 40px auto;
+      max-width: 900px;
+      box-shadow: var(--shadow-lg), var(--shadow-gold);
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .double-guarantee-box::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 120px;
+      height: 120px;
+      background: rgba(184, 134, 11, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .double-guarantee-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .double-guarantee-title {
+      font-family: var(--font-heading);
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    .double-guarantee-title i {
+      color: var(--accent);
+    }
+    .double-guarantee-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .guarantee-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .guarantee-column {
+      padding: 20px;
+      background: rgba(13, 43, 26, 0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(13, 43, 26, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .guarantee-column h4 {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .guarantee-column p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    @media (max-width: 768px) {
+      .guarantee-columns {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .double-guarantee-box {
+        padding: 20px 16px;
+      }
+    }
+
+    /* Glow Button Animation */
+    .btn-glow {
+      position: relative;
+      overflow: hidden;
+      animation: buttonGlow 2s infinite alternate;
+    }
+    @keyframes buttonGlow {
+      0% {
+        box-shadow: 0 4px 6px -1px rgba(192, 57, 14, 0.3), 0 0 0 0px rgba(192, 57, 14, 0.2);
+      }
+      50% {
+        box-shadow: 0 10px 20px rgba(192, 57, 14, 0.6), 0 0 0 8px rgba(192, 57, 14, 0);
+        transform: translateY(-2px);
+      }
+      100% {
+        box-shadow: 0 4px 6px -1px rgba(192, 57, 14, 0.3), 0 0 0 0px rgba(192, 57, 14, 0.2);
+      }
+    }
+
     /* Respect users who prefer reduced motion */
     @media (prefers-reduced-motion: reduce) {
       *,
@@ -1726,19 +1957,19 @@
           Bẻ gãy <strong>"vòng lặp lo âu dự báo"</strong> (càng sợ xuất sớm thì thần kinh giao cảm càng kích hoạt xuất sớm). Làm chủ thời gian <strong>15 - 20 phút tự nhiên</strong> chỉ với 15-20 phút luyện tập kín đáo mỗi ngày. Phương pháp y khoa hành vi <strong>không dùng thuốc bôi, không chai xịt gây tê</strong>, giữ trọn vẹn xúc cảm thăng hoa cho cả hai.
         </p>
 
-        <!-- 3 Result Milestones (Quick-Win timeline) -->
-        <div class="hero-milestones" style="display:flex; gap:0; margin-bottom:32px; border:1px solid rgba(13,43,26,0.1); border-radius: var(--radius-md); overflow:hidden; background: var(--bg-card); box-shadow: var(--shadow-sm);">
-          <div style="flex:1; padding:14px 12px; text-align:center; border-right:1px solid rgba(13,43,26,0.08);">
-            <div style="font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent);">72 giờ</div>
-            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.4;">Lần đầu cảm thấy <br><strong style="color:var(--text-main);">"mình có phanh"</strong></div>
+        <!-- 3 Result Milestones (Quick-Win timeline V3.0) -->
+        <div class="timeline-milestones">
+          <div class="timeline-step">
+            <span class="timeline-step-badge">72 Giờ Đầu</span>
+            <div class="timeline-step-text">Cảm nhận khác biệt, lần đầu tiên cảm thấy <strong>"mình có phanh"</strong>.</div>
           </div>
-          <div style="flex:1; padding:14px 12px; text-align:center; border-right:1px solid rgba(13,43,26,0.08);">
-            <div style="font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent);">Ngày 7</div>
-            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.4;">Nền tảng Kegel đúng + <br><strong style="color:var(--text-main);">chu kỳ Start-Stop đầu tiên</strong></div>
+          <div class="timeline-step">
+            <span class="timeline-step-badge">Ngày Thứ 7</span>
+            <div class="timeline-step-text">Nền tảng Kegel chuẩn xác, chu kỳ <strong>Start-Stop đầu tiên</strong>.</div>
           </div>
-          <div style="flex:1; padding:14px 12px; text-align:center;">
-            <div style="font-family:var(--font-heading); font-weight:700; font-size:17px; color:var(--accent);">Ngày 21</div>
-            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.4;">Phản xạ mới được <br><strong style="color:var(--text-main);">"cài đặt" ở não bộ</strong></div>
+          <div class="timeline-step">
+            <span class="timeline-step-badge">Ngày Thứ 21</span>
+            <div class="timeline-step-text">Phản xạ mới tự động <strong>cài đặt ở cấp não bộ</strong>.</div>
           </div>
         </div>
         
@@ -1761,14 +1992,14 @@
         </div>
         
         <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-          <a href="#offer-section" class="btn btn-accent btn-lg" style="animation: pulse 2s infinite;">
+          <a href="#offer-section" class="btn btn-accent btn-lg btn-glow">
             <i class="fa-solid fa-graduation-cap"></i> ĐĂNG KÝ NHẬN LỘ TRÌNH NGAY - 686.868đ
           </a>
-          <span style="font-size:14px; color:var(--text-muted); font-weight: 600;"><del style="color:var(--text-light)">5.000.000đ</del> (-86% ĐỢT NÀY)</span>
+          <span style="font-size:14px; color:var(--text-muted); font-weight: 600;"><del style="color:var(--text-light)">4.500.000đ</del> (-85% ĐỢT NÀY)</span>
         </div>
         <p style="font-size:13px; color:var(--text-muted); margin-top:14px; display:flex; align-items:center; gap:8px;">
           <i class="fa-solid fa-shield-halved" style="color:#2E7D32;"></i>
-          Được bảo vệ bởi <strong>Bảo Đảm Hoàn Tiền 3 Ngày</strong>: Không phù hợp vì bất kỳ lý do gì — nhắn Telegram, hoàn 100%, không hỏi.
+          Được bảo vệ bởi <strong>Cam Kết Bản Lĩnh Kép</strong>: Trải nghiệm 7 ngày vô điều kiện + Hoàn tiền 21 ngày theo kết quả.
         </p>
       </div>
       
@@ -1913,33 +2144,73 @@
     </div>
   </section>
 
-  <!-- ================= COMPARISON SECTION (Why other methods fail) ================= -->
+  <!-- ================= COMPARISON SECTION (Why other methods fail - V3.0) ================= -->
   <section class="comparison-sec">
     <div class="container">
-      <h2 class="section-title">Tại Sao Các Giải Pháp Khác <span>Lại Thất Bại?</span></h2>
-      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 50px auto; font-size: 16px;">
-        Nhiều nam giới đã thử đủ cách nhưng chỉ nhận lại sự thất vọng. Dưới đây là lý do tại sao các giải pháp thông thường chỉ giải quyết phần ngọn:
+      <h2 class="section-title">So Sánh <span>Các Giải Pháp</span> & Chi Phí Thay Thế</h2>
+      <p style="text-align: center; color: var(--text-muted); max-width: 700px; margin: 0 auto 30px auto; font-size: 16px;">
+        Nhiều nam giới đã tốn hàng triệu đồng cho các mẹo tạm thời nhưng chỉ nhận lại sự phụ thuộc hoặc mất sạch khoái cảm. Hãy xem bảng so sánh khoa học dưới đây:
       </p>
       
-      <div class="comparison-grid">
-        <div class="comparison-card normal" style="border: 1px solid rgba(192, 57, 14, 0.15);">
-          <h4 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> SỰ LỆ THUỘC VÀ TỔN HẠI SỨC KHỎE</h4>
-          <ul style="margin-top: 20px;">
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Tê liệt khoái cảm 80%:</strong> Các hóa chất trong chai xịt làm tê liệt đầu dây thần kinh quy đầu, khiến cuộc yêu vô cảm như khúc gỗ, bạn đời cũng bị giảm cảm giác theo.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Gây rối loạn cương dương lâu dài:</strong> Phụ thuộc chất gây tê làm suy giảm độ nhạy phản xạ tự nhiên của não bộ, lâu ngày dẫn tới khó cương hoặc xìu sớm.</span></li>
-            <li><i class="fa-solid fa-circle-xmark"></i> <span><strong>Hủy hoại tâm lý phái mạnh:</strong> Luôn nơm nớp lo sợ thuốc hết tác dụng giữa chừng, tạo gánh nặng áp lực cực kỳ lớn trước mỗi cuộc yêu.</span></li>
-          </ul>
-        </div>
-        
-        <div class="comparison-card active-card">
-          <div class="popular-badge">PHÁC ĐỒ Y SINH HỌC TỰ NHIÊN</div>
-          <h4 style="color: var(--primary);"><i class="fa-solid fa-award"></i> TỰ CHỦ HOÀN TOÀN & BỀN VỮNG TRỌN ĐỜI</h4>
-          <ul style="margin-top: 20px;">
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Huấn luyện phản xạ não bộ:</strong> Tái cấu trúc cơ chế kiểm soát của hệ thần kinh thực vật, phanh chậu tự động bằng kỹ thuật hành vi tự nhiên.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Giữ nguyên xúc giác thăng hoa 100%:</strong> Không hóa chất, không đơ liệt cảm giác. Bạn cảm nhận trọn vẹn sự sung sướng và thăng hoa cùng đối tác.</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span><strong>Khôi phục bản lĩnh vĩnh viễn:</strong> Sau 21 ngày thiết lập phản xạ mới, phong độ nằm hoàn toàn trong tầm kiểm soát của bạn mà không phụ thuộc vào thuốc.</span></li>
-          </ul>
-        </div>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Tiêu chí so sánh</th>
+              <th>Chai xịt tê / Gel bôi</th>
+              <th>Thuốc uống (SSRIs...)</th>
+              <th>Trị liệu nam khoa</th>
+              <th class="highlight-col">MẬT MÃ 21</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cơ chế tác động</strong></td>
+              <td class="text-danger">Tê liệt đầu dây thần kinh quy đầu tạm thời</td>
+              <td class="text-danger">Ức chế hệ thần kinh trung ương</td>
+              <td class="text-success">Vật lý trị liệu & can thiệp lâm sàng</td>
+              <td class="highlight-col text-success"><i class="fa-solid fa-circle-check"></i> Rèn luyện phản xạ Não bộ - Cơ sàn chậu tự nhiên</td>
+            </tr>
+            <tr>
+              <td><strong>Mức độ khoái cảm</strong></td>
+              <td class="text-danger">Mất 70 - 80% cảm giác (lâm trận đơ như khúc gỗ)</td>
+              <td>Giảm ham muốn, khó đạt cực khoái</td>
+              <td class="text-success">Giữ nguyên khoái cảm</td>
+              <td class="highlight-col text-success"><i class="fa-solid fa-circle-check"></i> Giữ trọn 100% cảm xúc chân thật, thăng hoa</td>
+            </tr>
+            <tr>
+              <td><strong>Tác dụng phụ</strong></td>
+              <td class="text-danger">Nguy cơ liệt dương, làm tê rát bạn đời</td>
+              <td class="text-danger">Mệt mỏi, buồn ngủ, tim đập nhanh, phụ thuộc</td>
+              <td>Hầu như không có</td>
+              <td class="highlight-col text-success"><i class="fa-solid fa-circle-check"></i> 100% tự nhiên, khỏe mạnh toàn diện hệ sinh dục</td>
+            </tr>
+            <tr>
+              <td><strong>Tính riêng tư</strong></td>
+              <td>Trung bình (phải chuẩn bị, xịt/bôi trước khi yêu)</td>
+              <td>Kín đáo (uống dạng thuốc tây)</td>
+              <td class="text-danger">Thấp (phải đến phòng khám, dễ gặp người quen)</td>
+              <td class="highlight-col text-success"><i class="fa-solid fa-circle-check"></i> Tuyệt đối ẩn danh, tự rèn luyện kín đáo tại nhà</td>
+            </tr>
+            <tr>
+              <td><strong>Độ bền kết quả</strong></td>
+              <td class="text-danger">Phụ thuộc vĩnh viễn, dừng dùng là hết tác dụng</td>
+              <td class="text-danger">Tạm thời, lờn thuốc sau vài tháng</td>
+              <td class="text-success">Lâu dài (nếu duy trì)</td>
+              <td class="highlight-col text-success"><i class="fa-solid fa-circle-check"></i> Phản xạ được cài đặt cố định, sở hữu trọn đời</td>
+            </tr>
+            <tr>
+              <td><strong>Ước tính chi phí</strong></td>
+              <td class="text-danger">300k - 500k/tháng<br><small>(Hàng chục triệu theo năm)</small></td>
+              <td class="text-danger">500k - 1.2M/tháng<br><small>(Uống liên tục có hại gan/thận)</small></td>
+              <td class="text-danger">3,000,000đ - 10,000,000đ<br><small>(Mỗi liệu trình điều trị)</small></td>
+              <td class="highlight-col text-success" style="font-size:16px;">
+                <strong>686.868đ</strong><br>
+                <span style="font-size:12px; color:var(--text-muted); font-weight:normal;">Thanh toán 1 lần duy nhất</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -2229,8 +2500,8 @@
               <i class="fa-solid fa-user-shield"></i>
             </div>
             <div class="value-item-info">
-              <h4>Hỗ Trợ Qua Nhóm Telegram Miễn Phí Trọn Đời <span class="value-price-badge free">Quà Tặng 4 - Trị giá 1.000.000đ</span></h4>
-              <p>Tham gia nhóm Telegram cộng đồng của FORMEN để được hướng dẫn luyện tập, đặt câu hỏi và nhận hỗ trợ từ đội ngũ chuyên môn — hoàn toàn miễn phí và không giới hạn thời gian.</p>
+              <h4>Thẻ VIP Hỗ Trợ 1:1 Qua Telegram Bảo Mật 21 Ngày <span class="value-price-badge free">Quà Tặng 4 - Trị giá 1.000.000đ</span></h4>
+              <p>Kết nối ẩn danh trực tiếp với đội ngũ chuyên môn qua Telegram để kiểm tra tracker hàng ngày và sửa lỗi tập sai cách (nín thở, gồng cơ bụng/đùi/mông). Đảm bảo tập đúng 100% — yếu tố quyết định sự thành bại.</p>
             </div>
           </div>
 
@@ -2262,7 +2533,7 @@
           <div class="pricing-stack">
             <div class="price-row">
               <span>Tổng giá trị thực tế:</span>
-              <span class="price-value-old">5.000.000đ</span>
+              <span class="price-value-old">4.500.000đ</span>
             </div>
             <div class="price-row" style="font-weight: 700;">
               <span>Gói Portal & 6 Quà tặng:</span>
@@ -2288,16 +2559,16 @@
           </a>
           
           <!-- Urgency Banner -->
-          <div style="background-color: rgba(192, 57, 14, 0.08); border: 1px dashed rgba(192, 57, 14, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; margin: 15px 0; font-size: 12.5px; color: var(--danger); font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <div style="background-color: rgba(192, 57, 14, 0.08); border: 1px dashed rgba(192, 57, 14, 0.3); border-radius: var(--radius-sm); padding: 12px 16px; margin: 15px 0; font-size: 12.5px; color: var(--danger); font-weight: 700; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; line-height: 1.45;">
             <i class="fa-solid fa-fire-flame-curved" style="animation: pulse 1s infinite;"></i>
-            <span>CHỈ CÒN 12 SUẤT NHẬN HỖ TRỢ 1:1 QUA TELEGRAM TRONG THÁNG NÀY</span>
+            <span>CHỈ CÒN 12 SUẤT HỖ TRỢ 1:1 QUA TELEGRAM TRONG THÁNG NÀY (ĐỦ 100 SẼ ĐÓNG ĐỂ ĐẢM BẢO CHẤT LƯỢNG)</span>
           </div>
 
           <div class="offer-guarantee-badge">
             <i class="fa-solid fa-shield-halved" style="color: #2E7D32; font-size: 32px;"></i>
             <div>
-              <strong>BẢO ĐẢM HOÀN TIỀN 3 NGÀY — RỦI RO BẰNG 0 CHO BẠN</strong><br>
-              Trọn 3 ngày trải nghiệm toàn bộ hệ thống. Không phù hợp vì bất kỳ lý do gì — nhắn Telegram `@kenthoang`, hoàn 100% trong 24 giờ, không hỏi một câu.
+              <strong>CAM KẾT BẢN LĨNH KÉP — AN TÂM TUYỆT ĐỐI</strong><br>
+              7 ngày trải nghiệm toàn bộ hệ thống vô điều kiện. Tập đủ 21 ngày không cải thiện → hoàn 100% học phí + giữ lại quà tặng.
             </div>
           </div>
         </div>
@@ -2310,6 +2581,24 @@
   <!-- ================= CHECKOUT / ORDER SECTION ================= -->
   <section class="checkout" id="order-section">
     <div class="container">
+      <!-- Double Guarantee Box V3.0 -->
+      <div class="double-guarantee-box">
+        <div class="double-guarantee-header">
+          <h3 class="double-guarantee-title"><i class="fa-solid fa-shield-halved"></i> Cam Kết Bản Lĩnh Kép (Bảo Hiểm 2 Lớp Cho Học Viên)</h3>
+          <p class="double-guarantee-subtitle">Chúng tôi loại bỏ 100% rủi ro tài chính của anh. Anh chỉ cần tập trung rèn luyện phong độ.</p>
+        </div>
+        <div class="guarantee-columns">
+          <div class="guarantee-column">
+            <h4><i class="fa-solid fa-hourglass-half"></i> LỚP 1: 7 Ngày Trải Nghiệm Vô Điều Kiện</h4>
+            <p>Anh có trọn vẹn 7 ngày để học thật, tập thật. Nếu anh thấy phương pháp không phù hợp vì bất kỳ lý do gì — kể cả những lý do cá nhân như "không thích giọng văn" — hãy nhắn tin Telegram <code>@kenthoang</code>. Chúng tôi sẽ hoàn lại 100% số tiền anh đã đóng trong vòng 24 giờ, không hỏi thêm một câu nào.</p>
+          </div>
+          <div class="guarantee-column">
+            <h4><i class="fa-solid fa-square-check"></i> LỚP 2: Cam Kết Theo Kết Quả 21 Ngày</h4>
+            <p>Nếu anh hoàn thành đủ lộ trình 21 ngày luyện tập, điền Nhật Ký Tracker đều đặn trong Portal mà <strong>không thấy bất kỳ sự cải thiện nào</strong> về thời gian lâm trận hay mức kiểm soát — hãy gửi tracker cho chúng tôi. Chúng tôi sẽ hoàn trả 100% học phí + tặng luôn trọn bộ 6 quà tặng như lời xin lỗi chân thành vì đã làm mất thời gian của anh.</p>
+          </div>
+        </div>
+      </div>
+
       <h2 class="section-title">Điền Thông Tin <span>Đăng Ký & Quét QR Nhận Kích Hoạt</span> VIP</h2>
       <div class="checkout-card">
         
@@ -2535,11 +2824,11 @@
 
         <div class="faq-item">
           <div class="faq-question">
-            <span>Chính sách hoàn tiền 3 ngày của Mật Mã 21 hoạt động thế nào?</span>
+            <span>Chính sách Cam Kết Bản Lĩnh Kép (Bảo hiểm 2 lớp) hoạt động thế nào?</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            <p>Anh được bảo vệ bởi <strong>Bảo Đảm Hoàn Tiền 3 Ngày Vô Điều Kiện:</strong> trọn 3 ngày đầu học thật, trải nghiệm toàn bộ hệ thống; nếu thấy không phù hợp vì bất kỳ lý do gì, nhắn Telegram <code>@kenthoang</code> để nhận lại 100% học phí trong 24 giờ — không cần giải thích, không hỏi thêm một câu.</p>
+            <p>Anh được bảo vệ 100% rủi ro: <strong>Lớp 1 (7 Ngày Vô Điều Kiện):</strong> anh được học và tập thử toàn bộ hệ thống trong 7 ngày đầu. Nếu cảm thấy không phù hợp vì bất kỳ lý do gì, nhắn Telegram <code>@kenthoang</code> để nhận lại 100% tiền trong 24 giờ mà không bị hỏi một câu nào. <strong>Lớp 2 (21 Ngày Theo Kết Quả):</strong> nếu hoàn thành đủ 21 ngày và điền tracker mà không cải thiện, anh sẽ được hoàn 100% tiền + giữ lại toàn bộ 6 quà tặng số.</p>
           </div>
         </div>
 
@@ -2578,7 +2867,7 @@
         <strong style="color:#fff;">Lựa chọn 1:</strong> Tiếp tục như 6 tháng qua. Tiếp tục ghìm bằng ý chí, tiếp tục chai xịt, tiếp tục tìm cớ đi ngủ trước. Và chấp nhận rằng khoảng lặng trong phòng ngủ sẽ dày thêm từng đêm.
       </p>
       <p style="margin-bottom: 16px; line-height: 1.75;">
-        <strong style="color:#fff;">Lựa chọn 2:</strong> Dành 21 ngày — mỗi ngày 15-20 phút kín đáo — để cài đặt lại phản xạ của chính cơ thể mình, theo đúng phác đồ mà y học hành vi thế giới đã kiểm chứng. Rủi ro của bạn bằng 0: <strong style="color: var(--accent-bright);">3 ngày hoàn tiền vô điều kiện — không hỏi thêm một câu.</strong>
+        <strong style="color:#fff;">Lựa chọn 2:</strong> Dành 21 ngày — mỗi ngày 15-20 phút kín đáo — để cài đặt lại phản xạ của chính cơ thể mình, theo đúng phác đồ mà y học hành vi thế giới đã kiểm chứng. Rủi ro của bạn bằng 0: <strong style="color: var(--accent-bright);">Được bảo vệ 100% bởi Cam Kết Bản Lĩnh Kép (7 Ngày Vô Điều Kiện + 21 Ngày Kết Quả).</strong>
       </p>
       <p style="margin-bottom: 32px; line-height: 1.75;">
         Thứ duy nhất bạn có thể mất khi bỏ qua trang này — không phải là 686.868đ. Mà là thêm một năm nữa của những cái thở dài im lặng.
