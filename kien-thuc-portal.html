@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -510,7 +510,7 @@
     <a href="/" class="kp-logo">
       <i class="fa-solid fa-shield-halved"></i> Mật Mã 21
     </a>
-    <span class="kp-badge"><i class="fa-solid fa-lock-open"></i> Miễn phí · Không cần đăng ký</span>
+    <span class="kp-badge"><i class="fa-solid fa-lock-open"></i> Miễn phí · Đã đăng nhập</span>
     <a href="/khoa-hoc.html" class="kp-home-link">
       <i class="fa-solid fa-arrow-left"></i> Khóa học
     </a>
@@ -596,6 +596,15 @@
 <script src="/chat-widget.js"></script>
 
 <script>
+  // Auth check - redirect if not logged in
+  (function checkAuth() {
+    const LS_SESSION = 'thuthach21ngay_user_session';
+    const session = JSON.parse(localStorage.getItem(LS_SESSION) || 'null');
+    if (!session || !session.email) {
+      window.location.replace('/khoa-hoc.html?action=register');
+    }
+  })();
+
   let courseData = [];
   let allLessons  = [];
   let currentId   = null;

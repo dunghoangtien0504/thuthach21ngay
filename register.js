@@ -682,6 +682,44 @@ function init() {
 
   window.openRegisterModal = openModal;
   window.openLoginModal = () => { openModal(); showLoginTab(); };
+
+  // Intercept free course portal links if not logged in
+  document.addEventListener('click', async e => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (href && (href.includes('kien-thuc-portal.html') || href === '/kien-thuc-portal')) {
+      // Check if logged in
+      let loggedIn = false;
+      if (isSupabaseEnabled) {
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session) loggedIn = true;
+        } catch (_) {}
+      }
+      if (!loggedIn) {
+        const raw = localStorage.getItem('thuthach21ngay_user_session');
+        if (raw) {
+          try { const s = JSON.parse(raw); loggedIn = !!s?.email; } catch (_) {}
+        }
+      }
+
+      if (!loggedIn) {
+        e.preventDefault();
+        openModal();
+        showSignupTab();
+      }
+    }
+  });
+
+  // Check action query param
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('action') === 'register') {
+    setTimeout(() => {
+      openModal();
+      showSignupTab();
+    }, 400);
+  }
 }
 
 if (document.readyState === 'loading') {
