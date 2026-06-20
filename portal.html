@@ -66,6 +66,9 @@
         <a href="/affiliate.html" class="btn-logout" title="Giới thiệu nhận 20% hoa hồng">
           <i class="fa-solid fa-sack-dollar"></i>
         </a>
+        <button class="btn-logout" id="btn-change-password" title="Đổi mật khẩu">
+          <i class="fa-solid fa-key"></i>
+        </button>
         <button class="btn-logout" id="btn-logout-action" title="Đăng xuất">
           <i class="fa-solid fa-right-from-bracket"></i>
         </button>
@@ -563,8 +566,26 @@
         <button type="submit" class="btn btn-primary btn-submit">
           Đăng Nhập <i class="fa-solid fa-right-to-bracket"></i>
         </button>
+        <p style="text-align:center;margin-top:12px;font-size:13px;">
+          <a href="#" id="link-forgot-password" style="color:var(--accent,#0D2B1A);text-decoration:underline;cursor:pointer;">Quên mật khẩu?</a>
+        </p>
       </form>
-      
+
+      <!-- Forgot Password Form -->
+      <form class="auth-form" id="forgot-form" style="display: none;">
+        <p style="font-size:13px;color:#555;margin-bottom:12px;">Nhập email đã đăng ký. Chúng tôi sẽ gửi mật khẩu mới vào hộp thư của anh.</p>
+        <div class="form-group">
+          <label for="forgot-email">Email</label>
+          <input type="email" id="forgot-email" placeholder="Nhập email của bạn..." required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit">
+          Gửi Mật Khẩu Mới <i class="fa-solid fa-paper-plane"></i>
+        </button>
+        <p style="text-align:center;margin-top:12px;font-size:13px;">
+          <a href="#" id="link-back-to-login" style="color:var(--accent,#0D2B1A);text-decoration:underline;cursor:pointer;">← Quay lại đăng nhập</a>
+        </p>
+      </form>
+
       <!-- Register Form -->
       <form class="auth-form" id="register-form" style="display: none;">
         <div class="form-group">
@@ -626,6 +647,31 @@
           <button type="button" class="btn btn-secondary" id="btn-close-log-modal" style="flex: 1; justify-content: center;">Hủy bỏ</button>
           <button type="submit" class="btn btn-primary" style="flex: 2; justify-content: center;">Lưu & Mở khóa <i class="fa-solid fa-unlock"></i></button>
         </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="change-password-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:#fff;border-radius:14px;max-width:400px;width:100%;padding:28px 24px;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h3 style="margin:0;font-size:18px;color:#0D2B1A;"><i class="fa-solid fa-key"></i> Đổi Mật Khẩu</h3>
+        <button id="close-change-password" style="background:none;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1;">&times;</button>
+      </div>
+      <p style="font-size:13px;color:#666;margin:0 0 16px;">Nhập mật khẩu mới cho tài khoản của anh (tối thiểu 6 ký tự).</p>
+      <form id="change-password-form">
+        <div class="form-group" style="margin-bottom:12px;">
+          <label for="new-password" style="display:block;font-size:13px;margin-bottom:6px;">Mật khẩu mới</label>
+          <input type="password" id="new-password" placeholder="Mật khẩu mới..." minlength="6" required
+            style="width:100%;padding:11px 12px;border:1.5px solid #ddd;border-radius:8px;box-sizing:border-box;">
+        </div>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label for="confirm-password" style="display:block;font-size:13px;margin-bottom:6px;">Nhập lại mật khẩu mới</label>
+          <input type="password" id="confirm-password" placeholder="Nhập lại..." minlength="6" required
+            style="width:100%;padding:11px 12px;border:1.5px solid #ddd;border-radius:8px;box-sizing:border-box;">
+        </div>
+        <div id="change-password-alert" style="display:none;font-size:13px;padding:8px 12px;border-radius:8px;margin-bottom:12px;"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;">Lưu Mật Khẩu Mới</button>
       </form>
     </div>
   </div>

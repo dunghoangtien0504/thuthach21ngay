@@ -474,6 +474,8 @@ async function loadDatabase() {
         source: u.source || 'supabase',
         enrollments: u.enrollments || [],
         supabase_id: u.id,
+        temp_password: u.temp_password || '',
+        temp_password_at: u.temp_password_at || '',
       });
     }
   });
@@ -969,7 +971,10 @@ function renderStudentsTable() {
         <strong>${escHtml(student.name)}</strong>
         ${student.phone ? `<br><small style="color:var(--text-dimmed)">${escHtml(student.phone)}</small>` : ''}
       </td>
-      <td>${escHtml(student.email)}${emailConfirmedBadge}${consentBadge}</td>
+      <td>
+        ${escHtml(student.email)}${emailConfirmedBadge}${consentBadge}
+        ${student.temp_password ? `<br><small style="color:#b45309;font-family:monospace" title="Mật khẩu reset gần nhất${student.temp_password_at ? ' — ' + new Date(student.temp_password_at).toLocaleString('vi-VN') : ''}">🔑 ${escHtml(student.temp_password)}</small>` : ''}
+      </td>
       <td>${escHtml(student.date)}</td>
       <td style="max-width:160px;white-space:normal;font-size:12px">${escHtml(student.key_used)}</td>
       <td>
@@ -988,6 +993,12 @@ function renderStudentsTable() {
             style="background:#EEF2FF;color:#4F46E5;border:1px solid #C7D2FE;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">
             <i class="fa-solid fa-unlock" style="font-size:10px;"></i> Khóa học
           </button>
+          ${isSupabase ? `
+            <button class="btn btn-sm btn-reset-pw" data-email="${escHtml(student.email)}"
+              style="background:#FEF3C7;color:#b45309;border:1px solid #FDE68A;font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;white-space:nowrap;">
+              <i class="fa-solid fa-key" style="font-size:10px;"></i> Reset MK
+            </button>
+          ` : ''}
           ${isLocal && !isSupabase ? `
             <button class="btn btn-danger btn-sm btn-delete-student" data-email="${escHtml(student.email)}">
               Xóa
@@ -1026,6 +1037,13 @@ function renderStudentsTable() {
     if (btnDeleteSupa) {
       btnDeleteSupa.addEventListener('click', () => {
         deleteSupabaseAccount(student.email);
+      });
+    }
+
+    const btnResetPw = row.querySelector('.btn-reset-pw');
+    if (btnResetPw) {
+      btnResetPw.addEventListener('click', () => {
+        resetStudentPassword(student.email);
       });
     }
 
@@ -1399,6 +1417,30 @@ async function deleteSupabaseAccount(email) {
     const data = await res.json();
     if (res.ok) {
       showToast(`✅ Đã xóa tài khoản Supabase ${email}`, 'success');
+      loadDatabase();
+    } else if (res.status === 503) {
+      showToast('Supabase chưa cấu hình — thêm SUPABASE_SERVICE_ROLE_KEY vào Vercel env vars.', 'warning');
+    } else {
+      showToast(`Lỗi: ${data.error || 'Không xác định'}`, 'error');
+    }
+  } catch (err) {
+    showToast(`Lỗi kết nối: ${err.message}`, 'error');
+  }
+}
+
+async function resetStudentPassword(email) {
+  if (!confirm(`Đặt lại mật khẩu cho "${email}"?\n\nMật khẩu mới sẽ được gửi vào email của khách và hiển thị tại đây để anh quản lý.`)) return;
+
+  try {
+    const res = await fetch('/api/admin?action=reset_password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${_adminKey}` },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showToast(`✅ Mật khẩu mới của ${email}: ${data.newPassword}`, 'success');
+      alert(`Mật khẩu mới của ${email}:\n\n${data.newPassword}\n\nĐã gửi vào email khách. Anh có thể đọc lại cho khách qua Telegram.`);
       loadDatabase();
     } else if (res.status === 503) {
       showToast('Supabase chưa cấu hình — thêm SUPABASE_SERVICE_ROLE_KEY vào Vercel env vars.', 'warning');

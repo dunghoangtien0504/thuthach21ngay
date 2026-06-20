@@ -130,6 +130,58 @@ Nhóm hỗ trợ Kegel — anh hỏi là có người trả lời trong ngày:</
   }),
 };
 
+/**
+ * Gửi email mật khẩu mới sau khi reset.
+ * @param {Object} opts
+ * @param {string} opts.email
+ * @param {string} [opts.name]
+ * @param {string} opts.newPassword
+ */
+export async function sendPasswordReset({ email, name, newPassword }) {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('[send-confirmation] RESEND_API_KEY not configured');
+    return;
+  }
+  if (!email || !newPassword) return;
+
+  const html = wrapConfirm(`
+<p>Anh ${name || 'ơi'},</p>
+
+<p>Mật khẩu đăng nhập FORMEN của anh vừa được đặt lại theo yêu cầu.</p>
+
+<p style="text-align:center;margin:24px 0;">
+  <span style="display:inline-block;background:#0D2B1A;color:#D4AF37;padding:14px 36px;border-radius:6px;font-size:22px;font-weight:bold;letter-spacing:2px;font-family:monospace;">${newPassword}</span>
+</p>
+
+<p style="text-align:center;color:#666;font-size:13px;margin-top:-12px;">Mật khẩu mới của anh</p>
+
+<p>Anh dùng email này và mật khẩu trên để đăng nhập:</p>
+
+<p style="text-align:center;margin:24px 0;">
+  <a href="${MM21_PORTAL}" style="background:#229ED9;color:#fff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;font-size:15px;">Đăng Nhập Ngay →</a>
+</p>
+
+<p style="font-size:14px;color:#888;">Sau khi đăng nhập, anh nên vào phần tài khoản để đổi sang mật khẩu riêng dễ nhớ hơn.</p>
+
+<p>Nếu anh không yêu cầu đổi mật khẩu — hãy reply email này để chúng tôi hỗ trợ ngay.</p>
+
+<p>—<br>FORMEN</p>`);
+
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM,
+      to: [email],
+      subject: 'Mật khẩu mới của anh — FORMEN',
+      html,
+    });
+    if (error) throw new Error(error.message);
+    console.log(`[send-confirmation] Password reset sent to ${email}`);
+  } catch (err) {
+    console.error(`[send-confirmation] Password reset failed to ${email}:`, err.message);
+    throw err;
+  }
+}
+
 function capitalizeSubject(subject) {
   if (!subject || typeof subject !== 'string') return subject;
   return subject.replace(/^([^a-zA-Zà-ỹÀ-Ỹ]*)([a-zA-Zà-ỹÀ-Ỹ])/, (match, prefix, char) => prefix + char.toUpperCase());

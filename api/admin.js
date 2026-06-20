@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { activateUserCourse } from './_activation-helper.js';
+import { resetUserPassword } from './_reset-password-helper.js';
 
 export default async function handler(req, res) {
   // CORS
@@ -58,7 +59,7 @@ export default async function handler(req, res) {
       // Get extended profiles
       const { data: profiles } = await adminClient
         .from('user_profiles')
-        .select('id, name, phone, email_consent, source, created_at');
+        .select('id, name, phone, email_consent, source, created_at, temp_password, temp_password_at');
 
       // Get enrollments
       const { data: enrollments } = await adminClient
@@ -85,6 +86,8 @@ export default async function handler(req, res) {
           registeredAt: u.created_at,
           enrollments: enrollmentMap[u.id] || [],
           status: u.email_confirmed_at ? 'active' : 'pending',
+          temp_password: profile.temp_password || '',
+          temp_password_at: profile.temp_password_at || '',
         };
       });
 
@@ -154,6 +157,31 @@ export default async function handler(req, res) {
       });
     } catch (err) {
       console.error('[admin-activate-user] Error:', err);
+      return res.status(500).json({ error: err.message || 'Internal server error' });
+    }
+  }
+
+  if (action === 'reset_password') {
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+    if (!dbConfigured) {
+      return res.status(503).json({ error: 'Supabase not configured' });
+    }
+    const { email } = req.body || {};
+    if (!email) return res.status(400).json({ error: 'email is required' });
+
+    try {
+      const result = await resetUserPassword({ email, source: 'admin_panel' });
+      if (!result.found) {
+        return res.status(404).json({ error: `Không tìm thấy tài khoản ${email} trong Supabase` });
+      }
+      return res.status(200).json({
+        success: true,
+        email: result.email,
+        newPassword: result.newPassword,
+        message: `Đã đặt lại mật khẩu cho ${result.email}`,
+      });
+    } catch (err) {
+      console.error('[admin-reset-password]', err);
       return res.status(500).json({ error: err.message || 'Internal server error' });
     }
   }

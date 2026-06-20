@@ -385,6 +385,124 @@ async function setupAuth() {
     });
   }
 
+  // 6b. Forgot Password — toggle form + submit
+  const forgotForm = document.getElementById('forgot-form');
+  const linkForgot = document.getElementById('link-forgot-password');
+  const linkBackToLogin = document.getElementById('link-back-to-login');
+
+  if (linkForgot && forgotForm && loginForm) {
+    linkForgot.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      if (registerForm) registerForm.style.display = 'none';
+      forgotForm.style.display = 'flex';
+      clearAlerts();
+    });
+  }
+  if (linkBackToLogin && forgotForm && loginForm) {
+    linkBackToLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      forgotForm.style.display = 'none';
+      loginForm.style.display = 'flex';
+      clearAlerts();
+    });
+  }
+  if (forgotForm) {
+    forgotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlerts();
+      const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+      if (!email) return;
+
+      const submitBtn = forgotForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Đang gửi...'; }
+      try {
+        const res = await fetch('/api/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showAuthSuccess(data.message || 'Nếu email tồn tại, mật khẩu mới đã được gửi vào hộp thư của anh.');
+        } else {
+          showAuthError(data.error || 'Có lỗi xảy ra. Vui lòng thử lại.');
+        }
+      } catch (err) {
+        showAuthError('Lỗi kết nối: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Gửi Mật Khẩu Mới <i class="fa-solid fa-paper-plane"></i>'; }
+      }
+    });
+  }
+
+  // 6c. Change Password — modal for logged-in students
+  const btnChangePassword = document.getElementById('btn-change-password');
+  const changePwModal = document.getElementById('change-password-modal');
+  const closeChangePw = document.getElementById('close-change-password');
+  const changePwForm = document.getElementById('change-password-form');
+
+  function showChangePwAlert(msg, type) {
+    const el = document.getElementById('change-password-alert');
+    if (!el) return;
+    el.style.display = 'block';
+    el.textContent = msg;
+    el.style.background = type === 'error' ? '#fee2e2' : '#dcfce7';
+    el.style.color = type === 'error' ? '#b91c1c' : '#166534';
+  }
+
+  if (btnChangePassword && changePwModal) {
+    btnChangePassword.addEventListener('click', () => {
+      changePwModal.style.display = 'flex';
+      const alertEl = document.getElementById('change-password-alert');
+      if (alertEl) alertEl.style.display = 'none';
+      if (changePwForm) changePwForm.reset();
+    });
+  }
+  if (closeChangePw && changePwModal) {
+    closeChangePw.addEventListener('click', () => { changePwModal.style.display = 'none'; });
+  }
+  if (changePwModal) {
+    changePwModal.addEventListener('click', (e) => {
+      if (e.target === changePwModal) changePwModal.style.display = 'none';
+    });
+  }
+  if (changePwForm) {
+    changePwForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newPass = document.getElementById('new-password').value;
+      const confirmPass = document.getElementById('confirm-password').value;
+
+      if (newPass.length < 6) { showChangePwAlert('Mật khẩu phải có ít nhất 6 ký tự.', 'error'); return; }
+      if (newPass !== confirmPass) { showChangePwAlert('Hai mật khẩu không khớp.', 'error'); return; }
+
+      if (!isSupabaseEnabled) {
+        showChangePwAlert('Tính năng này cần đăng nhập qua hệ thống mới.', 'error');
+        return;
+      }
+
+      const submitBtn = changePwForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Đang lưu...'; }
+      try {
+        const { error } = await supabase.auth.updateUser({ password: newPass });
+        if (error) {
+          if (error.message && error.message.includes('session')) {
+            showChangePwAlert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.', 'error');
+          } else {
+            showChangePwAlert(error.message || 'Không đổi được mật khẩu.', 'error');
+          }
+        } else {
+          showChangePwAlert('✅ Đã đổi mật khẩu thành công!', 'success');
+          setTimeout(() => { if (changePwModal) changePwModal.style.display = 'none'; }, 1500);
+        }
+      } catch (err) {
+        showChangePwAlert('Lỗi: ' + err.message, 'error');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Lưu Mật Khẩu Mới'; }
+      }
+    });
+  }
+
   // 7. Handle Logout Action
   if (btnLogoutAction) {
     btnLogoutAction.addEventListener('click', async () => {
