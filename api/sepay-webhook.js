@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   const transferType = payload.transferType || payload.transfer_type || 'in';
   const amount = parseFloat(payload.transferAmount || payload.amount || 0);
 
-  if (transferType === 'in' && amount >= 198000 && telegramToken && telegramChatId) {
+  if (transferType === 'in' && amount > 0 && telegramToken && telegramChatId) {
     const bankGateway = payload.gateway || payload.bank_brand_name || payload.bankBrandName || 'Ngân hàng';
     const accountNo = payload.accountNumber || payload.account_number || '';
     const content = payload.content || payload.transaction_content || payload.transactionContent || '';
@@ -36,22 +36,33 @@ export default async function handler(req, res) {
     const isMM21  = amount >= 685000 && amount <= 695000;
     const isKnownProduct = isKegel || isMM21;
 
+    // Phát hiện ý định từ nội dung CK (để cảnh báo thiếu tiền)
+    const contentLower = content.toLowerCase();
+    const looksLikeKegel = contentLower.includes('kegel') || contentLower.includes('kg21');
+    const looksLikeMM21  = contentLower.includes('ma21') || contentLower.includes('matma21') || contentLower.includes('mật mã');
+
     let productLabel = '';
     let courseId = null;
-    if (isKegel)       { productLabel = '🥋 *Kegel Khởi Đầu* (199k)'; courseId = 'kegel'; }
-    else if (isMM21)   { productLabel = '🔑 *Mật Mã 21* (686k)';       courseId = 'mat-ma-21'; }
-    else               { productLabel = `❓ Giao dịch không xác định: ${amount.toLocaleString('vi-VN')}đ`; }
-
-    // Try to auto-activate — chỉ khi nhận ra sản phẩm
-    let activatedUser = null;
-    let activationErrorMsg = '';
+    if (isKegel)            { productLabel = '🥋 *Kegel Khởi Đầu* (199k)'; courseId = 'kegel'; }
+    else if (isMM21)        { productLabel = '🔑 *Mật Mã 21* (686k)';       courseId = 'mat-ma-21'; }
+    else if (looksLikeKegel){ productLabel = `⚠️ *Kegel — THIẾU TIỀN* (cần 199k, nhận ${amount.toLocaleString('vi-VN')}đ)`; }
+    else if (looksLikeMM21) { productLabel = `⚠️ *Mật Mã 21 — THIẾU TIỀN* (cần 686.868đ, nhận ${amount.toLocaleString('vi-VN')}đ)`; }
+    else                    { productLabel = `❓ Giao dịch khác — không liên quan khóa học`; }
 
     // Extract phone number from content (digits of length 9 to 11)
     const phoneMatch = content.match(/\d{9,11}/);
     const cleanPhone = phoneMatch ? phoneMatch[0].replace(/[^0-9]/g, '') : null;
 
+    // Chỉ kích hoạt tài khoản khi đúng sản phẩm và đủ tiền
+    let activatedUser = null;
+    let activationErrorMsg = '';
+
     if (!isKnownProduct) {
-      activationErrorMsg = `Số tiền ${amount.toLocaleString('vi-VN')}đ không khớp với bất kỳ sản phẩm nào (199k hoặc 686k). Kiểm tra thủ công.`;
+      if (looksLikeKegel || looksLikeMM21) {
+        activationErrorMsg = `Số tiền chưa đủ — cần ${looksLikeKegel ? '199.000đ' : '686.868đ'}, nhận được ${amount.toLocaleString('vi-VN')}đ. Liên hệ khách yêu cầu chuyển bù.`;
+      } else {
+        activationErrorMsg = `Không phải giao dịch khóa học — không kích hoạt.`;
+      }
     } else if (cleanPhone) {
       try {
         const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -62,7 +73,6 @@ export default async function handler(req, res) {
             auth: { autoRefreshToken: false, persistSession: false },
           });
 
-          // Query user_profiles by matching the last 9 digits of the phone number
           const suffix = cleanPhone.substring(cleanPhone.length - 9);
           const { data: profiles, error: profErr } = await admin
             .from('user_profiles')
@@ -109,7 +119,11 @@ export default async function handler(req, res) {
       activationLabel = `\n⚠️ *Không tự động kích hoạt*: ${activationErrorMsg}`;
     }
 
-    const messageText = `✅ *Thanh Toán Thành Công!*\n\n• Sản phẩm: ${productLabel}\n• Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n• Ngân hàng: *${bankGateway}*\n• Số TK nhận: \`${accountNo}\`\n• Nội dung CK: *${content}*\n• Thời gian: _${dateStr}_\n• Mã đối chiếu: \`${refCode}\`${activationLabel}`;
+    const header = isKnownProduct ? '✅ *Thanh Toán Thành Công!*' :
+                   (looksLikeKegel || looksLikeMM21) ? '🚨 *Cảnh Báo: Thiếu Tiền!*' :
+                   '💰 *Giao Dịch Vào Tài Khoản*';
+
+    const messageText = `${header}\n\n• Sản phẩm: ${productLabel}\n• Số tiền: *${amount.toLocaleString('vi-VN')}đ*\n• Ngân hàng: *${bankGateway}*\n• Số TK nhận: \`${accountNo}\`\n• Nội dung CK: *${content}*\n• Thời gian: _${dateStr}_\n• Mã đối chiếu: \`${refCode}\`${activationLabel}`;
 
     try {
       await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
