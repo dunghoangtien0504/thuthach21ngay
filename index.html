@@ -2655,6 +2655,32 @@
           </div>
 
           <!-- Payment Success Box -->
+          <!-- Thanh toán thất bại / timeout -->
+          <div id="payment-failed-box" style="display:none; width:100%; text-align:center; align-items:center; flex-direction:column; padding:20px 10px;">
+            <div style="font-size:44px;margin-bottom:12px;">⚠️</div>
+            <h3 style="font-size:18px;font-weight:800;color:#c62828;margin:0 0 8px;">Chưa Xác Nhận Được Thanh Toán</h3>
+            <p style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:12px;">
+              Hệ thống chờ <strong>10 phút</strong> nhưng chưa nhận được giao dịch hợp lệ.
+            </p>
+            <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,200,0,0.4);border-radius:10px;padding:14px;margin-bottom:16px;text-align:left;font-size:12.5px;line-height:1.9;color:rgba(255,255,255,0.85);">
+              <strong style="color:#FFD54F;">Anh kiểm tra lại:</strong><br>
+              ✅ Số tiền chuyển đúng: <strong>686.868đ</strong><br>
+              ✅ Nội dung CK đúng: <strong>MA21 [số điện thoại]</strong><br>
+              ✅ Ngân hàng: <strong>MB Bank — 335577357</strong>
+            </div>
+            <p style="font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:14px;">
+              Đã chuyển đúng mà chưa kích hoạt? Liên hệ hỗ trợ ngay:
+            </p>
+            <a href="https://t.me/kenthoang" target="_blank"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;background:#229ED9;color:#fff;padding:13px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;width:100%;box-sizing:border-box;margin-bottom:10px;">
+              📱 Nhắn @kenthoang — Hỗ trợ ngay
+            </a>
+            <button onclick="retryMM21Payment()"
+                    style="width:100%;padding:12px;border:1.5px solid rgba(212,175,55,0.6);background:transparent;color:#D4AF37;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">
+              🔄 Kiểm tra lại lần nữa
+            </button>
+          </div>
+
           <div id="payment-success-box" style="display:none; width: 100%; text-align:center; align-items:center; flex-direction:column; padding: 20px 10px;">
             <i class="fa-solid fa-circle-check" style="font-size:54px; color: var(--accent-bright); margin-bottom: 15px; filter: drop-shadow(0 4px 8px rgba(168,213,181,0.3));"></i>
             <h3 style="font-family: var(--font-heading); font-weight:800; font-size:22px; color: var(--accent-bright); margin-bottom:10px;">THANH TOÁN THÀNH CÔNG!</h3>
@@ -3027,6 +3053,14 @@
 
     let paymentPollInterval = null;
 
+    function retryMM21Payment() {
+      // Ẩn failed box, hiện lại QR và restart submit để polling lại từ đầu
+      document.getElementById('payment-failed-box').style.display = 'none';
+      document.getElementById('qr-placeholder').style.display = '';
+      document.getElementById('qr-box').style.display = 'none';
+      orderForm.dispatchEvent(new Event('submit'));
+    }
+
     orderForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('order-name').value.trim();
@@ -3103,16 +3137,30 @@
         clearInterval(paymentPollInterval);
       }
 
-      // Check payment loop
+      // Poll every 5s — tối đa 10 phút (120 lần)
+      let mm21PollCount = 0;
+      const MM21_MAX_POLLS = 120;
+
       const checkPaymentStatus = async () => {
+        mm21PollCount++;
+
+        // Timeout — dừng và hiện thông báo
+        if (mm21PollCount > MM21_MAX_POLLS) {
+          clearInterval(paymentPollInterval);
+          paymentPollInterval = null;
+          qrBox.style.display = 'none';
+          document.getElementById('payment-failed-box').style.display = 'flex';
+          return;
+        }
+
         try {
           const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(email)}&product=mat-ma-21`);
           if (res.ok) {
             const data = await res.json();
             if (data.success) {
               clearInterval(paymentPollInterval);
-              
-              // Update status to active in local storage databases
+              paymentPollInterval = null;
+
               let users = JSON.parse(localStorage.getItem('thuthach21ngay_registered_users')) || [];
               const userIdx = users.findIndex(u => u.email === email);
               if (userIdx !== -1) {
@@ -3121,12 +3169,10 @@
                 localStorage.setItem('thuthach21ngay_registered_users', JSON.stringify(users));
               }
 
-              // Update user session to active
               const currentSession = JSON.parse(localStorage.getItem('thuthach21ngay_user_session')) || {};
               currentSession.status = 'active';
               localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(currentSession));
 
-              // Show success UI, hide QR code
               qrBox.style.display = 'none';
               document.getElementById('payment-success-box').style.display = 'flex';
             }
@@ -3136,10 +3182,7 @@
         }
       };
 
-      // Poll every 5 seconds
       paymentPollInterval = setInterval(checkPaymentStatus, 5000);
-      
-      // Check immediately
       checkPaymentStatus();
 
       // Scroll smoothly to QR code on mobile

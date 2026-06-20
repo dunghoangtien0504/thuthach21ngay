@@ -1199,6 +1199,30 @@
           <a href="https://t.me/kenthoang" target="_blank" style="color:var(--accent);">Nhắn trực tiếp @kenthoang</a>
         </p>
       </div>
+
+      <!-- Bước 4: Không xác nhận được thanh toán -->
+      <div id="modal-step-failed" style="display:none;text-align:center;padding:8px 0;">
+        <div style="font-size:44px;margin-bottom:12px;">⚠️</div>
+        <h2 class="modal-title" style="color:#c62828;">Chưa Xác Nhận Được Thanh Toán</h2>
+        <p class="modal-sub" style="margin-bottom:8px;">
+          Hệ thống chờ <strong>10 phút</strong> nhưng chưa nhận được giao dịch hợp lệ.
+        </p>
+        <div style="background:#fff8e1;border:1px solid #f9a825;border-radius:10px;padding:14px 16px;margin:16px 0;text-align:left;font-size:13px;line-height:1.8;">
+          <strong>Anh kiểm tra lại:</strong><br>
+          ✅ Số tiền chuyển đúng: <strong>199.000đ</strong><br>
+          ✅ Nội dung CK đúng định dạng: <strong>KEGEL [số điện thoại]</strong><br>
+          ✅ Chuyển đúng ngân hàng: <strong>MB Bank — 335577357</strong>
+        </div>
+        <p class="modal-sub" style="margin-bottom:16px;">Nếu đã chuyển đúng mà vẫn chưa được kích hoạt, liên hệ hỗ trợ ngay:</p>
+        <a href="https://t.me/kenthoang" target="_blank"
+           style="display:flex;align-items:center;justify-content:center;gap:8px;background:#229ED9;color:#fff;padding:13px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;margin-bottom:12px;">
+          📱 Liên hệ @kenthoang — Hỗ trợ ngay
+        </a>
+        <button onclick="retryKegelPayment()"
+                style="width:100%;padding:12px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;">
+          🔄 Kiểm tra lại lần nữa
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1281,9 +1305,18 @@
       if (kegelPollInterval) { clearInterval(kegelPollInterval); kegelPollInterval = null; }
     }
 
+    function retryKegelPayment() {
+      // Reset về màn QR và restart polling
+      document.getElementById('modal-step-failed').style.display = 'none';
+      document.getElementById('modal-step-qr').style.display = '';
+      // Trigger lại submit form để tạo QR và polling mới
+      document.getElementById('kegel-payment-form').dispatchEvent(new Event('submit'));
+    }
+
     function goBackToForm() {
       if (kegelPollInterval) { clearInterval(kegelPollInterval); kegelPollInterval = null; }
       document.getElementById('modal-step-qr').style.display = 'none';
+      document.getElementById('modal-step-failed').style.display = 'none';
       document.getElementById('modal-step-form').style.display = '';
     }
 
@@ -1342,8 +1375,22 @@
       document.getElementById('modal-step-form').style.display = 'none';
       document.getElementById('modal-step-qr').style.display = '';
 
-      // Polling xác nhận thanh toán
+      // Polling xác nhận thanh toán — tối đa 10 phút (120 lần × 5s)
+      let kegelPollCount = 0;
+      const KEGEL_MAX_POLLS = 120;
+
       const checkPayment = async () => {
+        kegelPollCount++;
+
+        // Hết thời gian chờ → dừng và báo khách
+        if (kegelPollCount > KEGEL_MAX_POLLS) {
+          clearInterval(kegelPollInterval);
+          kegelPollInterval = null;
+          document.getElementById('modal-step-qr').style.display = 'none';
+          document.getElementById('modal-step-failed').style.display = '';
+          return;
+        }
+
         try {
           const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(email)}&product=kegel`);
           if (!res.ok) return;
@@ -1362,26 +1409,15 @@
             }
 
             // Cập nhật/tạo session đăng nhập để vào học ngay không bị gate-overlay chặn
-            const sessionObj = {
-              email: email,
-              name: name,
-              phone: phone,
-              status: "active"
-            };
+            const sessionObj = { email, name, phone, status: 'active' };
             localStorage.setItem('thuthach21ngay_user_session', JSON.stringify(sessionObj));
 
             // Sync buyer to Brevo — Segment B (Kegel → MM21 upsell)
             fetch('/api/brevo-add-contact', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                email, name, phone,
-                segment: 'buyer_kegel',
-                product: 'kegel',
-                purchaseDate: new Date().toISOString().split('T')[0]
-              })
+              body: JSON.stringify({ email, name, phone, segment: 'buyer_kegel', product: 'kegel', purchaseDate: new Date().toISOString().split('T')[0] })
             }).catch(() => {});
-            // Schedule 25-email Kegel onboarding + MM21 upsell sequence
             fetch('/api/schedule-email-sequence', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
