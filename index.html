@@ -3106,7 +3106,7 @@
       // Check payment loop
       const checkPaymentStatus = async () => {
         try {
-          const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(email)}`);
+          const res = await fetch(`/api/check-payment?phone=${cleanPhone}&email=${encodeURIComponent(email)}&product=mat-ma-21`);
           if (res.ok) {
             const data = await res.json();
             if (data.success) {

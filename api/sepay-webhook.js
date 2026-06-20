@@ -31,8 +31,9 @@ export default async function handler(req, res) {
     const dateStr = payload.transactionDate || payload.transaction_date || new Date().toLocaleString('vi-VN');
     const refCode = payload.referenceCode || payload.reference_code || payload.id || '';
 
-    const isKegel = amount >= 195000 && amount < 650000;
-    const isMM21 = amount >= 680000;
+    // Kegel = 199,000đ | MM21 = 686,868đ — tight windows prevent cross-product false activation
+    const isKegel = amount >= 198000 && amount <= 205000;
+    const isMM21  = amount >= 685000 && amount <= 695000;
 
     let productLabel = '';
     const courseId = isKegel ? 'kegel' : 'mat-ma-21';

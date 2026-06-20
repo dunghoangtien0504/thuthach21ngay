@@ -21,9 +21,11 @@ export default async function handler(req, res) {
   }
 
   // Product-specific thresholds and program codes
+  // Kegel = 199,000đ | MM21 = 686,868đ
+  // Allow ±1,000đ tolerance for minor bank rounding; hard caps prevent cross-product activation
   const isKegel = product === 'kegel';
-  const minAmount = isKegel ? 195000 : 680000;
-  const maxAmount = isKegel ? 650000 : Infinity;
+  const minAmount = isKegel ? 198000 : 685000;
+  const maxAmount = isKegel ? 205000 : 695000;
   const programCodes = isKegel ? ['kegel', 'kg21'] : ['ma21', 'matma21'];
 
   try {
