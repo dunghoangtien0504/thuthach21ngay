@@ -6,6 +6,7 @@
     { "source": "/api/admin-transactions", "destination": "/api/admin?action=transactions" },
     { "source": "/api/admin-activate-user", "destination": "/api/admin?action=activate" },
     { "source": "/api/admin-delete-user", "destination": "/api/admin?action=delete" },
+    { "source": "/api/affiliate-stats", "destination": "/api/admin?action=affiliate_stats" },
     { "source": "/api/brevo-add-contact", "destination": "/api/brevo" },
     { "source": "/api/brevo-stats", "destination": "/api/brevo" },
     { "source": "/api/schedule-email-sequence", "destination": "/api/emails" },

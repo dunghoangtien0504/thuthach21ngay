@@ -18,14 +18,61 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Action is required' });
   }
 
-  // Admin auth check for all endpoints
+  // affiliate_stats: user token auth (not admin), early exit before admin check
+  if (action === 'affiliate_stats') {
+    if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+    const supabaseUrl2 = process.env.VITE_SUPABASE_URL;
+    const serviceRoleKey2 = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!supabaseUrl2 || !serviceRoleKey2) return res.status(503).json({ error: 'Supabase not configured' });
+
+    const bearerToken = (req.headers['authorization'] || '').replace('Bearer ', '').trim();
+    if (!bearerToken) return res.status(401).json({ error: 'Missing access token' });
+
+    try {
+      const svc = createClient(supabaseUrl2, serviceRoleKey2, { auth: { autoRefreshToken: false, persistSession: false } });
+      const { data: { user }, error: uErr } = await svc.auth.getUser(bearerToken);
+      if (uErr || !user) return res.status(401).json({ error: 'Invalid or expired session' });
+
+      const { data: aff } = await svc.from('affiliates').select('code').eq('user_id', user.id).maybeSingle();
+      if (!aff?.code) return res.status(200).json({ code: null, clicks: 0, signups: 0, buyers: 0, commission: 0, mm21Count: 0, kegelCount: 0, rows: [] });
+      const code = aff.code;
+
+      const { count: clicks } = await svc.from('referral_clicks').select('*', { count: 'exact', head: true }).eq('ref_code', code);
+      const { data: profiles } = await svc.from('user_profiles').select('id, name, created_at').eq('referred_by', code);
+      const referred = profiles || [];
+
+      let buyers = 0, commission = 0, mm21Count = 0, kegelCount = 0;
+      const rows = [];
+      const COMM = { 'mat-ma-21': 137374, kegel: 39800 };
+      if (referred.length) {
+        const ids = referred.map(p => p.id);
+        const { data: enrollments } = await svc.from('course_enrollments').select('user_id, course_id, status').in('user_id', ids);
+        const map = {};
+        (enrollments || []).forEach(e => { if (e.status === 'active') (map[e.user_id] = map[e.user_id] || []).push(e.course_id); });
+        referred.forEach(p => {
+          const courses = map[p.id] || [];
+          if (courses.length) buyers++;
+          if (courses.includes('mat-ma-21')) mm21Count++;
+          if (courses.includes('kegel')) kegelCount++;
+          let comm = 0; courses.forEach(c => { comm += COMM[c] || 0; }); commission += comm;
+          rows.push({ name: p.name || 'Học viên', bought: courses.length > 0, commission: comm });
+        });
+      }
+      return res.status(200).json({ code, clicks: clicks || 0, signups: referred.length, buyers, commission, mm21Count, kegelCount, rows });
+    } catch (err) {
+      console.error('[affiliate_stats]', err);
+      return res.status(500).json({ error: err.message });
+    }
+  }
+
+  // Admin auth check for all other endpoints
   const authHeader = req.headers['authorization'] || '';
   const adminPass  = process.env.ADMIN_PASS || process.env.VITE_ADMIN_PASS || '';
-  
+
   if (!adminPass) {
     return res.status(503).json({ error: 'ADMIN_PASS chưa được cấu hình trên server.' });
   }
-  
+
   if (authHeader !== `Bearer ${adminPass}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
