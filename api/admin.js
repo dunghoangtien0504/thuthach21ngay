@@ -59,7 +59,13 @@ export default async function handler(req, res) {
       // Get extended profiles
       const { data: profiles } = await adminClient
         .from('user_profiles')
-        .select('id, name, phone, email_consent, source, created_at, temp_password, temp_password_at');
+        .select('id, name, phone, email_consent, source, created_at');
+
+      // Get latest password resets (admin-only table, service role)
+      const { data: resets } = await adminClient
+        .from('password_resets')
+        .select('user_id, temp_password, reset_at');
+      const resetMap = Object.fromEntries((resets || []).map(r => [r.user_id, r]));
 
       // Get enrollments
       const { data: enrollments } = await adminClient
@@ -86,8 +92,8 @@ export default async function handler(req, res) {
           registeredAt: u.created_at,
           enrollments: enrollmentMap[u.id] || [],
           status: u.email_confirmed_at ? 'active' : 'pending',
-          temp_password: profile.temp_password || '',
-          temp_password_at: profile.temp_password_at || '',
+          temp_password: resetMap[u.id]?.temp_password || '',
+          temp_password_at: resetMap[u.id]?.reset_at || '',
         };
       });
 

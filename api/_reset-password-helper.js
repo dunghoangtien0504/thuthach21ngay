@@ -59,17 +59,20 @@ export async function resetUserPassword({ email, source = 'forgot_password' }) {
   });
   if (updErr) throw updErr;
 
-  // 3. Store on profile so admin can read it
+  // 3. Store in admin-only password_resets table.
+  //    Bảng này BẬT RLS và KHÔNG có policy public → chỉ service role (server) đọc được,
+  //    client với anon key KHÔNG bao giờ đọc được mật khẩu này.
   const name = target.user_metadata?.name || cleanEmail.split('@')[0];
   try {
-    await admin.from('user_profiles').upsert({
-      id: target.id,
+    await admin.from('password_resets').upsert({
+      user_id: target.id,
+      email: cleanEmail,
       name,
       temp_password: newPassword,
-      temp_password_at: new Date().toISOString(),
-    }, { onConflict: 'id' });
+      reset_at: new Date().toISOString(),
+    }, { onConflict: 'user_id' });
   } catch (profErr) {
-    console.error('[reset-password] Could not store temp password on profile:', profErr.message);
+    console.error('[reset-password] Could not store temp password:', profErr.message);
   }
 
   // 4. Email the new password to the customer
