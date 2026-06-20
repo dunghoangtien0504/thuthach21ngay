@@ -24,24 +24,25 @@ export default async function handler(req, res) {
   const transferType = payload.transferType || payload.transfer_type || 'in';
   const amount = parseFloat(payload.transferAmount || payload.amount || 0);
 
-  if (transferType === 'in' && amount >= 195000 && telegramToken && telegramChatId) {
+  if (transferType === 'in' && amount >= 198000 && telegramToken && telegramChatId) {
     const bankGateway = payload.gateway || payload.bank_brand_name || payload.bankBrandName || 'Ngân hàng';
     const accountNo = payload.accountNumber || payload.account_number || '';
     const content = payload.content || payload.transaction_content || payload.transactionContent || '';
     const dateStr = payload.transactionDate || payload.transaction_date || new Date().toLocaleString('vi-VN');
     const refCode = payload.referenceCode || payload.reference_code || payload.id || '';
 
-    // Kegel = 199,000đ | MM21 = 686,868đ — tight windows prevent cross-product false activation
+    // Kegel = 199.000đ | MM21 = 686.868đ — tight windows prevent cross-product false activation
     const isKegel = amount >= 198000 && amount <= 205000;
     const isMM21  = amount >= 685000 && amount <= 695000;
+    const isKnownProduct = isKegel || isMM21;
 
     let productLabel = '';
-    const courseId = isKegel ? 'kegel' : 'mat-ma-21';
-    if (isKegel) productLabel = '🥋 *Kegel Khởi Đầu* (199k)';
-    else if (isMM21) productLabel = '🔑 *Mật Mã 21* (686k)';
-    else productLabel = `Giao dịch ${amount.toLocaleString('vi-VN')}đ`;
+    let courseId = null;
+    if (isKegel)       { productLabel = '🥋 *Kegel Khởi Đầu* (199k)'; courseId = 'kegel'; }
+    else if (isMM21)   { productLabel = '🔑 *Mật Mã 21* (686k)';       courseId = 'mat-ma-21'; }
+    else               { productLabel = `❓ Giao dịch không xác định: ${amount.toLocaleString('vi-VN')}đ`; }
 
-    // Try to auto-activate the account
+    // Try to auto-activate — chỉ khi nhận ra sản phẩm
     let activatedUser = null;
     let activationErrorMsg = '';
 
@@ -49,7 +50,9 @@ export default async function handler(req, res) {
     const phoneMatch = content.match(/\d{9,11}/);
     const cleanPhone = phoneMatch ? phoneMatch[0].replace(/[^0-9]/g, '') : null;
 
-    if (cleanPhone) {
+    if (!isKnownProduct) {
+      activationErrorMsg = `Số tiền ${amount.toLocaleString('vi-VN')}đ không khớp với bất kỳ sản phẩm nào (199k hoặc 686k). Kiểm tra thủ công.`;
+    } else if (cleanPhone) {
       try {
         const supabaseUrl = process.env.VITE_SUPABASE_URL;
         const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -70,7 +73,6 @@ export default async function handler(req, res) {
 
           if (profiles && profiles.length > 0) {
             const profile = profiles[0];
-            // Get user's email from auth
             const { data: { user }, error: userErr } = await admin.auth.admin.getUserById(profile.id);
             if (userErr) throw userErr;
 
@@ -87,7 +89,7 @@ export default async function handler(req, res) {
               activationErrorMsg = 'Không tìm thấy email của user trong Auth.';
             }
           } else {
-            activationErrorMsg = `Không tìm thấy số điện thoại đuôi \`...${suffix}\` trong user_profiles.`;
+            activationErrorMsg = `Không tìm thấy SĐT đuôi \`...${suffix}\` trong user_profiles.`;
           }
         } else {
           activationErrorMsg = 'Chưa cấu hình Supabase URL hoặc Service Role Key.';
