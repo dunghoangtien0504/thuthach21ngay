@@ -11,6 +11,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+  // Xác thực webhook — chỉ enforce khi đã cấu hình SEPAY_WEBHOOK_API_KEY.
+  // SePay gửi header: Authorization: Apikey <key>
+  const webhookKey = process.env.SEPAY_WEBHOOK_API_KEY;
+  if (webhookKey) {
+    const authHeader = req.headers['authorization'] || '';
+    const ok = authHeader === `Apikey ${webhookKey}` || authHeader === `Bearer ${webhookKey}`;
+    if (!ok) {
+      console.warn('SePay webhook rejected: invalid Authorization header');
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
   const payload = req.body;
   if (!payload) {
     return res.status(400).json({ error: 'Missing webhook payload body' });

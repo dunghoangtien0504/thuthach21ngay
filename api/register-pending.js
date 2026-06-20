@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
     // 3. Optional: Upsert pending enrollment in course_enrollments
     if (course_id) {
-      const courseName = course_id === 'mat-ma-21' ? 'Mật Mã 21' : (course_id === 'kegel' ? 'Kegel Chuyên Sâu' : course_id);
+      const courseName = course_id === 'mat-ma-21' ? 'Mật Mã 21' : (course_id === 'kegel' ? 'Kegel Khởi Đầu' : course_id);
       
       // Check if they already have an active enrollment so we don't overwrite it
       const { data: currentEnroll } = await admin

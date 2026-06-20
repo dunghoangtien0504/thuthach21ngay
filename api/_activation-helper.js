@@ -32,10 +32,11 @@ export async function activateUserCourse({ email, name, phone, courseId, source,
       await admin.auth.admin.updateUserById(userId, { email_confirm: true });
     }
   } else {
-    // Create new user (using default temp password)
+    // Create new user with a random temp password (never a shared/known password)
+    const randomPassword = Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 6) + '!Tmp';
     const { data: created, error: createErr } = await admin.auth.admin.createUser({
       email,
-      password: 'MatMa21!Temp', // default temp password
+      password: randomPassword,
       email_confirm: true,
       user_metadata: { name: name || email.split('@')[0] },
     });
@@ -62,9 +63,18 @@ export async function activateUserCourse({ email, name, phone, courseId, source,
   if (profErr) throw profErr;
 
   // 3. Upsert active enrollment in course_enrollments
-  const courseName = courseId === 'mat-ma-21' ? 'Mật Mã 21' : (courseId === 'kegel' ? 'Kegel Chuyên Sâu' : courseId);
+  const courseName = courseId === 'mat-ma-21' ? 'Mật Mã 21' : (courseId === 'kegel' ? 'Kegel Khởi Đầu' : courseId);
   const enrolledAt = new Date().toISOString();
-  
+
+  // Kiểm tra trạng thái cũ để tránh gửi email xác nhận trùng lặp
+  const { data: prevEnroll } = await admin
+    .from('course_enrollments')
+    .select('status')
+    .eq('user_id', userId)
+    .eq('course_id', courseId)
+    .maybeSingle();
+  const wasAlreadyActive = prevEnroll?.status === 'active';
+
   const { error: enrollErr } = await admin.from('course_enrollments').upsert({
     user_id: userId,
     course_id: courseId,
@@ -154,8 +164,11 @@ export async function activateUserCourse({ email, name, phone, courseId, source,
   }
 
   // 6. Send immediate confirmation email with Telegram invite
-  const confirmType = courseId === 'kegel' ? 'kegel' : 'mm21';
-  await sendConfirmation({ type: confirmType, email, name: profileData.name });
+  //    Chỉ gửi nếu đây là lần kích hoạt đầu tiên (tránh trùng khi webhook + polling cùng chạy)
+  if (!wasAlreadyActive) {
+    const confirmType = courseId === 'kegel' ? 'kegel' : 'mm21';
+    await sendConfirmation({ type: confirmType, email, name: profileData.name });
+  }
 
   return { userId, email, courseId };
 }
