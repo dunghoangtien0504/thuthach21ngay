@@ -2421,77 +2421,39 @@ async function loadPortalAffiliateTab() {
   if (teleShare) teleShare.href = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${shareText}`;
   if (zaloShare) zaloShare.href = `https://zalo.me/share?u=${encodeURIComponent(refLink)}`;
   
-  // 2. Fetch stats
+  // 2. Fetch stats — qua server endpoint (service role) để không cần quyền đọc
+  //    cross-user trên client. Bảng user_profiles/enrollments/clicks vì thế có thể
+  //    bật RLS chặt mà dashboard vẫn chạy.
   if (isSupabaseEnabled) {
     try {
-      // Fetch clicks count
-      const { count: clicksCount } = await supabase
-        .from('referral_clicks')
-        .select('*', { count: 'exact', head: true })
-        .eq('ref_code', code);
-        
-      if (elClicks) elClicks.textContent = clicksCount ?? 0;
-      
-      // Fetch referred profiles
-      const { data: profiles } = await supabase
-        .from('user_profiles')
-        .select('id, name, created_at')
-        .eq('referred_by', code);
-        
-      const referredList = profiles || [];
-      if (elSignups) elSignups.textContent = referredList.length;
-      
-      let buyersCount = 0;
-      let totalCommission = 0;
-      const renderRows = [];
-      
-      if (referredList.length > 0) {
-        // Fetch enrollments of referred profiles
-        const profileIds = referredList.map(p => p.id);
-        const { data: enrollments } = await supabase
-          .from('course_enrollments')
-          .select('user_id, course_id, status')
-          .in('user_id', profileIds);
-          
-        const enrols = enrollments || [];
-        const userEnrolsMap = {};
-        enrols.forEach(e => {
-          if (e.status === 'active') {
-            if (!userEnrolsMap[e.user_id]) userEnrolsMap[e.user_id] = [];
-            userEnrolsMap[e.user_id].push(e);
-          }
-        });
-        
-        referredList.forEach(p => {
-          const userEnrols = userEnrolsMap[p.id] || [];
-          const bought = userEnrols.length > 0;
-          if (bought) buyersCount++;
-          
-          let comm = 0;
-          userEnrols.forEach(e => {
-            if (e.course_id === 'mat-ma-21') comm += 137374;
-            else if (e.course_id === 'kegel') comm += 39800;
-          });
-          totalCommission += comm;
-          
-          renderRows.push(`
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+      if (!token) throw new Error('No session token');
+
+      const resp = await fetch('/api/affiliate-stats', {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (!resp.ok) throw new Error('affiliate-stats ' + resp.status);
+      const stats = await resp.json();
+
+      if (elClicks) elClicks.textContent = stats.clicks ?? 0;
+      if (elSignups) elSignups.textContent = stats.signups ?? 0;
+      if (elBuyers) elBuyers.textContent = stats.buyers ?? 0;
+      if (elCommission) elCommission.textContent = (stats.commission || 0).toLocaleString('vi-VN') + 'đ';
+
+      const renderRows = (stats.rows || []).map(p => `
             <tr>
               <td>${p.name || 'Học viên'}</td>
-              <td><span class="badge ${bought ? 'success' : 'warning'}" style="display: inline-block; padding: 4px 10px; border-radius: 50px; font-size: 11px; font-weight: bold; background: ${bought ? 'rgba(61,107,74,0.1)' : 'rgba(184,134,11,0.1)'}; color: ${bought ? 'var(--secondary)' : 'var(--warning)'};">${bought ? 'Đã mua khóa' : 'Đang theo dõi'}</span></td>
+              <td><span class="badge ${p.bought ? 'success' : 'warning'}" style="display: inline-block; padding: 4px 10px; border-radius: 50px; font-size: 11px; font-weight: bold; background: ${p.bought ? 'rgba(61,107,74,0.1)' : 'rgba(184,134,11,0.1)'}; color: ${p.bought ? 'var(--secondary)' : 'var(--warning)'};">${p.bought ? 'Đã mua khóa' : 'Đang theo dõi'}</span></td>
             </tr>
           `);
-        });
-      }
-      
-      if (elBuyers) elBuyers.textContent = buyersCount;
-      if (elCommission) elCommission.textContent = totalCommission.toLocaleString('vi-VN') + 'đ';
-      
+
       if (renderRows.length > 0) {
         elList.innerHTML = renderRows.join('');
       } else {
         elList.innerHTML = `<tr><td colspan="2" style="text-align: center; color: var(--text-muted); padding: 20px;">Chưa có ai đăng ký qua link của bạn. Hãy chia sẻ link ngay!</td></tr>`;
       }
-      
+
     } catch (e) {
       console.error('Error fetching affiliate stats:', e);
       if (elClicks) elClicks.textContent = '—';

@@ -478,38 +478,29 @@ function getLocalStats(code, myEmail) {
 }
 
 // ── Stats — Supabase (cross-device) ─────────────────────────────────────────
+// Gọi server endpoint (service role) để không cần quyền đọc cross-user trên client.
 async function getSupabaseStats(code) {
-  let clicks = null;
   try {
-    const { count } = await supabase.from('referral_clicks').select('*', { count: 'exact', head: true }).eq('ref_code', code);
-    clicks = count ?? null;
-  } catch (_) {}
+    const { data: { session } } = await supabase.auth.getSession();
+    const token = session?.access_token;
+    if (!token) throw new Error('No session token');
 
-  let profiles = [];
-  try {
-    const { data } = await supabase.from('user_profiles').select('id,name').eq('referred_by', code);
-    profiles = data || [];
-  } catch (_) {}
-
-  let mm21Count = 0, kegelCount = 0;
-  const list = [];
-  if (profiles.length) {
-    let enrolls = [];
-    try {
-      const ids = profiles.map(p => p.id);
-      const { data } = await supabase.from('course_enrollments').select('user_id,course_id').in('user_id', ids);
-      enrolls = data || [];
-    } catch (_) {}
-    profiles.forEach(p => {
-      const hasMM21 = enrolls.some(e => e.user_id === p.id && e.course_id === 'mat-ma-21');
-      const hasKegel = enrolls.some(e => e.user_id === p.id && e.course_id === 'kegel');
-      if (hasMM21) mm21Count++;
-      if (hasKegel) kegelCount++;
-      list.push({ name: p.name || 'Học viên', bought: hasMM21 || hasKegel });
+    const resp = await fetch('/api/affiliate-stats', {
+      headers: { 'Authorization': `Bearer ${token}` },
     });
+    if (!resp.ok) throw new Error('affiliate-stats ' + resp.status);
+    const s = await resp.json();
+    return {
+      clicks: s.clicks ?? null,
+      signups: s.signups ?? 0,
+      mm21Count: s.mm21Count ?? 0,
+      kegelCount: s.kegelCount ?? 0,
+      list: s.rows || [],
+    };
+  } catch (e) {
+    console.error('Error fetching affiliate stats:', e);
+    return { clicks: null, signups: 0, mm21Count: 0, kegelCount: 0, list: [] };
   }
-
-  return { clicks, signups: profiles.length, mm21Count, kegelCount, list };
 }
 
 // ── Render dashboard ─────────────────────────────────────────────────────────
